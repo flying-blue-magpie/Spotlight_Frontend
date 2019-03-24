@@ -37,4 +37,10 @@ jobs:
           fingerprints:
             - "b2:c9:90:82:e0:84:b4:12:39:f9:32:e6:d2:30:38:64"
 
+      - run:
+          name: Configure git user for gh-pages
+          command: |
+            git config user.email "ci-build@flying-blue-magpie.com"
+            git config user.name "ci-build"
+
       - run: yarn run deploy
