@@ -1,0 +1,18 @@
+import React from 'react';
+import styled from 'styled-components';
+import {
+  mixinWidthWrapper,
+} from 'Styled/Settings/constants';
+
+const ContentContainer = styled.div`
+  background: yellow;
+  ${mixinWidthWrapper()}
+`;
+
+const Content = () => (
+  <ContentContainer>
+    Content
+  </ContentContainer>
+);
+
+export default Content;
