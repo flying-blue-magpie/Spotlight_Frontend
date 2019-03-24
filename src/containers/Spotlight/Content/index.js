@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {
   mixinWidthWrapper,
 } from 'Styled/Settings/constants';
+import Routes from './Routes';
 
 const ContentContainer = styled.div`
   background: yellow;
@@ -11,7 +12,7 @@ const ContentContainer = styled.div`
 
 const Content = () => (
   <ContentContainer>
-    Content
+    <Routes />
   </ContentContainer>
 );
 
