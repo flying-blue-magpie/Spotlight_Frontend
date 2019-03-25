@@ -1,6 +1,13 @@
 export const MAX_WIDTH = 1024;
 export const HEIGHT_HEADER = 50;
-export const HEIGHT_NAVIGATION = 50;
+export const HEIGHT_NAVIGATION = 60;
+
+export const PAGE_NAME = {
+  EXPLORE: '探索景點',
+  PLANNING: '計畫旅程',
+  TRAVEL_WALL: '旅遊牆',
+  PERSONAL_PAGE: '我的',
+};
 
 export const mixinWidthWrapper = ()=> `
   width: 100%;

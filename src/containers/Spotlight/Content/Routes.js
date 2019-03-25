@@ -1,19 +1,26 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import history from 'utils/history';
-import Page1 from 'containers/Spotlight/Content/Page1';
-import Page2 from 'containers/Spotlight/Content/Page2';
+import { PAGE_NAME } from 'Styled/Settings/constants';
+import ExplorePage from 'containers/Spotlight/Content/ExplorePage';
+import PlanningPage from 'containers/Spotlight/Content/PlanningPage';
+import TravelWallPage from 'containers/Spotlight/Content/TravelWallPage';
+import PersonalPage from 'containers/Spotlight/Content/PersonalPage';
 
 export const routePathConfig = {
-  page1Path: '/1',
-  page2Path: '/2',
+  explorePagePath: `/${PAGE_NAME.EXPLORE}`,
+  planningPagePath: `/${PAGE_NAME.PLANNING}`,
+  travelWallPagePath: `/${PAGE_NAME.TRAVEL_WALL}`,
+  personalPagePath: `/${PAGE_NAME.PERSONAL_PAGE}`,
 };
 
 export default () => (
   <Router history={history}>
     <Switch>
-      <Route exact path={routePathConfig.page1Path} component={Page1} />
-      <Route exact path={routePathConfig.page2Path} component={Page2} />
+      <Route exact path={routePathConfig.explorePagePath} component={ExplorePage} />
+      <Route exact path={routePathConfig.planningPagePath} component={PlanningPage} />
+      <Route exact path={routePathConfig.travelWallPagePath} component={TravelWallPage} />
+      <Route exact path={routePathConfig.personalPagePath} component={PersonalPage} />
     </Switch>
   </Router>
 );

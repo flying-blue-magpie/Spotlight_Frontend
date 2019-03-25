@@ -3,27 +3,22 @@ import styled from 'styled-components';
 import {
   mixinWidthWrapper,
 } from 'Styled/Settings/constants';
-import {
-  findAttributeInEvent,
-} from 'utils/event';
-import history from 'utils/history';
+import { PAGE_NAME } from 'Styled/Settings/constants';
+import NavTab from 'components/NavTab';
 
 const NavigationContainer = styled.div`
-  background: yellow;
+  display: flex;
+  justify-content: space-around;
   ${mixinWidthWrapper()}
 `;
 
-const Navigation = () => {
-  const handleRedirect = (event) => {
-    const pagePath = findAttributeInEvent(event, 'data-page');
-    history.push(pagePath);
-  }
-  return (
-    <NavigationContainer>
-      <button data-page={'1'} onClick={handleRedirect}>Page1</button>
-      <button data-page={'2'} onClick={handleRedirect}>Page2</button>
-    </NavigationContainer>
-  );
-};
+const Navigation = () => (
+  <NavigationContainer>
+    <NavTab title={PAGE_NAME.EXPLORE} />
+    <NavTab title={PAGE_NAME.PLANNING} />
+    <NavTab title={PAGE_NAME.TRAVEL_WALL} />
+    <NavTab title={PAGE_NAME.PERSONAL_PAGE} />
+  </NavigationContainer>
+);
 
 export default Navigation;
