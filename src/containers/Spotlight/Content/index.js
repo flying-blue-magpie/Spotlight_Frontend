@@ -6,7 +6,6 @@ import {
 import Routes from './Routes';
 
 const ContentContainer = styled.div`
-  background: yellow;
   ${mixinWidthWrapper()}
 `;
 
