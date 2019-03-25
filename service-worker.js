@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/Spotlight_Frontend/precache-manifest.45c46e2ee8ced83cf380d778a3f53b58.js"
+  "/Spotlight_Frontend/precache-manifest.9fee230c9f811e3b9e5943f0817dbda4.js"
 );
 
 workbox.clientsClaim();
