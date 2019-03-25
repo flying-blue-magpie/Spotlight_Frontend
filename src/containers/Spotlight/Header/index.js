@@ -4,14 +4,16 @@ import {
   mixinWidthWrapper,
 } from 'Styled/Settings/constants';
 
+import Routes from './Routes';
+
 const HeaderContainer = styled.div`
-  background: yellow;
+  background: lightgray;
   ${mixinWidthWrapper()}
 `;
 
 const Header = () => (
   <HeaderContainer>
-    Header
+    <Routes />
   </HeaderContainer>
 );
 
