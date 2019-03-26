@@ -11,7 +11,7 @@ const EditPlanningPage = () => (
         <span>台北購物之旅</span>
         <i className="fas fa-pen icon__pen" />
       </div>
-      <div className="edit-planning__cover-period">2019年6月5日-2019年6月9日 / 4天</div>
+      <div className="edit-planning__cover-period">2019年6月5日-2019年6月8日 / 4天</div>
     </div>
     <DateTabs />
     <div>

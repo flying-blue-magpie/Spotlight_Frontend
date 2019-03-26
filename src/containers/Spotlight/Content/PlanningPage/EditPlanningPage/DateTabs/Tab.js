@@ -9,6 +9,11 @@ const TabWrapper = styled.div`
   justify-content: center;
   align-items: center;
   color: #707070;
+  cursor: pointer;
+  &:hover {
+    border-bottom: 3px solid #707070;
+    box-sizing: border-box;
+  }
   .tab__date {
     font-size: 12px;
   }
@@ -21,9 +26,12 @@ const Tab = (props) => {
   const {
     id,
   } = props;
+  const handleOnClick = () => {
+    console.log('click');
+  }
   return (
-    <TabWrapper>
-      <div className="tab__date">{`6/${id + 1}`}</div>
+    <TabWrapper onClick={handleOnClick}>
+      <div className="tab__date">{`6/${id + 5}`}</div>
       <div className="tab__number">第{id + 1}天</div>
     </TabWrapper>
   );
