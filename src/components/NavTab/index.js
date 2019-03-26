@@ -32,7 +32,7 @@ const NavTab = (props) => {
   } = props;
   const handleRedirect = (event) => {
     const pagePath = findAttributeInEvent(event, 'data-page-path');
-    history.push(pagePath);
+    history.push(`/${pagePath}`);
   }
 
   return (

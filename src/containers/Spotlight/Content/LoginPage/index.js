@@ -50,8 +50,8 @@ const Login = () => (
     </RowSpaceBetween>
     <LoginButton>登入</LoginButton>
     <RowSpaceBetween>
-      <Link>立即註冊</Link>
-      <Link>忘記密碼？</Link>
+      <Link to="">立即註冊</Link>
+      <Link to="">忘記密碼？</Link>
     </RowSpaceBetween>
   </React.Fragment>
 );

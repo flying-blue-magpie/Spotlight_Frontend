@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 
 const Container = styled.div`
   padding-top: 36px;
@@ -46,13 +47,13 @@ const ExplorePage = () => (
         <CardImage src="https://www.telegraph.co.uk/content/dam/Travel/2017/May/taipei-night-market.jpg?imwidth=450" />
         <CardInfo>
           台北101
-          <i class="fas fa-heart">666</i>
+          <i className="fas fa-heart">666</i>
         </CardInfo>
       </Card>
     </CardRow>
     <ButtonRow>
       <Button>跳過</Button>
-      <Button>詳細</Button>
+      <Link to="/探索景點/1">詳細</Link>
       <Button>想去</Button>
     </ButtonRow>
   </Container>
