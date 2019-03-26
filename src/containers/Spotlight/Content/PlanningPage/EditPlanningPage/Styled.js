@@ -21,8 +21,3 @@ export const EditPlanningPageContainer = styled.div`
     }
   }
 `;
-
-export const DateTabsWrapper = styled.div`
-  background: lightgray;
-  height: 42px;
-`;

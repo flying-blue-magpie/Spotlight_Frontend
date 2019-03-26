@@ -1,7 +1,7 @@
 import React from 'react';
+import DateTabs from './DateTabs';
 import {
   EditPlanningPageContainer,
-  DateTabsWrapper,
 } from './Styled';
 
 const EditPlanningPage = () => (
@@ -13,9 +13,7 @@ const EditPlanningPage = () => (
       </div>
       <div className="edit-planning__cover-period">2019年6月5日-2019年6月9日 / 4天</div>
     </div>
-    <DateTabsWrapper>
-      date tabs
-    </DateTabsWrapper>
+    <DateTabs />
     <div>
       body
     </div>
