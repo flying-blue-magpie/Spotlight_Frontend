@@ -1,12 +1,25 @@
-import React, { useCallback } from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import history from 'utils/history';
 import {
   HeaderContainer,
 } from 'containers/Spotlight/Header/Styled';
 import { routePathConfig } from 'containers/Spotlight/Content/Routes';
+import Context from 'containers/Spotlight/Context';
+
+const { SpotlightContext } = Context;
 
 export default () => {
+  const context = useContext(SpotlightContext);
+  const {
+    setIsNavVisible,
+  } = context;
+  useEffect(() => {
+    setIsNavVisible(false);
+    return () => {
+      setIsNavVisible(true);
+    };
+  });
   const handleGoBack = useCallback(() => {
     history.push(routePathConfig.planningPagePath);
   }, []);

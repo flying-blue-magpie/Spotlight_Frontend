@@ -9,21 +9,31 @@ import {
 
 const {
   SpotlightProvider,
+  SpotlightConsumer,
 } = SpotlightContext;
 
 const Spotlight = () => (
   <SpotlightProvider>
-    <SpotlightContainer>
-      <div className="spot-light__header-container">
-        <Header />
-      </div>
-      <div className="spot-light__content-container">
-        <Content />
-      </div>
-      <div className="spot-light__navigation-container">
-        <Navigation />
-      </div>
-    </SpotlightContainer>
+    <SpotlightConsumer>
+      {
+        ({ isNavVisible }) => (
+          <SpotlightContainer isNavVisible={isNavVisible}>
+            <div className="spot-light__header-container">
+              <Header />
+            </div>
+            <div className="spot-light__content-container">
+              <Content />
+            </div>
+            {
+              isNavVisible &&
+              <div className="spot-light__navigation-container">
+                <Navigation />
+              </div>
+            }
+          </SpotlightContainer>
+        )
+      }
+    </SpotlightConsumer>
   </SpotlightProvider>
 );
 

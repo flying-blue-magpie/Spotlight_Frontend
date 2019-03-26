@@ -6,7 +6,11 @@ import {
 
 export const SpotlightContainer = styled.div`
   display: grid;
-  grid-template-rows: ${HEIGHT_HEADER}px auto ${HEIGHT_NAVIGATION}px;
+  ${(props) => {
+    return props.isNavVisible
+      ? `grid-template-rows: ${HEIGHT_HEADER}px auto ${HEIGHT_NAVIGATION}px;`
+      : `grid-template-rows: ${HEIGHT_HEADER}px auto 0px`
+  }}
   grid-template-areas:
     "header"
     "content"
