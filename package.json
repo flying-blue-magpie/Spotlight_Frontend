@@ -17,6 +17,7 @@
     "reselect": "^4.0.0",
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.4.0",
+    "rxjs-marbles": "^5.0.0",
     "styled-components": "^4.2.0"
   },
   "scripts": {

@@ -7,6 +7,7 @@ import {
 import createReducer from 'store/reducers';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { createEpicMiddleware, combineEpics } from 'redux-observable';
+import { request, fetchErrorEpic } from 'utils/requests';
 import initialEpics from './epics';
 
 export default function configureStore(initialState = {}, history) {
@@ -21,7 +22,12 @@ export default function configureStore(initialState = {}, history) {
                 return source$;
             }),
         );
-    const epicMiddleware = createEpicMiddleware();
+    const epicMiddleware = createEpicMiddleware({
+        dependencies: {
+            request,
+            fetchErrorEpic,
+        },
+    });
 
     // Create the store with two middlewares
     // 1. sagaMiddleware: Makes redux-sagas work
