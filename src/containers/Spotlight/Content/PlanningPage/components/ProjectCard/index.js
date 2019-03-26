@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import history from 'utils/history';
+import { routePathConfig } from 'containers/Spotlight/Content/Routes';
 
 const Container = styled.div`
   margin-top: 10px;
   position: relative;
+  cursor: pointer;
   .project-card__cover {
     background-image: url("https://www.telegraph.co.uk/content/dam/Travel/2017/May/taipei-night-market.jpg?imwidth=450");
     background-size: cover;
@@ -29,9 +32,16 @@ const Container = styled.div`
 const ProjectCard = (props) => {
   const {
     title,
+    id,
   } = props;
+  const handleOnClick = () => {
+    console.log('id: ', id);
+    history.push({
+      pathname: routePathConfig.editPlanningPagePath,
+    });
+  };
   return (
-    <Container>
+    <Container onClick={handleOnClick}>
       <div className="project-card__cover">
         <div className="project-card__body">
           <div className="project-card__body-title">{title}</div>

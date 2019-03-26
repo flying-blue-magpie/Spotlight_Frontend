@@ -10,7 +10,6 @@ export const HeaderContainer = styled.div`
 
   .header-container__icon-wrapper {
     position: absolute;
-    right: 0;
     margin: 0px 6px;
   }
   .icon-style {
@@ -21,5 +20,11 @@ export const HeaderContainer = styled.div`
   }
   .icon-transition {
     transform: rotate(90deg);
+  }
+  .icon-right {
+    right: 0;
+  }
+  .icon-left {
+    left: 0;
   }
 `;

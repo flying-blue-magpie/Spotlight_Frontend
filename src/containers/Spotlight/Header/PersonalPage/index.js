@@ -1,22 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { PAGE_NAME } from 'Styled/Settings/constants';
-import Context from 'containers/Spotlight/Context';
 import {
   HeaderContainer,
 } from '../Styled';
 
-export default () => {
-  const context = useContext(Context.SpotlightContext);
-  const {
-    headerTitle,
-    setHeaderTitle,
-  } = context;
-  useEffect(() => {
-    setHeaderTitle(PAGE_NAME.PERSONAL_PAGE)
-  });
-  return (
-    <HeaderContainer>
-      {headerTitle}
+export default () => (
+  <HeaderContainer>
+    {PAGE_NAME.PERSONAL_PAGE}
   </HeaderContainer>
-  );
-};
+);

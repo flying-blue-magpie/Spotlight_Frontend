@@ -7,30 +7,21 @@ const Container = styled.div`
   overflow: scroll;
 `;
 
-const PlanningPage = () => (
-  <Container>
-    <ProjectCard
-      title={'台北購物之旅'}
-    />
-    <ProjectCard
-      title={'台北購物之旅'}
-    />
-    <ProjectCard
-      title={'台北購物之旅'}
-    />
-    <ProjectCard
-      title={'台北購物之旅'}
-    />
-    <ProjectCard
-      title={'台北購物之旅'}
-    />
-    <ProjectCard
-      title={'台北購物之旅'}
-    />
-    <ProjectCard
-      title={'台北購物之旅'}
-    />
-  </Container>
-);
+const PlanningPage = () => {
+  const arr = new Array(10).fill(0).map((x, index) => index);
+  return (
+    <Container>
+      {
+        arr.map((index) => (
+          <ProjectCard
+            key={index}
+            id={index}
+            title={'台北購物之旅'}
+          />
+        ))
+      }
+    </Container>
+  );
+};
 
 export default PlanningPage;

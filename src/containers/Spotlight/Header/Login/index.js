@@ -1,21 +1,10 @@
-import React, { useContext, useEffect } from 'react';
-import Context from 'containers/Spotlight/Context';
+import React from 'react';
 import {
   HeaderContainer,
 } from '../Styled';
 
-export default () => {
-  const context = useContext(Context.SpotlightContext);
-  const {
-    headerTitle,
-    setHeaderTitle,
-  } = context;
-  useEffect(() => {
-    setHeaderTitle('登入')
-  });
-  return (
-    <HeaderContainer>
-      {headerTitle}
+export default () => (
+  <HeaderContainer>
+    {'登入'}
   </HeaderContainer>
-  );
-};
+);
