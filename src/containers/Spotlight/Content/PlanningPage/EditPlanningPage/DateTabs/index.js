@@ -7,7 +7,7 @@ const DateTabsWrapper = styled.div`
   display: flex;
 `;
 
-const DateTabs = () => {
+const DateTabs = (props) => {
   const tabs = new Array(4).fill(0).map((x, index) => index);
   return (
     <DateTabsWrapper>
@@ -16,6 +16,7 @@ const DateTabs = () => {
           <Tab
             key={tab}
             id={tab}
+            {...props}
           />
         ))
       }
