@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { PAGE_NAME } from 'Styled/Settings/constants';
 import Context from 'containers/Spotlight/Context';
 import {
   HeaderContainer,
@@ -11,11 +12,11 @@ export default () => {
     setHeaderTitle,
   } = context;
   useEffect(() => {
-    setHeaderTitle('登入')
+    setHeaderTitle(PAGE_NAME.TRAVEL_WALL)
   });
   return (
     <HeaderContainer>
       {headerTitle}
-  </HeaderContainer>
+    </HeaderContainer>
   );
 };

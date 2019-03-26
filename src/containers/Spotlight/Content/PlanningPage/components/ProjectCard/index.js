@@ -6,6 +6,7 @@ const Container = styled.div`
   position: relative;
   .project-card__cover {
     background-image: url("https://www.telegraph.co.uk/content/dam/Travel/2017/May/taipei-night-market.jpg?imwidth=450");
+    background-size: cover;
     height: 160px;
     width: 100%;
   }
