@@ -9,6 +9,7 @@ import TravelWallPage from 'containers/Spotlight/Content/TravelWallPage';
 import PersonalPage from 'containers/Spotlight/Content/PersonalPage';
 import EditPlanningPage from 'containers/Spotlight/Content/PlanningPage/EditPlanningPage';
 import UpdatePlanningPage from 'containers/Spotlight/Content/PlanningPage/UpdatePlanningPage';
+import SpotPage from 'containers/Spotlight/Content/SpotPage';
 
 export const routePathConfig = {
   login: '/',
@@ -18,6 +19,7 @@ export const routePathConfig = {
   personalPagePath: `/${PAGE_NAME.PERSONAL_PAGE}`,
   editPlanningPagePath: `/${PAGE_NAME.EDIT_PLANNING}`,
   updatePlanningPagePath: `/${PAGE_NAME.UPDATE_PLANNING}`,
+  spotPagePath: `/${PAGE_NAME.EXPLORE}/:spotId`,
 };
 
 export default () => (
@@ -30,6 +32,7 @@ export default () => (
       <Route exact path={routePathConfig.personalPagePath} component={PersonalPage} />
       <Route exact path={routePathConfig.editPlanningPagePath} component={EditPlanningPage} />
       <Route exact path={routePathConfig.updatePlanningPagePath} component={UpdatePlanningPage} />
+      <Route exact path={routePathConfig.spotPagePath} component={SpotPage} />
     </Switch>
   </Router>
 );
