@@ -23,7 +23,7 @@ const setInit = (action$, store) =>
     return Observable.empty();
   });
 
-const fetchASpotByIdEpic = (action$, store, { fetchErrorEpic, request }) => (
+const fetchSpotByIdEpic = (action$, store, { fetchErrorEpic, request }) => (
   action$.pipe(
     ofType(FETCH_SPOT_BY_ID),
     switchMap((action) => {
@@ -53,5 +53,5 @@ const fetchASpotByIdEpic = (action$, store, { fetchErrorEpic, request }) => (
 
 export default [
   setInit,
-  fetchASpotByIdEpic,
+  fetchSpotByIdEpic,
 ];
