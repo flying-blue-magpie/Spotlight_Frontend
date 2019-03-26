@@ -47,7 +47,7 @@ const ExplorePage = () => (
         <CardImage src="https://www.telegraph.co.uk/content/dam/Travel/2017/May/taipei-night-market.jpg?imwidth=450" />
         <CardInfo>
           台北101
-          <i class="fas fa-heart">666</i>
+          <i className="fas fa-heart">666</i>
         </CardInfo>
       </Card>
     </CardRow>
