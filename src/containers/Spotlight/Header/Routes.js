@@ -6,8 +6,8 @@ import ExplorePage from 'containers/Spotlight/Header/ExplorePage';
 import PlanningPage from 'containers/Spotlight/Header/PlanningPage';
 import TravelWallPage from 'containers/Spotlight/Header/TravelWallPage';
 import PersonalPage from 'containers/Spotlight/Header/PersonalPage';
-import EditPlanningPage from 'containers/Spotlight/Header/PersonalPage/EditPlanningPage';
-import UpdatePlanningPage from 'containers/Spotlight/Header/PersonalPage/UpdatePlanningPage';
+import EditPlanningPage from 'containers/Spotlight/Header/PlanningPage/EditPlanningPage';
+import UpdatePlanningPage from 'containers/Spotlight/Header/PlanningPage/UpdatePlanningPage';
 import { routePathConfig } from 'containers/Spotlight/Content/Routes';
 
 export default () => (
