@@ -24,7 +24,7 @@ export const SpotlightContainer = styled.div`
     border: 1px solid grey;
     display: flex;
     justify-content: center;
-    overflow-x: scroll;
+    overflow-y: scroll;
   }
   .spot-light__navigation-container {
     grid-area: navigation;
