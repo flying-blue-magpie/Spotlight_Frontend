@@ -36,8 +36,10 @@ const ProjectCard = (props) => {
   } = props;
   const handleOnClick = useCallback(() => {
     const editPlanningPagePath = `/${PAGE_NAME.EDIT_PLANNING}`;
+    const defaultDay = 1;
     history.push({
       pathname: `${editPlanningPagePath}/${id}`,
+      search: `?day=${defaultDay}`,
     });
   }, [id]);
   return (
