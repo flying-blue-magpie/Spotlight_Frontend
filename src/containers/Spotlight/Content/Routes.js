@@ -16,7 +16,7 @@ export const routePathConfig = {
   planningPagePath: `/${PAGE_NAME.PLANNING}`,
   travelWallPagePath: `/${PAGE_NAME.TRAVEL_WALL}`,
   personalPagePath: `/${PAGE_NAME.PERSONAL_PAGE}`,
-  editPlanningPagePath: `/${PAGE_NAME.EDIT_PLANNING}`,
+  editPlanningPagePath: `/${PAGE_NAME.EDIT_PLANNING}/:projectId`,
   updatePlanningPagePath: `/${PAGE_NAME.UPDATE_PLANNING}`,
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import history from 'utils/history';
 
 const TabWrapper = styled.div`
   border-right: 1px solid #ccc;
@@ -25,9 +26,13 @@ const TabWrapper = styled.div`
 const Tab = (props) => {
   const {
     id,
+    location,
   } = props;
   const handleOnClick = () => {
-    console.log('click');
+    history.push({
+      pathname: `${location.pathname}`,
+      search: `?day=${id+1}`,
+    });
   }
   return (
     <TabWrapper onClick={handleOnClick}>

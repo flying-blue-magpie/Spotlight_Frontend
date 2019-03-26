@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import history from 'utils/history';
-import { routePathConfig } from 'containers/Spotlight/Content/Routes';
+import { PAGE_NAME } from 'Styled/Settings/constants';
 
 const Container = styled.div`
   margin-top: 10px;
@@ -34,12 +34,12 @@ const ProjectCard = (props) => {
     title,
     id,
   } = props;
-  const handleOnClick = () => {
-    console.log('id: ', id);
+  const handleOnClick = useCallback(() => {
+    const editPlanningPagePath = `/${PAGE_NAME.EDIT_PLANNING}`;
     history.push({
-      pathname: routePathConfig.editPlanningPagePath,
+      pathname: `${editPlanningPagePath}/${id}`,
     });
-  };
+  }, [id]);
   return (
     <Container onClick={handleOnClick}>
       <div className="project-card__cover">

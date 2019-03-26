@@ -1,10 +1,11 @@
 import React from 'react';
 import DateTabs from './DateTabs';
+import Content from './Content';
 import {
   EditPlanningPageContainer,
 } from './Styled';
 
-const EditPlanningPage = () => (
+const EditPlanningPage = (props) => (
   <EditPlanningPageContainer>
     <div className="edit-planning__cover">
       <div className="edit-planning__cover-title">
@@ -13,10 +14,8 @@ const EditPlanningPage = () => (
       </div>
       <div className="edit-planning__cover-period">2019年6月5日-2019年6月8日 / 4天</div>
     </div>
-    <DateTabs />
-    <div>
-      body
-    </div>
+    <DateTabs {...props} />
+    <Content {...props} />
   </EditPlanningPageContainer>
 );
 
