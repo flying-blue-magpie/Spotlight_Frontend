@@ -6,6 +6,7 @@ const StyledSpotCard = styled.div`
   background-image: url(${(props) => props.imagePath});
   background-size: cover;
   position: relative;
+  cursor: pointer;
   .spot-card__title-wrapper {
     position: absolute;
     bottom: 0;
