@@ -179,7 +179,7 @@ export const privateRequest = ({ method, url, data, options, download = false })
           payload: res,
         });
       }
-      return res.data;
+      return res;
     })
   );
 };
