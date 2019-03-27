@@ -6,6 +6,9 @@ import {
 
 export default () => (
   <HeaderContainer>
-    {PAGE_NAME.PERSONAL_PAGE}
+    <div>{PAGE_NAME.PERSONAL_PAGE}</div>
+    <div className="header-container__icon-wrapper icon-right">
+      <i className="fas fa-cog icon-style" />
+    </div>
   </HeaderContainer>
 );

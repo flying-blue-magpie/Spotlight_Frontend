@@ -4,7 +4,6 @@ import history from 'utils/history';
 import {
   HeaderContainer,
 } from 'containers/Spotlight/Header/Styled';
-import { routePathConfig } from 'containers/Spotlight/Content/Routes';
 import Context from 'containers/Spotlight/Context';
 
 const { SpotlightContext } = Context;
@@ -21,7 +20,7 @@ export default () => {
     };
   });
   const handleGoBack = useCallback(() => {
-    history.push(routePathConfig.planningPagePath);
+    history.goBack();
   }, []);
   return (
     <HeaderContainer>
