@@ -2,9 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledPersonalPage = styled.div`
-  .personal-page__cover {
+  .personal-page__cover-image {
     height: 120px;
-    background: #C6C6C6;
+    background-image: url(${(props) => props.coverImagePath});
+    background-size: cover;
   }
   .personal-page__info-wrapper {
     display: flex;
@@ -83,9 +84,10 @@ const StyledPersonalPage = styled.div`
 const PersonalPage = () => {
   const faviconPath = "http://i.imgur.com/EUAd2ht.jpg";
   const faviconSize = 90;
+  const coverImagePath = "http://cdn01.dcfever.com/media/travel/poi/2016/02/10963_poi_banner.jpg";
   return (
-    <StyledPersonalPage faviconPath={faviconPath} faviconSize={faviconSize}>
-      <div className="personal-page__cover">cover</div>
+    <StyledPersonalPage coverImagePath={coverImagePath} faviconPath={faviconPath} faviconSize={faviconSize}>
+      <div className="personal-page__cover-image" />
       <div className="personal-page__info-wrapper">
         <div className="personal-page__favicon-wrapper">
           <img className="personal-page__favicon" alt=""/>
