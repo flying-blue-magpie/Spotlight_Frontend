@@ -21,7 +21,7 @@ function spotLightReducer(state = initialState, action) {
     case SET_SPOT_DONE: {
       const {
         error,
-        data, // get data from fetch epics
+        // data, // get data from fetch epics
       } = action.payload;
       if (error) {
         return state.update('setSpotMeta', updateMetaError);
