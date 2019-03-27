@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { findAttributeInEvent } from 'utils/event';
+import history from 'utils/history';
+import { PAGE_NAME } from 'Styled/Settings/constants';
 import Information from './Information';
 import CollectionTabs from './CollectionTabs';
+import CollectionContent from './CollectionContent';
 
 const StyledPersonalPage = styled.div`
   .personal-page__cover-image {
@@ -84,9 +88,19 @@ const StyledPersonalPage = styled.div`
 `;
 
 const PersonalPage = () => {
+  const [activeCollectionType, setActiveCollectionType] = useState('spot');
   const faviconPath = "http://i.imgur.com/EUAd2ht.jpg";
   const faviconSize = 90;
   const coverImagePath = "http://cdn01.dcfever.com/media/travel/poi/2016/02/10963_poi_banner.jpg";
+  const handleOnTabClick = (event) => {
+    const type = findAttributeInEvent(event, 'data-collection-type');
+    setActiveCollectionType(type);
+    const personalPagePath = `/${PAGE_NAME.PERSONAL_PAGE}`;
+    history.push({
+      pathname: personalPagePath,
+      search: `?collectionType=${type}`,
+    });
+  }
   return (
     <StyledPersonalPage
       coverImagePath={coverImagePath}
@@ -95,10 +109,11 @@ const PersonalPage = () => {
     >
       <div className="personal-page__cover-image" />
       <Information />
-      <CollectionTabs />
-      <div>
-        Cards
-      </div>
+      <CollectionTabs
+        activeCollectionType={activeCollectionType}
+        handleOnClick={handleOnTabClick}
+      />
+      <CollectionContent activeCollectionType={activeCollectionType} />
     </StyledPersonalPage>
   );
 };
