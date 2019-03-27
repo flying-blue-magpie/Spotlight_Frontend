@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import Information from './Information';
+import CollectionTabs from './CollectionTabs';
 
 const StyledPersonalPage = styled.div`
   .personal-page__cover-image {
@@ -86,34 +88,14 @@ const PersonalPage = () => {
   const faviconSize = 90;
   const coverImagePath = "http://cdn01.dcfever.com/media/travel/poi/2016/02/10963_poi_banner.jpg";
   return (
-    <StyledPersonalPage coverImagePath={coverImagePath} faviconPath={faviconPath} faviconSize={faviconSize}>
+    <StyledPersonalPage
+      coverImagePath={coverImagePath}
+      faviconPath={faviconPath}
+      faviconSize={faviconSize}
+    >
       <div className="personal-page__cover-image" />
-      <div className="personal-page__info-wrapper">
-        <div className="personal-page__favicon-wrapper">
-          <img className="personal-page__favicon" alt=""/>
-        </div>
-        <div className="personal-page__profile-wrapper">
-          <div className="personal-page__profile-name">這裡是名字</div>
-          <div className="personal-page__profile-travel-info">
-            <div className="personal-page__profile-travel-info-item-wrapper personal-page__profile-travel-info-item-divier personal-page__profile-travel-info-item-padding-right">
-              <div className="personal-page__profile-travel-info-item-title">旅程發表</div>
-              <div className="personal-page__profile-travel-info-item-number">99</div>
-            </div>
-            <div className="personal-page__profile-travel-info-item-wrapper personal-page__profile-travel-info-item-divier personal-page__profile-travel-info-item-padding-right personal-page__profile-travel-info-item-padding-left">
-              <div className="personal-page__profile-travel-info-item-title">收藏數</div>
-              <div className="personal-page__profile-travel-info-item-number">99</div>
-            </div>
-            <div className="personal-page__profile-travel-info-item-wrapper personal-page__profile-travel-info-item-padding-left">
-              <div className="personal-page__profile-travel-info-item-title">被收藏</div>
-              <div className="personal-page__profile-travel-info-item-number">99</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="personal-page__collection-group">
-        <div className="personal-page__collection-tab personal-page__collection-tab--active"><span>收藏景點</span></div>
-        <div className="personal-page__collection-tab"><span>收藏旅程</span></div>
-      </div>
+      <Information />
+      <CollectionTabs />
       <div>
         Cards
       </div>
