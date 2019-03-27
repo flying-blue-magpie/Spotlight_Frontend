@@ -27,9 +27,9 @@ const fetchSpotByIdEpic = (action$, store, { fetchErrorEpic, request }) => (
   action$.pipe(
     ofType(FETCH_SPOT_BY_ID),
     switchMap((action) => {
-      const {
-        payload,
-      } = action;
+      // const {
+      //   payload,
+      // } = action;
       return request({
         method: 'get',
         url: `/spot/1`,
@@ -38,7 +38,6 @@ const fetchSpotByIdEpic = (action$, store, { fetchErrorEpic, request }) => (
         .pipe(
           flatMap((data) => {
             console.log('data: ', data);
-            debugger;
             return setSpotDone(null, data); // send action to reducer here, if sucess, then error is nulls
           }),
           catchError((error) => fetchErrorEpic(
