@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
+import history from 'utils/history';
+import { PAGE_NAME } from 'Styled/Settings/constants';
 
 const StyledTravelCard = styled.div`
   margin-top: 10px;
@@ -32,6 +34,7 @@ const StyledTravelCard = styled.div`
     background: black;
     color: white;
     position: relative;
+    cursor: pointer;
     .travel-card__body-cover {
       opacity: 0.5;
       background-image: url(${(props) => props.imagePath});
@@ -67,8 +70,16 @@ const StyledTravelCard = styled.div`
   }
 `;
 
-const TravelCard = () => {
+const TravelCard = ({ projectId }) => {
   const imagePath = "https://www.silverkris.com/wp-content/uploads/2017/08/taipei-ximending.jpg";
+  const handleOnClick = useCallback(() => {
+    const editPlanningPagePath = `/${PAGE_NAME.EDIT_PLANNING}`;
+    const defaultDay = 1;
+    history.push({
+      pathname: `${editPlanningPagePath}/${projectId}`,
+      search: `?day=${defaultDay}`,
+    });
+  })
   return (
     <StyledTravelCard imagePath={imagePath}>
       <div className="travel-card__header-wrapper">
@@ -78,7 +89,7 @@ const TravelCard = () => {
           <div className="travel-card__header-time">1天前</div>
         </div>
       </div>
-      <div className="travel-card__body-wrapper">
+      <div className="travel-card__body-wrapper" onClick={handleOnClick}>
         <div className="travel-card__body-cover" />
         <div className="travel-card__body-text-wrapper">
           <div className="travel-card__body-title">台北購物之旅</div>
