@@ -7,7 +7,8 @@ const StyledSpinner = styled.div`
   align-items: center;
   height: 300px;
   .fa-spinner {
-      font-size: 3em;
+    font-size: 3em;
+    color: #d7d7d7;
   }
 `;
 
