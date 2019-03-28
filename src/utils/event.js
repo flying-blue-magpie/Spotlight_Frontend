@@ -5,11 +5,11 @@ export const findAttributeInEvent = (event, attr) => {
   let dataId = temp.getAttribute(attr);
 
   while (temp !== end && !dataId) {
-      temp = temp.parentElement;
-      if (temp === null) {
-          break;
-      }
-      dataId = temp.getAttribute(attr);
+    temp = temp.parentElement;
+    if (temp === null) {
+      break;
+    }
+    dataId = temp.getAttribute(attr);
   }
   return dataId;
 };

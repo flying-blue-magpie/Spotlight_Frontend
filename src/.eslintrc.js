@@ -20,5 +20,7 @@ module.exports = {
     "react/forbid-prop-types": 0,
     "jsx-a11y/label-has-associated-control": 0,
     "jsx-a11y/label-has-for": 0,
+    "import/no-extraneous-dependencies": 0,
+    "no-use-before-define": 0,
   },
 };

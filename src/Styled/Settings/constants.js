@@ -11,7 +11,7 @@ export const PAGE_NAME = {
   UPDATE_PLANNING: '修改旅程',
 };
 
-export const mixinWidthWrapper = ()=> `
+export const mixinWidthWrapper = () => `
   width: 100%;
   max-width: ${MAX_WIDTH}px;
 `;
