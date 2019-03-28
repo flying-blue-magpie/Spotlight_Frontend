@@ -60,7 +60,7 @@ export const authLogin = (data) => from(
     body: JSON.stringify(data),
     method: 'POST',
     headers: JSON_HEADER,
-  }).then((response) => response)
+  }).then((response) => response),
 ).pipe(
   catchError(handleRequestError),
   mergeMap((res) => from(new Promise((resolve, reject) => {
@@ -90,7 +90,7 @@ export const authLogin = (data) => from(
     setAuthToken(res.data.token);
     setUserEmail(data.email);
     return res.data;
-  })
+  }),
 );
 
 const getFetchOption = (method, headers, data) => {
@@ -144,7 +144,9 @@ const getHeaders = (data, options) => {
 
 export const request = (action) => privateRequest(action);
 
-export const privateRequest = ({ method, url, data, options, download = false }) => {
+export const privateRequest = ({
+  method, url, data, options, download = false,
+}) => {
   const headers = getHeaders(data, options);
   const fetchOption = getFetchOption(method, headers, data);
   const apiURL = getAPIURL(method, url, data, options);
@@ -160,7 +162,7 @@ export const privateRequest = ({ method, url, data, options, download = false })
       }
 
       return response;
-    })
+    }),
   ).pipe(
     catchError(handleRequestError),
     mergeMap((res) => {
@@ -180,7 +182,7 @@ export const privateRequest = ({ method, url, data, options, download = false })
         });
       }
       return res;
-    })
+    }),
   );
 };
 

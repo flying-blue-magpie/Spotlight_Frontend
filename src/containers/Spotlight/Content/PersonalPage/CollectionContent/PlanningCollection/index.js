@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PlanningCard from './PlanningCard';
 
-const StyledPlanningCollection  = styled.div`
+const StyledPlanningCollection = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-row-gap: 10px;

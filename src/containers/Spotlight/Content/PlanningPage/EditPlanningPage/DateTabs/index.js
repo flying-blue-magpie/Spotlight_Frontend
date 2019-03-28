@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Tab from './Tab';
+
 const DateTabsWrapper = styled.div`
   background: lightgray;
   height: 42px;

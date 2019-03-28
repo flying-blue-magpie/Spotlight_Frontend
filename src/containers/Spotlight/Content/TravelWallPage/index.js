@@ -13,7 +13,7 @@ const TravelWallPage = () => {
       {
         cards.map((card, index) => (
           <TravelCard
-            key={index}
+            key={card}
             projectId={index}
           />
         ))

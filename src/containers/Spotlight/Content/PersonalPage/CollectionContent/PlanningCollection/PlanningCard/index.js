@@ -42,11 +42,11 @@ const StyledPlanningCard = styled.div`
 
 const PlanningCard = () => {
   const imagePath = 'https://cw1.tw/CW/opinion/images/common/201801/opinion-5a618a5f20fb8.jpg';
-  const faviconPath = 'https://img.ltn.com.tw/Upload/liveNews/BigPic/600_php7mZoYr.jpg'
+  const faviconPath = 'https://img.ltn.com.tw/Upload/liveNews/BigPic/600_php7mZoYr.jpg';
   return (
     <StyledPlanningCard imagePath={imagePath}>
       <div className="planning-card__profile-wrapper">
-        <img className="planning-card__profile-favicon" src={faviconPath} alt=""/>
+        <img className="planning-card__profile-favicon" src={faviconPath} alt="" />
         <div className="planning-card__profile-name">這裡是名字</div>
       </div>
       <div className="planning-card__title-wrapper">

@@ -89,9 +89,9 @@ const StyledPersonalPage = styled.div`
 
 const PersonalPage = () => {
   const [activeCollectionType, setActiveCollectionType] = useState('spot');
-  const faviconPath = "http://i.imgur.com/EUAd2ht.jpg";
+  const faviconPath = 'http://i.imgur.com/EUAd2ht.jpg';
   const faviconSize = 90;
-  const coverImagePath = "http://cdn01.dcfever.com/media/travel/poi/2016/02/10963_poi_banner.jpg";
+  const coverImagePath = 'http://cdn01.dcfever.com/media/travel/poi/2016/02/10963_poi_banner.jpg';
   const handleOnTabClick = (event) => {
     const type = findAttributeInEvent(event, 'data-collection-type');
     setActiveCollectionType(type);
@@ -100,7 +100,7 @@ const PersonalPage = () => {
       pathname: personalPagePath,
       search: `?collectionType=${type}`,
     });
-  }
+  };
   return (
     <StyledPersonalPage
       coverImagePath={coverImagePath}

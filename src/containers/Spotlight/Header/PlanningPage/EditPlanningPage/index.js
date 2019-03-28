@@ -25,7 +25,7 @@ export default () => {
   return (
     <HeaderContainer>
       <div className="header-container__icon-wrapper icon-left">
-        <i className="fas fa-arrow-left icon-style" onClick={handleGoBack} />
+        <i role="presentation" className="fas fa-arrow-left icon-style" onClick={handleGoBack} />
       </div>
       <div>{PAGE_NAME.EDIT_PLANNING}</div>
       <div className="header-container__icon-wrapper icon-right">

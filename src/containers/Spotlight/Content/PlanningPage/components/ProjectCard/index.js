@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import history from 'utils/history';
 import { PAGE_NAME } from 'Styled/Settings/constants';
@@ -52,6 +53,19 @@ const ProjectCard = (props) => {
       </div>
     </Container>
   );
+};
+
+ProjectCard.propTypes = {
+  title: PropTypes.string,
+  id: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+};
+
+ProjectCard.defaultProps = {
+  title: '',
+  id: '',
 };
 
 export default ProjectCard;
