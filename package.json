@@ -4,6 +4,7 @@
   "homepage": "https://flying-blue-magpie.github.io/Spotlight_Frontend",
   "private": true,
   "dependencies": {
+    "g": "^2.0.1",
     "immutable": "^4.0.0-rc.12",
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
@@ -39,6 +40,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "eslint": "^5.15.3",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-react": "^7.12.4",
     "gh-pages": "^2.0.1"
   }
 }

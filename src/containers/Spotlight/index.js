@@ -25,9 +25,7 @@ const {
 } = SpotlightContext;
 
 const Spotlight = ({
-  setSpotsMeta: {
-    isLoading,
-  },
+  isLoading,
   spots,
   handleFetchSpots,
 }) => {
@@ -46,11 +44,11 @@ const Spotlight = ({
                 <Header />
               </div>
               <div className="spot-light__content-container">
-              {
-                isLoading
-                ? <Spinner />
-                : <Content />
-              }
+                {
+                  isLoading
+                    ? <Spinner />
+                    : <Content />
+                }
               </div>
               {
                 isNavVisible &&
@@ -70,16 +68,16 @@ Spotlight.propTypes = {
   isLoading: PropTypes.bool,
   spots: PropTypes.instanceOf(List),
   handleFetchSpots: PropTypes.func,
-}
+};
 
 Spotlight.defaultProps = {
   isLoading: false,
   spots: List(),
   handleFetchSpots: () => { },
-}
+};
 
 const mapStateToProps = createStructuredSelector({
-  setSpotsMeta :selectSpotsMeta(),
+  setSpotsMeta: selectSpotsMeta(),
   spots: selectSpots(),
 });
 

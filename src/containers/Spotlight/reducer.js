@@ -40,7 +40,7 @@ function spotLightReducer(state = initialState, action) {
     case SET_SPOTS_DONE: {
       const {
         error,
-        spots
+        spots,
       } = action.payload;
       if (error) {
         return state.update('setSpotsMeta', updateMetaError);
