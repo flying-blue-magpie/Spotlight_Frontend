@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Rx';
 import {
   ofType,
 } from 'redux-observable';
-// import { of } from 'rxjs';
+import { of } from 'rxjs';
 import {
   switchMap,
   flatMap,
@@ -12,10 +12,13 @@ import {
 import {
   INIT,
   FETCH_SPOT_BY_ID,
+  FETCH_SPOTS,
 } from './constants';
 import {
   setSpotLoading,
   setSpotDone,
+  setSpotsLoading,
+  setSpotsDone,
 } from './actions';
 
 const setInit = (action$, store) =>
@@ -38,7 +41,7 @@ const fetchSpotByIdEpic = (action$, store, { fetchErrorEpic, request }) => (
         .pipe(
           flatMap((data) => {
             console.log('data: ', data);
-            return setSpotDone(null, data); // send action to reducer here, if sucess, then error is nulls
+            return of(setSpotDone(null, data)); // send action to reducer here, if sucess, then error is nulls
           }),
           catchError((error) => fetchErrorEpic(
             error,
@@ -50,7 +53,28 @@ const fetchSpotByIdEpic = (action$, store, { fetchErrorEpic, request }) => (
   )
 );
 
+const fetchSpotsEpic = (action$, store, { fetchErrorEpic, request }) => (
+  action$.pipe(
+    ofType(FETCH_SPOTS),
+    switchMap(() => {
+      return request({
+        method: 'get',
+        url: `/spots`,
+      })
+        .pipe(
+          flatMap((data) => of(setSpotsDone(null, data.content))),
+          catchError((error) => fetchErrorEpic(
+            error,
+            setSpotsDone(error),
+          )),
+          startWith(setSpotsLoading()),
+        );
+    })
+  )
+);
+
 export default [
   setInit,
   fetchSpotByIdEpic,
+  fetchSpotsEpic,
 ];
