@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { PAGE_NAME } from 'Styled/Settings/constants';
 
 const StyledPlanningCard = styled.div`
   height: 100px;
@@ -40,11 +42,16 @@ const StyledPlanningCard = styled.div`
   }
 `;
 
-const PlanningCard = () => {
+const PlanningCard = ({ planningId, handleOnClick }) => {
   const imagePath = 'https://cw1.tw/CW/opinion/images/common/201801/opinion-5a618a5f20fb8.jpg';
   const faviconPath = 'https://img.ltn.com.tw/Upload/liveNews/BigPic/600_php7mZoYr.jpg';
   return (
-    <StyledPlanningCard imagePath={imagePath}>
+    <StyledPlanningCard
+      imagePath={imagePath}
+      data-id={planningId}
+      data-redirect-path={PAGE_NAME.DETAIL_PLANNING}
+      onClick={handleOnClick}
+    >
       <div className="planning-card__profile-wrapper">
         <img className="planning-card__profile-favicon" src={faviconPath} alt="" />
         <div className="planning-card__profile-name">這裡是名字</div>
@@ -54,6 +61,18 @@ const PlanningCard = () => {
       </div>
     </StyledPlanningCard>
   );
+};
+
+PlanningCard.propTypes = {
+  planningId: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
+  handleOnClick: PropTypes.func,
+};
+
+PlanningCard.propTypes = {
+  handleOnClick: () => { },
 };
 
 export default PlanningCard;

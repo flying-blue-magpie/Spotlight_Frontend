@@ -51,7 +51,7 @@ const Content = (props) => {
     location,
   } = props;
   const searchParams = new URLSearchParams(location.search);
-  const day = searchParams.get('day');
+  const day = searchParams.get('day') || 1;
   return (
     <StyledContent>
       <div className="content__title">

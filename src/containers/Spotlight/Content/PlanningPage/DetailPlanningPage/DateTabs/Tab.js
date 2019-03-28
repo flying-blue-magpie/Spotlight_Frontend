@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import history from 'utils/history';
 
@@ -31,15 +32,28 @@ const Tab = (props) => {
   const handleOnClick = () => {
     history.push({
       pathname: `${location.pathname}`,
-      search: `?day=${id+1}`,
+      search: `?day=${id + 1}`,
     });
-  }
+  };
   return (
     <TabWrapper onClick={handleOnClick}>
       <div className="tab__date">{`6/${id + 5}`}</div>
-      <div className="tab__number">第{id + 1}天</div>
+      <div className="tab__number">{`第${id + 1}天`}</div>
     </TabWrapper>
   );
+};
+
+Tab.propTypes = {
+  id: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+  location: PropTypes.object,
+};
+
+Tab.defaultProps = {
+  id: 1,
+  location: {},
 };
 
 export default Tab;

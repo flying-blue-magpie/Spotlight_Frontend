@@ -1,20 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { findAttributeInEvent } from 'utils/event';
+import history from 'utils/history';
 import SpotCollection from './SpotCollection';
 import PlanningCollection from './PlanningCollection';
 
-const CollectionContent = ({ activeCollectionType }) => {
-  if (activeCollectionType === 'planning') {
-    return <PlanningCollection />;
+const CollectionContent = () => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const handleOnCardClick = (event) => {
+    const id = findAttributeInEvent(event, 'data-id');
+    const redirectPath = findAttributeInEvent(event, 'data-redirect-path');
+    history.push({
+      pathname: `${redirectPath}/${id}`,
+    });
+  };
+  if (searchParams.get('collectionType') === 'planning') {
+    return <PlanningCollection handleOnClick={handleOnCardClick} />;
   }
-  return <SpotCollection />;
-};
-
-CollectionContent.propTypes = {
-  activeCollectionType: PropTypes.isRequired,
-};
-
-CollectionContent.propTypes = {
+  return <SpotCollection handleOnClick={handleOnCardClick} />;
 };
 
 export default CollectionContent;
