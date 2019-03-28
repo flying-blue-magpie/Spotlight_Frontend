@@ -5,7 +5,7 @@ import PlanningCollection from './PlanningCollection';
 
 const CollectionContent = ({ activeCollectionType }) => {
   if (activeCollectionType === 'planning') {
-    return <PlanningCollection />
+    return <PlanningCollection />;
   }
   return <SpotCollection />;
 };

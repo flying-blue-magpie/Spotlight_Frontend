@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const row = `
@@ -50,8 +50,8 @@ const Login = () => (
     </RowSpaceBetween>
     <LoginButton>登入</LoginButton>
     <RowSpaceBetween>
-      <Link to="">立即註冊</Link>
-      <Link to="">忘記密碼？</Link>
+      <div>立即註冊</div>
+      <div>忘記密碼？</div>
     </RowSpaceBetween>
   </React.Fragment>
 );

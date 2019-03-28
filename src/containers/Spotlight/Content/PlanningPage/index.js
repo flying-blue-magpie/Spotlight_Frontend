@@ -16,7 +16,7 @@ const PlanningPage = () => {
           <ProjectCard
             key={index}
             id={index}
-            title={'台北購物之旅'}
+            title="台北購物之旅"
           />
         ))
       }

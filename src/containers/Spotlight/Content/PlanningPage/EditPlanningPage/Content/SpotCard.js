@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledSpotCard = styled.div`
@@ -34,19 +35,25 @@ const StyledSpotCard = styled.div`
   }
 `;
 
-const SpotCard = ({ spot }) => {
-  return (
-    <StyledSpotCard>
-      <div className='spot-card__start-time-wrapper'>
-        <div className="spot-card__start-time-label">出發時間</div>
-        <div className="spot-card__start-time">{spot.get('startTime')}</div>
-      </div>
-      <div className="spot-card__body-wrapper">
-        <div className="spot-card__body-name">{spot.get('name')}</div>
-        <div className="spot-card__body-address">{spot.get('address')}</div>
-      </div>
-    </StyledSpotCard>
-  );
+const SpotCard = ({ spot }) => (
+  <StyledSpotCard>
+    <div className="spot-card__start-time-wrapper">
+      <div className="spot-card__start-time-label">出發時間</div>
+      <div className="spot-card__start-time">{spot.get('startTime')}</div>
+    </div>
+    <div className="spot-card__body-wrapper">
+      <div className="spot-card__body-name">{spot.get('name')}</div>
+      <div className="spot-card__body-address">{spot.get('address')}</div>
+    </div>
+  </StyledSpotCard>
+);
+
+SpotCard.propTypes = {
+  spot: PropTypes.object,
+};
+
+SpotCard.defaultProps = {
+  spot: {},
 };
 
 export default SpotCard;

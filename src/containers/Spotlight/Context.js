@@ -1,6 +1,8 @@
 import React, { createContext, useState } from 'react';
+import PropTypes from 'prop-types';
+
 const SpotlightContext = createContext();
-const { Provider, Consumer }  = SpotlightContext;
+const { Provider, Consumer } = SpotlightContext;
 
 const useSelection = () => {
   const [headerTitle, setHeaderTitle] = useState('');
@@ -23,6 +25,14 @@ const SpotlightProvider = (props) => {
       {children}
     </Provider>
   );
+};
+
+SpotlightProvider.propTypes = {
+  children: PropTypes.any,
+};
+
+SpotlightProvider.defaultProps = {
+  children: null,
 };
 
 export default {

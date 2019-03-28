@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { fromJS } from 'immutable';
 import SpotCard from './SpotCard';
@@ -67,6 +68,14 @@ const Content = (props) => {
       }
     </StyledContent>
   );
+};
+
+Content.propTypes = {
+  location: PropTypes.object,
+};
+
+Content.defaultProps = {
+  location: {},
 };
 
 export default Content;

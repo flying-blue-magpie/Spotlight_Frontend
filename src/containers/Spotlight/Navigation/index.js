@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import {
+  PAGE_NAME,
   mixinWidthWrapper,
 } from 'Styled/Settings/constants';
-import { PAGE_NAME } from 'Styled/Settings/constants';
 import NavTab from 'components/NavTab';
 
 const NavigationContainer = styled.div`

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import SpotCard from './SpotCard';
 
-const StyledSpotCollection  = styled.div`
+const StyledSpotCollection = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-row-gap: 10px;
