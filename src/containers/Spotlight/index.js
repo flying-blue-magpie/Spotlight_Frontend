@@ -25,15 +25,17 @@ const {
 } = SpotlightContext;
 
 const Spotlight = ({
-  isLoading,
+  setSpotsMeta,
   spots,
   handleFetchSpots,
 }) => {
+  const isLoading = setSpotsMeta.get('isLoading');
+  const isLoaded = setSpotsMeta.get('isLoaded');
   useEffect(() => {
-    if (!spots.size) {
+    if (!isLoaded) {
       handleFetchSpots();
     }
-  });
+  }, []);
   return (
     <SpotlightProvider>
       <SpotlightConsumer>
@@ -47,7 +49,7 @@ const Spotlight = ({
                 {
                   isLoading
                     ? <Spinner />
-                    : <Content />
+                    : <Content spots={spots} />
                 }
               </div>
               {
@@ -65,13 +67,13 @@ const Spotlight = ({
 };
 
 Spotlight.propTypes = {
-  isLoading: PropTypes.bool,
+  setSpotsMeta: PropTypes.object,
   spots: PropTypes.instanceOf(List),
   handleFetchSpots: PropTypes.func,
 };
 
 Spotlight.defaultProps = {
-  isLoading: false,
+  setSpotsMeta: null,
   spots: List(),
   handleFetchSpots: () => { },
 };
