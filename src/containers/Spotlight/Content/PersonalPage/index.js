@@ -110,7 +110,6 @@ const PersonalPage = () => {
       <div className="personal-page__cover-image" />
       <Information />
       <CollectionTabs
-        activeCollectionType={activeCollectionType}
         handleOnClick={handleOnTabClick}
       />
       <CollectionContent activeCollectionType={activeCollectionType} />

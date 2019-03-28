@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import SpotCard from './SpotCard';
 
@@ -10,7 +11,9 @@ const StyledSpotCollection = styled.div`
   padding: 10px 28px;
 `;
 
-const SpotCollection = () => {
+const SpotCollection = ({
+  handleOnClick,
+}) => {
   const cards = new Array(11).fill(0).map((x, index) => index);
   return (
     <StyledSpotCollection>
@@ -18,11 +21,21 @@ const SpotCollection = () => {
         cards.map((card) => (
           <SpotCard
             key={card}
+            spotId={card}
+            handleOnClick={handleOnClick}
           />
         ))
       }
     </StyledSpotCollection>
   );
+};
+
+SpotCollection.propTypes = {
+  handleOnClick: PropTypes.func,
+};
+
+SpotCollection.propTypes = {
+  handleOnClick: () => { },
 };
 
 export default SpotCollection;
