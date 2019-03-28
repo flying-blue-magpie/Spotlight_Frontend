@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "e20f282c76c1903896f3",
+    "revision": "3c89c264f613567a1b9c",
     "url": "/Spotlight_Frontend/static/css/main.b5d92891.chunk.css"
   },
   {
-    "revision": "e20f282c76c1903896f3",
-    "url": "/Spotlight_Frontend/static/js/main.934974fc.chunk.js"
+    "revision": "3c89c264f613567a1b9c",
+    "url": "/Spotlight_Frontend/static/js/main.6d77711e.chunk.js"
   },
   {
     "revision": "9449ac1b54603c2bc090",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/Spotlight_Frontend/static/js/2.bfc8daf2.chunk.js"
   },
   {
-    "revision": "7bf21404ceda44e988daf79777974260",
+    "revision": "07fe18af86a551357071db8bb33ac4a2",
     "url": "/Spotlight_Frontend/index.html"
   }
 ];
