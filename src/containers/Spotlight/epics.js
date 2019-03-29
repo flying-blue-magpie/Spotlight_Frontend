@@ -13,12 +13,14 @@ import {
   INIT,
   // FETCH_SPOT_BY_ID,
   FETCH_SPOTS,
+  LOGIN,
 } from './constants';
 import {
   // setSpotLoading,
   // setSpotDone,
   setSpotsLoading,
   setSpotsDone,
+  setLoginDone,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -61,8 +63,26 @@ const fetchSpotsEpic = (action$, $state, { request, fetchErrorEpic }) => (
   )
 );
 
+const loginEpic = (action$, state$, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(LOGIN),
+    switchMap((action) => request({
+      method: 'post',
+      url: '/login',
+      data: action.payload,
+    }).pipe(
+      flatMap(() => of(setLoginDone(null, { name: action.payload.acc }))),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setLoginDone(error),
+      )),
+    )),
+  )
+);
+
 export default [
   setInit,
   // fetchSpotByIdEpic,
   fetchSpotsEpic,
+  loginEpic,
 ];
