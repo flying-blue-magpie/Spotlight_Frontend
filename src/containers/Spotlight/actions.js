@@ -5,6 +5,8 @@ import {
   FETCH_SPOTS,
   SET_SPOTS_LOADING,
   SET_SPOTS_DONE,
+  LOGIN,
+  SET_LOGIN_DONE,
 } from './constants';
 
 // export const fetchSpotById = (id) => ({
@@ -39,5 +41,21 @@ export const setSpotsDone = (error, spots) => ({
   payload: {
     error,
     spots,
+  },
+});
+
+export const login = ({ acc = 'admin', pwd = 'admin' }) => ({
+  type: LOGIN,
+  payload: {
+    acc,
+    pwd,
+  },
+});
+
+export const setLoginDone = (error, user) => ({
+  type: SET_LOGIN_DONE,
+  payload: {
+    error,
+    user,
   },
 });
