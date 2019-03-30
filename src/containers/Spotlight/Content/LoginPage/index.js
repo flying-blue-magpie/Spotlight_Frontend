@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import history from 'utils/history';
 import {
   login,
+  register,
 } from 'containers/Spotlight/actions';
 import {
   selectLoginMeta,
@@ -70,6 +71,16 @@ const Login = (props) => {
     });
   };
 
+  const handleRegisterBtnClick = () => {
+    const {
+      handleSubmitRegister,
+    } = props;
+    handleSubmitRegister({
+      acc: usernameRef.current.value,
+      pwd: passwordRef.current.value,
+    });
+  };
+
   useEffect(() => {
     if (user) {
       history.push(`/${PAGE_NAME.EXPLORE}`);
@@ -82,7 +93,9 @@ const Login = (props) => {
       <PassWord ref={passwordRef} type="password" placeholder="輸入密碼" />
       <LoginButton onClick={handleLoginBtnClick}>登入</LoginButton>
       <RowSpaceBetween>
-        <a href="/#">立即註冊</a>
+        <a href="/#" onClick={handleRegisterBtnClick}>
+          立即註冊
+        </a>
       </RowSpaceBetween>
       {loginMeta.get('error') && <ErrorMessage>登入失敗</ErrorMessage>}
     </React.Fragment>
@@ -91,6 +104,7 @@ const Login = (props) => {
 
 Login.propTypes = {
   handleSubmitLogin: PropTypes.func,
+  handleSubmitRegister: PropTypes.func,
   user: PropTypes.instanceOf(Map),
   loginMeta: PropTypes.instanceOf(Map),
 };
@@ -106,6 +120,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   handleSubmitLogin: ({ acc, pwd }) => dispatch(login({ acc, pwd })),
+  handleSubmitRegister: ({ acc, pwd }) => dispatch(register({ acc, pwd })),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
