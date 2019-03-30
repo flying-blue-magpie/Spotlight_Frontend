@@ -3,7 +3,7 @@ import proxy from 'http-proxy-middleware';
 import http from 'http';
 import path from 'path';
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 const API_URI = 'spotlight-server.herokuapp.com';
 
