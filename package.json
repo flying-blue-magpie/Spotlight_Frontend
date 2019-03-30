@@ -5,7 +5,9 @@
   "private": true,
   "dependencies": {
     "connected-react-router": "^6.3.2",
+    "express": "4.16.4",
     "g": "^2.0.1",
+    "http-proxy-middleware": "0.19.1",
     "immutable": "^4.0.0-rc.12",
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
@@ -45,6 +47,8 @@
     "eslint": "^5.15.3",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-react": "^7.12.4",
-    "gh-pages": "^2.0.1"
+    "gh-pages": "^2.0.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
   }
 }
