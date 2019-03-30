@@ -1,13 +1,15 @@
 {
   "main.css": "/Spotlight_Frontend/static/css/main.b5d92891.chunk.css",
-  "main.js": "/Spotlight_Frontend/static/js/main.12af1537.chunk.js",
-  "main.js.map": "/Spotlight_Frontend/static/js/main.12af1537.chunk.js.map",
+  "main.js": "/Spotlight_Frontend/static/js/main.1ca16c9a.chunk.js",
+  "main.js.map": "/Spotlight_Frontend/static/js/main.1ca16c9a.chunk.js.map",
   "runtime~main.js": "/Spotlight_Frontend/static/js/runtime~main.e6f4d450.js",
   "runtime~main.js.map": "/Spotlight_Frontend/static/js/runtime~main.e6f4d450.js.map",
-  "static/js/2.ee3b698a.chunk.js": "/Spotlight_Frontend/static/js/2.ee3b698a.chunk.js",
-  "static/js/2.ee3b698a.chunk.js.map": "/Spotlight_Frontend/static/js/2.ee3b698a.chunk.js.map",
+  "static/css/2.4e7cbb43.chunk.css": "/Spotlight_Frontend/static/css/2.4e7cbb43.chunk.css",
+  "static/js/2.b23df8e8.chunk.js": "/Spotlight_Frontend/static/js/2.b23df8e8.chunk.js",
+  "static/js/2.b23df8e8.chunk.js.map": "/Spotlight_Frontend/static/js/2.b23df8e8.chunk.js.map",
   "index.html": "/Spotlight_Frontend/index.html",
-  "precache-manifest.17d468317860f2a0e828ac72665a0570.js": "/Spotlight_Frontend/precache-manifest.17d468317860f2a0e828ac72665a0570.js",
+  "precache-manifest.1b570a6f378ad7d0f0bb3c80e7616371.js": "/Spotlight_Frontend/precache-manifest.1b570a6f378ad7d0f0bb3c80e7616371.js",
   "service-worker.js": "/Spotlight_Frontend/service-worker.js",
+  "static/css/2.4e7cbb43.chunk.css.map": "/Spotlight_Frontend/static/css/2.4e7cbb43.chunk.css.map",
   "static/css/main.b5d92891.chunk.css.map": "/Spotlight_Frontend/static/css/main.b5d92891.chunk.css.map"
 }
