@@ -19,13 +19,13 @@ export default () => {
       setIsNavVisible(true);
     };
   });
-  const handleGoBack = useCallback(() => {
-    history.goBack();
+  const handleGoBackToPlanning = useCallback(() => {
+    history.push(`/${PAGE_NAME.PLANNING}`);
   }, []);
   return (
     <HeaderContainer>
       <div className="header-container__icon-wrapper icon-left">
-        <i role="presentation" className="fas fa-arrow-left icon-style" onClick={handleGoBack} />
+        <i role="presentation" className="fas fa-arrow-left icon-style" onClick={handleGoBackToPlanning} />
       </div>
       <div>{PAGE_NAME.DETAIL_PLANNING}</div>
       <div className="header-container__icon-wrapper icon-right">
