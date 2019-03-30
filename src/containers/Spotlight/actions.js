@@ -8,6 +8,9 @@ import {
   LOGIN,
   SET_LOGIN_DONE,
   SET_LOGIN_LOADING,
+  REGISTER,
+  SET_REGISTER_DONE,
+  SET_REGISTER_LOADING,
   EXPLORE_NEXT_SPOT,
 } from './constants';
 
@@ -60,6 +63,26 @@ export const setLoginLoading = () => ({
 
 export const setLoginDone = (error, user) => ({
   type: SET_LOGIN_DONE,
+  payload: {
+    error,
+    user,
+  },
+});
+
+export const register = ({ acc = 'admin', pwd = 'admin' }) => ({
+  type: REGISTER,
+  payload: {
+    acc,
+    pwd,
+  },
+});
+
+export const setRegisterLoading = () => ({
+  type: SET_REGISTER_LOADING,
+});
+
+export const setRegisterDone = (error, user) => ({
+  type: SET_REGISTER_DONE,
   payload: {
     error,
     user,
