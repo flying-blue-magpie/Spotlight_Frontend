@@ -43,10 +43,10 @@ const LoginButton = styled.button`
   outline: none;
 `;
 
-const RowSpaceBetween = styled.div`
+const RegisterRow = styled.div`
   ${row}
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const ErrorMessage = styled.div`
@@ -92,11 +92,11 @@ const Login = (props) => {
       <UserName ref={usernameRef} type="email" placeholder="輸入電子信箱/用戶名" />
       <PassWord ref={passwordRef} type="password" placeholder="輸入密碼" />
       <LoginButton onClick={handleLoginBtnClick}>登入</LoginButton>
-      <RowSpaceBetween>
+      <RegisterRow>
         <a href="/#" onClick={handleRegisterBtnClick}>
           立即註冊
         </a>
-      </RowSpaceBetween>
+      </RegisterRow>
       {loginMeta.get('error') && <ErrorMessage>登入失敗</ErrorMessage>}
     </React.Fragment>
   );
