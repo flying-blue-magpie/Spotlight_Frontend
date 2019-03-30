@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { Map } from 'immutable';
 import {
   KEY_REDUCER,
 } from './constants';
@@ -23,4 +24,9 @@ export const selectLoginMeta = () => createSelector(
 export const selectUser = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('user'),
+);
+
+export const selectExploringSpot = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.getIn(['spots', spotlightState.get('exploringSpotId')], Map()),
 );
