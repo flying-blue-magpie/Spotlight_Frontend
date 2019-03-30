@@ -1,7 +1,7 @@
 {
   "name": "spotlight-frontend",
   "version": "0.1.0",
-  "homepage": "https://flying-blue-magpie.github.io/Spotlight_Frontend",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "connected-react-router": "^6.3.2",
@@ -27,8 +27,13 @@
     "styled-components": "^4.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "debug:server": "node --inspect ./build/server.js",
+    "build:client": "react-scripts build",
+    "build:server": "NODE_ENV=production webpack --mode production --config ./webpack/prod.server.js",
+    "build": "npm run build:client && npm run build:server",
+    "dev": "npm-run-all build:server --parallel debug:server start",
+    "prod": "node ./build/server.js",
+    "start:": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
