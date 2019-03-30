@@ -1,6 +1,9 @@
 {
   "name": "spotlight-frontend",
   "version": "0.1.0",
+  "engines": {
+    "node": "11.1.0"
+  },
   "homepage": ".",
   "private": true,
   "dependencies": {
