@@ -6,6 +6,7 @@ import { Map } from 'immutable';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { selectExploringSpot } from 'containers/Spotlight/selectors';
+import { exploreNextSpot } from 'containers/Spotlight/actions';
 
 const Container = styled.div`
   padding-top: 36px;
@@ -48,13 +49,15 @@ const CardRow = styled.div`
 const ExplorePage = (props) => {
   const {
     spot,
+    handleSwipeLeft,
+    handleSwipeRight,
   } = props;
 
   return (
     <Container>
       <CardRow>
         <Card>
-          <CardImage src={spot.getIn(['pic', 0])} />
+          <CardImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
           <CardInfo>
             {spot.get('name')}
             <i className="fas fa-heart">666</i>
@@ -62,9 +65,9 @@ const ExplorePage = (props) => {
         </Card>
       </CardRow>
       <ButtonRow>
-        <Button>跳過</Button>
+        <Button onClick={handleSwipeLeft}>跳過</Button>
         <Link to="/探索景點/1">詳細</Link>
-        <Button>想去</Button>
+        <Button onClick={handleSwipeRight}>想去</Button>
       </ButtonRow>
     </Container>
   );
@@ -72,13 +75,17 @@ const ExplorePage = (props) => {
 
 ExplorePage.propTypes = {
   spot: PropTypes.instanceOf(Map),
+  handleSwipeLeft: PropTypes.func.isRequired,
+  handleSwipeRight: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   spot: selectExploringSpot(),
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = (dispatch) => ({
+  handleSwipeLeft: () => dispatch(exploreNextSpot()),
+  handleSwipeRight: () => dispatch(exploreNextSpot()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExplorePage);
