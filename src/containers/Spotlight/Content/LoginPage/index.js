@@ -54,6 +54,14 @@ const ErrorMessage = styled.div`
   color: red;
 `;
 
+const Logo = styled.img`
+  width: 125px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 50%;
+  margin-top: 24px;
+`;
+
 const Login = (props) => {
   const usernameRef = createRef();
   const passwordRef = createRef();
@@ -89,6 +97,7 @@ const Login = (props) => {
 
   return (
     <React.Fragment>
+      <Logo src="https://avatars0.githubusercontent.com/u/48876369?s=200&v=4" />
       <UserName ref={usernameRef} type="email" placeholder="輸入電子信箱/用戶名" />
       <PassWord ref={passwordRef} type="password" placeholder="輸入密碼" />
       <LoginButton onClick={handleLoginBtnClick}>登入</LoginButton>
