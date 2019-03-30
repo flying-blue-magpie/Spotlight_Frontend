@@ -14,3 +14,8 @@ export const selectSpots = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('spots'),
 );
+
+export const selectUser = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('user'),
+);

@@ -1,11 +1,16 @@
-import React, { createRef } from 'react';
+import React, { createRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
+import history from 'utils/history';
 import {
   login,
 } from 'containers/Spotlight/actions';
+import {
+  selectUser,
+} from 'containers/Spotlight/selectors';
+import { PAGE_NAME } from 'Styled/Settings/constants';
 
 const row = `
   width: 300px;
@@ -44,6 +49,9 @@ const RowSpaceBetween = styled.div`
 const Login = (props) => {
   const usernameRef = createRef();
   const passwordRef = createRef();
+  const {
+    user,
+  } = props;
   const handleLoginBtnClick = () => {
     const {
       handleSubmitLogin,
@@ -53,6 +61,13 @@ const Login = (props) => {
       pwd: passwordRef.current.value,
     });
   };
+
+  useEffect(() => {
+    if (user) {
+      history.push(`/${PAGE_NAME.EXPLORE}`);
+    }
+  });
+
   return (
     <React.Fragment>
       <UserName ref={usernameRef} placeholder="輸入電子信箱/用戶名" />
@@ -78,6 +93,7 @@ const Login = (props) => {
 
 Login.propTypes = {
   handleSubmitLogin: PropTypes.func,
+  user: PropTypes.object,
 };
 
 Login.defaultProps = {
@@ -85,6 +101,7 @@ Login.defaultProps = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  user: selectUser(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
