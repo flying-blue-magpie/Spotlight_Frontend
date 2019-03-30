@@ -7,6 +7,7 @@ import {
   SET_SPOTS_DONE,
   LOGIN,
   SET_LOGIN_DONE,
+  SET_LOGIN_LOADING,
 } from './constants';
 
 // export const fetchSpotById = (id) => ({
@@ -50,6 +51,10 @@ export const login = ({ acc = 'admin', pwd = 'admin' }) => ({
     acc,
     pwd,
   },
+});
+
+export const setLoginLoading = () => ({
+  type: SET_LOGIN_LOADING,
 });
 
 export const setLoginDone = (error, user) => ({

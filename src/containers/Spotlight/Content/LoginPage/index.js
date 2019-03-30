@@ -1,4 +1,5 @@
 import React, { createRef, useEffect } from 'react';
+import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -8,6 +9,7 @@ import {
   login,
 } from 'containers/Spotlight/actions';
 import {
+  selectLoginMeta,
   selectUser,
 } from 'containers/Spotlight/selectors';
 import { PAGE_NAME } from 'Styled/Settings/constants';
@@ -46,11 +48,17 @@ const RowSpaceBetween = styled.div`
   justify-content: space-between;
 `;
 
+const ErrorMessage = styled.div`
+  ${row}
+  color: red;
+`;
+
 const Login = (props) => {
   const usernameRef = createRef();
   const passwordRef = createRef();
   const {
     user,
+    loginMeta,
   } = props;
   const handleLoginBtnClick = () => {
     const {
@@ -87,13 +95,15 @@ const Login = (props) => {
         <div>立即註冊</div>
         <div>忘記密碼？</div>
       </RowSpaceBetween>
+      {loginMeta.get('error') && <ErrorMessage>登入失敗</ErrorMessage>}
     </React.Fragment>
   );
 };
 
 Login.propTypes = {
   handleSubmitLogin: PropTypes.func,
-  user: PropTypes.object,
+  user: PropTypes.instanceOf(Map),
+  loginMeta: PropTypes.instanceOf(Map),
 };
 
 Login.defaultProps = {
@@ -102,6 +112,7 @@ Login.defaultProps = {
 
 const mapStateToProps = createStructuredSelector({
   user: selectUser(),
+  loginMeta: selectLoginMeta(),
 });
 
 const mapDispatchToProps = (dispatch) => ({

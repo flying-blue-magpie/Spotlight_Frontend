@@ -15,6 +15,11 @@ export const selectSpots = () => createSelector(
   (spotlightState) => spotlightState.get('spots'),
 );
 
+export const selectLoginMeta = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('loginMeta'),
+);
+
 export const selectUser = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('user'),
