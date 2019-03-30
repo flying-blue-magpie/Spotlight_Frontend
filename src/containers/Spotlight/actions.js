@@ -8,6 +8,7 @@ import {
   LOGIN,
   SET_LOGIN_DONE,
   SET_LOGIN_LOADING,
+  EXPLORE_NEXT_SPOT,
 } from './constants';
 
 // export const fetchSpotById = (id) => ({
@@ -63,4 +64,8 @@ export const setLoginDone = (error, user) => ({
     error,
     user,
   },
+});
+
+export const exploreNextSpot = () => ({
+  type: EXPLORE_NEXT_SPOT,
 });
