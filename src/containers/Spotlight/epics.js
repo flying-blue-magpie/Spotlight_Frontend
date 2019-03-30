@@ -20,6 +20,7 @@ import {
   // setSpotDone,
   setSpotsLoading,
   setSpotsDone,
+  setLoginLoading,
   setLoginDone,
 } from './actions';
 
@@ -81,6 +82,7 @@ const loginEpic = (action$, state$, { request, fetchErrorEpic }) => (
         error,
         setLoginDone(error),
       )),
+      startWith(setLoginLoading()),
     )),
   )
 );
