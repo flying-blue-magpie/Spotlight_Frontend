@@ -1,13 +1,13 @@
 {
   "main.css": "/Spotlight_Frontend/static/css/main.b5d92891.chunk.css",
-  "main.js": "/Spotlight_Frontend/static/js/main.d82d7941.chunk.js",
-  "main.js.map": "/Spotlight_Frontend/static/js/main.d82d7941.chunk.js.map",
+  "main.js": "/Spotlight_Frontend/static/js/main.99da81b5.chunk.js",
+  "main.js.map": "/Spotlight_Frontend/static/js/main.99da81b5.chunk.js.map",
   "runtime~main.js": "/Spotlight_Frontend/static/js/runtime~main.e6f4d450.js",
   "runtime~main.js.map": "/Spotlight_Frontend/static/js/runtime~main.e6f4d450.js.map",
-  "static/js/2.d41435a2.chunk.js": "/Spotlight_Frontend/static/js/2.d41435a2.chunk.js",
-  "static/js/2.d41435a2.chunk.js.map": "/Spotlight_Frontend/static/js/2.d41435a2.chunk.js.map",
+  "static/js/2.ee3b698a.chunk.js": "/Spotlight_Frontend/static/js/2.ee3b698a.chunk.js",
+  "static/js/2.ee3b698a.chunk.js.map": "/Spotlight_Frontend/static/js/2.ee3b698a.chunk.js.map",
   "index.html": "/Spotlight_Frontend/index.html",
-  "precache-manifest.8c0811d9acf81abccbc9ae3f299e1d35.js": "/Spotlight_Frontend/precache-manifest.8c0811d9acf81abccbc9ae3f299e1d35.js",
+  "precache-manifest.d39bb13797360b22ab1dbf16f36ecafd.js": "/Spotlight_Frontend/precache-manifest.d39bb13797360b22ab1dbf16f36ecafd.js",
   "service-worker.js": "/Spotlight_Frontend/service-worker.js",
   "static/css/main.b5d92891.chunk.css.map": "/Spotlight_Frontend/static/css/main.b5d92891.chunk.css.map"
 }
