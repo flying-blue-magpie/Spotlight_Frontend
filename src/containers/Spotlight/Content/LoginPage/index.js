@@ -1,6 +1,11 @@
-import React from 'react';
-// import { Link } from 'react-router-dom';
+import React, { createRef } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
+import {
+  login,
+} from 'containers/Spotlight/actions';
 
 const row = `
   width: 300px;
@@ -26,6 +31,8 @@ const LoginButton = styled.button`
   line-height: 1.5;
   background-color: lightgray;
   font-size: 16px;
+  cursor: pointer;
+  outline: none;
 `;
 
 const RowSpaceBetween = styled.div`
@@ -34,26 +41,54 @@ const RowSpaceBetween = styled.div`
   justify-content: space-between;
 `;
 
-const Login = () => (
-  <React.Fragment>
-    <UserName placeholder="輸入電子信箱/用戶名" />
-    <PassWord placeholder="輸入密碼" />
-    <RowSpaceBetween>
-      <label>
-        <input id="remember-password" type="checkbox" />
-        記住密碼
-      </label>
-      <label>
-        <input id="auto-login" type="checkbox" />
-        自動登入
-      </label>
-    </RowSpaceBetween>
-    <LoginButton>登入</LoginButton>
-    <RowSpaceBetween>
-      <div>立即註冊</div>
-      <div>忘記密碼？</div>
-    </RowSpaceBetween>
-  </React.Fragment>
-);
+const Login = (props) => {
+  const usernameRef = createRef();
+  const passwordRef = createRef();
+  const handleLoginBtnClick = () => {
+    const {
+      handleSubmitLogin,
+    } = props;
+    handleSubmitLogin({
+      acc: usernameRef.current.value,
+      pwd: passwordRef.current.value,
+    });
+  };
+  return (
+    <React.Fragment>
+      <UserName ref={usernameRef} placeholder="輸入電子信箱/用戶名" />
+      <PassWord ref={passwordRef} placeholder="輸入密碼" />
+      <RowSpaceBetween>
+        <label>
+          <input id="remember-password" type="checkbox" />
+          記住密碼
+        </label>
+        <label>
+          <input id="auto-login" type="checkbox" />
+          自動登入
+        </label>
+      </RowSpaceBetween>
+      <LoginButton onClick={handleLoginBtnClick}>登入</LoginButton>
+      <RowSpaceBetween>
+        <div>立即註冊</div>
+        <div>忘記密碼？</div>
+      </RowSpaceBetween>
+    </React.Fragment>
+  );
+};
 
-export default Login;
+Login.propTypes = {
+  handleSubmitLogin: PropTypes.func,
+};
+
+Login.defaultProps = {
+  handleSubmitLogin: () => { },
+};
+
+const mapStateToProps = createStructuredSelector({
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleSubmitLogin: ({ acc, pwd }) => dispatch(login({ acc, pwd })),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
