@@ -71,7 +71,12 @@ const loginEpic = (action$, state$, { request, fetchErrorEpic }) => (
       url: '/login',
       data: action.payload,
     }).pipe(
-      flatMap(() => of(setLoginDone(null, { name: action.payload.acc }))),
+      flatMap((data) => {
+        const user = data.status === 'success'
+          ? { name: data.content.user }
+          : null;
+        return of(setLoginDone(null, user));
+      }),
       catchError((error) => fetchErrorEpic(
         error,
         setLoginDone(error),
