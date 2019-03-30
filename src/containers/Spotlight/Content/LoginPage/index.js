@@ -80,20 +80,9 @@ const Login = (props) => {
     <React.Fragment>
       <UserName ref={usernameRef} placeholder="輸入電子信箱/用戶名" />
       <PassWord ref={passwordRef} placeholder="輸入密碼" />
-      <RowSpaceBetween>
-        <label>
-          <input id="remember-password" type="checkbox" />
-          記住密碼
-        </label>
-        <label>
-          <input id="auto-login" type="checkbox" />
-          自動登入
-        </label>
-      </RowSpaceBetween>
       <LoginButton onClick={handleLoginBtnClick}>登入</LoginButton>
       <RowSpaceBetween>
-        <div>立即註冊</div>
-        <div>忘記密碼？</div>
+        <a href="/#">立即註冊</a>
       </RowSpaceBetween>
       {loginMeta.get('error') && <ErrorMessage>登入失敗</ErrorMessage>}
     </React.Fragment>
