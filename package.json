@@ -1,11 +1,15 @@
 {
   "name": "spotlight-frontend",
   "version": "0.1.0",
-  "homepage": "https://flying-blue-magpie.github.io/Spotlight_Frontend",
+  "engines": {
+    "node": "11.1.0"
+  },
   "private": true,
   "dependencies": {
     "connected-react-router": "^6.3.2",
+    "express": "4.16.4",
     "g": "^2.0.1",
+    "http-proxy-middleware": "0.19.1",
     "immutable": "^4.0.0-rc.12",
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
@@ -25,8 +29,14 @@
     "styled-components": "^4.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "debug:server": "node --inspect ./build/server.js",
+    "build:client": "react-scripts build",
+    "build:server": "NODE_ENV=production webpack --mode production --config ./webpack/prod.server.js",
+    "build": "npm run build:client && npm run build:server",
+    "dev": "npm-run-all build:server --parallel debug:server start:localhost",
+    "start": "node ./build/server.js",
+    "start:localhost": "react-scripts start",
+    "prod": "npm run build && npm run start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
@@ -45,6 +55,8 @@
     "eslint": "^5.15.3",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-react": "^7.12.4",
-    "gh-pages": "^2.0.1"
+    "gh-pages": "^2.0.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
   }
 }
