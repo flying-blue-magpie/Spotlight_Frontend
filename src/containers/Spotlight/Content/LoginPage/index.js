@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import history from 'utils/history';
 import {
   login,
+  register,
 } from 'containers/Spotlight/actions';
 import {
   selectLoginMeta,
@@ -42,15 +43,23 @@ const LoginButton = styled.button`
   outline: none;
 `;
 
-const RowSpaceBetween = styled.div`
+const RegisterRow = styled.div`
   ${row}
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const ErrorMessage = styled.div`
   ${row}
   color: red;
+`;
+
+const Logo = styled.img`
+  width: 125px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 50%;
+  margin-top: 24px;
 `;
 
 const Login = (props) => {
@@ -70,6 +79,16 @@ const Login = (props) => {
     });
   };
 
+  const handleRegisterBtnClick = () => {
+    const {
+      handleSubmitRegister,
+    } = props;
+    handleSubmitRegister({
+      acc: usernameRef.current.value,
+      pwd: passwordRef.current.value,
+    });
+  };
+
   useEffect(() => {
     if (user) {
       history.push(`/${PAGE_NAME.EXPLORE}`);
@@ -78,23 +97,15 @@ const Login = (props) => {
 
   return (
     <React.Fragment>
-      <UserName ref={usernameRef} placeholder="輸入電子信箱/用戶名" />
-      <PassWord ref={passwordRef} placeholder="輸入密碼" />
-      <RowSpaceBetween>
-        <label>
-          <input id="remember-password" type="checkbox" />
-          記住密碼
-        </label>
-        <label>
-          <input id="auto-login" type="checkbox" />
-          自動登入
-        </label>
-      </RowSpaceBetween>
+      <Logo src="https://avatars0.githubusercontent.com/u/48876369?s=200&v=4" />
+      <UserName ref={usernameRef} type="email" placeholder="輸入電子信箱/用戶名" />
+      <PassWord ref={passwordRef} type="password" placeholder="輸入密碼" />
       <LoginButton onClick={handleLoginBtnClick}>登入</LoginButton>
-      <RowSpaceBetween>
-        <div>立即註冊</div>
-        <div>忘記密碼？</div>
-      </RowSpaceBetween>
+      <RegisterRow>
+        <a href="/#" onClick={handleRegisterBtnClick}>
+          立即註冊
+        </a>
+      </RegisterRow>
       {loginMeta.get('error') && <ErrorMessage>登入失敗</ErrorMessage>}
     </React.Fragment>
   );
@@ -102,6 +113,7 @@ const Login = (props) => {
 
 Login.propTypes = {
   handleSubmitLogin: PropTypes.func,
+  handleSubmitRegister: PropTypes.func,
   user: PropTypes.instanceOf(Map),
   loginMeta: PropTypes.instanceOf(Map),
 };
@@ -117,6 +129,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   handleSubmitLogin: ({ acc, pwd }) => dispatch(login({ acc, pwd })),
+  handleSubmitRegister: ({ acc, pwd }) => dispatch(register({ acc, pwd })),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

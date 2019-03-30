@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { List } from 'immutable';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router';
 import Spinner from 'components/Spinner';
 import {
   fetchSpots,
@@ -28,6 +29,7 @@ const Spotlight = ({
   setSpotsMeta,
   spots,
   handleFetchSpots,
+  location,
 }) => {
   const isLoading = setSpotsMeta.get('isLoading');
   const isLoaded = setSpotsMeta.get('isLoaded');
@@ -54,6 +56,7 @@ const Spotlight = ({
               </div>
               {
                 isNavVisible &&
+                location.pathname !== '/' &&
                 <div className="spot-light__navigation-container">
                   <Navigation />
                 </div>
@@ -70,6 +73,7 @@ Spotlight.propTypes = {
   setSpotsMeta: PropTypes.object,
   spots: PropTypes.instanceOf(List),
   handleFetchSpots: PropTypes.func,
+  location: PropTypes.object.isRequired,
 };
 
 Spotlight.defaultProps = {
@@ -87,4 +91,4 @@ const mapDispatchToProps = (dispatch) => ({
   handleFetchSpots: () => dispatch(fetchSpots()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Spotlight);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Spotlight));
