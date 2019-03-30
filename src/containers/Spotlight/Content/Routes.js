@@ -30,7 +30,7 @@ export default () => (
       <Route exact path={routePathConfig.planningPagePath} component={PlanningPage} />
       <Route exact path={routePathConfig.travelWallPagePath} component={TravelWallPage} />
       <Route exact path={routePathConfig.personalPagePath} component={PersonalPage} />
-      <Route exact path={routePathConfig.detailPlanningPagePath} component={DetailPlanningPage} />
+      <Route path={routePathConfig.detailPlanningPagePath} component={DetailPlanningPage} />
       <Route exact path={routePathConfig.updatePlanningPagePath} component={UpdatePlanningPage} />
       <Route exact path={routePathConfig.spotPagePath} component={SpotPage} />
     </Switch>
