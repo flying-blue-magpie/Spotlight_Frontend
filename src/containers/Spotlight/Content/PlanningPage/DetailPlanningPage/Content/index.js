@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+// http://front-ender.me/react-drag-list
+import ReactDragList from 'react-drag-list';
+import 'react-drag-list/assets/index.css';
 import { fromJS } from 'immutable';
 import SpotCard from './SpotCard';
 
@@ -16,6 +19,12 @@ const StyledContent = styled.div`
   }
   .content__title-date {
     font-size: 12px;
+  }
+  .content__simple-drag {
+    background: yellow;
+  }
+  .content__simple-drag-row {
+    background: red;
   }
 `;
 
@@ -58,14 +67,19 @@ const Content = (props) => {
         <div className="content__title-day">{`第${day}天`}</div>
         <div className="content__title-date">{`2019年6月${parseInt(day, 10) + 4}日`}</div>
       </div>
-      {
-        mockSpotData.map((spot) => (
+      <ReactDragList
+        dataSource={mockSpotData}
+        row={(spot) => (
           <SpotCard
             key={spot.get('id')}
             spot={spot}
           />
-        ))
-      }
+        )}
+        handles={false}
+        className="simple-drag"
+        rowClassName="simple-drag-row"
+        onUpdate={() => {}}
+      />
     </StyledContent>
   );
 };
