@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import META, {
   updateMetaLoading,
   updateMetaDone,
@@ -9,6 +9,7 @@ import {
   // SET_SPOT_DONE,
   SET_SPOTS_LOADING,
   SET_SPOTS_DONE,
+  SET_LOGIN_LOADING,
   SET_LOGIN_DONE,
 } from './constants';
 
@@ -16,6 +17,7 @@ const initialState = fromJS({
   // setSpotMeta: META,
   setSpotsMeta: META,
   spots: [],
+  loginMeta: META,
   user: null,
 });
 
@@ -52,6 +54,9 @@ function spotLightReducer(state = initialState, action) {
         .update('setSpotsMeta', updateMetaDone);
     }
 
+    case SET_LOGIN_LOADING:
+      return state.update('loginMeta', updateMetaLoading);
+
     case SET_LOGIN_DONE: {
       const {
         error,
@@ -60,7 +65,9 @@ function spotLightReducer(state = initialState, action) {
       if (error) {
         return state.set('user', null);
       }
-      return state.set('user', user);
+      return state
+        .set('user', user && Map(user))
+        .update('loginMeta', user === null ? updateMetaError : updateMetaDone);
     }
 
     default:
