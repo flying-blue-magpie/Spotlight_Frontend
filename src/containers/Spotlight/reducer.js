@@ -16,7 +16,7 @@ const initialState = fromJS({
   // setSpotMeta: META,
   setSpotsMeta: META,
   spots: [],
-  user: {},
+  user: null,
 });
 
 function spotLightReducer(state = initialState, action) {
@@ -52,8 +52,16 @@ function spotLightReducer(state = initialState, action) {
         .update('setSpotsMeta', updateMetaDone);
     }
 
-    case SET_LOGIN_DONE:
-      return state.set('user', action.payload.user);
+    case SET_LOGIN_DONE: {
+      const {
+        error,
+        user,
+      } = action.payload;
+      if (error) {
+        return state.set('user', null);
+      }
+      return state.set('user', user);
+    }
 
     default:
       return state;
