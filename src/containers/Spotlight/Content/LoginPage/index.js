@@ -78,8 +78,8 @@ const Login = (props) => {
 
   return (
     <React.Fragment>
-      <UserName ref={usernameRef} placeholder="輸入電子信箱/用戶名" />
-      <PassWord ref={passwordRef} placeholder="輸入密碼" />
+      <UserName ref={usernameRef} type="email" placeholder="輸入電子信箱/用戶名" />
+      <PassWord ref={passwordRef} type="password" placeholder="輸入密碼" />
       <LoginButton onClick={handleLoginBtnClick}>登入</LoginButton>
       <RowSpaceBetween>
         <a href="/#">立即註冊</a>
