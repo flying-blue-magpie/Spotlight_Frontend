@@ -71,7 +71,8 @@ function spotLightReducer(state = initialState, action) {
         user,
       } = action.payload;
       if (error) {
-        return state.set('user', null);
+        return state.set('user', null)
+          .update('loginMeta', updateMetaError);
       }
       return state
         .set('user', user && fromJS(user))
@@ -87,7 +88,8 @@ function spotLightReducer(state = initialState, action) {
         user,
       } = action.payload;
       if (error) {
-        return state.set('user', null);
+        return state.set('user', null)
+          .update('registerMeta', updateMetaError);
       }
       return state
         .set('user', user && fromJS(user))
