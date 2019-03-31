@@ -15,6 +15,7 @@ import {
   FETCH_SPOTS,
   LOGIN,
   REGISTER,
+  FETCH_LOGIN_STATUS,
 } from './constants';
 import {
   // setSpotLoading,
@@ -25,6 +26,8 @@ import {
   setLoginDone,
   setRegisterDone,
   setRegisterLoading,
+  setLoginStatusDone,
+  setLoginStatusLoading,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -113,10 +116,33 @@ const registerEpic = (action$, state$, { request, fetchErrorEpic }) => (
   )
 );
 
+const fetchLoginStatusEpic = (action$, state$, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_LOGIN_STATUS),
+    switchMap(() => request({
+      method: 'get',
+      url: '/check_login',
+    }).pipe(
+      flatMap((data) => {
+        const user = data.status === 'success'
+          ? data.content
+          : null;
+        return of(setLoginStatusDone(null, user));
+      }),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setLoginStatusDone(error),
+      )),
+      startWith(setLoginStatusLoading()),
+    )),
+  )
+);
+
 export default [
   setInit,
   // fetchSpotByIdEpic,
   fetchSpotsEpic,
   loginEpic,
   registerEpic,
+  fetchLoginStatusEpic,
 ];

@@ -14,6 +14,8 @@ import {
   SET_REGISTER_LOADING,
   SET_REGISTER_DONE,
   EXPLORE_NEXT_SPOT,
+  SET_LOGIN_STATUS_LOADING,
+  SET_LOGIN_STATUS_DONE,
 } from './constants';
 
 const initialState = fromJS({
@@ -22,6 +24,7 @@ const initialState = fromJS({
   spots: [],
   loginMeta: META,
   registerMeta: META,
+  loginStatusMeta: META,
   user: null,
   exploringSpotId: 0,
 });
@@ -68,7 +71,8 @@ function spotLightReducer(state = initialState, action) {
         user,
       } = action.payload;
       if (error) {
-        return state.set('user', null);
+        return state.set('user', null)
+          .update('loginMeta', updateMetaError);
       }
       return state
         .set('user', user && fromJS(user))
@@ -84,11 +88,29 @@ function spotLightReducer(state = initialState, action) {
         user,
       } = action.payload;
       if (error) {
-        return state.set('user', null);
+        return state.set('user', null)
+          .update('registerMeta', updateMetaError);
       }
       return state
         .set('user', user && fromJS(user))
         .update('registerMeta', user === null ? updateMetaError : updateMetaDone);
+    }
+
+    case SET_LOGIN_STATUS_LOADING:
+      return state.update('loginStatusMeta', updateMetaLoading);
+
+    case SET_LOGIN_STATUS_DONE: {
+      const {
+        error,
+        user,
+      } = action.payload;
+      if (error) {
+        return state.set('user', null)
+          .update('loginStatusMeta', updateMetaError);
+      }
+      return state
+        .set('user', user && fromJS(user))
+        .update('loginStatusMeta', updateMetaDone);
     }
 
     case EXPLORE_NEXT_SPOT:
