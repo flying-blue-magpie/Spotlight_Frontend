@@ -91,16 +91,14 @@ const Login = (props) => {
     });
   };
 
-  const isAnonymous = loginStatusMeta.get('isLoaded') && !user;
-
   useEffect(() => {
-    if (user) {
+    if (loginStatusMeta.get('isLoaded') && user) {
       history.push(`/${PAGE_NAME.EXPLORE}`);
     }
   }, [user]);
 
   return (
-    isAnonymous ? (
+    loginStatusMeta.get('isLoaded') && !user ? (
       <React.Fragment>
         <Logo src="https://avatars0.githubusercontent.com/u/48876369?s=200&v=4" />
         <UserName ref={usernameRef} type="email" placeholder="輸入電子信箱/用戶名" />
