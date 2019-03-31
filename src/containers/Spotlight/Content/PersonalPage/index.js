@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Map } from 'immutable';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { findAttributeInEvent } from 'utils/event';
 import history from 'utils/history';
+import { routePathConfig } from 'containers/Spotlight/Content/Routes';
+import {
+  selectUser,
+  selectLoginStatusMeta,
+} from 'containers/Spotlight/selectors';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import Information from './Information';
 import CollectionTabs from './CollectionTabs';
@@ -87,7 +97,10 @@ const StyledPersonalPage = styled.div`
   }
 `;
 
-const PersonalPage = () => {
+const PersonalPage = ({
+  user,
+  loginStatusMeta,
+}) => {
   const [activeCollectionType, setActiveCollectionType] = useState('spot');
   const faviconPath = 'http://i.imgur.com/EUAd2ht.jpg';
   const faviconSize = 90;
@@ -101,6 +114,13 @@ const PersonalPage = () => {
       search: `?collectionType=${type}`,
     });
   };
+  const isAnonymous = loginStatusMeta.get('isLoaded') && !user;
+  if (!loginStatusMeta.get('isLoaded')) {
+    return null;
+  }
+  if (isAnonymous) {
+    return <Redirect to={routePathConfig.login} />;
+  }
   return (
     <StyledPersonalPage
       coverImagePath={coverImagePath}
@@ -117,4 +137,14 @@ const PersonalPage = () => {
   );
 };
 
-export default PersonalPage;
+PersonalPage.propTypes = {
+  user: PropTypes.instanceOf(Map),
+  loginStatusMeta: PropTypes.instanceOf(Map),
+};
+
+const mapStateToProps = createStructuredSelector({
+  user: selectUser(),
+  loginStatusMeta: selectLoginStatusMeta(),
+});
+
+export default connect(mapStateToProps)(PersonalPage);
