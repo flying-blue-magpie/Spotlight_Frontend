@@ -3,48 +3,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Map } from 'immutable';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { selectExploringSpot } from 'containers/Spotlight/selectors';
 import { exploreNextSpot } from 'containers/Spotlight/actions';
 
-const Container = styled.div`
-  padding-top: 36px;
-`;
-
-const Card = styled.div`
-  display: block;
-`;
-
-const CardImage = styled.img`
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
-`;
-
-const CardInfo = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 6px;
-  background: lightgray;
-`;
-
-const ButtonRow = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 36px;
-`;
-
-const Button = styled.button`
-  display: inline-block;
-  padding: 6px 12px;
-  background: lightgray;
-`;
-
-const CardRow = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+import {
+  Container,
+  CardRow,
+  Card,
+  CardImage,
+  CardInfo,
+  ButtonRow,
+  Button,
+} from './Styled';
 
 const ExplorePage = (props) => {
   const {
