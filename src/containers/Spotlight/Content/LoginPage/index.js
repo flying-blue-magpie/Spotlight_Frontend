@@ -93,7 +93,7 @@ const Login = (props) => {
     if (user) {
       history.push(`/${PAGE_NAME.EXPLORE}`);
     }
-  });
+  }, [user]);
 
   return (
     <React.Fragment>
