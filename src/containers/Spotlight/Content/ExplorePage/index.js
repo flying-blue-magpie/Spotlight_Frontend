@@ -15,6 +15,10 @@ import {
   CardInfo,
   ButtonRow,
   Button,
+  SearchRow,
+  SearchBar,
+  SelectCountyButton,
+  SearchInput,
 } from './Styled';
 
 const ExplorePage = (props) => {
@@ -26,6 +30,15 @@ const ExplorePage = (props) => {
 
   return (
     <Container>
+      <SearchRow>
+        <SearchBar>
+          <SelectCountyButton>
+            縣市選擇
+            <i className="fas fa-caret-right" />
+          </SelectCountyButton>
+          <SearchInput type="text" placeholder="你想去的景點或街道名稱" />
+        </SearchBar>
+      </SearchRow>
       <CardRow>
         <Card>
           <CardImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
