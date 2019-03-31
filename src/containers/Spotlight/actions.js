@@ -12,6 +12,9 @@ import {
   SET_REGISTER_DONE,
   SET_REGISTER_LOADING,
   EXPLORE_NEXT_SPOT,
+  FETCH_LOGIN_STATUS,
+  SET_LOGIN_STATUS_LOADING,
+  SET_LOGIN_STATUS_DONE,
 } from './constants';
 
 // export const fetchSpotById = (id) => ({
@@ -83,6 +86,22 @@ export const setRegisterLoading = () => ({
 
 export const setRegisterDone = (error, user) => ({
   type: SET_REGISTER_DONE,
+  payload: {
+    error,
+    user,
+  },
+});
+
+export const fetchLoginStatus = () => ({
+  type: FETCH_LOGIN_STATUS,
+});
+
+export const setLoginStatusLoading = () => ({
+  type: SET_LOGIN_STATUS_LOADING,
+});
+
+export const setLoginStatusDone = (error, user) => ({
+  type: SET_LOGIN_STATUS_DONE,
   payload: {
     error,
     user,
