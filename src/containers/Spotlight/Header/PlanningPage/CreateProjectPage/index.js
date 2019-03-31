@@ -3,8 +3,12 @@ import { PAGE_NAME } from 'Styled/Settings/constants';
 import {
   HeaderContainer,
 } from 'containers/Spotlight/Header/Styled';
+import history from 'utils/history';
 
-export default () => {
+const CreateProjectPage = () => {
+  const handleOnCancelBtn = () => {
+    history.push(PAGE_NAME.PLANNING);
+  };
   const handleOnCheckBtn = () => {
     // console.log('check');
   };
@@ -14,7 +18,7 @@ export default () => {
         <i
           role="presentation"
           className="fas fa-times icon-style"
-          onClick={handleOnCheckBtn}
+          onClick={handleOnCancelBtn}
         />
       </div>
       <div>{PAGE_NAME.CREATE_PROJECT}</div>
@@ -28,3 +32,5 @@ export default () => {
     </HeaderContainer>
   );
 };
+
+export default CreateProjectPage;
