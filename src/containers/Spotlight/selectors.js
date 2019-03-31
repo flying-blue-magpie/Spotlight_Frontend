@@ -35,3 +35,13 @@ export const selectLoginStatusMeta = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('loginStatusMeta'),
 );
+
+export const selectOwnProjects = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('ownProjects'),
+);
+
+export const selectOwnProjectsMeta = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('ownProjectsMeta'),
+);

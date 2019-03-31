@@ -15,6 +15,9 @@ import {
   FETCH_LOGIN_STATUS,
   SET_LOGIN_STATUS_LOADING,
   SET_LOGIN_STATUS_DONE,
+  FETCH_OWN_PROJECTS,
+  SET_OWN_PROJECTS_LOADING,
+  SET_OWN_PROJECTS_DONE,
 } from './constants';
 
 // export const fetchSpotById = (id) => ({
@@ -110,4 +113,20 @@ export const setLoginStatusDone = (error, user) => ({
 
 export const exploreNextSpot = () => ({
   type: EXPLORE_NEXT_SPOT,
+});
+
+export const fetchOwnProjects = () => ({
+  type: FETCH_OWN_PROJECTS,
+});
+
+export const setOwnProjectsLoading = () => ({
+  type: SET_OWN_PROJECTS_LOADING,
+});
+
+export const setOwnProjectsDone = (error, ownProjects) => ({
+  type: SET_OWN_PROJECTS_DONE,
+  payload: {
+    error,
+    ownProjects,
+  },
 });

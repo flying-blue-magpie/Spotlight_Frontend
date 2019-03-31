@@ -16,6 +16,9 @@ import {
   EXPLORE_NEXT_SPOT,
   SET_LOGIN_STATUS_LOADING,
   SET_LOGIN_STATUS_DONE,
+
+  SET_OWN_PROJECTS_LOADING,
+  SET_OWN_PROJECTS_DONE,
 } from './constants';
 
 const initialState = fromJS({
@@ -25,8 +28,10 @@ const initialState = fromJS({
   loginMeta: META,
   registerMeta: META,
   loginStatusMeta: META,
+  ownProjectsMeta: META,
   user: null,
   exploringSpotId: 0,
+  ownProjects: [],
 });
 
 function spotLightReducer(state = initialState, action) {
@@ -115,6 +120,22 @@ function spotLightReducer(state = initialState, action) {
 
     case EXPLORE_NEXT_SPOT:
       return state.update('exploringSpotId', (id) => (id + 1) % state.get('spots').size);
+
+    case SET_OWN_PROJECTS_LOADING:
+      return state.update('ownProjectsMeta', updateMetaLoading);
+
+    case SET_OWN_PROJECTS_DONE: {
+      const {
+        error,
+        ownProjects,
+      } = action.payload;
+      if (error) {
+        return state.update('ownProjectsMeta', updateMetaError);
+      }
+      return state
+        .set('ownProjects', fromJS(ownProjects))
+        .update('ownProjectsMeta', updateMetaDone);
+    }
 
     default:
       return state;

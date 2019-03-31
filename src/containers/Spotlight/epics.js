@@ -16,6 +16,7 @@ import {
   LOGIN,
   REGISTER,
   FETCH_LOGIN_STATUS,
+  FETCH_OWN_PROJECTS,
 } from './constants';
 import {
   // setSpotLoading,
@@ -28,6 +29,8 @@ import {
   setRegisterLoading,
   setLoginStatusDone,
   setLoginStatusLoading,
+  setOwnProjectsDone,
+  setOwnProjectsLoading,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -50,6 +53,25 @@ const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.emp
 //     )),
 //   )
 // );
+
+const fetchOwnProjectsEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_OWN_PROJECTS),
+    switchMap(() => request({
+      method: 'get',
+      url: '/own/projs',
+    }).pipe(
+      flatMap((data) => of(
+        setOwnProjectsDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setOwnProjectsDone(error),
+      )),
+      startWith(setOwnProjectsLoading()),
+    )),
+  )
+);
 
 const fetchSpotsEpic = (action$, $state, { request, fetchErrorEpic }) => (
   action$.pipe(
@@ -141,6 +163,7 @@ const fetchLoginStatusEpic = (action$, state$, { request, fetchErrorEpic }) => (
 export default [
   setInit,
   // fetchSpotByIdEpic,
+  fetchOwnProjectsEpic,
   fetchSpotsEpic,
   loginEpic,
   registerEpic,
