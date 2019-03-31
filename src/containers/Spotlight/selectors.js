@@ -30,3 +30,8 @@ export const selectExploringSpot = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.getIn(['spots', spotlightState.get('exploringSpotId')], Map()),
 );
+
+export const selectLoginStatusMeta = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('loginStatusMeta'),
+);
