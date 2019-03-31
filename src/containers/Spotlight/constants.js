@@ -26,3 +26,21 @@ export const EXPLORE_NEXT_SPOT = `${KEY_REDUCER}/EXPLORE_NEXT_SPOT`;
 export const FETCH_OWN_PROJECTS = `${KEY_REDUCER}/FETCH_OWN_PROJECTS`;
 export const SET_OWN_PROJECTS_LOADING = `${KEY_REDUCER}/SET_OWN_PROJECTS_LOADING`;
 export const SET_OWN_PROJECTS_DONE = `${KEY_REDUCER}/SET_OWN_PROJECTS_DONE`;
+
+
+export const DEFAULT_PROJECT = {
+  name: '',
+  start_day: '', // format: 2018/12/01 00:00:00
+  end_day: '', // format: 2018/12/01 00:00:00
+  plan: [],
+};
+
+export const DEFAULT_PLAN = {
+  start_time: '', // format: 08:00:00
+  arrange: [],
+};
+
+export const DEFAULT_ARRANGE = {
+  spot_id: null,
+  during: 0,
+};
