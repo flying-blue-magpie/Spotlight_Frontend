@@ -11,6 +11,7 @@ import {
 } from 'containers/Spotlight/actions';
 import {
   selectLoginMeta,
+  selectLoginStatusMeta,
   selectUser,
 } from 'containers/Spotlight/selectors';
 import { PAGE_NAME } from 'Styled/Settings/constants';
@@ -68,6 +69,7 @@ const Login = (props) => {
   const {
     user,
     loginMeta,
+    loginStatusMeta,
   } = props;
   const handleLoginBtnClick = () => {
     const {
@@ -90,24 +92,26 @@ const Login = (props) => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (loginStatusMeta.get('isLoaded') && user) {
       history.push(`/${PAGE_NAME.EXPLORE}`);
     }
   }, [user]);
 
   return (
-    <React.Fragment>
-      <Logo src="https://avatars0.githubusercontent.com/u/48876369?s=200&v=4" />
-      <UserName ref={usernameRef} type="email" placeholder="輸入電子信箱/用戶名" />
-      <PassWord ref={passwordRef} type="password" placeholder="輸入密碼" />
-      <LoginButton onClick={handleLoginBtnClick}>登入</LoginButton>
-      <RegisterRow>
-        <a href="/#" onClick={handleRegisterBtnClick}>
-          立即註冊
-        </a>
-      </RegisterRow>
-      {loginMeta.get('error') && <ErrorMessage>登入失敗</ErrorMessage>}
-    </React.Fragment>
+    loginStatusMeta.get('isLoaded') && !user ? (
+      <React.Fragment>
+        <Logo src="https://avatars0.githubusercontent.com/u/48876369?s=200&v=4" />
+        <UserName ref={usernameRef} type="email" placeholder="輸入電子信箱/用戶名" />
+        <PassWord ref={passwordRef} type="password" placeholder="輸入密碼" />
+        <LoginButton onClick={handleLoginBtnClick}>登入</LoginButton>
+        <RegisterRow>
+          <a href="/#" onClick={handleRegisterBtnClick}>
+            立即註冊
+          </a>
+        </RegisterRow>
+        {loginMeta.get('error') && <ErrorMessage>登入失敗</ErrorMessage>}
+      </React.Fragment>
+    ) : null
   );
 };
 
@@ -116,6 +120,7 @@ Login.propTypes = {
   handleSubmitRegister: PropTypes.func,
   user: PropTypes.instanceOf(Map),
   loginMeta: PropTypes.instanceOf(Map),
+  loginStatusMeta: PropTypes.instanceOf(Map),
 };
 
 Login.defaultProps = {
@@ -125,6 +130,7 @@ Login.defaultProps = {
 const mapStateToProps = createStructuredSelector({
   user: selectUser(),
   loginMeta: selectLoginMeta(),
+  loginStatusMeta: selectLoginStatusMeta(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
