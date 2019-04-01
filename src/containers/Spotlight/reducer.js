@@ -5,8 +5,8 @@ import META, {
   updateMetaError,
 } from 'Provider/global/meta';
 import {
-  // SET_SPOT_LOADING,
-  // SET_SPOT_DONE,
+  SET_SPOT_LOADING,
+  SET_SPOT_DONE,
   SET_SPOTS_LOADING,
   SET_SPOTS_DONE,
   SET_LOGIN_LOADING,
@@ -24,7 +24,7 @@ import {
 } from './constants';
 
 const initialState = fromJS({
-  // setSpotMeta: META,
+  setSpotMeta: META,
   setSpotsMeta: META,
   spots: {},
   spotsResult: [],
@@ -40,20 +40,22 @@ const initialState = fromJS({
 
 function spotLightReducer(state = initialState, action) {
   switch (action.type) {
-    // case SET_SPOT_LOADING:
-    //   return state.update('setSpotMeta', updateMetaLoading);
+    case SET_SPOT_LOADING:
+      return state.update('setSpotMeta', updateMetaLoading);
 
-    // case SET_SPOT_DONE: {
-    //   const {
-    //     error,
-    //     // data, // get data from fetch epics
-    //   } = action.payload;
+    case SET_SPOT_DONE: {
+      const {
+        error,
+        spot,
+      } = action.payload;
 
-    //   if (error) {
-    //     return state.update('setSpotMeta', updateMetaError);
-    //   }
-    //   return state.update('setSpotMeta', updateMetaDone);
-    // }
+      if (error) {
+        return state.update('setSpotMeta', updateMetaError);
+      }
+      return state
+        .setIn(['spots', spot.spot_id], fromJS(spot))
+        .update('setSpotMeta', updateMetaDone);
+    }
 
     case SET_SPOTS_LOADING:
       return state.update('setSpotsMeta', updateMetaLoading);
