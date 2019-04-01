@@ -19,6 +19,8 @@ import {
   SearchBar,
   SelectCountyButton,
   SearchInput,
+  ZonesRow,
+  ZoneLabel,
 } from './Styled';
 
 const ExplorePage = (props) => {
@@ -27,6 +29,8 @@ const ExplorePage = (props) => {
     handleSwipeLeft,
     handleSwipeRight,
   } = props;
+
+  const zones = ['新竹市', '高雄市'];
 
   return (
     <Container>
@@ -39,6 +43,14 @@ const ExplorePage = (props) => {
           <SearchInput type="text" placeholder="你想去的景點或街道名稱" />
         </SearchBar>
       </SearchRow>
+      <ZonesRow>
+        {zones.map((zone) => (
+          <ZoneLabel key={zone}>
+            {zone}
+            <i className="fas fa-times" />
+          </ZoneLabel>
+        ))}
+      </ZonesRow>
       <CardRow>
         <Card>
           <CardImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />

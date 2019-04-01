@@ -42,7 +42,6 @@ export const SearchRow = styled.div`
   justify-content: center;
   background-color: lightgray;
   padding: 12px;
-  margin-bottom: 12px;
 `;
 
 export const SearchBar = styled.div`
@@ -67,4 +66,21 @@ export const SelectCountyButton = styled.button`
 export const SearchInput = styled.input`
   flex-grow: 1;
   padding: 6px;
+`;
+
+export const ZonesRow = styled.div`
+  padding: 12px;
+  margin-bottom: 12px;
+`;
+
+export const ZoneLabel = styled.span`
+  display: inline-block;
+  background-color: lightgray;
+  font-size: 14px;
+  padding: 3px;
+  margin-right: 6px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 `;
