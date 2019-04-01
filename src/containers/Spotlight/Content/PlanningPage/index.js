@@ -41,6 +41,7 @@ const PlanningPage = ({
       {
         ownProjects.map((project) => (
           <ProjectCard
+            key={project.get('proj_id')}
             project={project}
           />
         ))
