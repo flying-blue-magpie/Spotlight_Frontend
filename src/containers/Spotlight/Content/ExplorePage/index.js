@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Map } from 'immutable';
-import { Link } from 'react-router-dom';
 import { selectExploringSpot, selectSpotsMeta } from 'containers/Spotlight/selectors';
 import { exploreNextSpot, fetchSpots } from 'containers/Spotlight/actions';
 import Spinner from 'components/Spinner';
@@ -89,7 +88,6 @@ const ExplorePage = (props) => {
             </CardRow>
             <ButtonRow>
               <Button onClick={handleSwipeLeft}>跳過</Button>
-              <Link to="/探索景點/1">詳細</Link>
               <Button onClick={handleSwipeRight}>想去</Button>
             </ButtonRow>
           </React.Fragment>
