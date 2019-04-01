@@ -53,7 +53,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setSpotMeta', updateMetaError);
       }
       return state
-        .setIn(['spots', spot.spot_id], fromJS(spot))
+        .mergeDeepIn(['spots', spot.spot_id], fromJS(spot))
         .update('setSpotMeta', updateMetaDone);
     }
 
@@ -70,7 +70,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setSpotsMeta', updateMetaError);
       }
       return state
-        .set('spots', fromJS(entities.spots))
+        .mergeDeepIn(['spots'], fromJS(entities.spots))
         .set('spotsResult', fromJS(result))
         .update('setSpotsMeta', updateMetaDone);
     }
