@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Map } from 'immutable';
+import { Link } from 'react-router-dom';
 import { selectExploringSpot, selectSpotsMeta } from 'containers/Spotlight/selectors';
 import { exploreNextSpot, fetchSpots } from 'containers/Spotlight/actions';
 import Spinner from 'components/Spinner';
+import { PAGE_NAME } from 'Styled/Settings/constants';
 
 import {
   Container,
@@ -78,13 +80,15 @@ const ExplorePage = (props) => {
         : (
           <React.Fragment>
             <CardRow>
-              <Card>
-                <CardImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
-                <CardInfo>
-                  {spot.get('name')}
-                  <i className="fas fa-heart">666</i>
-                </CardInfo>
-              </Card>
+              <Link to={`/${PAGE_NAME.EXPLORE}/${spot.get('spot_id')}`}>
+                <Card>
+                  <CardImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
+                  <CardInfo>
+                    {spot.get('name')}
+                    <i className="fas fa-heart">666</i>
+                  </CardInfo>
+                </Card>
+              </Link>
             </CardRow>
             <ButtonRow>
               <Button onClick={handleSwipeLeft}>跳過</Button>

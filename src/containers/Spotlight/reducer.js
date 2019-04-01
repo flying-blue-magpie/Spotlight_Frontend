@@ -5,8 +5,8 @@ import META, {
   updateMetaError,
 } from 'Provider/global/meta';
 import {
-  // SET_SPOT_LOADING,
-  // SET_SPOT_DONE,
+  SET_SPOT_LOADING,
+  SET_SPOT_DONE,
   SET_SPOTS_LOADING,
   SET_SPOTS_DONE,
   SET_LOGIN_LOADING,
@@ -24,35 +24,38 @@ import {
 } from './constants';
 
 const initialState = fromJS({
-  // setSpotMeta: META,
+  setSpotMeta: META,
   setSpotsMeta: META,
-  spots: [],
+  spots: {},
+  spotsResult: [],
   loginMeta: META,
   registerMeta: META,
   loginStatusMeta: META,
   ownProjectsMeta: META,
   createProjectMeta: META,
   user: null,
-  exploringSpotId: 0,
   ownProjects: [],
+  exploringSpotsResultIndex: 0,
 });
 
 function spotLightReducer(state = initialState, action) {
   switch (action.type) {
-    // case SET_SPOT_LOADING:
-    //   return state.update('setSpotMeta', updateMetaLoading);
+    case SET_SPOT_LOADING:
+      return state.update('setSpotMeta', updateMetaLoading);
 
-    // case SET_SPOT_DONE: {
-    //   const {
-    //     error,
-    //     // data, // get data from fetch epics
-    //   } = action.payload;
+    case SET_SPOT_DONE: {
+      const {
+        error,
+        spot,
+      } = action.payload;
 
-    //   if (error) {
-    //     return state.update('setSpotMeta', updateMetaError);
-    //   }
-    //   return state.update('setSpotMeta', updateMetaDone);
-    // }
+      if (error) {
+        return state.update('setSpotMeta', updateMetaError);
+      }
+      return state
+        .setIn(['spots', spot.spot_id], fromJS(spot))
+        .update('setSpotMeta', updateMetaDone);
+    }
 
     case SET_SPOTS_LOADING:
       return state.update('setSpotsMeta', updateMetaLoading);
@@ -60,13 +63,15 @@ function spotLightReducer(state = initialState, action) {
     case SET_SPOTS_DONE: {
       const {
         error,
-        spots,
+        entities,
+        result,
       } = action.payload;
       if (error) {
         return state.update('setSpotsMeta', updateMetaError);
       }
       return state
-        .set('spots', fromJS(spots))
+        .set('spots', fromJS(entities.spots))
+        .set('spotsResult', fromJS(result))
         .update('setSpotsMeta', updateMetaDone);
     }
 
@@ -122,7 +127,7 @@ function spotLightReducer(state = initialState, action) {
     }
 
     case EXPLORE_NEXT_SPOT:
-      return state.update('exploringSpotId', (id) => (id + 1) % state.get('spots').size);
+      return state.update('exploringSpotsResultIndex', (id) => (id + 1) % state.get('spots').size);
 
     case SET_OWN_PROJECTS_LOADING:
       return state.update('ownProjectsMeta', updateMetaLoading);

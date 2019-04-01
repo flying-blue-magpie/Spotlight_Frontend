@@ -6,6 +6,11 @@ import {
 
 const selectSpotlight = (state) => state.get(KEY_REDUCER);
 
+export const selectSpotMeta = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('setSpotMeta'),
+);
+
 export const selectSpotsMeta = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('setSpotsMeta'),
@@ -26,9 +31,18 @@ export const selectUser = () => createSelector(
   (spotlightState) => spotlightState.get('user'),
 );
 
+export const selectExploringSpotsResultIndex = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('exploringSpotsResultIndex'),
+);
+
 export const selectExploringSpot = () => createSelector(
   selectSpotlight,
-  (spotlightState) => spotlightState.getIn(['spots', spotlightState.get('exploringSpotId')], Map()),
+  selectExploringSpotsResultIndex(),
+  (spotlightState, exploringSpotsResultIndex) => {
+    const index = String(spotlightState.get('spotsResult').get(exploringSpotsResultIndex));
+    return spotlightState.getIn(['spots', index], Map());
+  },
 );
 
 export const selectLoginStatusMeta = () => createSelector(

@@ -11,7 +11,7 @@ import {
 } from 'rxjs/operators';
 import {
   INIT,
-  // FETCH_SPOT_BY_ID,
+  FETCH_SPOT_BY_ID,
   FETCH_SPOTS,
   LOGIN,
   REGISTER,
@@ -20,8 +20,8 @@ import {
   SUBMIT_CREATE_PROJECT,
 } from './constants';
 import {
-  // setSpotLoading,
-  // setSpotDone,
+  setSpotLoading,
+  setSpotDone,
   setSpotsLoading,
   setSpotsDone,
   setLoginLoading,
@@ -38,24 +38,24 @@ import {
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
 
-// const fetchSpotByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
-//   action$.pipe(
-//     ofType(FETCH_SPOT_BY_ID),
-//     switchMap(() => request({
-//       method: 'get',
-//       url: '/spot/1',
-//     }).pipe(
-//       flatMap((data) => of(
-//         setSpotDone(null, data.content),
-//       )),
-//       catchError((error) => fetchErrorEpic(
-//         error,
-//         setSpotDone(error),
-//       )),
-//       startWith(setSpotLoading()),
-//     )),
-//   )
-// );
+const fetchSpotByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_SPOT_BY_ID),
+    switchMap((action) => request({
+      method: 'get',
+      url: `/spot/${action.payload.id}`,
+    }).pipe(
+      flatMap((data) => of(
+        setSpotDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setSpotDone(error),
+      )),
+      startWith(setSpotLoading()),
+    )),
+  )
+);
 
 const createProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
   action$.pipe(
@@ -214,8 +214,8 @@ const fetchLoginStatusEpic = (action$, state$, { request, fetchErrorEpic }) => (
 
 export default [
   setInit,
-  // fetchSpotByIdEpic,
   fetchOwnProjectsEpic,
+  fetchSpotByIdEpic,
   fetchSpotsEpic,
   loginEpic,
   registerEpic,
