@@ -26,15 +26,16 @@ import {
 const initialState = fromJS({
   // setSpotMeta: META,
   setSpotsMeta: META,
-  spots: [],
+  spots: {},
+  spotsResult: [],
   loginMeta: META,
   registerMeta: META,
   loginStatusMeta: META,
   ownProjectsMeta: META,
   createProjectMeta: META,
   user: null,
-  exploringSpotId: 0,
   ownProjects: [],
+  exploringSpotsResultIndex: 0,
 });
 
 function spotLightReducer(state = initialState, action) {
@@ -60,13 +61,15 @@ function spotLightReducer(state = initialState, action) {
     case SET_SPOTS_DONE: {
       const {
         error,
-        spots,
+        entities,
+        result,
       } = action.payload;
       if (error) {
         return state.update('setSpotsMeta', updateMetaError);
       }
       return state
-        .set('spots', fromJS(spots))
+        .set('spots', fromJS(entities.spots))
+        .set('spotsResult', fromJS(result))
         .update('setSpotsMeta', updateMetaDone);
     }
 
@@ -122,7 +125,7 @@ function spotLightReducer(state = initialState, action) {
     }
 
     case EXPLORE_NEXT_SPOT:
-      return state.update('exploringSpotId', (id) => (id + 1) % state.get('spots').size);
+      return state.update('exploringSpotsResultIndex', (id) => (id + 1) % state.get('spots').size);
 
     case SET_OWN_PROJECTS_LOADING:
       return state.update('ownProjectsMeta', updateMetaLoading);

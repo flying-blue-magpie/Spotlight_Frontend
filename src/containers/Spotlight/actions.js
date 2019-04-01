@@ -1,3 +1,4 @@
+import { schema, normalize } from 'normalizr';
 import {
   // FETCH_SPOT_BY_ID,
   // SET_SPOT_LOADING,
@@ -22,6 +23,9 @@ import {
   CREATE_PROJECT_LOADING,
   CREATE_PROJECT_DONE,
 } from './constants';
+
+const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
+const spotListSchema = new schema.Array(spotSchema);
 
 // export const fetchSpotById = (id) => ({
 //   type: FETCH_SPOT_BY_ID,
@@ -55,7 +59,7 @@ export const setSpotsDone = (error, spots) => ({
   type: SET_SPOTS_DONE,
   payload: {
     error,
-    spots,
+    ...normalize(spots, spotListSchema),
   },
 });
 
