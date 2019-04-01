@@ -6,6 +6,11 @@ import {
 
 const selectSpotlight = (state) => state.get(KEY_REDUCER);
 
+export const selectSpotMeta = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('setSpotMeta'),
+);
+
 export const selectSpotsMeta = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('setSpotsMeta'),
