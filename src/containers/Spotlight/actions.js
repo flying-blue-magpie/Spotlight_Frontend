@@ -1,8 +1,8 @@
 import { schema, normalize } from 'normalizr';
 import {
-  // FETCH_SPOT_BY_ID,
-  // SET_SPOT_LOADING,
-  // SET_SPOT_DONE,
+  FETCH_SPOT_BY_ID,
+  SET_SPOT_LOADING,
+  SET_SPOT_DONE,
   FETCH_SPOTS,
   SET_SPOTS_LOADING,
   SET_SPOTS_DONE,
@@ -27,24 +27,24 @@ import {
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
 const spotListSchema = new schema.Array(spotSchema);
 
-// export const fetchSpotById = (id) => ({
-//   type: FETCH_SPOT_BY_ID,
-//   payload: {
-//     id,
-//   },
-// });
+export const fetchSpotById = (id) => ({
+  type: FETCH_SPOT_BY_ID,
+  payload: {
+    id,
+  },
+});
 
-// export const setSpotLoading = () => ({
-//   type: SET_SPOT_LOADING,
-// });
+export const setSpotLoading = () => ({
+  type: SET_SPOT_LOADING,
+});
 
-// export const setSpotDone = (error, data) => ({
-//   type: SET_SPOT_DONE,
-//   payload: {
-//     error,
-//     data,
-//   },
-// });
+export const setSpotDone = (error, spot) => ({
+  type: SET_SPOT_DONE,
+  payload: {
+    error,
+    spot,
+  },
+});
 
 export const fetchSpots = ({ zones = [], kw = '' } = {}) => ({
   type: FETCH_SPOTS,
