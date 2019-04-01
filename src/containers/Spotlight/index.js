@@ -1,16 +1,14 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router';
 import Spinner from 'components/Spinner';
 import {
-  fetchSpots, fetchLoginStatus,
+  fetchLoginStatus,
 } from './actions';
 import {
-  selectSpotsMeta,
-  selectSpots,
   selectLoginStatusMeta,
 } from './selectors';
 import SpotlightContext from './Context';
@@ -27,20 +25,12 @@ const {
 } = SpotlightContext;
 
 const Spotlight = ({
-  setSpotsMeta,
-  spots,
-  handleFetchSpots,
   handleFetchLoginStatus,
   location,
   loginStatusMeta,
 }) => {
-  const isLoading = setSpotsMeta.get('isLoading');
-  const isLoaded = setSpotsMeta.get('isLoaded');
   useEffect(() => {
-    if (!isLoaded) {
-      handleFetchSpots();
-    }
-    if (!loginStatusMeta.get('isLoaded')) {
+    if (!loginStatusMeta.get('isLoading')) {
       handleFetchLoginStatus();
     }
   }, []);
@@ -55,9 +45,9 @@ const Spotlight = ({
               </div>
               <div className="spot-light__content-container">
                 {
-                  (isLoading || loginStatusMeta.get('isLoading'))
+                  (loginStatusMeta.get('isLoading'))
                     ? <Spinner />
-                    : <Content spots={spots} />
+                    : <Content />
                 }
               </div>
               {
@@ -76,28 +66,19 @@ const Spotlight = ({
 };
 
 Spotlight.propTypes = {
-  setSpotsMeta: PropTypes.object,
-  spots: PropTypes.instanceOf(List),
-  handleFetchSpots: PropTypes.func,
   handleFetchLoginStatus: PropTypes.func.isRequired,
   loginStatusMeta: PropTypes.instanceOf(Map),
   location: PropTypes.object.isRequired,
 };
 
 Spotlight.defaultProps = {
-  setSpotsMeta: null,
-  spots: List(),
-  handleFetchSpots: () => { },
 };
 
 const mapStateToProps = createStructuredSelector({
-  setSpotsMeta: selectSpotsMeta(),
-  spots: selectSpots(),
   loginStatusMeta: selectLoginStatusMeta(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleFetchSpots: () => dispatch(fetchSpots()),
   handleFetchLoginStatus: () => dispatch(fetchLoginStatus()),
 });
 
