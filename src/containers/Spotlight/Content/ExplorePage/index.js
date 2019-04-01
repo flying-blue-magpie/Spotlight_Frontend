@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Map } from 'immutable';
 import { Link } from 'react-router-dom';
 import { selectExploringSpot } from 'containers/Spotlight/selectors';
-import { exploreNextSpot } from 'containers/Spotlight/actions';
+import { exploreNextSpot, fetchSpots } from 'containers/Spotlight/actions';
 
 import {
   Container,
@@ -28,9 +28,17 @@ const ExplorePage = (props) => {
     spot,
     handleSwipeLeft,
     handleSwipeRight,
+    handleFetchSpots,
   } = props;
 
   const zones = ['新竹市', '高雄市'];
+
+  const [keyword, setKeyword] = useState('');
+  const handleSearchInputKeyUp = (event) => {
+    if (event.key === 'Enter') {
+      handleFetchSpots({ kw: keyword, zones });
+    }
+  };
 
   return (
     <Container>
@@ -40,7 +48,13 @@ const ExplorePage = (props) => {
             縣市選擇
             <i className="fas fa-caret-right" />
           </SelectCountyButton>
-          <SearchInput type="text" placeholder="你想去的景點或街道名稱" />
+          <SearchInput
+            type="text"
+            placeholder="你想去的景點或街道名稱"
+            value={keyword}
+            onChange={(event) => setKeyword(event.target.value)}
+            onKeyUp={handleSearchInputKeyUp}
+          />
         </SearchBar>
       </SearchRow>
       <ZonesRow>
@@ -73,6 +87,7 @@ ExplorePage.propTypes = {
   spot: PropTypes.instanceOf(Map),
   handleSwipeLeft: PropTypes.func.isRequired,
   handleSwipeRight: PropTypes.func.isRequired,
+  handleFetchSpots: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -82,6 +97,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch) => ({
   handleSwipeLeft: () => dispatch(exploreNextSpot()),
   handleSwipeRight: () => dispatch(exploreNextSpot()),
+  handleFetchSpots: ({ kw, zones }) => dispatch(fetchSpots({ kw, zones })),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExplorePage);
