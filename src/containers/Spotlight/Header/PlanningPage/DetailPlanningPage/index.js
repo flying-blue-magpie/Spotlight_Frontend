@@ -18,7 +18,7 @@ export default () => {
     return () => {
       setIsNavVisible(true);
     };
-  });
+  }, []);
   const handleGoBackToPlanning = useCallback(() => {
     history.push(`/${PAGE_NAME.PLANNING}`);
   }, []);

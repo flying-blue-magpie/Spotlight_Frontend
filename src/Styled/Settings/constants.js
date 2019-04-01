@@ -9,6 +9,7 @@ export const PAGE_NAME = {
   PERSONAL_PAGE: '我的',
   DETAIL_PLANNING: '旅程內容',
   UPDATE_PLANNING: '修改旅程',
+  CREATE_PROJECT: '增加旅程',
 };
 
 export const mixinWidthWrapper = () => `

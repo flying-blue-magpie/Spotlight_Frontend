@@ -16,6 +16,8 @@ import {
   LOGIN,
   REGISTER,
   FETCH_LOGIN_STATUS,
+  FETCH_OWN_PROJECTS,
+  SUBMIT_CREATE_PROJECT,
 } from './constants';
 import {
   // setSpotLoading,
@@ -28,6 +30,10 @@ import {
   setRegisterLoading,
   setLoginStatusDone,
   setLoginStatusLoading,
+  setOwnProjectsDone,
+  setOwnProjectsLoading,
+  createProjectDone,
+  createProjectLoading,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -50,6 +56,50 @@ const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.emp
 //     )),
 //   )
 // );
+
+const createProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(SUBMIT_CREATE_PROJECT),
+    switchMap((action) => {
+      const {
+        newProject,
+      } = action.payload;
+      return request({
+        method: 'post',
+        url: '/own/proj',
+        data: newProject,
+      }).pipe(
+        flatMap((data) => of(
+          createProjectDone(null, data),
+        )),
+        catchError((error) => fetchErrorEpic(
+          error,
+          createProjectDone(error),
+        )),
+        startWith(createProjectLoading()),
+      );
+    }),
+  )
+);
+
+const fetchOwnProjectsEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_OWN_PROJECTS),
+    switchMap(() => request({
+      method: 'get',
+      url: '/own/projs',
+    }).pipe(
+      flatMap((data) => of(
+        setOwnProjectsDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setOwnProjectsDone(error),
+      )),
+      startWith(setOwnProjectsLoading()),
+    )),
+  )
+);
 
 const getKeywordQueryString = (keyword) => (
   typeof keyword === 'string' && keyword.length > 0
@@ -165,8 +215,10 @@ const fetchLoginStatusEpic = (action$, state$, { request, fetchErrorEpic }) => (
 export default [
   setInit,
   // fetchSpotByIdEpic,
+  fetchOwnProjectsEpic,
   fetchSpotsEpic,
   loginEpic,
   registerEpic,
   fetchLoginStatusEpic,
+  createProjectEpic,
 ];

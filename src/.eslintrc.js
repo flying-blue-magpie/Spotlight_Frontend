@@ -22,5 +22,6 @@ module.exports = {
     "jsx-a11y/label-has-for": 0,
     "import/no-extraneous-dependencies": 0,
     "no-use-before-define": 0,
+    "max-len": 0,
   },
 };

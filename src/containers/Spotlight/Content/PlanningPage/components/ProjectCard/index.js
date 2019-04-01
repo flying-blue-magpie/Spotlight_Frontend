@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { Map } from 'immutable';
 import styled from 'styled-components';
 import history from 'utils/history';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import moment from 'moment';
 
 const Container = styled.div`
   margin-top: 10px;
@@ -22,7 +24,7 @@ const Container = styled.div`
     opacity: 0.9;
     padding: 8px 10px;
   }
-  .project-card__body-title {
+  .project-card__body-name {
     font-size: 14px;
   }
   .project-card__body-content {
@@ -32,9 +34,13 @@ const Container = styled.div`
 
 const ProjectCard = (props) => {
   const {
-    title,
-    id,
+    project,
   } = props;
+  const id = project.get('proj_id');
+  const name = project.get('name');
+  const days = project.get('tot_days');
+  const startDay = moment(project.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日');
+  const endDay = moment(project.get('start_day'), 'YYYY-MM-DD').add(days - 1, 'days').format('YYYY年MM月DD日');
   const handleOnClick = useCallback(() => {
     const detailPlanningPagePath = `/${PAGE_NAME.DETAIL_PLANNING}`;
     const defaultDay = 1;
@@ -47,8 +53,8 @@ const ProjectCard = (props) => {
     <Container onClick={handleOnClick}>
       <div className="project-card__cover">
         <div className="project-card__body">
-          <div className="project-card__body-title">{title}</div>
-          <div className="project-card__body-content">2019年6月5日-2019年6月9日 / 4天</div>
+          <div className="project-card__body-name">{name}</div>
+          <div className="project-card__body-content">{`${startDay}-${endDay} / ${days}天`}</div>
         </div>
       </div>
     </Container>
@@ -56,16 +62,11 @@ const ProjectCard = (props) => {
 };
 
 ProjectCard.propTypes = {
-  title: PropTypes.string,
-  id: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  project: PropTypes.instanceOf(Map),
 };
 
 ProjectCard.defaultProps = {
-  title: '',
-  id: '',
+  project: Map(),
 };
 
 export default ProjectCard;
