@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-// import { List } from 'immutable';
+import { List } from 'immutable';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -23,28 +23,25 @@ const Container = styled.div`
 
 const PlanningPage = ({
   ownProjectsMeta,
-  // ownProjects,
+  ownProjects,
   handleFetchOwnProjects,
 }) => {
   const isLoaded = ownProjectsMeta.get('isLoaded');
   const isLoading = ownProjectsMeta.get('isLoading');
-  const arr = new Array(10).fill(0).map((x, index) => index);
   useEffect(() => {
     if (!isLoaded) {
       handleFetchOwnProjects();
     }
-  });
+  }, []);
   if (isLoading) {
     return <Spinner />;
   }
   return (
     <Container>
       {
-        arr.map((index) => (
+        ownProjects.map((project) => (
           <ProjectCard
-            key={index}
-            id={index}
-            title="台北購物之旅"
+            project={project}
           />
         ))
       }
@@ -54,13 +51,13 @@ const PlanningPage = ({
 
 PlanningPage.propTypes = {
   ownProjectsMeta: PropTypes.object,
-  // ownProjects: PropTypes.instanceOf(List),
+  ownProjects: PropTypes.instanceOf(List),
   handleFetchOwnProjects: PropTypes.func,
 };
 
 PlanningPage.defaultProps = {
   ownProjectsMeta: null,
-  // ownProjects: List(),
+  ownProjects: List(),
   handleFetchOwnProjects: () => { },
 };
 

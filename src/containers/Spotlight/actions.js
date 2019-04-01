@@ -18,6 +18,9 @@ import {
   FETCH_OWN_PROJECTS,
   SET_OWN_PROJECTS_LOADING,
   SET_OWN_PROJECTS_DONE,
+  SUBMIT_CREATE_PROJECT,
+  CREATE_PROJECT_LOADING,
+  CREATE_PROJECT_DONE,
 } from './constants';
 
 // export const fetchSpotById = (id) => ({
@@ -128,5 +131,24 @@ export const setOwnProjectsDone = (error, ownProjects) => ({
   payload: {
     error,
     ownProjects,
+  },
+});
+
+export const submitCreateProject = (newProject) => ({
+  type: SUBMIT_CREATE_PROJECT,
+  payload: {
+    newProject,
+  },
+});
+
+export const createProjectLoading = () => ({
+  type: CREATE_PROJECT_LOADING,
+});
+
+export const createProjectDone = (error, user) => ({
+  type: CREATE_PROJECT_DONE,
+  payload: {
+    error,
+    user,
   },
 });

@@ -1,30 +1,69 @@
 import React, { useContext, useEffect } from 'react';
-import { PAGE_NAME } from 'Styled/Settings/constants';
+import PropTypes from 'prop-types';
+import { fromJS } from 'immutable';
+import { DEFAULT_PROJECT } from 'containers/Spotlight/constants';
+import moment from 'moment';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import {
+  PAGE_NAME,
+} from 'Styled/Settings/constants';
+
 import {
   HeaderContainer,
 } from 'containers/Spotlight/Header/Styled';
 import history from 'utils/history';
 import Context from 'containers/Spotlight/Context';
+import { useAlert } from 'react-alert';
+import {
+  submitCreateProject,
+} from 'containers/Spotlight/actions';
 
 const { SpotlightContext } = Context;
 
-const CreateProjectPage = () => {
+const CreateProjectPage = (props) => {
+  const alert = useAlert();
+  const context = useContext(SpotlightContext);
+  const {
+    setIsNavVisible,
+    newProject,
+    setNewProject,
+  } = context;
+  const setInit = () => {
+    setNewProject(fromJS(DEFAULT_PROJECT));
+  };
   const handleOnCancelBtn = () => {
     history.push(PAGE_NAME.PLANNING);
   };
   const handleOnCheckBtn = () => {
-    // console.log('check');
+    const {
+      handleSubmitCreateProject,
+    } = props;
+    const name = newProject.get('name');
+    const startDay = moment(newProject.get('start_day')).format('YYYY/MM/DD 00:mm:ss');
+    const days = newProject.get('tot_days');
+    if (!name || !newProject.get('start_day') || !days) {
+      alert.error('欄位皆為必填');
+      return;
+    }
+    if (days <= 0) {
+      alert.error('天數格式錯誤');
+      return;
+    }
+    handleSubmitCreateProject({
+      name,
+      start_day: startDay,
+      tot_days: days,
+    });
   };
-  const context = useContext(SpotlightContext);
-  const {
-    setIsNavVisible,
-  } = context;
   useEffect(() => {
     setIsNavVisible(false);
+    setInit();
     return () => {
       setIsNavVisible(true);
     };
-  });
+  }, []);
+
   return (
     <HeaderContainer>
       <div className="header-container__icon-wrapper icon-left">
@@ -46,4 +85,20 @@ const CreateProjectPage = () => {
   );
 };
 
-export default CreateProjectPage;
+CreateProjectPage.propTypes = {
+  handleSubmitCreateProject: PropTypes.func,
+};
+
+CreateProjectPage.defaultProps = {
+  handleSubmitCreateProject: () => { },
+};
+
+const mapStateToProps = createStructuredSelector({
+
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleSubmitCreateProject: (newProject) => dispatch(submitCreateProject(newProject)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateProjectPage);

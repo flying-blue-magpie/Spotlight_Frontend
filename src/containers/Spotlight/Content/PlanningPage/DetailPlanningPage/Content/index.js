@@ -69,10 +69,11 @@ const Content = (props) => {
       </div>
       <ReactDragList
         dataSource={mockSpotData}
-        row={(spot) => (
+        row={(spot, index) => (
           <SpotCard
             key={spot.get('id')}
             spot={spot}
+            index={index}
           />
         )}
         handles={false}

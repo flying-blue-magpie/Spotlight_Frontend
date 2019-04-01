@@ -27,16 +27,18 @@ export const FETCH_OWN_PROJECTS = `${KEY_REDUCER}/FETCH_OWN_PROJECTS`;
 export const SET_OWN_PROJECTS_LOADING = `${KEY_REDUCER}/SET_OWN_PROJECTS_LOADING`;
 export const SET_OWN_PROJECTS_DONE = `${KEY_REDUCER}/SET_OWN_PROJECTS_DONE`;
 
+export const SUBMIT_CREATE_PROJECT = `${KEY_REDUCER}/SUBMIT_CREATE_PROJECT`;
+export const CREATE_PROJECT_LOADING = `${KEY_REDUCER}/CREATE_PROJECT_LOADING`;
+export const CREATE_PROJECT_DONE = `${KEY_REDUCER}/CREATE_PROJECT_DONE`;
 
 export const DEFAULT_PROJECT = {
   name: '',
   start_day: '', // format: 2018/12/01 00:00:00
-  end_day: '', // format: 2018/12/01 00:00:00
-  plan: [],
+  tot_days: 0, // format: 2018/12/01 00:00:00
 };
 
 export const DEFAULT_PLAN = {
-  start_time: '', // format: 08:00:00
+  start_time: '08:00:00', // format: 08:00:00
   arrange: [],
 };
 
