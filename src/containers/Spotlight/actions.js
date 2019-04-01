@@ -36,8 +36,9 @@ import {
 //   },
 // });
 
-export const fetchSpots = () => ({
+export const fetchSpots = ({ zones = [], kw = '' } = {}) => ({
   type: FETCH_SPOTS,
+  payload: { zones, kw },
 });
 
 export const setSpotsLoading = () => ({

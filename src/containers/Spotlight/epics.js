@@ -51,12 +51,36 @@ const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.emp
 //   )
 // );
 
+const getKeywordQueryString = (keyword) => (
+  typeof keyword === 'string' && keyword.length > 0
+    ? `kw=${keyword}`
+    : ''
+);
+
+const getZonesQueryString = (zones) => zones
+  .map((zone) => `zone=${zone}`)
+  .join('&');
+
+const getSearchSpotQueryString = ({ zones, keyword }) => {
+  const queryString = [
+    getKeywordQueryString(keyword),
+    getZonesQueryString(zones),
+  ]
+    .filter((queryStringSegment) => queryStringSegment !== '')
+    .join('&');
+
+  return queryString.length > 0 ? `?${queryString}` : '';
+};
+
 const fetchSpotsEpic = (action$, $state, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(FETCH_SPOTS),
-    switchMap(() => request({
+    switchMap((action) => request({
       method: 'get',
-      url: '/spots',
+      url: `/spots${getSearchSpotQueryString({
+        zones: action.payload.zones,
+        keyword: action.payload.kw,
+      })}`,
     }).pipe(
       flatMap((data) => of(
         setSpotsDone(null, data.content),
