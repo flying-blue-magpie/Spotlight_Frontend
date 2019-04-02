@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Map } from 'immutable';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import queryString from 'query-string';
 import { selectExploringSpot, selectSpotsMeta } from 'containers/Spotlight/selectors';
 import { exploreNextSpot, fetchSpots } from 'containers/Spotlight/actions';
 import Spinner from 'components/Spinner';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import ZoneMene from './ZoneMenu';
 
 import {
   Container,
@@ -32,6 +35,8 @@ const ExplorePage = (props) => {
     handleSwipeRight,
     handleFetchSpots,
     setSpotsMeta,
+    location,
+    history,
   } = props;
 
   const zones = ['新竹市', '高雄市'];
@@ -50,11 +55,17 @@ const ExplorePage = (props) => {
     }
   }, []);
 
+  const query = queryString.parse(location.search);
+
+  if (query.menu === 'zone') {
+    return <ZoneMene location={location} history={history} />;
+  }
+
   return (
     <Container>
       <SearchRow>
         <SearchBar>
-          <SelectCountyButton>
+          <SelectCountyButton onClick={() => history.push(`${location.pathname}?menu=zone`)}>
             縣市選擇
             <i className="fas fa-caret-right" />
           </SelectCountyButton>
@@ -107,6 +118,8 @@ ExplorePage.propTypes = {
   handleSwipeRight: PropTypes.func.isRequired,
   handleFetchSpots: PropTypes.func.isRequired,
   setSpotsMeta: PropTypes.object,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -120,4 +133,4 @@ const mapDispatchToProps = (dispatch) => ({
   handleFetchSpots: ({ kw, zones } = {}) => dispatch(fetchSpots({ kw, zones })),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExplorePage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExplorePage));
