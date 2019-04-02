@@ -9,6 +9,7 @@ import {
   catchError,
   startWith,
 } from 'rxjs/operators';
+import Alert from 'react-s-alert';
 import {
   INIT,
   FETCH_SPOT_BY_ID,
@@ -34,6 +35,7 @@ import {
   setOwnProjectsLoading,
   createProjectDone,
   createProjectLoading,
+  fetchOwnProjects,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -69,9 +71,13 @@ const createProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
         url: '/own/proj',
         data: newProject,
       }).pipe(
-        flatMap((data) => of(
-          createProjectDone(null, data),
-        )),
+        flatMap((data) => {
+          Alert.success('創建成功');
+          return of(
+            createProjectDone(null, data),
+            fetchOwnProjects(), // reload own projects after creation
+          );
+        }),
         catchError((error) => fetchErrorEpic(
           error,
           createProjectDone(error),

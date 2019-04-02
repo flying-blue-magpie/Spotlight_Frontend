@@ -14,7 +14,7 @@ import {
 } from 'containers/Spotlight/Header/Styled';
 import history from 'utils/history';
 import Context from 'containers/Spotlight/Context';
-import { useAlert } from 'react-alert';
+import Alert from 'react-s-alert';
 import {
   submitCreateProject,
 } from 'containers/Spotlight/actions';
@@ -22,7 +22,6 @@ import {
 const { SpotlightContext } = Context;
 
 const CreateProjectPage = (props) => {
-  const alert = useAlert();
   const context = useContext(SpotlightContext);
   const {
     setIsNavVisible,
@@ -42,12 +41,12 @@ const CreateProjectPage = (props) => {
     const name = newProject.get('name');
     const startDay = moment(newProject.get('start_day')).format('YYYY/MM/DD 00:mm:ss');
     const days = newProject.get('tot_days');
-    if (!name || !newProject.get('start_day') || !days) {
-      alert.error('欄位皆為必填');
+    if (!name || !newProject.get('start_day')) {
+      Alert.error('欄位皆為必填');
       return;
     }
     if (days <= 0) {
-      alert.error('天數格式錯誤');
+      Alert.error('天數格式錯誤');
       return;
     }
     handleSubmitCreateProject({
@@ -55,6 +54,7 @@ const CreateProjectPage = (props) => {
       start_day: startDay,
       tot_days: days,
     });
+    history.push(`/${PAGE_NAME.PLANNING}`);
   };
   useEffect(() => {
     setIsNavVisible(false);
