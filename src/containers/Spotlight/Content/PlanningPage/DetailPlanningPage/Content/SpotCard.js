@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 export const HEIGHT_SPOT_CARD = 60;
-export const HEIGHT_SPOT_TRAVEL_TIME = 30;
+export const HEIGHT_SPOT_TRAVEL_TIME = 40;
 
 const StyledSpotCard = styled.div`
   height: ${HEIGHT_SPOT_CARD + HEIGHT_SPOT_TRAVEL_TIME}px;
@@ -18,6 +18,9 @@ const StyledSpotCard = styled.div`
     flex-direction: column;
     justify-content: center;
     padding: 0px 15px;
+  }
+  .spot-card__card-body-address {
+    font-size: 12px;
   }
   .spot-card__start-end-time-wrapper {
     width: 60px;
@@ -54,7 +57,7 @@ const SpotCard = ({ spot }) => (
       </div>
       <div className="spot-card__card-body">
         <div>{spot.get('name')}</div>
-        <div>{spot.get('address')}</div>
+        <div className="spot-card__card-body-address">{spot.get('address')}</div>
       </div>
     </div>
     <div className="spot-card__travel-row-wrapper">

@@ -29,8 +29,7 @@ export default () => {
       </div>
       <div>{PAGE_NAME.DETAIL_PLANNING}</div>
       <div className="header-container__icon-wrapper icon-right">
-        <i className="fas fa-exchange-alt icon-style icon-transition" />
-        <i className="fas fa-check icon-style" />
+        <i className="far fa-map icon-style" />
       </div>
     </HeaderContainer>
   );

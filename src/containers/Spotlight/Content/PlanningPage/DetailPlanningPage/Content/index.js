@@ -50,8 +50,8 @@ const SpotOperator = styled.div`
   .operator__number-circle-border {
     border: 1px solid grey;
     border-radius: 100%;
-    width: 25px;
-    height: 25px;
+    width: 28px;
+    height: 28px;
     display: flex;
     justify-content: center;
     align-items: center;
