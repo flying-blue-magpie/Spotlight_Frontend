@@ -58,7 +58,9 @@ function spotLightReducer(state = initialState, action) {
     }
 
     case SET_SPOTS_LOADING:
-      return state.update('setSpotsMeta', updateMetaLoading);
+      return state
+        .update('setSpotsMeta', updateMetaLoading)
+        .set('exploringSpotsResultIndex', initialState.get('exploringSpotsResultIndex'));
 
     case SET_SPOTS_DONE: {
       const {
@@ -127,7 +129,11 @@ function spotLightReducer(state = initialState, action) {
     }
 
     case EXPLORE_NEXT_SPOT:
-      return state.update('exploringSpotsResultIndex', (id) => (id + 1) % state.get('spots').size);
+      return state
+        .update(
+          'exploringSpotsResultIndex',
+          (id) => (id + 1) % state.get('spotsResult').size,
+        );
 
     case SET_OWN_PROJECTS_LOADING:
       return state.update('ownProjectsMeta', updateMetaLoading);
