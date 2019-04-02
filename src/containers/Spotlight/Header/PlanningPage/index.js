@@ -37,19 +37,12 @@ export default () => {
   if (isEditMode) {
     return (
       <HeaderContainer>
-        <div className="header-container__icon-wrapper icon-left">
-          <i
-            role="presentation"
-            className="fas fa-times icon-style"
-            onClick={handleEditModeOff}
-          />
-        </div>
         <div>調整旅程</div>
         <div className="header-container__icon-wrapper icon-right">
           <i
             role="presentation"
             className="fas fa-check icon-style"
-            onClick={() => {}}
+            onClick={handleEditModeOff}
           />
         </div>
       </HeaderContainer>

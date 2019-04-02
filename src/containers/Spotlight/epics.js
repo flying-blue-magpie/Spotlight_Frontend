@@ -9,7 +9,7 @@ import {
   catchError,
   startWith,
 } from 'rxjs/operators';
-import Alert from 'react-s-alert';
+import message from 'antd/lib/message';
 import {
   INIT,
   FETCH_SPOT_BY_ID,
@@ -72,16 +72,19 @@ const createProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
         data: newProject,
       }).pipe(
         flatMap((data) => {
-          Alert.success('創建成功');
+          message.success('創建成功');
           return of(
             createProjectDone(null, data),
             fetchOwnProjects(), // reload own projects after creation
           );
         }),
-        catchError((error) => fetchErrorEpic(
-          error,
-          createProjectDone(error),
-        )),
+        catchError((error) => {
+          message.error('創建失敗');
+          return fetchErrorEpic(
+            error,
+            createProjectDone(error),
+          );
+        }),
         startWith(createProjectLoading()),
       );
     }),

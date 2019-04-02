@@ -6,7 +6,12 @@ import history from 'utils/history';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import moment from 'moment';
 import Context from 'containers/Spotlight/Context';
+import {
+  findAttributeInEvent,
+} from 'utils/event';
+import Modal from 'antd/lib/modal';
 
+const { confirm } = Modal;
 const { SpotlightContext } = Context;
 
 const Container = styled.div`
@@ -20,7 +25,6 @@ const Container = styled.div`
   .project-card__info-row-wrapper {
     background: white;
     opacity: 0.9;
-    /* opacity: 1; */
     position: absolute;
     width: 100%;
     bottom: 0px;
@@ -76,7 +80,7 @@ const ProjectCard = (props) => {
   const {
     project,
   } = props;
-  const id = project.get('proj_id');
+  const projectId = project.get('proj_id');
   const name = project.get('name');
   const days = project.get('tot_days');
   const startDay = moment(project.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日');
@@ -88,10 +92,22 @@ const ProjectCard = (props) => {
     const detailPlanningPagePath = `/${PAGE_NAME.DETAIL_PLANNING}`;
     const defaultDay = 1;
     history.push({
-      pathname: `${detailPlanningPagePath}/${id}`,
+      pathname: `${detailPlanningPagePath}/${projectId}`,
       search: `?day=${defaultDay}`,
     });
-  }, [id, isEditMode]);
+  }, [projectId, isEditMode]);
+  const handleOnDeleteProject = useCallback((event) => {
+    const projId = findAttributeInEvent(event, 'data-project-id');
+    confirm({
+      title: '刪除旅程計畫',
+      content: `確認是否刪除 "${name}" ？`,
+      okText: '刪除',
+      okType: 'danger',
+      onOk: () => {
+        console.log('delete project: ', projId);
+      },
+    });
+  }, []);
   return (
     <Container isEditMode={isEditMode} onClick={handleOnClick}>
       <div role="presentation" className="project-card__info-row-wrapper">
@@ -104,7 +120,12 @@ const ProjectCard = (props) => {
         isEditMode &&
         <>
           <div className="project-card__mask" />
-          <div className="project-card__trash-icon-wrapper">
+          <div
+            role="presentation"
+            className="project-card__trash-icon-wrapper"
+            data-project-id={projectId}
+            onClick={handleOnDeleteProject}
+          >
             <i className="fas fa-trash-alt project-card__trash-icon" />
           </div>
         </>
