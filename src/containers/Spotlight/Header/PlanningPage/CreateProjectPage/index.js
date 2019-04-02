@@ -8,13 +8,13 @@ import { createStructuredSelector } from 'reselect';
 import {
   PAGE_NAME,
 } from 'Styled/Settings/constants';
+import message from 'antd/lib/message';
 
 import {
   HeaderContainer,
 } from 'containers/Spotlight/Header/Styled';
 import history from 'utils/history';
 import Context from 'containers/Spotlight/Context';
-import Alert from 'react-s-alert';
 import {
   submitCreateProject,
 } from 'containers/Spotlight/actions';
@@ -42,11 +42,11 @@ const CreateProjectPage = (props) => {
     const startDay = moment(newProject.get('start_day')).format('YYYY/MM/DD 00:mm:ss');
     const days = newProject.get('tot_days');
     if (!name || !newProject.get('start_day')) {
-      Alert.error('欄位皆為必填');
+      message.error('欄位皆為必填');
       return;
     }
     if (days <= 0) {
-      Alert.error('天數格式錯誤');
+      message.error('天數格式錯誤');
       return;
     }
     handleSubmitCreateProject({
