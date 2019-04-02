@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import Tab from './Tab';
 
 const DateTabsWrapper = styled.div`
-  background: lightgray;
-  height: 42px;
+  background: #e4e4e4;
+  height: 50px;
+  padding: 0px 10px;
   display: flex;
 `;
 

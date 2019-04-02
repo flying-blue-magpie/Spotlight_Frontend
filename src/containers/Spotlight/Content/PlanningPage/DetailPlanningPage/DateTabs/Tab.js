@@ -4,23 +4,33 @@ import styled from 'styled-components';
 import history from 'utils/history';
 
 const TabWrapper = styled.div`
-  border-right: 1px solid #ccc;
-  width: 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #707070;
+  position: relative;
   cursor: pointer;
-  &:hover {
-    border-bottom: 3px solid #707070;
-    box-sizing: border-box;
-  }
-  .tab__date {
-    font-size: 12px;
-  }
   .tab__number {
     font-size: 14px;
+    background: #f9f9f9;
+    margin: 0px 5px;
+    border-radius: 50px;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .tab__text {
+    width: 50px;
+    text-align: center;
+    font-size: 16px;
+  }
+  .tab__times-circle-icon {
+    font-size: 25px;
+    line-height: 30px;
   }
 `;
 
@@ -37,8 +47,10 @@ const Tab = (props) => {
   };
   return (
     <TabWrapper onClick={handleOnClick}>
-      <div className="tab__date">{`6/${id + 5}`}</div>
-      <div className="tab__number">{`第${id + 1}天`}</div>
+      <div className="tab__number">
+        <div className="tab__text">{`第${id + 1}天`}</div>
+        <i className="fas fa-times-circle tab__times-circle-icon" />
+      </div>
     </TabWrapper>
   );
 };
