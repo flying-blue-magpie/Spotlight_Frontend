@@ -2,158 +2,80 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+export const HEIGHT_SPOT_CARD = 60;
+export const HEIGHT_SPOT_TRAVEL_TIME = 30;
+
 const StyledSpotCard = styled.div`
-  color: #707070;
-  display: flex;
-  .spot-card__operator-wrapper {
-    width: 40px;
+  height: ${HEIGHT_SPOT_CARD + HEIGHT_SPOT_TRAVEL_TIME}px;
+  .spot-card__card-row {
+    height: ${HEIGHT_SPOT_CARD}px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
   }
-  .spot-card__operator-divider {
-    width: 1px;
-    height: 28px;
-    position: absolute;
-    background: grey;
-  }
-  .spot-card__operator-divider-top {
-    top: -10px;
-  }
-  .spot-card__operator-divider-bottom {
-    bottom: -7px;
-  }
-  .spot-card__spot-operator {
-    z-index: 1;
-    border: 1px solid grey;
-    border-radius: 100%;
-    width: 25px;
-    height: 25px;
-    background: white;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    &:hover {
-      background: #eee;
-    }
-  }
-
-  .spot-card__start-time-wrapper {
-    padding: 0px 7px;
-    width: 63px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .spot-card__start-time-label {
-    font-size: 14px;
-    margin-bottom: 2px;
-  }
-  .spot-card__start-time {
-    font-size: 14px;
-  }
-
-  .spot-card__body-wrapper {
-    padding: 10px 7px;
+  .spot-card__card-body {
     background: #D3D3D3;
-    flex: 1 0 auto;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 0px 15px;
   }
-  .spot-card__body-name {
+  .spot-card__start-end-time-wrapper {
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .spot-card__travel-row-wrapper {
+    display: flex;
+    height: ${HEIGHT_SPOT_TRAVEL_TIME}px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .spot-card__travel-time-wrapper {
+    display: flex;
+    align-items: center;
     font-size: 14px;
-    margin-bottom: 2px;
-  }
-  .spot-card__body-address {
-    font-size: 12px;
-  }
-`;
-
-const StyledTravelTime = styled.div`
-  display: flex;
-  justify-content: space-between;
-  .travel-time__operator-wrapper {
-    width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .travel-time__add-spot-btn {
-    font-size: 30px;
     color: #707070;
-    z-index: 1;
+    margin-left: 15px;
   }
-  .travel-time__time-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 8px 0px;
-    color: #707070;
-    font-size: 12px;
-  }
-  .travel-time__time-item-wrapper {
-    display: flex;
-    margin-left: 20px;
-    justify-content: center;
-    align-items: center;
-  }
-  .travel-time__time-item-icon {
+  .spot-card__travel-time-icon {
     margin-right: 5px;
   }
 `;
 
-const SpotCard = ({ spot, index }) => (
-  <>
-    <StyledSpotCard>
-      <div className="spot-card__operator-wrapper">
-        {
-          Boolean(index) &&
-          <div className="spot-card__operator-divider spot-card__operator-divider-top" />
-        }
-        <div className="spot-card__spot-operator"><span>{index + 1}</span></div>
-        <div className="spot-card__operator-divider spot-card__operator-divider-bottom" />
-      </div>
-      <div className="spot-card__start-time-wrapper">
-        <div className="spot-card__start-time-label">08:00</div>
+const SpotCard = ({ spot }) => (
+  <StyledSpotCard>
+    <div className="spot-card__card-row">
+      <div className="spot-card__start-end-time-wrapper">
+        <div>8:00</div>
         <div>|</div>
-        <div className="spot-card__start-time">{spot.get('startTime')}</div>
+        <div>10:00</div>
       </div>
-      <div className="spot-card__body-wrapper">
-        <div className="spot-card__body-name">{spot.get('name')}</div>
-        <div className="spot-card__body-address">{spot.get('address')}</div>
+      <div className="spot-card__card-body">
+        <div>{spot.get('name')}</div>
+        <div>{spot.get('address')}</div>
       </div>
-    </StyledSpotCard>
-    <StyledTravelTime>
-      <div className="travel-time__operator-wrapper">
-        <i className="fas fa-map-marker-alt travel-time__add-spot-btn" />
+    </div>
+    <div className="spot-card__travel-row-wrapper">
+      <div className="spot-card__travel-time-wrapper">
+        <i className="fas fa-car spot-card__travel-time-icon" />
+        <div>1時15分</div>
       </div>
-      <div className="travel-time__time-wrapper">
-        <div className="travel-time__time-item-wrapper">
-          <i className="fas fa-car travel-time__time-item-icon" />
-          <div>1時15分</div>
-        </div>
-        <div className="travel-time__time-item-wrapper">
-          <i className="fas fa-running travel-time__time-item-icon" />
-          <div>6時15分</div>
-        </div>
+      <div className="spot-card__travel-time-wrapper">
+        <i className="fas fa-running spot-card__travel-time-icon" />
+        <div>6時15分</div>
       </div>
-    </StyledTravelTime>
-  </>
+    </div>
+  </StyledSpotCard>
 );
 
 SpotCard.propTypes = {
   spot: PropTypes.object,
-  index: PropTypes.number,
 };
 
 SpotCard.defaultProps = {
   spot: {},
-  index: 0,
 };
 
 export default SpotCard;

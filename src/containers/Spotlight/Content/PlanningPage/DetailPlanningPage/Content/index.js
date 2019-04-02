@@ -5,7 +5,10 @@ import styled from 'styled-components';
 import ReactDragList from 'react-drag-list';
 import 'react-drag-list/assets/index.css';
 import { fromJS } from 'immutable';
-import SpotCard from './SpotCard';
+import SpotCard, {
+  HEIGHT_SPOT_CARD,
+  HEIGHT_SPOT_TRAVEL_TIME,
+} from './SpotCard';
 
 const StyledContent = styled.div`
   padding: 15px 30px;
@@ -25,6 +28,67 @@ const StyledContent = styled.div`
   }
   .content__simple-drag-row {
     background: red;
+  }
+
+  .content__spot-cards-wrapper {
+    display: flex;
+  }
+  .content__spot-simple-drag {
+    flex: 1 1 auto;
+  }
+`;
+
+const SpotOperator = styled.div`
+  height: ${HEIGHT_SPOT_CARD + HEIGHT_SPOT_TRAVEL_TIME}px;
+  .operator__number-wrapper {
+    height: ${HEIGHT_SPOT_CARD}px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .operator__number-circle-border {
+    border: 1px solid grey;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1;
+    background: white;
+    &:hover {
+      background: #eee;
+    }
+  }
+  .operator__divider-line {
+    position: absolute;
+    width: 1px;
+    background: black;
+    height: 40px;
+  }
+  .operator__divider-line-top {
+    top: -20px;
+  }
+  .operator__divider-line-bottom {
+    bottom: -20px;
+  }
+  .operator__map-marker-wrapper {
+    height: ${HEIGHT_SPOT_TRAVEL_TIME}px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .operator__map-marker-icon {
+    font-size: 33px;
+    color: #707070;
+    z-index: 1;
+    background: white;
+    cursor: pointer;
+    &:hover {
+      color: #bbbbbb;
+    }
   }
 `;
 
@@ -67,20 +131,41 @@ const Content = (props) => {
         <div className="content__title-day">{`第${day}天`}</div>
         <div className="content__title-date">{`2019年6月${parseInt(day, 10) + 4}日`}</div>
       </div>
-      <ReactDragList
-        dataSource={mockSpotData}
-        row={(spot, index) => (
-          <SpotCard
-            key={spot.get('id')}
-            spot={spot}
-            index={index}
-          />
-        )}
-        handles={false}
-        className="simple-drag"
-        rowClassName="simple-drag-row"
-        onUpdate={() => {}}
-      />
+      <div className="content__spot-cards-wrapper">
+        <div>
+          {
+            mockSpotData.map((spot, index) => (
+              <SpotOperator key={spot.get('id')}>
+                <div className="operator__number-wrapper">
+                  {
+                    Boolean(index) &&
+                    <div className="operator__divider-line operator__divider-line-top" />
+                  }
+                  <div className="operator__number-circle-border"><span>{spot.get('id') + 1}</span></div>
+                  <div className="operator__divider-line operator__divider-line-bottom" />
+                </div>
+                <div className="operator__map-marker-wrapper">
+                  <i className="fas fa-map-marker-alt operator__map-marker-icon" />
+                </div>
+              </SpotOperator>
+            ))
+          }
+        </div>
+        <ReactDragList
+          dataSource={mockSpotData}
+          row={(spot, index) => (
+            <SpotCard
+              key={spot.get('id')}
+              spot={spot}
+              index={index}
+            />
+          )}
+          handles={false}
+          className="simple-drag content__spot-simple-drag"
+          rowClassName="simple-drag-row"
+          onUpdate={() => { }}
+        />
+      </div>
     </StyledContent>
   );
 };
