@@ -12,6 +12,7 @@ const useSelection = () => {
 
   // create project
   const [newProject, setNewProject] = useState(fromJS(DEFAULT_PROJECT));
+  const [isEditMode, setIsEditMode] = useState(false);
 
   return {
     headerTitle,
@@ -22,6 +23,9 @@ const useSelection = () => {
     // create project
     newProject,
     setNewProject,
+
+    isEditMode,
+    setIsEditMode,
   };
 };
 
