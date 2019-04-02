@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import styled from 'styled-components';
 // http://front-ender.me/react-drag-list
 import ReactDragList from 'react-drag-list';
@@ -81,7 +81,7 @@ const SpotOperator = styled.div`
     align-items: center;
   }
   .operator__map-marker-icon {
-    font-size: 33px;
+    font-size: 30px;
     color: #707070;
     z-index: 1;
     background: white;
@@ -119,63 +119,52 @@ const mockSpotData = fromJS([
   },
 ]);
 
-const Content = (props) => {
-  const {
-    location,
-  } = props;
-  const searchParams = new URLSearchParams(location.search);
-  const day = searchParams.get('day') || 1;
-  return (
-    <StyledContent>
-      <div className="content__title">
-        <div className="content__title-day">{`第${day}天`}</div>
-        <div className="content__title-date">{`2019年6月${parseInt(day, 10) + 4}日`}</div>
+const Content = () => (
+  <StyledContent>
+    <div className="content__spot-cards-wrapper">
+      <div>
+        {
+          mockSpotData.map((spot, index) => (
+            <SpotOperator key={spot.get('id')}>
+              <div className="operator__number-wrapper">
+                {
+                  Boolean(index) &&
+                  <div className="operator__divider-line operator__divider-line-top" />
+                }
+                <div className="operator__number-circle-border"><span>{spot.get('id') + 1}</span></div>
+                <div className="operator__divider-line operator__divider-line-bottom" />
+              </div>
+              <div className="operator__map-marker-wrapper">
+                <i className="fas fa-map-marker-alt operator__map-marker-icon" />
+              </div>
+            </SpotOperator>
+          ))
+        }
       </div>
-      <div className="content__spot-cards-wrapper">
-        <div>
-          {
-            mockSpotData.map((spot, index) => (
-              <SpotOperator key={spot.get('id')}>
-                <div className="operator__number-wrapper">
-                  {
-                    Boolean(index) &&
-                    <div className="operator__divider-line operator__divider-line-top" />
-                  }
-                  <div className="operator__number-circle-border"><span>{spot.get('id') + 1}</span></div>
-                  <div className="operator__divider-line operator__divider-line-bottom" />
-                </div>
-                <div className="operator__map-marker-wrapper">
-                  <i className="fas fa-map-marker-alt operator__map-marker-icon" />
-                </div>
-              </SpotOperator>
-            ))
-          }
-        </div>
-        <ReactDragList
-          dataSource={mockSpotData}
-          row={(spot, index) => (
-            <SpotCard
-              key={spot.get('id')}
-              spot={spot}
-              index={index}
-            />
-          )}
-          handles={false}
-          className="simple-drag content__spot-simple-drag"
-          rowClassName="simple-drag-row"
-          onUpdate={() => { }}
-        />
-      </div>
-    </StyledContent>
-  );
-};
+      <ReactDragList
+        dataSource={mockSpotData}
+        row={(spot, index) => (
+          <SpotCard
+            key={spot.get('id')}
+            spot={spot}
+            index={index}
+          />
+        )}
+        handles={false}
+        className="simple-drag content__spot-simple-drag"
+        rowClassName="simple-drag-row"
+        onUpdate={() => { }}
+      />
+    </div>
+  </StyledContent>
+);
 
 Content.propTypes = {
-  location: PropTypes.object,
+  // location: PropTypes.object,
 };
 
 Content.defaultProps = {
-  location: {},
+  // location: {},
 };
 
 export default Content;

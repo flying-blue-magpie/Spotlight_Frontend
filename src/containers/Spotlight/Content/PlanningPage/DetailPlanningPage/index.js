@@ -1,5 +1,6 @@
 import React from 'react';
 import DateTabs from './DateTabs';
+import DateTimeInfo from './DateTimeInfo';
 import Content from './Content';
 import {
   DetailPlanningPageContainer,
@@ -15,6 +16,7 @@ const DetailPlanningPage = (props) => (
       <div className="detail-planning__cover-period">2019年6月5日-2019年6月8日 / 4天</div>
     </div>
     <DateTabs {...props} />
+    <DateTimeInfo />
     <Content {...props} />
   </DetailPlanningPageContainer>
 );
