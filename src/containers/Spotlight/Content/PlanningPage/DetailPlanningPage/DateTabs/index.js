@@ -7,10 +7,11 @@ const DateTabsWrapper = styled.div`
   height: 50px;
   padding: 0px 10px;
   display: flex;
+  overflow-x: auto;
 `;
 
 const DateTabs = (props) => {
-  const tabs = new Array(4).fill(0).map((x, index) => index);
+  const tabs = new Array(7).fill(0).map((x, index) => index);
   return (
     <DateTabsWrapper>
       {
