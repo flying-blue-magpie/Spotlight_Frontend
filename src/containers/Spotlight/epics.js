@@ -19,6 +19,7 @@ import {
   FETCH_LOGIN_STATUS,
   FETCH_OWN_PROJECTS,
   SUBMIT_CREATE_PROJECT,
+  SUBMIT_DELETE_PROJECT,
 } from './constants';
 import {
   setSpotLoading,
@@ -36,6 +37,8 @@ import {
   createProjectDone,
   createProjectLoading,
   fetchOwnProjects,
+  deleteProjectLoading,
+  deleteProjectDone,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -86,6 +89,37 @@ const createProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
           );
         }),
         startWith(createProjectLoading()),
+      );
+    }),
+  )
+);
+
+const deleteProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(SUBMIT_DELETE_PROJECT),
+    switchMap((action) => {
+      const {
+        projectId,
+      } = action.payload;
+      return request({
+        method: 'delete',
+        url: `/proj/${projectId}`,
+      }).pipe(
+        flatMap(() => {
+          message.success('刪除成功');
+          return of(
+            deleteProjectDone(null),
+            fetchOwnProjects(), // reload own projects after creation
+          );
+        }),
+        catchError((error) => {
+          message.error('刪除失敗');
+          return fetchErrorEpic(
+            error,
+            deleteProjectDone(error),
+          );
+        }),
+        startWith(deleteProjectLoading()),
       );
     }),
   )
@@ -230,4 +264,5 @@ export default [
   registerEpic,
   fetchLoginStatusEpic,
   createProjectEpic,
+  deleteProjectEpic,
 ];

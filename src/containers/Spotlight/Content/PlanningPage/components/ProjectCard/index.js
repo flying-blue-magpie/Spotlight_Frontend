@@ -79,6 +79,7 @@ const ProjectCard = (props) => {
   } = context;
   const {
     project,
+    handleDeleteProject,
   } = props;
   const projectId = project.get('proj_id');
   const name = project.get('name');
@@ -104,7 +105,7 @@ const ProjectCard = (props) => {
       okText: '刪除',
       okType: 'danger',
       onOk: () => {
-        console.log('delete project: ', projId);
+        handleDeleteProject(projId);
       },
     });
   }, []);
@@ -136,10 +137,12 @@ const ProjectCard = (props) => {
 
 ProjectCard.propTypes = {
   project: PropTypes.instanceOf(Map),
+  handleDeleteProject: PropTypes.func,
 };
 
 ProjectCard.defaultProps = {
   project: Map(),
+  handleDeleteProject: () => { },
 };
 
 export default ProjectCard;

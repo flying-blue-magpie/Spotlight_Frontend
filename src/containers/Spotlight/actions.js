@@ -22,6 +22,9 @@ import {
   SUBMIT_CREATE_PROJECT,
   CREATE_PROJECT_LOADING,
   CREATE_PROJECT_DONE,
+  SUBMIT_DELETE_PROJECT,
+  DELETE_PROJECT_LOADING,
+  DELETE_PROJECT_DONE,
 } from './constants';
 
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
@@ -155,5 +158,23 @@ export const createProjectDone = (error, user) => ({
   payload: {
     error,
     user,
+  },
+});
+
+export const submitDeleteProject = (projectId) => ({
+  type: SUBMIT_DELETE_PROJECT,
+  payload: {
+    projectId,
+  },
+});
+
+export const deleteProjectLoading = () => ({
+  type: DELETE_PROJECT_LOADING,
+});
+
+export const deleteProjectDone = (error) => ({
+  type: DELETE_PROJECT_DONE,
+  payload: {
+    error,
   },
 });

@@ -8,6 +8,7 @@ import { withRouter } from 'react-router';
 
 import {
   fetchOwnProjects,
+  submitDeleteProject,
 } from 'containers/Spotlight/actions';
 import {
   selectOwnProjects,
@@ -25,6 +26,7 @@ const PlanningPage = ({
   ownProjectsMeta,
   ownProjects,
   handleFetchOwnProjects,
+  handleDeleteProject,
 }) => {
   const isLoaded = ownProjectsMeta.get('isLoaded');
   const isLoading = ownProjectsMeta.get('isLoading');
@@ -46,6 +48,7 @@ const PlanningPage = ({
           <ProjectCard
             key={project.get('proj_id')}
             project={project}
+            handleDeleteProject={handleDeleteProject}
           />
         ))
       }
@@ -57,12 +60,14 @@ PlanningPage.propTypes = {
   ownProjectsMeta: PropTypes.object,
   ownProjects: PropTypes.instanceOf(List),
   handleFetchOwnProjects: PropTypes.func,
+  handleDeleteProject: PropTypes.func,
 };
 
 PlanningPage.defaultProps = {
   ownProjectsMeta: null,
   ownProjects: List(),
   handleFetchOwnProjects: () => { },
+  handleDeleteProject: () => { },
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -72,6 +77,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   handleFetchOwnProjects: () => dispatch(fetchOwnProjects()),
+  handleDeleteProject: (projectId) => dispatch(submitDeleteProject(projectId)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PlanningPage));

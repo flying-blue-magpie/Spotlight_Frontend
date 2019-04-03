@@ -21,6 +21,10 @@ import {
   SET_OWN_PROJECTS_DONE,
   CREATE_PROJECT_LOADING,
   CREATE_PROJECT_DONE,
+
+  // delete project
+  DELETE_PROJECT_LOADING,
+  DELETE_PROJECT_DONE,
 } from './constants';
 
 const initialState = fromJS({
@@ -33,6 +37,7 @@ const initialState = fromJS({
   loginStatusMeta: META,
   ownProjectsMeta: META,
   createProjectMeta: META,
+  deleteProjectMeta: META,
   user: null,
   ownProjects: [],
   exploringSpotsResultIndex: 0,
@@ -163,6 +168,20 @@ function spotLightReducer(state = initialState, action) {
       }
       return state
         .update('createProjectMeta', updateMetaDone);
+    }
+
+    case DELETE_PROJECT_LOADING:
+      return state.update('deleteProjectMeta', updateMetaLoading);
+
+    case DELETE_PROJECT_DONE: {
+      const {
+        error,
+      } = action.payload;
+      if (error) {
+        return state.update('deleteProjectMeta', updateMetaError);
+      }
+      return state
+        .update('deleteProjectMeta', updateMetaDone);
     }
 
     default:
