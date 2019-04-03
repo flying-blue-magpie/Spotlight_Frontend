@@ -49,7 +49,7 @@ const Tab = (props) => {
     <TabWrapper onClick={handleOnClick}>
       <div className="tab__number">
         <div className="tab__text">{`第${id + 1}天`}</div>
-        <i className="fas fa-times-circle tab__times-circle-icon" />
+        {/* <i className="fas fa-times-circle tab__times-circle-icon" /> */}
       </div>
     </TabWrapper>
   );
