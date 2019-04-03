@@ -57,6 +57,9 @@ function spotLightReducer(state = initialState, action) {
       if (error) {
         return state.update('setSpotMeta', updateMetaError);
       }
+      if (!spot) { // handle spot is undefined
+        return state.update('setSpotMeta', updateMetaDone);
+      }
       return state
         .mergeDeepIn(['spots', spot.spot_id], fromJS(spot))
         .update('setSpotMeta', updateMetaDone);

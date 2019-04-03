@@ -47,7 +47,7 @@ const DetailPlanningPage = (props) => {
   }
   const ownProject = ownProjects.find((project) => project.get('proj_id').toString() === projectId);
   if (!ownProject) {
-    return <div>找不到旅行計劃資料</div>;
+    return <div>找不到該旅行計劃資料</div>;
   }
   const days = ownProject.get('tot_days');
   const startDay = moment(ownProject.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日');

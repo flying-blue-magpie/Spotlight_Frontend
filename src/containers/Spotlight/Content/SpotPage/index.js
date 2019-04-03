@@ -44,7 +44,9 @@ const SpotPage = ({
   }
 
   const spot = spots.get(Number(match.params.spotId), Map());
-
+  if (!spot.size) {
+    return <div>找不到該景點資料</div>;
+  }
   return (
     <div>
       <Feature>
