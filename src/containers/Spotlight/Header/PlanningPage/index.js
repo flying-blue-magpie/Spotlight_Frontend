@@ -52,7 +52,7 @@ export default () => {
     <HeaderContainer>
       <div>{PAGE_NAME.PLANNING}</div>
       <div className="header-container__icon-wrapper icon-right">
-        <i role="presentation" className="fas fa-edit icon-style" onClick={handleEditModeOn} />
+        <i role="presentation" className="fas fa-pen icon-style" onClick={handleEditModeOn} />
         <i
           role="presentation"
           className="fas fa-plus icon-style"
