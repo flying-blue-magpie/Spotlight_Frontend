@@ -17,22 +17,18 @@ const ZoneMenu = ({ history, location }) => {
 
   return (
     <div>
-      {regions
-        .map(
-          (region) => (
-            <div key={region}>
-              <div>{region}</div>
-              <ul>
-                {zonesState
-                  .filter((zone) => zone.get('region') === region)
-                  .map((zone) => <li key={zone.get('name')}>{zone.get('name')}</li>)
-                  .toList()
-                }
-              </ul>
-            </div>
-          ),
-        )
-      }
+      {regions.map((region) => (
+        <div key={region}>
+          <div>{region}</div>
+          <ul>
+            {zonesState
+              .filter((zone) => zone.get('region') === region)
+              .map((zone) => <li key={zone.get('name')}>{zone.get('name')}</li>)
+              .toList()
+            }
+          </ul>
+        </div>
+      ))}
       <button type="button" onClick={() => history.push(location.pathname)}>
         關閉
       </button>
