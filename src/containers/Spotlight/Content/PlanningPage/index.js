@@ -36,6 +36,9 @@ const PlanningPage = ({
   if (isLoading) {
     return <Spinner />;
   }
+  if (!ownProjects.size) {
+    return <div>尚無任何旅行計劃</div>;
+  }
   return (
     <Container>
       {

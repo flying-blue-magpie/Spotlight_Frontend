@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Tab from './Tab';
 
@@ -11,7 +12,10 @@ const DateTabsWrapper = styled.div`
 `;
 
 const DateTabs = (props) => {
-  const tabs = new Array(7).fill(0).map((x, index) => index);
+  const {
+    days,
+  } = props;
+  const tabs = new Array(days).fill(0).map((x, index) => index);
   return (
     <DateTabsWrapper>
       {
@@ -25,6 +29,14 @@ const DateTabs = (props) => {
       }
     </DateTabsWrapper>
   );
+};
+
+DateTabs.propTypes = {
+  days: PropTypes.number,
+};
+
+DateTabs.defaultProps = {
+  days: 0,
 };
 
 export default DateTabs;
