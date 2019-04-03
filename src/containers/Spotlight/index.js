@@ -26,7 +26,6 @@ const {
 
 const Spotlight = ({
   handleFetchLoginStatus,
-  location,
   loginStatusMeta,
 }) => {
   useEffect(() => {
@@ -52,7 +51,6 @@ const Spotlight = ({
               </div>
               {
                 isNavVisible &&
-                location.pathname !== '/' &&
                 <div className="spot-light__navigation-container">
                   <Navigation />
                 </div>
@@ -68,7 +66,6 @@ const Spotlight = ({
 Spotlight.propTypes = {
   handleFetchLoginStatus: PropTypes.func.isRequired,
   loginStatusMeta: PropTypes.instanceOf(Map),
-  location: PropTypes.object.isRequired,
 };
 
 Spotlight.defaultProps = {
