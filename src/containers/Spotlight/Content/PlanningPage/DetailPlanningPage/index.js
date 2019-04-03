@@ -49,6 +49,7 @@ const DetailPlanningPage = (props) => {
   if (!ownProject) {
     return <div>找不到該旅行計劃資料</div>;
   }
+  const name = ownProject.get('name');
   const days = ownProject.get('tot_days');
   const startDay = moment(ownProject.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日');
   const endDay = moment(ownProject.get('start_day'), 'YYYY-MM-DD').add(days - 1, 'days').format('YYYY年MM月DD日');
@@ -56,7 +57,7 @@ const DetailPlanningPage = (props) => {
     <DetailPlanningPageContainer>
       <div className="detail-planning__cover">
         <div className="detail-planning__cover-title">
-          <span>台北購物之旅</span>
+          <span>{name}</span>
           <i className="fas fa-pen icon__pen" />
         </div>
         <div className="detail-planning__cover-period">
