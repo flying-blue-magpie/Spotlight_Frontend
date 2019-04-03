@@ -50,3 +50,6 @@ export const DEFAULT_ARRANGE = {
   spot_id: null,
   during: 0,
 };
+
+export const WEEKDAYS = '星期日_星期一_星期二_星期三_星期四_星期五_星期六'.split('_');
+export const WEEKDAYS_SHORT = '週日_週一_週二_週三_週四_週五_週六'.split('_');

@@ -1,41 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import {
+  WEEKDAYS_SHORT,
+} from 'containers/Spotlight/constants';
 
 const StyledDateTimeInfo = styled.div`
   display: flex;
+  align-items: center;
   width: 100%;
-  height: 40px;
-  border-bottom: 1px solid #ccc;
-  box-sizing: border-box;
-  .date-time-info__date-wrapper {
-    border-right: 1px solid #ccc;
-    width: 50%;
-    display: flex;
-    align-items: center;
-    padding: 0px 20px;
-  }
-  .date-time-info__start-time-wrapper {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    padding: 0px 20px;
-  }
-  .date-time-info__icon {
-    margin-right: 8px;
-  }
+  height: 60px;
+  padding: 0px 30px;
+  justify-content: space-between;
 `;
 
-const DateTimeInfo = () => (
-  <StyledDateTimeInfo>
-    <div className="date-time-info__date-wrapper">
-      <i className="far fa-calendar-alt date-time-info__icon" />
-      <div>2019年6月5日 週三</div>
-    </div>
-    <div className="date-time-info__start-time-wrapper">
-      <i className="far fa-clock date-time-info__icon" />
-      <div>出發時間 8:00</div>
-    </div>
-  </StyledDateTimeInfo>
-);
+const DateTimeInfo = (props) => {
+  const {
+    startDay,
+  } = props;
+  const searchParams = new URLSearchParams(window.location.search);
+  const day = parseInt(searchParams.get('day'), 10);
+  const date = moment(startDay, 'YYYY-MM-DD').add(day - 1, 'days').format('YYYY年MM月DD日');
+  const weekday = WEEKDAYS_SHORT[moment(startDay, 'YYYY-MM-DD').add(day - 1, 'days').get('weekday')];
+  return (
+    <StyledDateTimeInfo>
+      <div>{`${date} ${weekday}`}</div>
+    </StyledDateTimeInfo>
+  );
+};
+
+DateTimeInfo.propTypes = {
+  startDay: PropTypes.string,
+};
+
+DateTimeInfo.defaultProps = {
+  startDay: '',
+};
 
 export default DateTimeInfo;

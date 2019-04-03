@@ -64,7 +64,7 @@ const DetailPlanningPage = (props) => {
         </div>
       </div>
       <DateTabs days={days} {...props} />
-      <DateTimeInfo />
+      <DateTimeInfo startDay={startDay} {...props} />
       <Content {...props} />
     </DetailPlanningPageContainer>
   );

@@ -12,6 +12,7 @@ import SpotCard, {
 
 const StyledContent = styled.div`
   padding: 15px 30px;
+  padding-top: 0;
   .content__title {
     display: flex;
     justify-content: space-between;
