@@ -23,6 +23,7 @@ import {
   SUBMIT_CREATE_PROJECT,
   SUBMIT_DELETE_PROJECT,
   LIKE_SPOT,
+  FETCH_FAVORITE_SPOT_IDS,
 } from './constants';
 import {
   setSpotLoading,
@@ -43,6 +44,8 @@ import {
   deleteProjectLoading,
   deleteProjectDone,
   setLikeSpotDone,
+  setFavoriteSpotIdsDone,
+  setFavoriteSpotIdsLoading,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -277,6 +280,30 @@ const likeSpotEpic = (action$, state$, { request }) => (
   )
 );
 
+const fetchFavoriteSpotIdsEpic = (action$, state$, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_FAVORITE_SPOT_IDS),
+    switchMap(() => request({
+      method: 'get',
+      url: '/like/spots',
+    }).pipe(
+      flatMap((res) => {
+        if (res.status === 'success') {
+          return of(
+            setFavoriteSpotIdsDone(null, res.content.map((row) => row.spot_id)),
+          );
+        }
+        return of(setFavoriteSpotIdsDone(res));
+      }),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setFavoriteSpotIdsDone(error),
+      )),
+      startWith(setFavoriteSpotIdsLoading()),
+    )),
+  )
+);
+
 export default [
   setInit,
   fetchOwnProjectsEpic,
@@ -288,4 +315,5 @@ export default [
   createProjectEpic,
   deleteProjectEpic,
   likeSpotEpic,
+  fetchFavoriteSpotIdsEpic,
 ];
