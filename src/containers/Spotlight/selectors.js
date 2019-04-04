@@ -59,3 +59,8 @@ export const selectOwnProjectsMeta = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('ownProjectsMeta'),
 );
+
+export const selectFavoriteSpotIdsMeta = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('setFavoriteSpotIdsMeta'),
+);
