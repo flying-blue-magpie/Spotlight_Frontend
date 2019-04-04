@@ -5,8 +5,6 @@ import message from 'antd/lib/message';
 import { Region, ZoneLabel } from './Styled';
 
 const ZoneMenu = ({
-  history,
-  location,
   zonesState,
   dispatch,
 }) => {
@@ -45,16 +43,11 @@ const ZoneMenu = ({
           }
         </div>
       ))}
-      <button type="button" onClick={() => history.push(location.pathname)}>
-        關閉
-      </button>
     </div>
   );
 };
 
 ZoneMenu.propTypes = {
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   zonesState: PropTypes.instanceOf(Map).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
