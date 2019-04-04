@@ -10,7 +10,7 @@ import { selectExploringSpot, selectSpotsMeta } from 'containers/Spotlight/selec
 import { exploreNextSpot, fetchSpots } from 'containers/Spotlight/actions';
 import Spinner from 'components/Spinner';
 import { PAGE_NAME } from 'Styled/Settings/constants';
-import ZoneMene from './ZoneMenu';
+import ZoneMenu from './ZoneMenu';
 import { zoneReducer } from './reducer';
 import { zones as zonesData } from './constants';
 
@@ -66,7 +66,7 @@ const ExplorePage = (props) => {
 
   if (query.menu === 'zone') {
     return (
-      <ZoneMene
+      <ZoneMenu
         location={location}
         history={history}
         zonesState={zonesState}
