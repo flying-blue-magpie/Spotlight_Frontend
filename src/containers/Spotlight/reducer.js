@@ -25,7 +25,10 @@ import {
   // delete project
   DELETE_PROJECT_LOADING,
   DELETE_PROJECT_DONE,
+
+  SET_FAVORITE_SPOT_IDS_LOADING,
   SET_LIKE_SPOT_DONE,
+  SET_FAVORITE_SPOT_IDS_DONE,
 } from './constants';
 
 const initialState = fromJS({
@@ -42,6 +45,8 @@ const initialState = fromJS({
   user: null,
   ownProjects: [],
   exploringSpotsResultIndex: 0,
+  setFavoriteSpotIdsMeta: META,
+  favoriteSpotIds: [],
 });
 
 function spotLightReducer(state = initialState, action) {
@@ -195,6 +200,19 @@ function spotLightReducer(state = initialState, action) {
       }
       return state
         .updateIn(['spots', String(id), 'like_num'], (likeNum) => likeNum + 1);
+    }
+
+    case SET_FAVORITE_SPOT_IDS_LOADING:
+      return state.update('setFavoriteSpotIdsMeta', updateMetaLoading);
+
+    case SET_FAVORITE_SPOT_IDS_DONE: {
+      const { error, ids } = action.payload;
+      if (error) {
+        return state.update('setFavoriteSpotIdsMeta', updateMetaError);
+      }
+      return state
+        .set('favoriteSpotIds', fromJS(ids))
+        .update('setFavoriteSpotIdsMeta', updateMetaError);
     }
 
     default:
