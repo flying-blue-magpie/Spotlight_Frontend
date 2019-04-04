@@ -25,6 +25,7 @@ import {
   // delete project
   DELETE_PROJECT_LOADING,
   DELETE_PROJECT_DONE,
+  SET_LIKE_SPOT_DONE,
 } from './constants';
 
 const initialState = fromJS({
@@ -185,6 +186,15 @@ function spotLightReducer(state = initialState, action) {
       }
       return state
         .update('deleteProjectMeta', updateMetaDone);
+    }
+
+    case SET_LIKE_SPOT_DONE: {
+      const { error, id } = action.payload;
+      if (error) {
+        return state;
+      }
+      return state
+        .updateIn(['spots', String(id), 'like_num'], (likeNum) => likeNum + 1);
     }
 
     default:

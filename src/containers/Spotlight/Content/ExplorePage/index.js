@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
 import { selectExploringSpot, selectSpotsMeta } from 'containers/Spotlight/selectors';
-import { exploreNextSpot, fetchSpots } from 'containers/Spotlight/actions';
+import { exploreNextSpot, fetchSpots, likeSpot } from 'containers/Spotlight/actions';
 import Spinner from 'components/Spinner';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import ZoneMenu from './ZoneMenu';
@@ -28,13 +28,16 @@ import {
   SearchInput,
   ZonesRow,
   ZoneLabel,
+  ButtonLabel,
+  SpotName,
+  SpotLikes,
 } from './Styled';
 
 const ExplorePage = (props) => {
   const {
     spot,
     handleSwipeLeft,
-    handleSwipeRight,
+    createHandleSwipeRight,
     handleFetchSpots,
     setSpotsMeta,
     location,
@@ -109,15 +112,28 @@ const ExplorePage = (props) => {
                 <Card>
                   <CardImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
                   <CardInfo>
-                    {spot.get('name')}
-                    <i className="fas fa-heart">666</i>
+                    <SpotName>{spot.get('name')}</SpotName>
+                    <SpotLikes>
+                      {spot.get('like_num')}
+                      人收藏
+                    </SpotLikes>
                   </CardInfo>
                 </Card>
               </Link>
             </CardRow>
             <ButtonRow>
-              <Button onClick={handleSwipeLeft}>跳過</Button>
-              <Button onClick={handleSwipeRight}>想去</Button>
+              <ButtonLabel>
+                <Button onClick={handleSwipeLeft}>
+                  <i className="fas fa-times" />
+                </Button>
+                <span>跳過</span>
+              </ButtonLabel>
+              <ButtonLabel>
+                <Button onClick={createHandleSwipeRight(spot.get('spot_id'))}>
+                  <i className="fas fa-heart" />
+                </Button>
+                <span>想去</span>
+              </ButtonLabel>
             </ButtonRow>
           </React.Fragment>
         )
@@ -129,7 +145,7 @@ const ExplorePage = (props) => {
 ExplorePage.propTypes = {
   spot: PropTypes.instanceOf(Map),
   handleSwipeLeft: PropTypes.func.isRequired,
-  handleSwipeRight: PropTypes.func.isRequired,
+  createHandleSwipeRight: PropTypes.func.isRequired,
   handleFetchSpots: PropTypes.func.isRequired,
   setSpotsMeta: PropTypes.object,
   location: PropTypes.object.isRequired,
@@ -143,7 +159,10 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   handleSwipeLeft: () => dispatch(exploreNextSpot()),
-  handleSwipeRight: () => dispatch(exploreNextSpot()),
+  createHandleSwipeRight: (spotId) => () => {
+    dispatch(likeSpot(spotId));
+    dispatch(exploreNextSpot());
+  },
   handleFetchSpots: ({ kw, zones } = {}) => dispatch(fetchSpots({ kw, zones })),
 });
 

@@ -19,7 +19,7 @@ const ExplorePageHeader = ({ location }) => {
       <LeftButtons>
         {menu === 'zone' &&
           <LinkButton to={`/${PAGE_NAME.EXPLORE}`}>
-            <i className="fas fa-arrow-left icon-style" />
+            <i className="fas fa-arrow-left" />
           </LinkButton>
         }
       </LeftButtons>
@@ -29,7 +29,7 @@ const ExplorePageHeader = ({ location }) => {
       <RightButtons>
         {menu === 'zone' &&
           <LinkButton to={`/${PAGE_NAME.EXPLORE}`}>
-            <i className="fas fa-check icon-style" />
+            <i className="fas fa-check" />
           </LinkButton>
         }
       </RightButtons>

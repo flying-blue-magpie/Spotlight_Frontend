@@ -20,6 +20,7 @@ import {
   FETCH_OWN_PROJECTS,
   SUBMIT_CREATE_PROJECT,
   SUBMIT_DELETE_PROJECT,
+  LIKE_SPOT,
 } from './constants';
 import {
   setSpotLoading,
@@ -39,6 +40,7 @@ import {
   fetchOwnProjects,
   deleteProjectLoading,
   deleteProjectDone,
+  setLikeSpotDone,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -255,6 +257,22 @@ const fetchLoginStatusEpic = (action$, state$, { request, fetchErrorEpic }) => (
   )
 );
 
+const likeSpotEpic = (action$, state$, { request }) => (
+  action$.pipe(
+    ofType(LIKE_SPOT),
+    switchMap((action) => request({
+      method: 'post',
+      url: `/like/spot/${action.payload}`,
+    }).pipe(
+      flatMap((res) => of(
+        res.status === 'success'
+          ? setLikeSpotDone(null, action.payload)
+          : setLikeSpotDone(res),
+      )),
+    )),
+  )
+);
+
 export default [
   setInit,
   fetchOwnProjectsEpic,
@@ -265,4 +283,5 @@ export default [
   fetchLoginStatusEpic,
   createProjectEpic,
   deleteProjectEpic,
+  likeSpotEpic,
 ];
