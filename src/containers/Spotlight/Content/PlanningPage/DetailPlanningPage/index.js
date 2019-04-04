@@ -53,6 +53,7 @@ const DetailPlanningPage = (props) => {
   const days = ownProject.get('tot_days');
   const startDay = moment(ownProject.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日');
   const endDay = moment(ownProject.get('start_day'), 'YYYY-MM-DD').add(days - 1, 'days').format('YYYY年MM月DD日');
+  const plan = ownProject.get('plan');
   return (
     <DetailPlanningPageContainer>
       <div className="detail-planning__cover">
@@ -65,7 +66,7 @@ const DetailPlanningPage = (props) => {
         </div>
       </div>
       <DateTabs days={days} {...props} />
-      <DateTimeInfo startDay={startDay} {...props} />
+      <DateTimeInfo plan={plan} startDay={startDay} {...props} />
       <Content {...props} />
     </DetailPlanningPageContainer>
   );
