@@ -23,13 +23,28 @@ export const CardInfo = styled.div`
 export const ButtonRow = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 36px;
+  margin-top: 16px;
 `;
 
 export const Button = styled.button`
-  display: inline-block;
-  padding: 6px 12px;
+  display: block;
+  width: 50px;
+  height: 50px;
   background: lightgray;
+  border-radius: 50%;
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 3px;
+`;
+
+export const ButtonLabel = styled.label`
+  margin-right: 16px;
+  text-align: center;
+  font-size: 14px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 `;
 
 export const CardRow = styled.div`

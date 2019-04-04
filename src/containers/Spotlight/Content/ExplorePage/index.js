@@ -28,6 +28,7 @@ import {
   SearchInput,
   ZonesRow,
   ZoneLabel,
+  ButtonLabel,
 } from './Styled';
 
 const ExplorePage = (props) => {
@@ -116,8 +117,18 @@ const ExplorePage = (props) => {
               </Link>
             </CardRow>
             <ButtonRow>
-              <Button onClick={handleSwipeLeft}>跳過</Button>
-              <Button onClick={handleSwipeRight}>想去</Button>
+              <ButtonLabel>
+                <Button onClick={handleSwipeLeft}>
+                  <i className="fas fa-times" />
+                </Button>
+                <span>跳過</span>
+              </ButtonLabel>
+              <ButtonLabel>
+                <Button onClick={handleSwipeRight}>
+                  <i className="fas fa-heart" />
+                </Button>
+                <span>想去</span>
+              </ButtonLabel>
             </ButtonRow>
           </React.Fragment>
         )
