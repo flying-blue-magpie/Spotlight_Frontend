@@ -13,7 +13,7 @@ const ZoneMenu = ({
   return (
     <div>
       {regions.map((region) => (
-        <div key={region}>
+        <React.Fragment key={region}>
           <Region>{region}</Region>
           {zonesState
             .filter((zone) => zone.get('region') === region)
@@ -41,7 +41,7 @@ const ZoneMenu = ({
             ))
             .toList()
           }
-        </div>
+        </React.Fragment>
       ))}
     </div>
   );

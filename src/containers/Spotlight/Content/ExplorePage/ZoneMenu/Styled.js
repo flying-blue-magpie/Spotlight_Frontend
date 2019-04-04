@@ -13,4 +13,8 @@ export const ZoneLabel = styled.label`
   margin: 0 12px 9px;
   padding-bottom: 9px;
   border-bottom: solid 1px lightgray;
+
+  &:last-child {
+    border-bottom: 0;
+  }
 `;
