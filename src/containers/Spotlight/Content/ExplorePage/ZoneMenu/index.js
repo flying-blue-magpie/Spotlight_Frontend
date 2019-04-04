@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
+import message from 'antd/lib/message';
 import { Region, ZoneLabel } from './Styled';
 
 const ZoneMenu = ({
@@ -23,10 +24,19 @@ const ZoneMenu = ({
                 {zone.get('name')}
                 <input
                   type="checkbox"
-                  onChange={(event) => dispatch({
-                    type: event.currentTarget.checked ? 'SELECT_ZONE' : 'CANCEL_ZONE',
-                    payload: { zone: zone.get('name') },
-                  })}
+                  onChange={(event) => {
+                    const selectedSize = zonesState
+                      .filter((zoneState) => zoneState.get('selected'))
+                      .size;
+                    if (selectedSize === 5 && event.currentTarget.checked) {
+                      message.warning('最多可選 5 個！', 2);
+                      return;
+                    }
+                    dispatch({
+                      type: event.currentTarget.checked ? 'SELECT_ZONE' : 'CANCEL_ZONE',
+                      payload: { zone: zone.get('name') },
+                    });
+                  }}
                   checked={zone.get('selected', false)}
                 />
               </ZoneLabel>
