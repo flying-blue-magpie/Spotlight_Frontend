@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
 import { selectExploringSpot, selectSpotsMeta } from 'containers/Spotlight/selectors';
-import { exploreNextSpot, fetchSpots } from 'containers/Spotlight/actions';
+import { exploreNextSpot, fetchSpots, likeSpot } from 'containers/Spotlight/actions';
 import Spinner from 'components/Spinner';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import ZoneMenu from './ZoneMenu';
@@ -37,7 +37,7 @@ const ExplorePage = (props) => {
   const {
     spot,
     handleSwipeLeft,
-    handleSwipeRight,
+    createHandleSwipeRight,
     handleFetchSpots,
     setSpotsMeta,
     location,
@@ -129,7 +129,7 @@ const ExplorePage = (props) => {
                 <span>跳過</span>
               </ButtonLabel>
               <ButtonLabel>
-                <Button onClick={handleSwipeRight}>
+                <Button onClick={createHandleSwipeRight(spot.get('spot_id'))}>
                   <i className="fas fa-heart" />
                 </Button>
                 <span>想去</span>
@@ -145,7 +145,7 @@ const ExplorePage = (props) => {
 ExplorePage.propTypes = {
   spot: PropTypes.instanceOf(Map),
   handleSwipeLeft: PropTypes.func.isRequired,
-  handleSwipeRight: PropTypes.func.isRequired,
+  createHandleSwipeRight: PropTypes.func.isRequired,
   handleFetchSpots: PropTypes.func.isRequired,
   setSpotsMeta: PropTypes.object,
   location: PropTypes.object.isRequired,
@@ -159,7 +159,10 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   handleSwipeLeft: () => dispatch(exploreNextSpot()),
-  handleSwipeRight: () => dispatch(exploreNextSpot()),
+  createHandleSwipeRight: (spotId) => () => {
+    dispatch(likeSpot(spotId));
+    dispatch(exploreNextSpot());
+  },
   handleFetchSpots: ({ kw, zones } = {}) => dispatch(fetchSpots({ kw, zones })),
 });
 
