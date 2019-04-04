@@ -27,6 +27,10 @@ import {
   DELETE_PROJECT_DONE,
   LIKE_SPOT,
   SET_LIKE_SPOT_DONE,
+  FETCH_FAVORITE_SPOT_IDS,
+  SET_FAVORITE_SPOT_IDS_LOADING,
+  SET_FAVORITE_SPOT_IDS_DONE,
+  SET_EXPLORING_SPOT_ID,
 } from './constants';
 
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
@@ -128,6 +132,11 @@ export const exploreNextSpot = () => ({
   type: EXPLORE_NEXT_SPOT,
 });
 
+export const setExploringSpotId = (id) => ({
+  type: SET_EXPLORING_SPOT_ID,
+  payload: id,
+});
+
 export const fetchOwnProjects = () => ({
   type: FETCH_OWN_PROJECTS,
 });
@@ -191,5 +200,21 @@ export const setLikeSpotDone = (error, id) => ({
   payload: {
     error,
     id,
+  },
+});
+
+export const fetchFavoriteSpotIds = () => ({
+  type: FETCH_FAVORITE_SPOT_IDS,
+});
+
+export const setFavoriteSpotIdsLoading = () => ({
+  type: SET_FAVORITE_SPOT_IDS_LOADING,
+});
+
+export const setFavoriteSpotIdsDone = (error, ids) => ({
+  type: SET_FAVORITE_SPOT_IDS_DONE,
+  payload: {
+    error,
+    ids,
   },
 });

@@ -13,7 +13,6 @@ import {
   SET_LOGIN_DONE,
   SET_REGISTER_LOADING,
   SET_REGISTER_DONE,
-  EXPLORE_NEXT_SPOT,
   SET_LOGIN_STATUS_LOADING,
   SET_LOGIN_STATUS_DONE,
 
@@ -25,7 +24,11 @@ import {
   // delete project
   DELETE_PROJECT_LOADING,
   DELETE_PROJECT_DONE,
+
+  SET_FAVORITE_SPOT_IDS_LOADING,
   SET_LIKE_SPOT_DONE,
+  SET_FAVORITE_SPOT_IDS_DONE,
+  SET_EXPLORING_SPOT_ID,
 } from './constants';
 
 const initialState = fromJS({
@@ -41,7 +44,9 @@ const initialState = fromJS({
   deleteProjectMeta: META,
   user: null,
   ownProjects: [],
-  exploringSpotsResultIndex: 0,
+  exploringSpotId: 0,
+  setFavoriteSpotIdsMeta: META,
+  favoriteSpotIds: [],
 });
 
 function spotLightReducer(state = initialState, action) {
@@ -68,8 +73,7 @@ function spotLightReducer(state = initialState, action) {
 
     case SET_SPOTS_LOADING:
       return state
-        .update('setSpotsMeta', updateMetaLoading)
-        .set('exploringSpotsResultIndex', initialState.get('exploringSpotsResultIndex'));
+        .update('setSpotsMeta', updateMetaLoading);
 
     case SET_SPOTS_DONE: {
       const {
@@ -83,7 +87,8 @@ function spotLightReducer(state = initialState, action) {
       return state
         .mergeDeepIn(['spots'], fromJS(entities.spots))
         .set('spotsResult', fromJS(result))
-        .update('setSpotsMeta', updateMetaDone);
+        .update('setSpotsMeta', updateMetaDone)
+        .set('exploringSpotId', result[0]);
     }
 
     case SET_LOGIN_LOADING:
@@ -137,12 +142,8 @@ function spotLightReducer(state = initialState, action) {
         .update('loginStatusMeta', updateMetaDone);
     }
 
-    case EXPLORE_NEXT_SPOT:
-      return state
-        .update(
-          'exploringSpotsResultIndex',
-          (id) => (id + 1) % state.get('spotsResult').size,
-        );
+    case SET_EXPLORING_SPOT_ID:
+      return state.set('exploringSpotId', action.payload);
 
     case SET_OWN_PROJECTS_LOADING:
       return state.update('ownProjectsMeta', updateMetaLoading);
@@ -195,6 +196,19 @@ function spotLightReducer(state = initialState, action) {
       }
       return state
         .updateIn(['spots', String(id), 'like_num'], (likeNum) => likeNum + 1);
+    }
+
+    case SET_FAVORITE_SPOT_IDS_LOADING:
+      return state.update('setFavoriteSpotIdsMeta', updateMetaLoading);
+
+    case SET_FAVORITE_SPOT_IDS_DONE: {
+      const { error, ids } = action.payload;
+      if (error) {
+        return state.update('setFavoriteSpotIdsMeta', updateMetaError);
+      }
+      return state
+        .set('favoriteSpotIds', fromJS(ids))
+        .update('setFavoriteSpotIdsMeta', updateMetaError);
     }
 
     default:
