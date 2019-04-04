@@ -1,4 +1,3 @@
-
 const YELLOW = '#F9D94A';
 
 const SpotlightTheme = {
@@ -8,3 +7,6 @@ const SpotlightTheme = {
 export const defaultTheme = {
   ...SpotlightTheme,
 };
+
+export const GRAY = '#dbdcdb';
+export const GRAY_DARK = '#c4c4c4';
