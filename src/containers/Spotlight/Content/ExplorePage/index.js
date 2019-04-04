@@ -1,16 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
-import { selectExploringSpot, selectSpotsMeta } from 'containers/Spotlight/selectors';
-import { exploreNextSpot, fetchSpots } from 'containers/Spotlight/actions';
+import {
+  selectExploringSpot,
+  selectSpotsMeta,
+  selectFavoriteSpotIdsMeta,
+} from 'containers/Spotlight/selectors';
+import {
+  exploreNextSpot,
+  fetchSpots,
+  likeSpot,
+  fetchFavoriteSpotIds,
+} from 'containers/Spotlight/actions';
 import Spinner from 'components/Spinner';
 import { PAGE_NAME } from 'Styled/Settings/constants';
-import ZoneMene from './ZoneMenu';
+import ZoneMenu from './ZoneMenu';
+import { zoneReducer } from './reducer';
+import { zones as zonesData } from './constants';
 
 import {
   Container,
@@ -26,25 +37,35 @@ import {
   SearchInput,
   ZonesRow,
   ZoneLabel,
+  ButtonLabel,
+  SpotName,
+  SpotLikes,
 } from './Styled';
 
 const ExplorePage = (props) => {
   const {
     spot,
     handleSwipeLeft,
-    handleSwipeRight,
+    createHandleSwipeRight,
     handleFetchSpots,
     setSpotsMeta,
     location,
     history,
+    handleFetchFavoriteSpotIds,
+    favoriteSpotIdsMeta,
   } = props;
 
-  const zones = ['新竹市', '高雄市'];
+  const [zonesState, dispatch] = useReducer(zoneReducer, fromJS(zonesData));
+  const selectedZones = zonesState
+    .filter((zone) => zone.get('selected'))
+    .map((zone) => zone.get('name'))
+    .toList()
+    .toJS();
 
   const [keyword, setKeyword] = useState('');
   const handleSearchInputKeyUp = (event) => {
     if (event.key === 'Enter') {
-      handleFetchSpots({ kw: keyword, zones });
+      handleFetchSpots({ kw: keyword, zones: selectedZones });
       event.currentTarget.blur();
     }
   };
@@ -53,12 +74,22 @@ const ExplorePage = (props) => {
     if (!setSpotsMeta.get('isLoading')) {
       handleFetchSpots();
     }
+    if (!favoriteSpotIdsMeta.get('isLoading')) {
+      handleFetchFavoriteSpotIds();
+    }
   }, []);
 
   const query = queryString.parse(location.search);
 
   if (query.menu === 'zone') {
-    return <ZoneMene location={location} history={history} />;
+    return (
+      <ZoneMenu
+        location={location}
+        history={history}
+        zonesState={zonesState}
+        dispatch={dispatch}
+      />
+    );
   }
 
   return (
@@ -79,7 +110,7 @@ const ExplorePage = (props) => {
         </SearchBar>
       </SearchRow>
       <ZonesRow>
-        {zones.map((zone) => (
+        {selectedZones.map((zone) => (
           <ZoneLabel key={zone}>
             {zone}
             <i className="fas fa-times" />
@@ -95,15 +126,28 @@ const ExplorePage = (props) => {
                 <Card>
                   <CardImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
                   <CardInfo>
-                    {spot.get('name')}
-                    <i className="fas fa-heart">666</i>
+                    <SpotName>{spot.get('name')}</SpotName>
+                    <SpotLikes>
+                      {spot.get('like_num')}
+                      人收藏
+                    </SpotLikes>
                   </CardInfo>
                 </Card>
               </Link>
             </CardRow>
             <ButtonRow>
-              <Button onClick={handleSwipeLeft}>跳過</Button>
-              <Button onClick={handleSwipeRight}>想去</Button>
+              <ButtonLabel>
+                <Button onClick={handleSwipeLeft}>
+                  <i className="fas fa-times" />
+                </Button>
+                <span>跳過</span>
+              </ButtonLabel>
+              <ButtonLabel>
+                <Button onClick={createHandleSwipeRight(spot.get('spot_id'))}>
+                  <i className="fas fa-heart" />
+                </Button>
+                <span>想去</span>
+              </ButtonLabel>
             </ButtonRow>
           </React.Fragment>
         )
@@ -115,22 +159,29 @@ const ExplorePage = (props) => {
 ExplorePage.propTypes = {
   spot: PropTypes.instanceOf(Map),
   handleSwipeLeft: PropTypes.func.isRequired,
-  handleSwipeRight: PropTypes.func.isRequired,
+  createHandleSwipeRight: PropTypes.func.isRequired,
   handleFetchSpots: PropTypes.func.isRequired,
   setSpotsMeta: PropTypes.object,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  handleFetchFavoriteSpotIds: PropTypes.func.isRequired,
+  favoriteSpotIdsMeta: PropTypes.instanceOf(Map).isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   spot: selectExploringSpot(),
   setSpotsMeta: selectSpotsMeta(),
+  favoriteSpotIdsMeta: selectFavoriteSpotIdsMeta(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleSwipeLeft: () => dispatch(exploreNextSpot()),
-  handleSwipeRight: () => dispatch(exploreNextSpot()),
+  createHandleSwipeRight: (spotId) => () => {
+    dispatch(likeSpot(spotId));
+    dispatch(exploreNextSpot());
+  },
   handleFetchSpots: ({ kw, zones } = {}) => dispatch(fetchSpots({ kw, zones })),
+  handleFetchFavoriteSpotIds: () => dispatch(fetchFavoriteSpotIds()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExplorePage));

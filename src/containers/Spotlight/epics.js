@@ -8,6 +8,8 @@ import {
   flatMap,
   catchError,
   startWith,
+  distinct,
+  map,
 } from 'rxjs/operators';
 import message from 'antd/lib/message';
 import {
@@ -20,6 +22,10 @@ import {
   FETCH_OWN_PROJECTS,
   SUBMIT_CREATE_PROJECT,
   SUBMIT_DELETE_PROJECT,
+  LIKE_SPOT,
+  FETCH_FAVORITE_SPOT_IDS,
+  EXPLORE_NEXT_SPOT,
+  KEY_REDUCER,
 } from './constants';
 import {
   setSpotLoading,
@@ -39,6 +45,10 @@ import {
   fetchOwnProjects,
   deleteProjectLoading,
   deleteProjectDone,
+  setLikeSpotDone,
+  setFavoriteSpotIdsDone,
+  setFavoriteSpotIdsLoading,
+  setExploringSpotId,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -255,6 +265,68 @@ const fetchLoginStatusEpic = (action$, state$, { request, fetchErrorEpic }) => (
   )
 );
 
+const likeSpotEpic = (action$, state$, { request }) => (
+  action$.pipe(
+    ofType(LIKE_SPOT),
+    flatMap((action) => request({
+      method: 'post',
+      url: `/like/spot/${action.payload}`,
+    }).pipe(
+      flatMap((res) => of(
+        res.status === 'success'
+          ? setLikeSpotDone(null, action.payload)
+          : setLikeSpotDone(res),
+      )),
+    )),
+  )
+);
+
+const fetchFavoriteSpotIdsEpic = (action$, state$, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_FAVORITE_SPOT_IDS),
+    switchMap(() => request({
+      method: 'get',
+      url: '/like/spots',
+    }).pipe(
+      flatMap((res) => {
+        if (res.status === 'success') {
+          return of(
+            setFavoriteSpotIdsDone(null, res.content.map((row) => row.spot_id)),
+          );
+        }
+        return of(setFavoriteSpotIdsDone(res));
+      }),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setFavoriteSpotIdsDone(error),
+      )),
+      startWith(setFavoriteSpotIdsLoading()),
+    )),
+  )
+);
+
+const exploreNextSpotEpic = (action$, state$) => (
+  action$.pipe(
+    ofType(EXPLORE_NEXT_SPOT),
+    map(() => {
+      const state = state$.value.get(KEY_REDUCER);
+      const favoriteSpotIds = state.get('favoriteSpotIds');
+      const spotIds = state.get('spotsResult');
+      const exploringSpotId = state.get('exploringSpotId');
+      const nextSpot = spotIds
+        .slice(spotIds.indexOf(exploringSpotId) + 1)
+        .map((id) => state.getIn(['spots', String(id)]))
+        .find((spot) => !favoriteSpotIds.includes(spot.get('spot_id')));
+
+      if (nextSpot) {
+        return setExploringSpotId(nextSpot.get('spot_id'));
+      }
+
+      return setExploringSpotId(exploringSpotId);
+    }),
+  )
+);
+
 export default [
   setInit,
   fetchOwnProjectsEpic,
@@ -265,4 +337,7 @@ export default [
   fetchLoginStatusEpic,
   createProjectEpic,
   deleteProjectEpic,
+  likeSpotEpic,
+  fetchFavoriteSpotIdsEpic,
+  exploreNextSpotEpic,
 ];

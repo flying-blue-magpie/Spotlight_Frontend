@@ -31,18 +31,15 @@ export const selectUser = () => createSelector(
   (spotlightState) => spotlightState.get('user'),
 );
 
-export const selectExploringSpotsResultIndex = () => createSelector(
+export const selectExploringSpotId = () => createSelector(
   selectSpotlight,
-  (spotlightState) => spotlightState.get('exploringSpotsResultIndex'),
+  (spotlightState) => spotlightState.get('exploringSpotId'),
 );
 
 export const selectExploringSpot = () => createSelector(
   selectSpotlight,
-  selectExploringSpotsResultIndex(),
-  (spotlightState, exploringSpotsResultIndex) => {
-    const index = String(spotlightState.get('spotsResult').get(exploringSpotsResultIndex));
-    return spotlightState.getIn(['spots', index], Map());
-  },
+  selectExploringSpotId(),
+  (spotlightState, spotId) => spotlightState.getIn(['spots', String(spotId)], Map()),
 );
 
 export const selectLoginStatusMeta = () => createSelector(
@@ -58,4 +55,9 @@ export const selectOwnProjects = () => createSelector(
 export const selectOwnProjectsMeta = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('ownProjectsMeta'),
+);
+
+export const selectFavoriteSpotIdsMeta = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('setFavoriteSpotIdsMeta'),
 );

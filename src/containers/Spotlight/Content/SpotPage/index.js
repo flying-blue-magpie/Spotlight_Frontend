@@ -14,19 +14,36 @@ const Feature = styled.div`
 
 const FeatureImage = styled.img`
   display: block;
-  height: 220px;
+  height: 150px;
   width: 100%;
   object-fit: cover;
 `;
 
 const FeatureInfo = styled.div`
-  position: absolute;
-  width: calc(100% - 2 * 12px);
-  bottom: 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 12px;
-  background-color: rgba(255, 255, 255, .7);
+  font-size: 16px;
+`;
+
+const Title = styled.div`
+  padding: 0 12px;
+  margin-bottom: 6px;
+  font-size: 15px;
+`;
+
+const LikeButton = styled.i`
+  margin-right: 3px;
+`;
+
+const Paragraph = styled.p`
+  padding: 0 12px;
+  margin-bottom: 24px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const SpotPage = ({
@@ -53,19 +70,24 @@ const SpotPage = ({
         <FeatureImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
         <FeatureInfo>
           {spot.get('name')}
-          <i className="fas fa-heart">666</i>
+          <label>
+            <LikeButton className="fas fa-heart" />
+            666
+          </label>
         </FeatureInfo>
       </Feature>
-      <div>景點介紹</div>
-      <p>
+      <Title>景點介紹</Title>
+      <Paragraph>
         {spot.get('describe')}
-      </p>
-      <div>地址</div>
-      <p>{spot.get('address')}</p>
-      <div>電話</div>
-      <p>{spot.get('tel')}</p>
-      <div>網址</div>
-      <a href={spot.get('website')}>{spot.get('website')}</a>
+      </Paragraph>
+      <Title>地址</Title>
+      <Paragraph>{spot.get('address')}</Paragraph>
+      <Title>電話</Title>
+      <Paragraph>{spot.get('tel')}</Paragraph>
+      <Title>網址</Title>
+      <Paragraph>
+        <a href={spot.get('website')}>{spot.get('website')}</a>
+      </Paragraph>
     </div>
   );
 };

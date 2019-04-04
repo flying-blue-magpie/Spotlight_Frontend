@@ -5,31 +5,59 @@ export const Container = styled.div`
 
 export const Card = styled.div`
   display: block;
+  width: 250px;
 `;
 
 export const CardImage = styled.img`
-  width: 250px;
-  height: 250px;
+  width: 100%;
+  height: 210px;
   object-fit: cover;
 `;
 
 export const CardInfo = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 6px;
+  padding: 6px 12px;
   background: lightgray;
+`;
+
+export const SpotName = styled.span`
+  flex-grow: 1;
+  text-overflow: ellipsis;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
+export const SpotLikes = styled.span`
+  flex-shrink: 0;
 `;
 
 export const ButtonRow = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 36px;
+  margin-top: 16px;
 `;
 
 export const Button = styled.button`
-  display: inline-block;
-  padding: 6px 12px;
+  display: block;
+  width: 50px;
+  height: 50px;
   background: lightgray;
+  border-radius: 50%;
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 3px;
+`;
+
+export const ButtonLabel = styled.label`
+  margin-right: 16px;
+  text-align: center;
+  font-size: 14px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 `;
 
 export const CardRow = styled.div`
