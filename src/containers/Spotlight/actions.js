@@ -25,6 +25,8 @@ import {
   SUBMIT_DELETE_PROJECT,
   DELETE_PROJECT_LOADING,
   DELETE_PROJECT_DONE,
+  LIKE_SPOT,
+  SET_LIKE_SPOT_DONE,
 } from './constants';
 
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
@@ -176,5 +178,18 @@ export const deleteProjectDone = (error) => ({
   type: DELETE_PROJECT_DONE,
   payload: {
     error,
+  },
+});
+
+export const likeSpot = (id) => ({
+  type: LIKE_SPOT,
+  payload: id,
+});
+
+export const setLikeSpotDone = (error, id) => ({
+  type: SET_LIKE_SPOT_DONE,
+  payload: {
+    error,
+    id,
   },
 });
