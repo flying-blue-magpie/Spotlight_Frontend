@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
@@ -11,6 +11,8 @@ import { exploreNextSpot, fetchSpots } from 'containers/Spotlight/actions';
 import Spinner from 'components/Spinner';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import ZoneMene from './ZoneMenu';
+import { zoneReducer } from './reducer';
+import { zones as zonesData } from './constants';
 
 import {
   Container,
@@ -39,12 +41,17 @@ const ExplorePage = (props) => {
     history,
   } = props;
 
-  const zones = ['新竹市', '高雄市'];
+  const [zonesState, dispatch] = useReducer(zoneReducer, fromJS(zonesData));
+  const selectedZones = zonesState
+    .filter((zone) => zone.get('selected'))
+    .map((zone) => zone.get('name'))
+    .toList()
+    .toJS();
 
   const [keyword, setKeyword] = useState('');
   const handleSearchInputKeyUp = (event) => {
     if (event.key === 'Enter') {
-      handleFetchSpots({ kw: keyword, zones });
+      handleFetchSpots({ kw: keyword, zones: selectedZones });
       event.currentTarget.blur();
     }
   };
@@ -58,7 +65,14 @@ const ExplorePage = (props) => {
   const query = queryString.parse(location.search);
 
   if (query.menu === 'zone') {
-    return <ZoneMene location={location} history={history} />;
+    return (
+      <ZoneMene
+        location={location}
+        history={history}
+        zonesState={zonesState}
+        dispatch={dispatch}
+      />
+    );
   }
 
   return (
@@ -79,7 +93,7 @@ const ExplorePage = (props) => {
         </SearchBar>
       </SearchRow>
       <ZonesRow>
-        {zones.map((zone) => (
+        {selectedZones.map((zone) => (
           <ZoneLabel key={zone}>
             {zone}
             <i className="fas fa-times" />

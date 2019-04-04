@@ -1,23 +1,14 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { fromJS } from 'immutable';
-import { zones } from './constants';
+import { Map } from 'immutable';
 import { Region, ZoneLabel } from './Styled';
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'SELECT_ZONE':
-      return state.setIn([action.payload.zone, 'selected'], true);
-    case 'CANCEL_ZONE':
-      return state.setIn([action.payload.zone, 'selected'], false);
-    default:
-      return state;
-  }
-};
-
-const ZoneMenu = ({ history, location }) => {
-  const [zonesState, dispatch] = useReducer(reducer, fromJS(zones));
-
+const ZoneMenu = ({
+  history,
+  location,
+  zonesState,
+  dispatch,
+}) => {
   const regions = zonesState.map((zone) => zone.get('region')).toSet();
 
   return (
@@ -32,11 +23,11 @@ const ZoneMenu = ({ history, location }) => {
                 {zone.get('name')}
                 <input
                   type="checkbox"
-                  onClick={(event) => dispatch({
-                    type: event.currentTarget.value ? 'CANCEL_ZONE' : 'SELECT_ZONE',
+                  onChange={(event) => dispatch({
+                    type: event.currentTarget.checked ? 'SELECT_ZONE' : 'CANCEL_ZONE',
                     payload: { zone: zone.get('name') },
                   })}
-                  value={zone.get('selected')}
+                  checked={zone.get('selected', false)}
                 />
               </ZoneLabel>
             ))
@@ -54,6 +45,8 @@ const ZoneMenu = ({ history, location }) => {
 ZoneMenu.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  zonesState: PropTypes.instanceOf(Map).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default ZoneMenu;
