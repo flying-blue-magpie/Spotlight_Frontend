@@ -24,6 +24,8 @@ import {
   SUBMIT_DELETE_PROJECT,
   LIKE_SPOT,
   FETCH_FAVORITE_SPOT_IDS,
+  EXPLORE_NEXT_SPOT,
+  KEY_REDUCER,
 } from './constants';
 import {
   setSpotLoading,
@@ -46,6 +48,7 @@ import {
   setLikeSpotDone,
   setFavoriteSpotIdsDone,
   setFavoriteSpotIdsLoading,
+  setExploringSpotId,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -304,6 +307,28 @@ const fetchFavoriteSpotIdsEpic = (action$, state$, { request, fetchErrorEpic }) 
   )
 );
 
+const exploreNextSpotEpic = (action$, state$) => (
+  action$.pipe(
+    ofType(EXPLORE_NEXT_SPOT),
+    map(() => {
+      const state = state$.value.get(KEY_REDUCER);
+      const favoriteSpotIds = state.get('favoriteSpotIds');
+      const spotIds = state.get('spotsResult');
+      const exploringSpotId = state.get('exploringSpotId');
+      const nextSpot = spotIds
+        .slice(spotIds.indexOf(exploringSpotId) + 1)
+        .map((id) => state.getIn(['spots', String(id)]))
+        .find((spot) => !favoriteSpotIds.includes(spot.get('spot_id')));
+
+      if (nextSpot) {
+        return setExploringSpotId(nextSpot.get('spot_id'));
+      }
+
+      return setExploringSpotId(exploringSpotId);
+    }),
+  )
+);
+
 export default [
   setInit,
   fetchOwnProjectsEpic,
@@ -316,4 +341,5 @@ export default [
   deleteProjectEpic,
   likeSpotEpic,
   fetchFavoriteSpotIdsEpic,
+  exploreNextSpotEpic,
 ];
