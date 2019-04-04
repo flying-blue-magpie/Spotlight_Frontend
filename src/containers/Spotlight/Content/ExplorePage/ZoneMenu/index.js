@@ -6,13 +6,17 @@ import { Region, ZoneLabel } from './Styled';
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'SELECT_ZONE':
+      return state.setIn([action.payload.zone, 'selected'], true);
+    case 'CANCEL_ZONE':
+      return state.setIn([action.payload.zone, 'selected'], false);
     default:
       return state;
   }
 };
 
 const ZoneMenu = ({ history, location }) => {
-  const [zonesState] = useReducer(reducer, fromJS(zones));
+  const [zonesState, dispatch] = useReducer(reducer, fromJS(zones));
 
   const regions = zonesState.map((zone) => zone.get('region')).toSet();
 
@@ -28,6 +32,10 @@ const ZoneMenu = ({ history, location }) => {
                 {zone.get('name')}
                 <input
                   type="checkbox"
+                  onClick={(event) => dispatch({
+                    type: event.currentTarget.value ? 'CANCEL_ZONE' : 'SELECT_ZONE',
+                    payload: { zone: zone.get('name') },
+                  })}
                   value={zone.get('selected')}
                 />
               </ZoneLabel>
