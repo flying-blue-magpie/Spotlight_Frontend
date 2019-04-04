@@ -111,7 +111,10 @@ const ExplorePage = (props) => {
                   <CardImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
                   <CardInfo>
                     {spot.get('name')}
-                    <i className="fas fa-heart">666</i>
+                    <span>
+                      {spot.get('like_num')}
+                      人收藏
+                    </span>
                   </CardInfo>
                 </Card>
               </Link>
