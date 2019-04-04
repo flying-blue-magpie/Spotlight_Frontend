@@ -6,8 +6,17 @@ import { Map, fromJS } from 'immutable';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
-import { selectExploringSpot, selectSpotsMeta } from 'containers/Spotlight/selectors';
-import { exploreNextSpot, fetchSpots, likeSpot } from 'containers/Spotlight/actions';
+import {
+  selectExploringSpot,
+  selectSpotsMeta,
+  selectFavoriteSpotIdsMeta,
+} from 'containers/Spotlight/selectors';
+import {
+  exploreNextSpot,
+  fetchSpots,
+  likeSpot,
+  fetchFavoriteSpotIds,
+} from 'containers/Spotlight/actions';
 import Spinner from 'components/Spinner';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import ZoneMenu from './ZoneMenu';
@@ -42,6 +51,8 @@ const ExplorePage = (props) => {
     setSpotsMeta,
     location,
     history,
+    handleFetchFavoriteSpotIds,
+    favoriteSpotIdsMeta,
   } = props;
 
   const [zonesState, dispatch] = useReducer(zoneReducer, fromJS(zonesData));
@@ -62,6 +73,9 @@ const ExplorePage = (props) => {
   useEffect(() => {
     if (!setSpotsMeta.get('isLoading')) {
       handleFetchSpots();
+    }
+    if (!favoriteSpotIdsMeta.get('isLoading')) {
+      handleFetchFavoriteSpotIds();
     }
   }, []);
 
@@ -150,11 +164,14 @@ ExplorePage.propTypes = {
   setSpotsMeta: PropTypes.object,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  handleFetchFavoriteSpotIds: PropTypes.func.isRequired,
+  favoriteSpotIdsMeta: PropTypes.instanceOf(Map).isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   spot: selectExploringSpot(),
   setSpotsMeta: selectSpotsMeta(),
+  favoriteSpotIdsMeta: selectFavoriteSpotIdsMeta(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -164,6 +181,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(exploreNextSpot());
   },
   handleFetchSpots: ({ kw, zones } = {}) => dispatch(fetchSpots({ kw, zones })),
+  handleFetchFavoriteSpotIds: () => dispatch(fetchFavoriteSpotIds()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExplorePage));
