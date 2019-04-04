@@ -9,7 +9,7 @@ export const Card = styled.div`
 
 export const CardImage = styled.img`
   width: 250px;
-  height: 250px;
+  height: 210px;
   object-fit: cover;
 `;
 
