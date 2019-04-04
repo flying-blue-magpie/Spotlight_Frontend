@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { fromJS } from 'immutable';
 import { zones } from './constants';
+import { Region, ZoneLabel } from './Styled';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -19,14 +20,20 @@ const ZoneMenu = ({ history, location }) => {
     <div>
       {regions.map((region) => (
         <div key={region}>
-          <div>{region}</div>
-          <ul>
-            {zonesState
-              .filter((zone) => zone.get('region') === region)
-              .map((zone) => <li key={zone.get('name')}>{zone.get('name')}</li>)
-              .toList()
-            }
-          </ul>
+          <Region>{region}</Region>
+          {zonesState
+            .filter((zone) => zone.get('region') === region)
+            .map((zone) => (
+              <ZoneLabel key={zone.get('name')}>
+                {zone.get('name')}
+                <input
+                  type="checkbox"
+                  value={zone.get('selected')}
+                />
+              </ZoneLabel>
+            ))
+            .toList()
+          }
         </div>
       ))}
       <button type="button" onClick={() => history.push(location.pathname)}>
