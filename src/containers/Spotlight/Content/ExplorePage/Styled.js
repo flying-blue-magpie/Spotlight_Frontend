@@ -5,10 +5,11 @@ export const Container = styled.div`
 
 export const Card = styled.div`
   display: block;
+  width: 250px;
 `;
 
 export const CardImage = styled.img`
-  width: 250px;
+  width: 100%;
   height: 210px;
   object-fit: cover;
 `;
@@ -16,8 +17,20 @@ export const CardImage = styled.img`
 export const CardInfo = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 6px;
+  padding: 6px 12px;
   background: lightgray;
+`;
+
+export const SpotName = styled.span`
+  flex-grow: 1;
+  text-overflow: ellipsis;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
+export const SpotLikes = styled.span`
+  flex-shrink: 0;
 `;
 
 export const ButtonRow = styled.div`

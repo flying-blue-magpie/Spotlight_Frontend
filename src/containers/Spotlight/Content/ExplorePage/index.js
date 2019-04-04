@@ -29,6 +29,8 @@ import {
   ZonesRow,
   ZoneLabel,
   ButtonLabel,
+  SpotName,
+  SpotLikes,
 } from './Styled';
 
 const ExplorePage = (props) => {
@@ -110,11 +112,11 @@ const ExplorePage = (props) => {
                 <Card>
                   <CardImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
                   <CardInfo>
-                    {spot.get('name')}
-                    <span>
+                    <SpotName>{spot.get('name')}</SpotName>
+                    <SpotLikes>
                       {spot.get('like_num')}
                       人收藏
-                    </span>
+                    </SpotLikes>
                   </CardInfo>
                 </Card>
               </Link>
