@@ -8,6 +8,8 @@ import {
   flatMap,
   catchError,
   startWith,
+  distinct,
+  map,
 } from 'rxjs/operators';
 import message from 'antd/lib/message';
 import {
@@ -260,13 +262,15 @@ const fetchLoginStatusEpic = (action$, state$, { request, fetchErrorEpic }) => (
 const likeSpotEpic = (action$, state$, { request }) => (
   action$.pipe(
     ofType(LIKE_SPOT),
-    switchMap((action) => request({
+    map((action) => action.payload),
+    distinct(),
+    flatMap((spotId) => request({
       method: 'post',
-      url: `/like/spot/${action.payload}`,
+      url: `/like/spot/${spotId}`,
     }).pipe(
       flatMap((res) => of(
         res.status === 'success'
-          ? setLikeSpotDone(null, action.payload)
+          ? setLikeSpotDone(null, spotId)
           : setLikeSpotDone(res),
       )),
     )),
