@@ -9,12 +9,14 @@ import PersonalPage from 'containers/Spotlight/Header/PersonalPage';
 import DetailPlanningPage from 'containers/Spotlight/Header/PlanningPage/DetailPlanningPage';
 import CreateProjectPage from 'containers/Spotlight/Header/PlanningPage/CreateProjectPage';
 import SpotPage from 'containers/Spotlight/Header/SpotPage';
+import AddSpotToProjectPage from 'containers/Spotlight/Header/AddSpotToProjectPage';
+import AddSpotToProjectPlanPage from 'containers/Spotlight/Header/AddSpotToProjectPlanPage';
 import { routePathConfig } from 'containers/Spotlight/Content/Routes';
 
 export default () => (
   <Router history={history}>
     <Switch>
-      <Route exact path={routePathConfig.login} component={LoginPage} />
+      <Route exact path={routePathConfig.loginPagePath} component={LoginPage} />
       <Route exact path={routePathConfig.explorePagePath} component={ExplorePage} />
       <Route exact path={routePathConfig.planningPagePath} component={PlanningPage} />
       <Route exact path={routePathConfig.travelWallPagePath} component={TravelWallPage} />
@@ -22,6 +24,8 @@ export default () => (
       <Route exact path={routePathConfig.detailPlanningPagePath} component={DetailPlanningPage} />
       <Route exact path={routePathConfig.createProjectPagePath} component={CreateProjectPage} />
       <Route exact path={routePathConfig.spotPagePath} component={SpotPage} />
+      <Route exact path={routePathConfig.addSpotToProjectPagePath} component={AddSpotToProjectPage} />
+      <Route exact path={routePathConfig.addSpotToProjectPlanPagePath} component={AddSpotToProjectPlanPage} />
     </Switch>
   </Router>
 );

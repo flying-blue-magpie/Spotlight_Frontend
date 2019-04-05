@@ -10,9 +10,11 @@ import PersonalPage from 'containers/Spotlight/Content/PersonalPage';
 import DetailPlanningPage from 'containers/Spotlight/Content/PlanningPage/DetailPlanningPage';
 import CreateProjectPage from 'containers/Spotlight/Content/PlanningPage/CreateProjectPage';
 import SpotPage from 'containers/Spotlight/Content/SpotPage';
+import AddSpotToProjectPage from 'containers/Spotlight/Content/AddSpotToProjectPage';
+import AddSpotToProjectPlanPage from 'containers/Spotlight/Content/AddSpotToProjectPlanPage';
 
 export const routePathConfig = {
-  login: '/',
+  loginPagePath: '/',
   explorePagePath: `/${PAGE_NAME.EXPLORE}`,
   planningPagePath: `/${PAGE_NAME.PLANNING}`,
   travelWallPagePath: `/${PAGE_NAME.TRAVEL_WALL}`,
@@ -20,12 +22,14 @@ export const routePathConfig = {
   detailPlanningPagePath: `/${PAGE_NAME.DETAIL_PLANNING}/:projectId`,
   createProjectPagePath: `/${PAGE_NAME.CREATE_PROJECT}`,
   spotPagePath: `/${PAGE_NAME.EXPLORE}/:spotId`,
+  addSpotToProjectPagePath: `/${PAGE_NAME.EXPLORE}/:spotId/${PAGE_NAME.ADD_SPOT_TO_PROJECT}`,
+  addSpotToProjectPlanPagePath: `/${PAGE_NAME.EXPLORE}/:spotId/${PAGE_NAME.ADD_SPOT_TO_PROJECT}/:projectId`,
 };
 
 export default () => (
   <Router history={history}>
     <Switch>
-      <Route exact path={routePathConfig.login} component={LoginPage} />
+      <Route exact path={routePathConfig.loginPagePath} component={LoginPage} />
       <Route exact path={routePathConfig.explorePagePath} component={ExplorePage} />
       <Route exact path={routePathConfig.planningPagePath} component={PlanningPage} />
       <Route exact path={routePathConfig.travelWallPagePath} component={TravelWallPage} />
@@ -33,6 +37,8 @@ export default () => (
       <Route exact path={routePathConfig.detailPlanningPagePath} component={DetailPlanningPage} />
       <Route exact path={routePathConfig.createProjectPagePath} component={CreateProjectPage} />
       <Route exact path={routePathConfig.spotPagePath} component={SpotPage} />
+      <Route exact path={routePathConfig.addSpotToProjectPagePath} component={AddSpotToProjectPage} />
+      <Route exact path={routePathConfig.addSpotToProjectPlanPagePath} component={AddSpotToProjectPlanPage} />
     </Switch>
   </Router>
 );

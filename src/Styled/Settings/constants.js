@@ -10,6 +10,7 @@ export const PAGE_NAME = {
   DETAIL_PLANNING: '旅程內容',
   UPDATE_PLANNING: '修改旅程',
   CREATE_PROJECT: '增加旅程',
+  ADD_SPOT_TO_PROJECT: '加到我的行程',
 };
 
 export const mixinWidthWrapper = () => `
