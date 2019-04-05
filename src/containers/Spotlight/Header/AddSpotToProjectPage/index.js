@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import history from 'utils/history';
+import Context from 'containers/Spotlight/Context';
 import {
   HeaderContainer,
   HeaderLeftButtons,
@@ -9,19 +10,32 @@ import {
   HeaderRightButtons,
 } from '../Styled';
 
-const AddSpotToProjectPage = () => (
-  <HeaderContainer>
-    <HeaderLeftButtons>
-      <HeaderButton type="button" onClick={() => history.goBack()}>
-        <i className="fas fa-arrow-left" />
-      </HeaderButton>
-    </HeaderLeftButtons>
-    <HeaderTitle>
-      加到我的行程
-    </HeaderTitle>
-    <HeaderRightButtons />
-  </HeaderContainer>
-);
+const { SpotlightContext } = Context;
+
+const AddSpotToProjectPage = () => {
+  const { setIsNavVisible } = useContext(SpotlightContext);
+
+  useEffect(() => {
+    setIsNavVisible(false);
+    return () => {
+      setIsNavVisible(true);
+    };
+  }, []);
+
+  return (
+    <HeaderContainer>
+      <HeaderLeftButtons>
+        <HeaderButton type="button" onClick={() => history.goBack()}>
+          <i className="fas fa-arrow-left" />
+        </HeaderButton>
+      </HeaderLeftButtons>
+      <HeaderTitle>
+        加到我的行程
+      </HeaderTitle>
+      <HeaderRightButtons />
+    </HeaderContainer>
+  );
+};
 
 AddSpotToProjectPage.propTypes = {
 };
