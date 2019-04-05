@@ -9,6 +9,9 @@ import {
   LOGIN,
   SET_LOGIN_DONE,
   SET_LOGIN_LOADING,
+  LOGOUT,
+  SET_LOGOUT_DONE,
+  SET_LOGOUT_LOADING,
   REGISTER,
   SET_REGISTER_DONE,
   SET_REGISTER_LOADING,
@@ -113,6 +116,21 @@ export const setLoginDone = (error, user) => ({
   payload: {
     error,
     user,
+  },
+});
+
+export const logout = () => ({
+  type: LOGOUT,
+});
+
+export const setLogoutLoading = () => ({
+  type: SET_LOGOUT_LOADING,
+});
+
+export const setLogoutDone = (error) => ({
+  type: SET_LOGOUT_DONE,
+  payload: {
+    error,
   },
 });
 

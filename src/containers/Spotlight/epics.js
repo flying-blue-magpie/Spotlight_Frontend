@@ -16,6 +16,7 @@ import {
   FETCH_SPOT_BY_ID,
   FETCH_SPOTS,
   LOGIN,
+  LOGOUT,
   REGISTER,
   FETCH_LOGIN_STATUS,
   FETCH_OWN_PROJECTS,
@@ -35,6 +36,8 @@ import {
   setSpotsDone,
   setLoginLoading,
   setLoginDone,
+  setLogoutLoading,
+  setLogoutDone,
   setRegisterDone,
   setRegisterLoading,
   setLoginStatusDone,
@@ -268,6 +271,25 @@ const loginEpic = (action$, state$, { request, fetchErrorEpic }) => (
   )
 );
 
+const logoutEpic = (action$, stat$, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(LOGOUT),
+    switchMap(() => request({
+      method: 'get',
+      url: '/logout',
+    }).pipe(
+      flatMap(() => (
+        of(setLogoutDone(null))
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setLogoutDone(error),
+      )),
+      startWith(setLogoutLoading()),
+    )),
+  )
+);
+
 const registerEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(REGISTER),
@@ -405,6 +427,7 @@ export default [
   fetchSpotByIdEpic,
   fetchSpotsEpic,
   loginEpic,
+  logoutEpic,
   registerEpic,
   fetchLoginStatusEpic,
   createProjectEpic,

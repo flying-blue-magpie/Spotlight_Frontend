@@ -11,6 +11,8 @@ import {
   SET_SPOTS_DONE,
   SET_LOGIN_LOADING,
   SET_LOGIN_DONE,
+  SET_LOGOUT_DONE,
+  SET_LOGOUT_LOADING,
   SET_REGISTER_LOADING,
   SET_REGISTER_DONE,
   SET_LOGIN_STATUS_LOADING,
@@ -50,6 +52,7 @@ const initialState = fromJS({
   spotsResult: [],
 
   loginMeta: META,
+  logoutMeta: META,
   registerMeta: META,
   loginStatusMeta: META,
   ownProjectsMeta: META,
@@ -124,6 +127,19 @@ function spotLightReducer(state = initialState, action) {
       return state
         .set('user', user && fromJS(user))
         .update('loginMeta', user === null ? updateMetaError : updateMetaDone);
+    }
+
+    case SET_LOGOUT_LOADING:
+      return state.update('logoutMeta', updateMetaLoading);
+
+    case SET_LOGOUT_DONE: {
+      const { error } = action.payload;
+      if (error) {
+        return state.update('logoutMeta', updateMetaError);
+      }
+      return state
+        .set('user', null)
+        .update('logoutMeta', updateMetaDone);
     }
 
     case SET_REGISTER_LOADING:
