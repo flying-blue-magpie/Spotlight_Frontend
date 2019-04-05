@@ -59,7 +59,6 @@ const DetailPlanningPage = (props) => {
       <div className="detail-planning__cover">
         <div className="detail-planning__cover-title">
           <span>{name}</span>
-          <i className="fas fa-pen icon__pen" />
         </div>
         <div className="detail-planning__cover-period">
           {`${startDay} - ${endDay} / ${days}天`}
