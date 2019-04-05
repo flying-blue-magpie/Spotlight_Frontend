@@ -8,7 +8,6 @@ import {
   flatMap,
   catchError,
   startWith,
-  distinct,
   map,
 } from 'rxjs/operators';
 import message from 'antd/lib/message';
