@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Map, List } from 'immutable';
+import { withRouter } from 'react-router';
 
 import Spinner from 'components/Spinner';
 import {
@@ -26,6 +27,7 @@ const AddSpotToProjectPage = ({
   ownProjectsMeta,
   handleFetchOwnProjects,
   ownProjects,
+  location,
 }) => {
   useEffect(() => {
     if (!ownProjectsMeta.get('isLoaded')) {
@@ -41,7 +43,10 @@ const AddSpotToProjectPage = ({
     <div>
       <div>
         {ownProjects.map((project) => (
-          <Project key={project.get('proj_id')}>
+          <Project
+            key={project.get('proj_id')}
+            to={`${location.pathname}/${project.get('proj_id')}`}
+          >
             <div>{project.get('name')}</div>
             <div>
               {formatDate(new Date(project.get('start_day')))}
@@ -65,6 +70,7 @@ AddSpotToProjectPage.propTypes = {
   ownProjectsMeta: PropTypes.instanceOf(Map).isRequired,
   handleFetchOwnProjects: PropTypes.func.isRequired,
   ownProjects: PropTypes.instanceOf(List).isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -77,4 +83,4 @@ const mapDispatchToProps = (dispatch) => ({
   handleDeleteProject: (projectId) => dispatch(submitDeleteProject(projectId)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddSpotToProjectPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddSpotToProjectPage));
