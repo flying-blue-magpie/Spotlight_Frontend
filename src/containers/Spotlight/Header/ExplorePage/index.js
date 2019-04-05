@@ -5,34 +5,34 @@ import queryString from 'query-string';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import {
   HeaderContainer,
-  Title,
-  LinkButton,
-  LeftButtons,
-  RightButtons,
-} from './Styled';
+  HeaderTitle,
+  HeaderLinkButton,
+  HeaderLeftButtons,
+  HeaderRightButtons,
+} from '../Styled';
 
 const ExplorePageHeader = ({ location }) => {
   const { menu } = queryString.parse(location.search);
 
   return (
     <HeaderContainer>
-      <LeftButtons>
+      <HeaderLeftButtons>
         {menu === 'zone' &&
-          <LinkButton to={`/${PAGE_NAME.EXPLORE}`}>
+          <HeaderLinkButton to={`/${PAGE_NAME.EXPLORE}`}>
             <i className="fas fa-arrow-left" />
-          </LinkButton>
+          </HeaderLinkButton>
         }
-      </LeftButtons>
-      <Title>
+      </HeaderLeftButtons>
+      <HeaderTitle>
         {menu === 'zone' ? '縣市選擇' : PAGE_NAME.EXPLORE}
-      </Title>
-      <RightButtons>
+      </HeaderTitle>
+      <HeaderRightButtons>
         {menu === 'zone' &&
-          <LinkButton to={`/${PAGE_NAME.EXPLORE}`}>
+          <HeaderLinkButton to={`/${PAGE_NAME.EXPLORE}`}>
             <i className="fas fa-check" />
-          </LinkButton>
+          </HeaderLinkButton>
         }
-      </RightButtons>
+      </HeaderRightButtons>
     </HeaderContainer>
   );
 };
