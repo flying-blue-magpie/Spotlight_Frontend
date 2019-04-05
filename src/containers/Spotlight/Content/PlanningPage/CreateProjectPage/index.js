@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Context from 'containers/Spotlight/Context';
+import InputBox from 'components/InputBox';
 
 const { SpotlightContext } = Context;
 
@@ -49,18 +50,19 @@ const CreateProjectPage = () => {
   };
   return (
     <StyledCreateProjectPage>
-      <div className="create-project__input-wrapper">
-        <div className="create-project__label-box"><span>旅程名稱</span></div>
-        <input type="text" className="create-project__input" onChange={handleOnNameChange} />
-      </div>
-      <div className="create-project__input-wrapper">
-        <div className="create-project__label-box"><span>出發日期</span></div>
-        <input type="date" className="create-project__input" onChange={handleOnStartDayChange} />
-      </div>
-      <div className="create-project__input-wrapper">
-        <div className="create-project__label-box"><span>天數</span></div>
-        <input type="text" className="create-project__input" onChange={handleOnDaysChange} />
-      </div>
+      <InputBox
+        title="旅程名稱"
+        handleOnChange={handleOnNameChange}
+      />
+      <InputBox
+        title="出發日期"
+        inputType="date"
+        handleOnChange={handleOnStartDayChange}
+      />
+      <InputBox
+        title="天數"
+        handleOnChange={handleOnDaysChange}
+      />
     </StyledCreateProjectPage>
   );
 };
