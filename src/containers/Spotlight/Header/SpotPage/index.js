@@ -17,7 +17,7 @@ const SpotPage = ({ location }) => (
       </LinkButton>
     </LeftButtons>
     <RightButtons>
-      <LinkButton to={`${location.pathname}#test`}>
+      <LinkButton to={`${location.pathname}/${PAGE_NAME.ADD_SPOT_TO_PROJECT}`}>
         <i className="fas fa-plus" />
       </LinkButton>
     </RightButtons>
