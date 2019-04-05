@@ -1,10 +1,16 @@
 import React, { useContext, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { Map } from 'immutable';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import history from 'utils/history';
 import {
   HeaderContainer,
 } from 'containers/Spotlight/Header/Styled';
+import {
+  submitUpdateProject,
+} from 'containers/Spotlight/actions';
 import Context from 'containers/Spotlight/Context';
 
 const { SpotlightContext } = Context;
@@ -13,7 +19,12 @@ const UpdatePlanningPage = (props) => {
   const context = useContext(SpotlightContext);
   const {
     setIsNavVisible,
+    setUpdateProject,
+    updateProject,
   } = context;
+  const {
+    handleSubmitUpdateProject,
+  } = props;
   useEffect(() => {
     setIsNavVisible(false);
     return () => {
@@ -33,11 +44,15 @@ const UpdatePlanningPage = (props) => {
     const searchParams = new URLSearchParams(window.location.search);
     const day = searchParams.get('day');
     const { projectId } = props.match.params;
+
+    handleSubmitUpdateProject(projectId, updateProject);
+    setUpdateProject(Map());
+
     history.push({
       pathname: `/${PAGE_NAME.DETAIL_PLANNING}/${projectId}`,
       search: `?day=${day}`,
     });
-  }, []);
+  }, [updateProject]);
   return (
     <HeaderContainer>
       <div className="header-container__icon-wrapper icon-left">
@@ -61,10 +76,20 @@ const UpdatePlanningPage = (props) => {
 
 UpdatePlanningPage.propTypes = {
   match: PropTypes.object,
+  handleSubmitUpdateProject: PropTypes.func,
 };
 
 UpdatePlanningPage.defaultProps = {
   match: {},
+  handleSubmitUpdateProject: () => { },
 };
 
-export default UpdatePlanningPage;
+const mapStateToProps = createStructuredSelector({
+
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleSubmitUpdateProject: (projectId, updateProject) => dispatch(submitUpdateProject(projectId, updateProject)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UpdatePlanningPage);

@@ -25,6 +25,7 @@ import {
   FETCH_FAVORITE_SPOT_IDS,
   EXPLORE_NEXT_SPOT,
   KEY_REDUCER,
+  SUBMIT_UPDATE_PROJECT,
 } from './constants';
 import {
   setSpotLoading,
@@ -39,9 +40,18 @@ import {
   setLoginStatusLoading,
   setOwnProjectsDone,
   setOwnProjectsLoading,
+
+  // create project
   createProjectDone,
   createProjectLoading,
+
+  // update project
+  updateProjectDone,
+  updateProjectLoading,
+
   fetchOwnProjects,
+
+  // delete project
   deleteProjectLoading,
   deleteProjectDone,
   setLikeSpotDone,
@@ -98,6 +108,40 @@ const createProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
           );
         }),
         startWith(createProjectLoading()),
+      );
+    }),
+  )
+);
+
+// PUT /own/proj/<int:proj_id>
+const updateProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(SUBMIT_UPDATE_PROJECT),
+    switchMap((action) => {
+      const {
+        projectId,
+        updateProject,
+      } = action.payload;
+      return request({
+        method: 'put',
+        url: `/own/proj/${projectId}`,
+        data: updateProject.toJS(),
+      }).pipe(
+        flatMap((data) => {
+          message.success('更新成功');
+          return of(
+            updateProjectDone(null, data),
+            fetchOwnProjects(), // reload own projects after creation
+          );
+        }),
+        catchError((error) => {
+          message.error('更新失敗');
+          return fetchErrorEpic(
+            error,
+            updateProjectDone(error),
+          );
+        }),
+        startWith(updateProjectLoading()),
       );
     }),
   )
@@ -335,6 +379,7 @@ export default [
   registerEpic,
   fetchLoginStatusEpic,
   createProjectEpic,
+  updateProjectEpic,
   deleteProjectEpic,
   likeSpotEpic,
   fetchFavoriteSpotIdsEpic,

@@ -19,9 +19,18 @@ import {
   FETCH_OWN_PROJECTS,
   SET_OWN_PROJECTS_LOADING,
   SET_OWN_PROJECTS_DONE,
+
+  // create project
   SUBMIT_CREATE_PROJECT,
   CREATE_PROJECT_LOADING,
   CREATE_PROJECT_DONE,
+
+  // update project
+  SUBMIT_UPDATE_PROJECT,
+  UPDATE_PROJECT_LOADING,
+  UPDATE_PROJECT_DONE,
+
+  // delete project
   SUBMIT_DELETE_PROJECT,
   DELETE_PROJECT_LOADING,
   DELETE_PROJECT_DONE,
@@ -137,6 +146,7 @@ export const setExploringSpotId = (id) => ({
   payload: id,
 });
 
+// fetch own project
 export const fetchOwnProjects = () => ({
   type: FETCH_OWN_PROJECTS,
 });
@@ -153,6 +163,7 @@ export const setOwnProjectsDone = (error, ownProjects) => ({
   },
 });
 
+// create project
 export const submitCreateProject = (newProject) => ({
   type: SUBMIT_CREATE_PROJECT,
   payload: {
@@ -172,6 +183,27 @@ export const createProjectDone = (error, user) => ({
   },
 });
 
+// update project
+export const submitUpdateProject = (projectId, updateProject) => ({
+  type: SUBMIT_UPDATE_PROJECT,
+  payload: {
+    projectId,
+    updateProject,
+  },
+});
+
+export const updateProjectLoading = () => ({
+  type: UPDATE_PROJECT_LOADING,
+});
+
+export const updateProjectDone = (error) => ({
+  type: UPDATE_PROJECT_DONE,
+  payload: {
+    error,
+  },
+});
+
+// delete project
 export const submitDeleteProject = (projectId) => ({
   type: SUBMIT_DELETE_PROJECT,
   payload: {

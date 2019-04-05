@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import styled from 'styled-components';
 import InputBox from 'components/InputBox';
 import { connect } from 'react-redux';
@@ -16,6 +16,9 @@ import {
 import {
   fetchOwnProjects,
 } from 'containers/Spotlight/actions';
+import Context from 'containers/Spotlight/Context';
+
+const { SpotlightContext } = Context;
 
 const UpdatePlanningPageWrapper = styled.div`
   padding: 0px 15px;
@@ -27,17 +30,34 @@ const UpdatePlanningPage = ({
   ownProjects,
   handleFetchOwnProjects,
 }) => {
+  const context = useContext(SpotlightContext);
+  const {
+    setUpdateProject,
+  } = context;
   const {
     params: {
       projectId,
     },
   } = match;
+  const handleOnNameChange = useCallback((event) => {
+    const name = event.target.value;
+    setUpdateProject((updateProject) => updateProject.set('name', name));
+  }, []);
+  const handleOnDateChange = useCallback((event) => {
+    const starDay = event.target.value;
+    setUpdateProject((data) => data.set('start_day', moment(starDay).format('YYYY/MM/DD 00:00:00')));
+  }, []);
+
   const isLoaded = ownProjectsMeta.get('isLoaded');
   const isLoading = ownProjectsMeta.get('isLoading');
   useEffect(() => {
+    setUpdateProject(Map());
     if (!isLoaded) {
       handleFetchOwnProjects();
     }
+    return () => {
+      setUpdateProject(Map());
+    };
   }, []);
   if (isLoading) {
     return <Spinner />;
@@ -56,13 +76,13 @@ const UpdatePlanningPage = ({
       <InputBox
         title="旅程名稱"
         defaultValue={name}
-        handleOnChange={() => {}}
+        handleOnChange={handleOnNameChange}
       />
       <InputBox
         title="出發日期"
         inputType="date"
         defaultValue={startDay}
-        handleOnChange={() => {}}
+        handleOnChange={handleOnDateChange}
       />
     </UpdatePlanningPageWrapper>
   );
