@@ -3,17 +3,17 @@ import { withRouter } from 'react-router';
 import history from 'utils/history';
 import {
   HeaderContainer,
-  LeftButtons,
-  Button,
-} from './Styled';
+  HeaderLeftButtons,
+  HeaderButton,
+} from '../Styled';
 
 const AddSpotToProjectPage = () => (
   <HeaderContainer>
-    <LeftButtons>
-      <Button type="button" onClick={() => history.goBack()}>
+    <HeaderLeftButtons>
+      <HeaderButton type="button" onClick={() => history.goBack()}>
         <i className="fas fa-arrow-left" />
-      </Button>
-    </LeftButtons>
+      </HeaderButton>
+    </HeaderLeftButtons>
   </HeaderContainer>
 );
 

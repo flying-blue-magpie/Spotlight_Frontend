@@ -4,23 +4,23 @@ import { withRouter } from 'react-router';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import {
   HeaderContainer,
-  LeftButtons,
-  RightButtons,
-  LinkButton,
-} from './Styled';
+  HeaderLeftButtons,
+  HeaderRightButtons,
+  HeaderLinkButton,
+} from '../Styled';
 
 const SpotPage = ({ location }) => (
   <HeaderContainer>
-    <LeftButtons>
-      <LinkButton to={`/${PAGE_NAME.EXPLORE}`}>
+    <HeaderLeftButtons>
+      <HeaderLinkButton to={`/${PAGE_NAME.EXPLORE}`}>
         <i className="fas fa-arrow-left" />
-      </LinkButton>
-    </LeftButtons>
-    <RightButtons>
-      <LinkButton to={`${location.pathname}/${PAGE_NAME.ADD_SPOT_TO_PROJECT}`}>
+      </HeaderLinkButton>
+    </HeaderLeftButtons>
+    <HeaderRightButtons>
+      <HeaderLinkButton to={`${location.pathname}/${PAGE_NAME.ADD_SPOT_TO_PROJECT}`}>
         <i className="fas fa-plus" />
-      </LinkButton>
-    </RightButtons>
+      </HeaderLinkButton>
+    </HeaderRightButtons>
   </HeaderContainer>
 );
 
