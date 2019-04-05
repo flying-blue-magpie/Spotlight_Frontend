@@ -18,8 +18,14 @@ import {
 
   SET_OWN_PROJECTS_LOADING,
   SET_OWN_PROJECTS_DONE,
+
+  // create project
   CREATE_PROJECT_LOADING,
   CREATE_PROJECT_DONE,
+
+  // update project
+  UPDATE_PROJECT_LOADING,
+  UPDATE_PROJECT_DONE,
 
   // delete project
   DELETE_PROJECT_LOADING,
@@ -41,6 +47,7 @@ const initialState = fromJS({
   loginStatusMeta: META,
   ownProjectsMeta: META,
   createProjectMeta: META,
+  updateProjectMeta: META,
   deleteProjectMeta: META,
   user: null,
   ownProjects: [],
@@ -161,6 +168,7 @@ function spotLightReducer(state = initialState, action) {
         .update('ownProjectsMeta', updateMetaDone);
     }
 
+    // create project
     case CREATE_PROJECT_LOADING:
       return state.update('createProjectMeta', updateMetaLoading);
 
@@ -175,6 +183,22 @@ function spotLightReducer(state = initialState, action) {
         .update('createProjectMeta', updateMetaDone);
     }
 
+    // update project
+    case UPDATE_PROJECT_LOADING:
+      return state.update('updateProjectMeta', updateMetaLoading);
+
+    case UPDATE_PROJECT_DONE: {
+      const {
+        error,
+      } = action.payload;
+      if (error) {
+        return state.update('updateProjectMeta', updateMetaError);
+      }
+      return state
+        .update('updateProjectMeta', updateMetaDone);
+    }
+
+    // delete project
     case DELETE_PROJECT_LOADING:
       return state.update('deleteProjectMeta', updateMetaLoading);
 

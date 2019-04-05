@@ -14,9 +14,5 @@ export const DetailPlanningPageContainer = styled.div`
     .detail-planning__cover-period {
       font-size: 12px;
     }
-    .icon__pen {
-      font-size: 14px;
-      margin: 0px 10px;
-    }
   }
 `;

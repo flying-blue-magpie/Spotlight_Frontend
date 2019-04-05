@@ -1,28 +1,32 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import { DEFAULT_PROJECT } from './constants';
 
 const SpotlightContext = createContext();
 const { Provider, Consumer } = SpotlightContext;
 
 const useSelection = () => {
-  const [headerTitle, setHeaderTitle] = useState('');
   const [isNavVisible, setIsNavVisible] = useState(true);
 
   // create project
   const [newProject, setNewProject] = useState(fromJS(DEFAULT_PROJECT));
   const [isEditMode, setIsEditMode] = useState(false);
 
+  // update project
+  const [updateProject, setUpdateProject] = useState(Map());
+
   return {
-    headerTitle,
-    setHeaderTitle,
     isNavVisible,
     setIsNavVisible,
 
     // create project
     newProject,
     setNewProject,
+
+    // update project
+    updateProject,
+    setUpdateProject,
 
     isEditMode,
     setIsEditMode,
