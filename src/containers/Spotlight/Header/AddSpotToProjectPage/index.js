@@ -5,6 +5,8 @@ import {
   HeaderContainer,
   HeaderLeftButtons,
   HeaderButton,
+  HeaderTitle,
+  HeaderRightButtons,
 } from '../Styled';
 
 const AddSpotToProjectPage = () => (
@@ -14,6 +16,10 @@ const AddSpotToProjectPage = () => (
         <i className="fas fa-arrow-left" />
       </HeaderButton>
     </HeaderLeftButtons>
+    <HeaderTitle>
+      加到我的行程
+    </HeaderTitle>
+    <HeaderRightButtons />
   </HeaderContainer>
 );
 

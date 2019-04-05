@@ -31,7 +31,8 @@ export const HeaderContainer = styled.div`
 `;
 
 export const HeaderTitle = styled.div`
-  flex: 1;
+  flex-basis: 1;
+  flex-shrink: 0;
   text-align: center;
 `;
 
