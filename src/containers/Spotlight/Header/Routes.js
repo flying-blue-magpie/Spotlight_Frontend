@@ -15,7 +15,7 @@ import { routePathConfig } from 'containers/Spotlight/Content/Routes';
 export default () => (
   <Router history={history}>
     <Switch>
-      <Route exact path={routePathConfig.login} component={LoginPage} />
+      <Route exact path={routePathConfig.loginPagePath} component={LoginPage} />
       <Route exact path={routePathConfig.explorePagePath} component={ExplorePage} />
       <Route exact path={routePathConfig.planningPagePath} component={PlanningPage} />
       <Route exact path={routePathConfig.travelWallPagePath} component={TravelWallPage} />
