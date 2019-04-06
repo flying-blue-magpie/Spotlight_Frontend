@@ -63,13 +63,25 @@ export const ButtonRow = styled.div`
 
 export const Button = styled.button`
   display: block;
-  width: 50px;
-  height: 50px;
-  background: lightgray;
+  width: 60px;
+  height: 60px;
+  background: #fff;
   border-radius: 50%;
   font-size: 18px;
-  color: #fff;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  appearance: none;
+  border: 0;
+`;
+
+export const ButtonCrossIcon = styled.i`
+  font-size: 28px;
+  color: #333333;
+`;
+
+export const ButtonHeartIcon = styled.i`
+  font-size: 20px;
+  color: #EB715A;
 `;
 
 export const ButtonLabel = styled.label`

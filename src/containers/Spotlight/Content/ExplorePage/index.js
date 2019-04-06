@@ -42,6 +42,8 @@ import {
   SpotName,
   SpotLikes,
   ZoneLabelCrossIcon,
+  ButtonCrossIcon,
+  ButtonHeartIcon,
 } from './Styled';
 
 const ExplorePage = (props) => {
@@ -142,13 +144,13 @@ const ExplorePage = (props) => {
             <ButtonRow>
               <ButtonLabel>
                 <Button onClick={handleSwipeLeft}>
-                  <i className="fas fa-times" />
+                  <ButtonCrossIcon className="fas fa-times" />
                 </Button>
                 <span>跳過</span>
               </ButtonLabel>
               <ButtonLabel>
                 <Button onClick={createHandleSwipeRight(spot.get('spot_id'))}>
-                  <i className="fas fa-heart" />
+                  <ButtonHeartIcon className="fas fa-heart" />
                 </Button>
                 <span>想去</span>
               </ButtonLabel>
