@@ -90,6 +90,7 @@ const DateTimeInfo = (props) => {
       <Modal
         optionStyle={modalStyle}
         isVisible={isModalVisible}
+        heightGrowing
       >
         <TimePicker
           startTime={startTime}

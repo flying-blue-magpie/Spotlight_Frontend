@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 import Picker from 'react-mobile-picker-scroll';
 import {
@@ -7,12 +7,24 @@ import {
   MINUTES,
 } from 'containers/Spotlight/constants';
 
+const heightGrowingAnimation = keyframes`
+  from {
+    height: 10%;
+  }
+  to {
+    height: 100%;
+  }
+`;
+
 const TimePickerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background: white;
   width: 100%;
   height: 100%;
+  position: absolute;
+  bottom: 0;
+  animation: 0.2s ease-in-out ${heightGrowingAnimation};
   .time-picker__buttom-wrapper {
     height: 50px;
     background: ${(props) => props.theme.mainColor};
