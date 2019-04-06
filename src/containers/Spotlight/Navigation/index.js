@@ -5,19 +5,23 @@ import {
   mixinWidthWrapper,
 } from 'Styled/Settings/constants';
 import NavTab from 'components/NavTab';
+import {
+  NavIcon,
+} from 'containers/Spotlight/constants';
 
 const NavigationContainer = styled.div`
   display: flex;
   justify-content: space-around;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.16);
   ${mixinWidthWrapper()}
 `;
 
 const Navigation = () => (
   <NavigationContainer>
-    <NavTab title={PAGE_NAME.EXPLORE} />
-    <NavTab title={PAGE_NAME.PLANNING} />
-    <NavTab title={PAGE_NAME.TRAVEL_WALL} />
-    <NavTab title={PAGE_NAME.PERSONAL_PAGE} />
+    <NavTab title={PAGE_NAME.EXPLORE} iconPath={NavIcon.explore} />
+    <NavTab title={PAGE_NAME.PLANNING} iconPath={NavIcon.planning} />
+    <NavTab title={PAGE_NAME.TRAVEL_WALL} iconPath={NavIcon.travelWall} />
+    <NavTab title={PAGE_NAME.PERSONAL_PAGE} iconPath={NavIcon.personal} />
   </NavigationContainer>
 );
 

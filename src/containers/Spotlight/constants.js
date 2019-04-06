@@ -1,3 +1,16 @@
+import planningIconPath from 'assets/NavIcons/planning_icon.svg';
+import planningHoverIconPath from 'assets/NavIcons/planning_icon_hover.svg';
+
+import exploreIconPath from 'assets/NavIcons/explore_icon.svg';
+import exploreHoverIconPath from 'assets/NavIcons/explore_icon_hover.svg';
+
+import travelWallIconPath from 'assets/NavIcons/travel_wall_icon.svg';
+import travelWallHoverIconPath from 'assets/NavIcons/travel_wall_icon_hover.svg';
+
+import personalIconPath from 'assets/NavIcons/personal_icon.svg';
+import personalHoverIconPath from 'assets/NavIcons/personal_icon_hover.svg';
+
+
 export const KEY_REDUCER = 'spotlight';
 export const INIT = `${KEY_REDUCER}/INIT`;
 
@@ -63,6 +76,25 @@ export const DEFAULT_PLAN = {
 export const DEFAULT_ARRANGE = {
   spot_id: null,
   during: 0,
+};
+
+export const NavIcon = {
+  explore: {
+    normal: exploreIconPath,
+    hover: exploreHoverIconPath,
+  },
+  planning: {
+    normal: planningIconPath,
+    hover: planningHoverIconPath,
+  },
+  travelWall: {
+    normal: travelWallIconPath,
+    hover: travelWallHoverIconPath,
+  },
+  personal: {
+    normal: personalIconPath,
+    hover: personalHoverIconPath,
+  },
 };
 
 export const WEEKDAYS = '星期日_星期一_星期二_星期三_星期四_星期五_星期六'.split('_');
