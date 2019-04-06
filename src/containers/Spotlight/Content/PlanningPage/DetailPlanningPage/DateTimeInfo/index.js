@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import moment from 'moment';
 import Modal from 'components/Modal';
+import TimePicker from 'components/TimePicker';
 import {
   WEEKDAYS_SHORT,
 } from 'containers/Spotlight/constants';
+import {
+  selectIsModalVisible,
+} from 'containers/Spotlight/selectors';
+import {
+  setIsModalVisible,
+} from 'containers/Spotlight/actions';
+
+const modalStyle = {
+  bottom: '0px',
+  width: '100%',
+  height: '245px',
+};
 
 const StyledDateTimeInfo = styled.div`
   display: flex;
@@ -37,26 +52,37 @@ const DateTimeInfo = (props) => {
   const {
     startDay,
     plan,
+    isModalVisible,
+    handleSetModalVisible,
   } = props;
   const searchParams = new URLSearchParams(window.location.search);
   const day = parseInt(searchParams.get('day'), 10);
   const date = moment(startDay, 'YYYY-MM-DD').add(day - 1, 'days').format('YYYY年MM月DD日');
   const weekday = WEEKDAYS_SHORT[moment(startDay, 'YYYY-MM-DD').add(day - 1, 'days').get('weekday')];
   const startTime = moment(plan.getIn([day - 1, 'start_time']), 'HH:mm').format('HH:mm');
+  const handleShowModal = useCallback(() => {
+    handleSetModalVisible(true);
+  }, []);
+  const handleHideModal = useCallback(() => {
+    handleSetModalVisible(false);
+  }, []);
+
   return (
     <>
       <StyledDateTimeInfo>
         <div>{`${date} ${weekday}`}</div>
-        <div className="date-time-info__start-time-wrapper">
+        <div role="presentation" className="date-time-info__start-time-wrapper" onClick={handleShowModal}>
           <i className="far fa-clock date-time-info__clock-icon" />
           <span>{`出發時間 ${startTime}`}</span>
         </div>
       </StyledDateTimeInfo>
       <Modal
-        optionStyle={{ bottom: '0px' }}
-        isVisible={false}
+        optionStyle={modalStyle}
+        isVisible={isModalVisible}
       >
-        <div>123</div>
+        <TimePicker
+          handleOnCancel={handleHideModal}
+        />
       </Modal>
     </>
   );
@@ -64,12 +90,24 @@ const DateTimeInfo = (props) => {
 
 DateTimeInfo.propTypes = {
   startDay: PropTypes.string,
+  isModalVisible: PropTypes.bool,
   plan: PropTypes.instanceOf(List),
+  handleSetModalVisible: PropTypes.func,
 };
 
 DateTimeInfo.defaultProps = {
   startDay: '',
+  isModalVisible: false,
   plan: List(),
+  handleSetModalVisible: () => { },
 };
 
-export default DateTimeInfo;
+const mapStateToProps = createStructuredSelector({
+  isModalVisible: selectIsModalVisible(),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleSetModalVisible: (isVisible) => dispatch(setIsModalVisible(isVisible)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DateTimeInfo);

@@ -36,19 +36,42 @@ class Modal extends React.Component {
     const {
       isVisible,
     } = this.props;
-    if (isVisible) {
-      this.el = document.createElement('div');
+    this.el = document.createElement('div');
+    this.el.setAttribute('id', 'modal-root-element');
+    if (isVisible === true) {
       this.el.style.position = 'absolute';
       this.el.style.top = '0px';
       this.el.style.width = '100%';
       this.el.style.height = '100%';
       this.el.style.zIndex = '1';
+      this.el.style.display = '';
+    } else {
+      this.el.style = {};
+      this.el.style.display = 'none';
     }
   }
 
   componentDidMount() {
     if (this.el) {
       document.body.appendChild(this.el);
+    }
+  }
+
+  componentDidUpdate() {
+    const {
+      isVisible,
+    } = this.props;
+    const modalRootEl = document.getElementById('modal-root-element');
+    if (isVisible === true) {
+      this.el.style.position = 'absolute';
+      this.el.style.top = '0px';
+      this.el.style.width = '100%';
+      this.el.style.height = '100%';
+      this.el.style.zIndex = '1';
+      this.el.style.display = '';
+    } else {
+      this.el.style = {};
+      modalRootEl.style.display = 'none';
     }
   }
 
