@@ -5,20 +5,24 @@ export const Container = styled.div`
 
 export const Card = styled.div`
   display: block;
-  width: 250px;
+  width: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
 `;
 
 export const CardImage = styled.img`
   width: 100%;
-  height: 210px;
+  height: 240px;
   object-fit: cover;
 `;
 
 export const CardInfo = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 6px 12px;
-  background: lightgray;
+  align-items: center;
+  padding: 18px 18px;
+  background-color: #FFFFFF;
 `;
 
 export const SpotName = styled.span`
@@ -27,10 +31,28 @@ export const SpotName = styled.span`
   min-width: 0;
   white-space: nowrap;
   overflow: hidden;
+  font-size: 18px;
+  
+  &,
+  &:active,
+  &:focus,
+  &:visited,
+  &:hover {
+    color: #333333;
+  }
 `;
 
 export const SpotLikes = styled.span`
   flex-shrink: 0;
+  font-size: 14px;
+
+  &,
+  &:active,
+  &:focus,
+  &:visited,
+  &:hover {
+    color: #AAAAAA;
+  }
 `;
 
 export const ButtonRow = styled.div`
