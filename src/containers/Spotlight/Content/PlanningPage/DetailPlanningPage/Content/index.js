@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import ReactDragList from 'react-drag-list';
 import 'react-drag-list/assets/index.css';
 import { fromJS } from 'immutable';
+import mapPlusIconPath from 'assets/map_plus_icon.svg';
 import SpotCard, {
   HEIGHT_SPOT_CARD,
   HEIGHT_SPOT_TRAVEL_TIME,
@@ -49,10 +50,13 @@ const SpotOperator = styled.div`
     position: relative;
   }
   .operator__number-circle-border {
-    border: 1px solid grey;
+    border: 2px solid rgba(51, 51, 51, 1);
+    color: rgba(51, 51, 51, 1);
+    font-size: 16px;
+    font-weight: 500;
     border-radius: 100%;
-    width: 28px;
-    height: 28px;
+    width: 29px;
+    height: 29px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,13 +64,14 @@ const SpotOperator = styled.div`
     z-index: 1;
     background: white;
     &:hover {
-      background: #eee;
+      background: rgba(51, 51, 51, 1);
+      color: ${(props) => props.theme.mainColor};
     }
   }
   .operator__divider-line {
     position: absolute;
-    width: 1px;
-    background: black;
+    width: 2px;
+    background: rgba(170, 170, 170, 1);
     height: 40px;
   }
   .operator__divider-line-top {
@@ -82,8 +87,7 @@ const SpotOperator = styled.div`
     align-items: center;
   }
   .operator__map-marker-icon {
-    font-size: 30px;
-    color: #707070;
+    height: 33px;
     z-index: 1;
     background: white;
     cursor: pointer;
@@ -136,7 +140,7 @@ const Content = () => (
                 <div className="operator__divider-line operator__divider-line-bottom" />
               </div>
               <div className="operator__map-marker-wrapper">
-                <i className="fas fa-map-marker-alt operator__map-marker-icon" />
+                <img src={mapPlusIconPath} className="operator__map-marker-icon" alt="" />
               </div>
             </SpotOperator>
           ))

@@ -12,15 +12,22 @@ const StyledSpotCard = styled.div`
     display: flex;
   }
   .spot-card__card-body {
-    background: #D3D3D3;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 0px 15px;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+    border-radius: 10px;
+  }
+  .spot-card__card-body-spot-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
   }
   .spot-card__card-body-address {
     font-size: 12px;
+    color: rgba(170, 170, 170, 1);
   }
   .spot-card__start-end-time-wrapper {
     width: 60px;
@@ -28,6 +35,7 @@ const StyledSpotCard = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: rgba(51, 51, 51, 1);
   }
   .spot-card__travel-row-wrapper {
     display: flex;
@@ -39,11 +47,12 @@ const StyledSpotCard = styled.div`
     display: flex;
     align-items: center;
     font-size: 14px;
-    color: #707070;
+    color: rgba(170, 170, 170, 1);
     margin-left: 15px;
   }
   .spot-card__travel-time-icon {
     margin-right: 5px;
+    color: rgba(51, 51, 51, 1);
   }
 `;
 
@@ -56,7 +65,7 @@ const SpotCard = ({ spot }) => (
         <div>10:00</div>
       </div>
       <div className="spot-card__card-body">
-        <div>{spot.get('name')}</div>
+        <div className="spot-card__card-body-spot-title">{spot.get('name')}</div>
         <div className="spot-card__card-body-address">{spot.get('address')}</div>
       </div>
     </div>
