@@ -30,5 +30,6 @@ export const SpotlightContainer = styled.div`
     grid-area: navigation;
     display: flex;
     justify-content: center;
+    z-index: 1;
   }
 `;

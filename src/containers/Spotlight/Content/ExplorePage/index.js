@@ -34,12 +34,16 @@ import {
   SearchRow,
   SearchBar,
   SelectCountyButton,
+  SearchInputContainer,
   SearchInput,
   ZonesRow,
   ZoneLabel,
   ButtonLabel,
   SpotName,
   SpotLikes,
+  ZoneLabelCrossIcon,
+  ButtonCrossIcon,
+  ButtonHeartIcon,
 } from './Styled';
 
 const ExplorePage = (props) => {
@@ -100,20 +104,22 @@ const ExplorePage = (props) => {
             縣市選擇
             <i className="fas fa-caret-right" />
           </SelectCountyButton>
-          <SearchInput
-            type="text"
-            placeholder="你想去的景點或街道名稱"
-            value={keyword}
-            onChange={(event) => setKeyword(event.target.value)}
-            onKeyUp={handleSearchInputKeyUp}
-          />
+          <SearchInputContainer>
+            <SearchInput
+              type="text"
+              placeholder="搜尋景點關鍵字"
+              value={keyword}
+              onChange={(event) => setKeyword(event.target.value)}
+              onKeyUp={handleSearchInputKeyUp}
+            />
+          </SearchInputContainer>
         </SearchBar>
       </SearchRow>
       <ZonesRow>
         {selectedZones.map((zone) => (
           <ZoneLabel key={zone}>
             {zone}
-            <i className="fas fa-times" />
+            <ZoneLabelCrossIcon className="fas fa-times" />
           </ZoneLabel>
         ))}
       </ZonesRow>
@@ -138,13 +144,13 @@ const ExplorePage = (props) => {
             <ButtonRow>
               <ButtonLabel>
                 <Button onClick={handleSwipeLeft}>
-                  <i className="fas fa-times" />
+                  <ButtonCrossIcon className="fas fa-times" />
                 </Button>
                 <span>跳過</span>
               </ButtonLabel>
               <ButtonLabel>
                 <Button onClick={createHandleSwipeRight(spot.get('spot_id'))}>
-                  <i className="fas fa-heart" />
+                  <ButtonHeartIcon className="fas fa-heart" />
                 </Button>
                 <span>想去</span>
               </ButtonLabel>
