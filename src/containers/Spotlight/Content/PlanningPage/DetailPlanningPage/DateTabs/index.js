@@ -1,14 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import editDayIcon from 'assets/edit_day_icon.svg';
 import Tab from './Tab';
 
-const DateTabsWrapper = styled.div`
-  background: #e4e4e4;
-  height: 50px;
-  padding: 0px 10px;
+const DateTabsContainer = styled.div`
   display: flex;
-  overflow-x: auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+  position: relative;
+  .date-tab__wrapper {
+    display: flex;
+    height: 50px;
+    overflow-x: auto;
+    border-radius: 10px;
+    padding: 0px 15px;
+  }
+  .date-tab__edit-day-icon {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    right: 0px;
+    cursor: pointer;
+  }
 `;
 
 const DateTabs = (props) => {
@@ -17,17 +32,20 @@ const DateTabs = (props) => {
   } = props;
   const tabs = new Array(days).fill(0).map((x, index) => index);
   return (
-    <DateTabsWrapper>
-      {
-        tabs.map((tab) => (
-          <Tab
-            key={tab}
-            id={tab}
-            {...props}
-          />
-        ))
-      }
-    </DateTabsWrapper>
+    <DateTabsContainer>
+      <div className="date-tab__wrapper">
+        {
+          tabs.map((tab) => (
+            <Tab
+              key={tab}
+              id={tab}
+              {...props}
+            />
+          ))
+        }
+      </div>
+      <img src={editDayIcon} className="date-tab__edit-day-icon" alt="" />
+    </DateTabsContainer>
   );
 };
 
