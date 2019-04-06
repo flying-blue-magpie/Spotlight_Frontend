@@ -275,7 +275,7 @@ const logoutEpic = (action$, stat$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(LOGOUT),
     switchMap(() => request({
-      method: 'get',
+      method: 'post',
       url: '/logout',
     }).pipe(
       flatMap(() => (
