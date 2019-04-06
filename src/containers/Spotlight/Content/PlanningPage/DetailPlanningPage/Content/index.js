@@ -1,11 +1,17 @@
-import React from 'react';
-// import PropTypes from 'prop-types';
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 // http://front-ender.me/react-drag-list
 import ReactDragList from 'react-drag-list';
 import 'react-drag-list/assets/index.css';
 import { fromJS } from 'immutable';
+import { PAGE_NAME } from 'Styled/Settings/constants';
+import history from 'utils/history';
 import mapPlusIconPath from 'assets/map_plus_icon.svg';
+import {
+  findAttributeInEvent,
+} from 'utils/event';
+
 import SpotCard, {
   HEIGHT_SPOT_CARD,
   HEIGHT_SPOT_TRAVEL_TIME,
@@ -124,52 +130,72 @@ const mockSpotData = fromJS([
   },
 ]);
 
-const Content = () => (
-  <StyledContent>
-    <div className="content__spot-cards-wrapper">
-      <div>
-        {
-          mockSpotData.map((spot, index) => (
-            <SpotOperator key={spot.get('id')}>
-              <div className="operator__number-wrapper">
-                {
-                  Boolean(index) &&
-                  <div className="operator__divider-line operator__divider-line-top" />
-                }
-                <div className="operator__number-circle-border"><span>{spot.get('id') + 1}</span></div>
-                <div className="operator__divider-line operator__divider-line-bottom" />
-              </div>
-              <div className="operator__map-marker-wrapper">
-                <img src={mapPlusIconPath} className="operator__map-marker-icon" alt="" />
-              </div>
-            </SpotOperator>
-          ))
-        }
+const Content = (props) => {
+  const handleGoToAddSpot = useCallback((event) => {
+    const { projectId } = props.match.params;
+    const { search } = props.location;
+    const insertAfterIndex = findAttributeInEvent(event, 'data-index');
+    const addSpotToPlanPagePath = `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`;
+    history.push({
+      pathname: addSpotToPlanPagePath,
+      search,
+      state: { afterIndex: insertAfterIndex },
+    });
+  });
+  return (
+    <StyledContent>
+      <div className="content__spot-cards-wrapper">
+        <div>
+          {
+            mockSpotData.map((spot, index) => (
+              <SpotOperator key={spot.get('id')}>
+                <div className="operator__number-wrapper">
+                  {
+                    Boolean(index) &&
+                    <div className="operator__divider-line operator__divider-line-top" />
+                  }
+                  <div className="operator__number-circle-border"><span>{spot.get('id') + 1}</span></div>
+                  <div className="operator__divider-line operator__divider-line-bottom" />
+                </div>
+                <div
+                  role="presentation"
+                  className="operator__map-marker-wrapper"
+                  data-index={spot.get('id') + 1}
+                  onClick={handleGoToAddSpot}
+                >
+                  <img src={mapPlusIconPath} className="operator__map-marker-icon" alt="" />
+                </div>
+              </SpotOperator>
+            ))
+          }
+        </div>
+        <ReactDragList
+          dataSource={mockSpotData}
+          row={(spot, index) => (
+            <SpotCard
+              key={spot.get('id')}
+              spot={spot}
+              index={index}
+            />
+          )}
+          handles={false}
+          className="simple-drag content__spot-simple-drag"
+          rowClassName="simple-drag-row"
+          onUpdate={() => { }}
+        />
       </div>
-      <ReactDragList
-        dataSource={mockSpotData}
-        row={(spot, index) => (
-          <SpotCard
-            key={spot.get('id')}
-            spot={spot}
-            index={index}
-          />
-        )}
-        handles={false}
-        className="simple-drag content__spot-simple-drag"
-        rowClassName="simple-drag-row"
-        onUpdate={() => { }}
-      />
-    </div>
-  </StyledContent>
-);
+    </StyledContent>
+  );
+};
 
 Content.propTypes = {
-  // location: PropTypes.object,
+  location: PropTypes.object,
+  match: PropTypes.object,
 };
 
 Content.defaultProps = {
-  // location: {},
+  location: {},
+  match: {},
 };
 
 export default Content;

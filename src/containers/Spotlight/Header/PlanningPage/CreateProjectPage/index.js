@@ -32,7 +32,7 @@ const CreateProjectPage = (props) => {
     setNewProject(fromJS(DEFAULT_PROJECT));
   };
   const handleOnCancelBtn = () => {
-    history.push(PAGE_NAME.PLANNING);
+    history.push(PAGE_NAME.PLANNING.name);
   };
   const handleOnCheckBtn = () => {
     const {
@@ -54,7 +54,7 @@ const CreateProjectPage = (props) => {
       start_day: startDay,
       tot_days: days,
     });
-    history.push(`/${PAGE_NAME.PLANNING}`);
+    history.push(`/${PAGE_NAME.PLANNING.name}`);
   };
   useEffect(() => {
     setIsNavVisible(false);
@@ -73,7 +73,7 @@ const CreateProjectPage = (props) => {
           onClick={handleOnCancelBtn}
         />
       </div>
-      <div>{PAGE_NAME.CREATE_PROJECT}</div>
+      <div>{PAGE_NAME.CREATE_PROJECT.text}</div>
       <div className="header-container__icon-wrapper icon-right">
         <i
           role="presentation"

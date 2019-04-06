@@ -50,13 +50,13 @@ export default () => {
   }
   return (
     <HeaderContainer>
-      <div>{PAGE_NAME.PLANNING}</div>
+      <div>{PAGE_NAME.PLANNING.text}</div>
       <div className="header-container__icon-wrapper icon-right">
         <i role="presentation" className="fas fa-pen icon-style" onClick={handleEditModeOn} />
         <i
           role="presentation"
           className="fas fa-plus icon-style"
-          data-redirect-path={PAGE_NAME.CREATE_PROJECT}
+          data-redirect-path={PAGE_NAME.CREATE_PROJECT.name}
           onClick={handleToCreateProject}
         />
       </div>

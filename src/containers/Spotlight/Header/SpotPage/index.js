@@ -12,12 +12,12 @@ import {
 const SpotPage = ({ location }) => (
   <HeaderContainer>
     <HeaderLeftButtons>
-      <HeaderLinkButton to={`/${PAGE_NAME.EXPLORE}`}>
+      <HeaderLinkButton to={`/${PAGE_NAME.EXPLORE.name}`}>
         <i className="fas fa-arrow-left" />
       </HeaderLinkButton>
     </HeaderLeftButtons>
     <HeaderRightButtons>
-      <HeaderLinkButton to={`${location.pathname}/${PAGE_NAME.ADD_SPOT_TO_PROJECT}`}>
+      <HeaderLinkButton to={`${location.pathname}/${PAGE_NAME.ADD_SPOT_TO_PROJECT.name}`}>
         <i className="fas fa-plus" />
       </HeaderLinkButton>
     </HeaderRightButtons>

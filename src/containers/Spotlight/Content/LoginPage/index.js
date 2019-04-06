@@ -93,7 +93,7 @@ const Login = (props) => {
 
   useEffect(() => {
     if (loginStatusMeta.get('isLoaded') && user) {
-      history.push(`/${PAGE_NAME.EXPLORE}`);
+      history.push(`/${PAGE_NAME.EXPLORE.name}`);
     }
   }, [user]);
 

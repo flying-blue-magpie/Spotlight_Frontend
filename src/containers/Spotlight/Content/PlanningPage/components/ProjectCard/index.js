@@ -96,7 +96,7 @@ const ProjectCard = (props) => {
     if (isEditMode) {
       return;
     }
-    const detailPlanningPagePath = `/${PAGE_NAME.DETAIL_PLANNING}`;
+    const detailPlanningPagePath = `/${PAGE_NAME.DETAIL_PLANNING.name}`;
     const defaultDay = 1;
     history.push({
       pathname: `${detailPlanningPagePath}/${projectId}`,

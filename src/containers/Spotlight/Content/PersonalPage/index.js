@@ -95,7 +95,7 @@ const PersonalPage = () => {
   const handleOnTabClick = (event) => {
     const type = findAttributeInEvent(event, 'data-collection-type');
     setActiveCollectionType(type);
-    const personalPagePath = `/${PAGE_NAME.PERSONAL_PAGE}`;
+    const personalPagePath = `/${PAGE_NAME.PERSONAL_PAGE.name}`;
     history.push({
       pathname: personalPagePath,
       search: `?collectionType=${type}`,

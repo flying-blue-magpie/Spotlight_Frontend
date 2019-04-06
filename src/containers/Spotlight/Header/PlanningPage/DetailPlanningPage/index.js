@@ -22,14 +22,14 @@ const DetailPlanningPage = (props) => {
     };
   }, []);
   const handleGoBackToPlanning = useCallback(() => {
-    history.push(`/${PAGE_NAME.PLANNING}`);
+    history.push(`/${PAGE_NAME.PLANNING.name}`);
   }, []);
   const handleGoToUpdatePlanning = useCallback(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const day = searchParams.get('day');
     const { projectId } = props.match.params;
     history.push({
-      pathname: `/${PAGE_NAME.UPDATE_PLANNING}/${projectId}`,
+      pathname: `/${PAGE_NAME.UPDATE_PLANNING.name}/${projectId}`,
       search: `?day=${day}`,
     });
   }, []);
@@ -38,7 +38,7 @@ const DetailPlanningPage = (props) => {
       <div className="header-container__icon-wrapper icon-left">
         <i role="presentation" className="fas fa-arrow-left icon-style" onClick={handleGoBackToPlanning} />
       </div>
-      <div>{PAGE_NAME.DETAIL_PLANNING}</div>
+      <div>{PAGE_NAME.DETAIL_PLANNING.text}</div>
       <div className="header-container__icon-wrapper icon-right">
         <i role="presentation" className="fas fa-pen icon-style" onClick={handleGoToUpdatePlanning} />
         <img src={uploadTravelWallIconPath} className="icon-style" alt="" />

@@ -10,22 +10,24 @@ import PersonalPage from 'containers/Spotlight/Content/PersonalPage';
 import DetailPlanningPage from 'containers/Spotlight/Content/PlanningPage/DetailPlanningPage';
 import UpdatePlanningPage from 'containers/Spotlight/Content/PlanningPage/UpdatePlanningPage';
 import CreateProjectPage from 'containers/Spotlight/Content/PlanningPage/CreateProjectPage';
+import AddSpotToPlanPage from 'containers/Spotlight/Content/PlanningPage/AddSpotToPlanPage';
 import SpotPage from 'containers/Spotlight/Content/SpotPage';
 import AddSpotToProjectPage from 'containers/Spotlight/Content/AddSpotToProjectPage';
 import AddSpotToProjectPlanPage from 'containers/Spotlight/Content/AddSpotToProjectPlanPage';
 
 export const routePathConfig = {
   loginPagePath: '/',
-  explorePagePath: `/${PAGE_NAME.EXPLORE}`,
-  planningPagePath: `/${PAGE_NAME.PLANNING}`,
-  travelWallPagePath: `/${PAGE_NAME.TRAVEL_WALL}`,
-  personalPagePath: `/${PAGE_NAME.PERSONAL_PAGE}`,
-  detailPlanningPagePath: `/${PAGE_NAME.DETAIL_PLANNING}/:projectId`,
-  updatePlanningPagePath: `/${PAGE_NAME.UPDATE_PLANNING}/:projectId`,
-  createProjectPagePath: `/${PAGE_NAME.CREATE_PROJECT}`,
-  spotPagePath: `/${PAGE_NAME.EXPLORE}/:spotId`,
-  addSpotToProjectPagePath: `/${PAGE_NAME.EXPLORE}/:spotId/${PAGE_NAME.ADD_SPOT_TO_PROJECT}`,
-  addSpotToProjectPlanPagePath: `/${PAGE_NAME.EXPLORE}/:spotId/${PAGE_NAME.ADD_SPOT_TO_PROJECT}/:projectId`,
+  explorePagePath: `/${PAGE_NAME.EXPLORE.name}`,
+  planningPagePath: `/${PAGE_NAME.PLANNING.name}`,
+  travelWallPagePath: `/${PAGE_NAME.TRAVEL_WALL.name}`,
+  personalPagePath: `/${PAGE_NAME.PERSONAL_PAGE.name}`,
+  detailPlanningPagePath: `/${PAGE_NAME.DETAIL_PLANNING.name}/:projectId`,
+  updatePlanningPagePath: `/${PAGE_NAME.UPDATE_PLANNING.name}/:projectId`,
+  addSpotToPlanPagePath: `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/:projectId`,
+  createProjectPagePath: `/${PAGE_NAME.CREATE_PROJECT.name}`,
+  spotPagePath: `/${PAGE_NAME.EXPLORE.name}/:spotId`,
+  addSpotToProjectPagePath: `/${PAGE_NAME.EXPLORE.name}/:spotId/${PAGE_NAME.ADD_SPOT_TO_PROJECT.name}`,
+  addSpotToProjectPlanPagePath: `/${PAGE_NAME.EXPLORE.name}/:spotId/${PAGE_NAME.ADD_SPOT_TO_PROJECT.name}/:projectId`,
 };
 
 export default () => (
@@ -39,6 +41,7 @@ export default () => (
       <Route exact path={routePathConfig.detailPlanningPagePath} component={DetailPlanningPage} />
       <Route exact path={routePathConfig.updatePlanningPagePath} component={UpdatePlanningPage} />
       <Route exact path={routePathConfig.createProjectPagePath} component={CreateProjectPage} />
+      <Route exact path={routePathConfig.addSpotToPlanPagePath} component={AddSpotToPlanPage} />
       <Route exact path={routePathConfig.spotPagePath} component={SpotPage} />
       <Route exact path={routePathConfig.addSpotToProjectPagePath} component={AddSpotToProjectPage} />
       <Route exact path={routePathConfig.addSpotToProjectPlanPagePath} component={AddSpotToProjectPlanPage} />

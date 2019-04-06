@@ -36,7 +36,7 @@ const UpdatePlanningPage = (props) => {
     const day = searchParams.get('day');
     const { projectId } = props.match.params;
     history.push({
-      pathname: `/${PAGE_NAME.DETAIL_PLANNING}/${projectId}`,
+      pathname: `/${PAGE_NAME.DETAIL_PLANNING.name}/${projectId}`,
       search: `?day=${day}`,
     });
   }, []);
@@ -49,7 +49,7 @@ const UpdatePlanningPage = (props) => {
     setUpdateProject(Map());
 
     history.push({
-      pathname: `/${PAGE_NAME.DETAIL_PLANNING}/${projectId}`,
+      pathname: `/${PAGE_NAME.DETAIL_PLANNING.name}/${projectId}`,
       search: `?day=${day}`,
     });
   }, [updateProject]);
@@ -62,7 +62,7 @@ const UpdatePlanningPage = (props) => {
           onClick={handleGoBackToDetailPlanning}
         />
       </div>
-      <div>{PAGE_NAME.UPDATE_PLANNING}</div>
+      <div>{PAGE_NAME.UPDATE_PLANNING.text}</div>
       <div className="header-container__icon-wrapper icon-right">
         <i
           role="presentation"

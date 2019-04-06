@@ -74,3 +74,8 @@ export const selectIsModalVisible = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('isModalVisible'),
 );
+
+export const selectFavoriteSpotIds = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('favoriteSpotIds'),
+);

@@ -49,7 +49,7 @@ const PlanningCard = ({ planningId, handleOnClick }) => {
     <StyledPlanningCard
       imagePath={imagePath}
       data-id={planningId}
-      data-redirect-path={PAGE_NAME.DETAIL_PLANNING}
+      data-redirect-path={PAGE_NAME.DETAIL_PLANNING.name}
       onClick={handleOnClick}
     >
       <div className="planning-card__profile-wrapper">
