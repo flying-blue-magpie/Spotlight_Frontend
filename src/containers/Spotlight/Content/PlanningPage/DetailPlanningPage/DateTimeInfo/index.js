@@ -66,6 +66,9 @@ const DateTimeInfo = (props) => {
   const handleHideModal = useCallback(() => {
     handleSetModalVisible(false);
   }, []);
+  const handleOnPickerCheck = useCallback((value) => {
+    console.log('value: ', value);
+  }, []);
 
   return (
     <>
@@ -81,7 +84,9 @@ const DateTimeInfo = (props) => {
         isVisible={isModalVisible}
       >
         <TimePicker
+          startTime={startTime}
           handleOnCancel={handleHideModal}
+          handleOnOk={handleOnPickerCheck}
         />
       </Modal>
     </>

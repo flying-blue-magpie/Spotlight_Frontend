@@ -55,7 +55,7 @@ const initialState = fromJS({
   deleteProjectMeta: META,
 
   // modal
-  isModalVisible: false,
+  isModalVisible: true,
 
   user: null,
   ownProjects: [],
