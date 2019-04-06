@@ -18,7 +18,8 @@ import Spinner from 'components/Spinner';
 import ProjectCard from './components/ProjectCard';
 
 const Container = styled.div`
-  padding: 0px 28px;
+  height: 100%;
+  padding: 0px 15px;
   overflow: scroll;
 `;
 
