@@ -136,18 +136,24 @@ export const SearchInput = styled.input`
 `;
 
 export const ZonesRow = styled.div`
-  padding: 12px;
-  margin-bottom: 12px;
+  padding: 0 12px;
+  margin-bottom: 30px;
 `;
 
 export const ZoneLabel = styled.span`
   display: inline-block;
-  background-color: lightgray;
-  font-size: 14px;
-  padding: 3px;
-  margin-right: 6px;
+  background-color: #EEEEEE;
+  color: #AAAAAA;
+  font-size: 12px;
+  padding: 2px 5px;
+  margin-right: 10px;
+  border-radius: 12px;
 
   &:last-child {
     margin-right: 0;
   }
+`;
+
+export const ZoneLabelCrossIcon = styled.i`
+  margin-left: 5px;
 `;

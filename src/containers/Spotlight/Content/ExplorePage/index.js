@@ -41,6 +41,7 @@ import {
   ButtonLabel,
   SpotName,
   SpotLikes,
+  ZoneLabelCrossIcon,
 } from './Styled';
 
 const ExplorePage = (props) => {
@@ -116,7 +117,7 @@ const ExplorePage = (props) => {
         {selectedZones.map((zone) => (
           <ZoneLabel key={zone}>
             {zone}
-            <i className="fas fa-times" />
+            <ZoneLabelCrossIcon className="fas fa-times" />
           </ZoneLabel>
         ))}
       </ZonesRow>
