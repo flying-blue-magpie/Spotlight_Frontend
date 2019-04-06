@@ -7,7 +7,9 @@ import {
 import Routes from './Routes';
 
 const HeaderContainer = styled.div`
-  background: lightgray;
+  background: ${(props) => props.theme.mainColor};
+  font-weight: 600;
+  color: rgba(51, 51, 51, 1);
   ${mixinWidthWrapper()}
 `;
 
