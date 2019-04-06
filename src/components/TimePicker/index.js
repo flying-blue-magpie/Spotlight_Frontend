@@ -103,7 +103,7 @@ class TimePicker extends Component {
       hourValueGroups,
       minuteValueGroups,
     } = this.state;
-    handleOnOk(`${hourValueGroups.hour}:${minuteValueGroups.minute}`);
+    handleOnOk(`${hourValueGroups.hour}:${minuteValueGroups.minute}:00`);
   }
 
   render() {

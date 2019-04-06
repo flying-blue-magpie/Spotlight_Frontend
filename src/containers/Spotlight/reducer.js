@@ -55,7 +55,7 @@ const initialState = fromJS({
   deleteProjectMeta: META,
 
   // modal
-  isModalVisible: true,
+  isModalVisible: false,
 
   user: null,
   ownProjects: [],
@@ -203,7 +203,8 @@ function spotLightReducer(state = initialState, action) {
         return state.update('updateProjectMeta', updateMetaError);
       }
       return state
-        .update('updateProjectMeta', updateMetaDone);
+        .update('updateProjectMeta', updateMetaDone)
+        .set('isModalVisible', false);
     }
 
     // delete project
@@ -240,7 +241,7 @@ function spotLightReducer(state = initialState, action) {
       }
       return state
         .set('favoriteSpotIds', fromJS(ids))
-        .update('setFavoriteSpotIdsMeta', updateMetaError);
+        .update('setFavoriteSpotIdsMeta', updateMetaDone);
     }
 
     // modal
