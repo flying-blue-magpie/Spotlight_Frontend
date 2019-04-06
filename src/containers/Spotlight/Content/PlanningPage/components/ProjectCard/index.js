@@ -10,49 +10,52 @@ import {
   findAttributeInEvent,
 } from 'utils/event';
 import Modal from 'antd/lib/modal';
+import trashIconPath from 'assets/trash_icon.svg';
 
 const { confirm } = Modal;
 const { SpotlightContext } = Context;
 
 const Container = styled.div`
-  background-image: url("https://www.telegraph.co.uk/content/dam/Travel/2017/May/taipei-night-market.jpg?imwidth=450");
-  background-size: cover;
-
-  height: 160px;
-  margin-top: 10px;
+  margin-top: 15px;
+  box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16);
+  border-radius: 10px;
   position: relative;
-  cursor: ${(props) => (props.isEditMode ? '' : 'pointer')};
-  .project-card__info-row-wrapper {
-    background: white;
-    opacity: 0.9;
-    position: absolute;
-    width: 100%;
-    bottom: 0px;
-    height: 50px;
+  .project-card__cover-image {
+    background-image: url("https://icrvb3jy.xinmedia.com/solomo/article/139141/7A21D0A7-AEA1-D18D-C305-9A5930D37D27.jpeg");
+    background-size: cover;
+    height: 150px;
+    border-radius: 10px 10px 0px 0px;
   }
   .project-card__info-row {
     height: 100%;
     padding: 0px 15px;
+    height: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
   .project-card__info-title {
-    font-size: 16px
+    color: rgba(51, 51, 51, 1);
+    font-weight: 500;
+    font-size: 16px;
   }
   .project-card__info-period {
-    font-size: 12px
+    font-size: 12px;
+    color: rgba(170, 170, 170, 1);
   }
+
   .project-card__mask {
     position: absolute;
     height: 100%;
     width: 100%;
     background: black;
-    opacity: 0.6;
+    opacity: 0.7;
+    z-index: 1;
+    border-radius: 10px;
   }
   .project-card__trash-icon-wrapper {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,6 +65,7 @@ const Container = styled.div`
     right: 0;
     margin: 15px;
     cursor: pointer;
+    z-index: 1;
     &:hover {
       opacity: 0.8;
     }
@@ -69,6 +73,8 @@ const Container = styled.div`
   .project-card__trash-icon {
     color: #545454;
     font-size: 12px;
+    width: 14px;
+    height: 14px;
   }
 `;
 
@@ -111,12 +117,6 @@ const ProjectCard = (props) => {
   }, []);
   return (
     <Container isEditMode={isEditMode} onClick={handleOnClick}>
-      <div role="presentation" className="project-card__info-row-wrapper">
-        <div className="project-card__info-row">
-          <div className="project-card__info-title">{name}</div>
-          <div className="project-card__info-period">{`${startDay}-${endDay} / ${days}天`}</div>
-        </div>
-      </div>
       {
         isEditMode &&
         <>
@@ -127,10 +127,15 @@ const ProjectCard = (props) => {
             data-project-id={projectId}
             onClick={handleOnDeleteProject}
           >
-            <i className="fas fa-trash-alt project-card__trash-icon" />
+            <img className="project-card__trash-icon" src={trashIconPath} alt="" />
           </div>
         </>
       }
+      <div className="project-card__cover-image" />
+      <div className="project-card__info-row">
+        <div className="project-card__info-title">{name}</div>
+        <div className="project-card__info-period">{`${startDay}-${endDay} / ${days}天`}</div>
+      </div>
     </Container>
   );
 };
