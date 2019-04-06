@@ -35,6 +35,9 @@ import {
   SET_LIKE_SPOT_DONE,
   SET_FAVORITE_SPOT_IDS_DONE,
   SET_EXPLORING_SPOT_ID,
+
+  // modal
+  SET_IS_MODAL_VISIBLE,
 } from './constants';
 
 const initialState = fromJS({
@@ -42,6 +45,7 @@ const initialState = fromJS({
   setSpotsMeta: META,
   spots: {},
   spotsResult: [],
+
   loginMeta: META,
   registerMeta: META,
   loginStatusMeta: META,
@@ -49,6 +53,10 @@ const initialState = fromJS({
   createProjectMeta: META,
   updateProjectMeta: META,
   deleteProjectMeta: META,
+
+  // modal
+  isModalVisible: false,
+
   user: null,
   ownProjects: [],
   exploringSpotId: 0,
@@ -195,7 +203,8 @@ function spotLightReducer(state = initialState, action) {
         return state.update('updateProjectMeta', updateMetaError);
       }
       return state
-        .update('updateProjectMeta', updateMetaDone);
+        .update('updateProjectMeta', updateMetaDone)
+        .set('isModalVisible', false);
     }
 
     // delete project
@@ -232,7 +241,15 @@ function spotLightReducer(state = initialState, action) {
       }
       return state
         .set('favoriteSpotIds', fromJS(ids))
-        .update('setFavoriteSpotIdsMeta', updateMetaError);
+        .update('setFavoriteSpotIdsMeta', updateMetaDone);
+    }
+
+    // modal
+    case SET_IS_MODAL_VISIBLE: {
+      const {
+        isVisible,
+      } = action.payload;
+      return state.set('isModalVisible', isVisible);
     }
 
     default:

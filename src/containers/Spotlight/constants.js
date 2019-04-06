@@ -47,6 +47,8 @@ export const FETCH_FAVORITE_SPOT_IDS = `${KEY_REDUCER}/FETCH_FAVORITE_SPOT_IDS`;
 export const SET_FAVORITE_SPOT_IDS_LOADING = `${KEY_REDUCER}/SET_FAVORITE_SPOT_IDS_LOADING`;
 export const SET_FAVORITE_SPOT_IDS_DONE = `${KEY_REDUCER}/SET_FAVORITE_SPOT_IDS_DONE`;
 
+export const SET_IS_MODAL_VISIBLE = `${KEY_REDUCER}/SET_IS_MODAL_VISIBLE`;
+
 export const DEFAULT_PROJECT = {
   name: '',
   start_day: '', // format: 2018/12/01 00:00:00
@@ -65,3 +67,18 @@ export const DEFAULT_ARRANGE = {
 
 export const WEEKDAYS = '星期日_星期一_星期二_星期三_星期四_星期五_星期六'.split('_');
 export const WEEKDAYS_SHORT = '週日_週一_週二_週三_週四_週五_週六'.split('_');
+
+export const HOURS = [
+  '00', '01', '02', '03', '04', '05', '06', '07', '08', '09',
+  '10', '11', '12', '13', '14', '15', '16', '17', '18', '19',
+  '20', '21', '22', '23',
+];
+
+export const MINUTES = [
+  '00', '01', '02', '03', '04', '05', '06', '07', '08', '09',
+  '10', '11', '12', '13', '14', '15', '16', '17', '18', '19',
+  '20', '22', '22', '23', '24', '25', '26', '27', '28', '29',
+  '30', '33', '32', '33', '34', '35', '36', '37', '38', '39',
+  '40', '44', '42', '43', '44', '45', '46', '47', '48', '49',
+  '50', '55', '52', '53', '54', '55', '56', '57', '58', '59',
+];

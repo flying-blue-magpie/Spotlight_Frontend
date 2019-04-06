@@ -40,10 +40,20 @@ import {
   SET_FAVORITE_SPOT_IDS_LOADING,
   SET_FAVORITE_SPOT_IDS_DONE,
   SET_EXPLORING_SPOT_ID,
+
+  // modal
+  SET_IS_MODAL_VISIBLE,
 } from './constants';
 
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
 const spotListSchema = new schema.Array(spotSchema);
+
+export const setIsModalVisible = (isVisible) => ({
+  type: SET_IS_MODAL_VISIBLE,
+  payload: {
+    isVisible,
+  },
+});
 
 export const fetchSpotById = (id) => ({
   type: FETCH_SPOT_BY_ID,
