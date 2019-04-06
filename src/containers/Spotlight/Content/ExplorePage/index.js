@@ -34,6 +34,7 @@ import {
   SearchRow,
   SearchBar,
   SelectCountyButton,
+  SearchInputContainer,
   SearchInput,
   ZonesRow,
   ZoneLabel,
@@ -100,13 +101,15 @@ const ExplorePage = (props) => {
             縣市選擇
             <i className="fas fa-caret-right" />
           </SelectCountyButton>
-          <SearchInput
-            type="text"
-            placeholder="你想去的景點或街道名稱"
-            value={keyword}
-            onChange={(event) => setKeyword(event.target.value)}
-            onKeyUp={handleSearchInputKeyUp}
-          />
+          <SearchInputContainer>
+            <SearchInput
+              type="text"
+              placeholder="搜尋景點關鍵字"
+              value={keyword}
+              onChange={(event) => setKeyword(event.target.value)}
+              onKeyUp={handleSearchInputKeyUp}
+            />
+          </SearchInputContainer>
         </SearchBar>
       </SearchRow>
       <ZonesRow>
