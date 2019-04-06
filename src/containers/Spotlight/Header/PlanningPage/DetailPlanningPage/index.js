@@ -6,6 +6,7 @@ import {
   HeaderContainer,
 } from 'containers/Spotlight/Header/Styled';
 import Context from 'containers/Spotlight/Context';
+import uploadTravelWallIconPath from 'assets/upload_travel_wall_icon.svg';
 
 const { SpotlightContext } = Context;
 
@@ -40,7 +41,7 @@ const DetailPlanningPage = (props) => {
       <div>{PAGE_NAME.DETAIL_PLANNING}</div>
       <div className="header-container__icon-wrapper icon-right">
         <i role="presentation" className="fas fa-pen icon-style" onClick={handleGoToUpdatePlanning} />
-        <i className="far fa-map icon-style" />
+        <img src={uploadTravelWallIconPath} className="icon-style" alt="" />
       </div>
     </HeaderContainer>
   );

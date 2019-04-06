@@ -11,7 +11,7 @@ import SpotCard, {
 } from './SpotCard';
 
 const StyledContent = styled.div`
-  padding: 15px 30px;
+  padding: 15px 15px;
   padding-top: 0;
   .content__title {
     display: flex;

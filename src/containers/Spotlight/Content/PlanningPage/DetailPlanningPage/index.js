@@ -57,14 +57,16 @@ const DetailPlanningPage = (props) => {
   return (
     <DetailPlanningPageContainer>
       <div className="detail-planning__cover">
-        <div className="detail-planning__cover-title">
-          <span>{name}</span>
-        </div>
-        <div className="detail-planning__cover-period">
-          {`${startDay} - ${endDay} / ${days}天`}
+        <div className="detail-planning__info_wrapper">
+          <div className="detail-planning__cover-title">
+            <span>{name}</span>
+          </div>
+          <div className="detail-planning__cover-period">
+            {`${startDay} - ${endDay} / ${days}天`}
+          </div>
+          <DateTabs days={days} {...props} />
         </div>
       </div>
-      <DateTabs days={days} {...props} />
       <DateTimeInfo plan={plan} startDay={startDay} {...props} />
       <Content {...props} />
     </DetailPlanningPageContainer>

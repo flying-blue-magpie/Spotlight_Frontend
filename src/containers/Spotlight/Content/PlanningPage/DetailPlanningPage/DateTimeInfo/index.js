@@ -29,23 +29,30 @@ const StyledDateTimeInfo = styled.div`
   align-items: center;
   width: 100%;
   height: 60px;
-  padding: 0px 30px;
+  padding: 0px 15px;
   justify-content: space-between;
+  margin-top: 30px;
+  .date-time-info__date-text {
+    color: rgba(51, 51, 51, 1);
+    font-family: 'Segoe UI';
+    font-weight: 500;
+  }
   .date-time-info__start-time-wrapper {
     display: flex;
     align-items: center;
     line-height: 20px;
-    background: #707070;
+    background: rgba(51, 51, 51, 1);
     color: white;
     padding: 6px 8px;
-    border-radius: 50px;
+    border-radius: 16px;
     cursor: pointer;
     &:hover {
-      background: #70707080;
+      background: rgba(51, 51, 51, 0.8);
     }
   }
   .date-time-info__clock-icon {
     margin-right: 5px;
+    color: ${(props) => props.theme.mainColor};
   }
 `;
 
@@ -81,7 +88,7 @@ const DateTimeInfo = (props) => {
   return (
     <>
       <StyledDateTimeInfo>
-        <div>{`${date} ${weekday}`}</div>
+        <div className="date-time-info__date-text">{`${date} ${weekday}`}</div>
         <div role="presentation" className="date-time-info__start-time-wrapper" onClick={handleShowModal}>
           <i className="far fa-clock date-time-info__clock-icon" />
           <span>{`出發時間 ${startTime}`}</span>
