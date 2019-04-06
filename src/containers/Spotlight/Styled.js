@@ -17,20 +17,17 @@ export const SpotlightContainer = styled.div`
   height: 100vh;
   .spot-light__header-container {
     grid-area: header;
-    border: 1px solid grey;
     display: flex;
     justify-content: center;
   }
   .spot-light__content-container {
     grid-area: content;
-    border: 1px solid grey;
     display: flex;
     justify-content: center;
     overflow-y: scroll;
   }
   .spot-light__navigation-container {
     grid-area: navigation;
-    border: 1px solid grey;
     display: flex;
     justify-content: center;
   }

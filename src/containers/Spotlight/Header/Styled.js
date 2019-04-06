@@ -14,7 +14,7 @@ export const HeaderContainer = styled.div`
     margin: 0px 6px;
   }
   .icon-style {
-    color: white;
+    color: rgba(51, 51, 51, 1);
     margin: 0px 8px;
     cursor: pointer;
     font-size: 18px;

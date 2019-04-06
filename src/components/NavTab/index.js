@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   findAttributeInEvent,
@@ -11,7 +12,6 @@ const NavTabWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  background: #D3D3D3;
   font-size: 12px;
   width: 100%;
   cursor: pointer;
@@ -23,24 +23,38 @@ const NavTabWrapper = styled.div`
     height: 30px;
     width: 30px;
     margin: 2px;
+    background-image: url(${(props) => props.iconPath.normal});
+    background-size: cover;
+    &:hover {
+      background-image: url(${(props) => props.iconPath.hover});
+    }
+    &:active {
+      background-image: url(${(props) => props.iconPath.hover});
+    }
   }
 `;
 
 const NavTab = (props) => {
   const {
     title,
+    iconPath,
   } = props;
   const handleRedirect = (event) => {
     const pagePath = findAttributeInEvent(event, 'data-page-path');
     history.push(`/${pagePath}`);
-  }
+  };
 
   return (
-    <NavTabWrapper data-page-path={title} onClick={handleRedirect}>
-      <img className="nav-tab__image" src="https://freeiconshop.com/wp-content/uploads/edd/bulb-curvy-flat.png" alt=""/>
+    <NavTabWrapper iconPath={iconPath} data-page-path={title} onClick={handleRedirect}>
+      <div className="nav-tab__image" />
       <div>{title}</div>
     </NavTabWrapper>
   );
+};
+
+NavTab.propTypes = {
+  title: PropTypes.string.isRequired,
+  iconPath: PropTypes.object.isRequired,
 };
 
 export default NavTab;
