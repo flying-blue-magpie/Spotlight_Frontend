@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { connect } from 'react-redux';
@@ -11,7 +11,11 @@ import { routePathConfig } from 'containers/Spotlight/Content/Routes';
 import {
   selectUser,
   selectLoginStatusMeta,
+  selectFavoriteSpotIdsMeta,
 } from 'containers/Spotlight/selectors';
+import {
+  fetchFavoriteSpotIds,
+} from 'containers/Spotlight/actions';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import Information from './Information';
 import CollectionTabs from './CollectionTabs';
@@ -97,9 +101,12 @@ const StyledPersonalPage = styled.div`
   }
 `;
 
+/* eslint no-shadow: 0 */
 const PersonalPage = ({
   user,
   loginStatusMeta,
+  favoriteSpotIdsMeta,
+  fetchFavoriteSpotIds,
 }) => {
   const [activeCollectionType, setActiveCollectionType] = useState('spot');
   const faviconPath = 'http://i.imgur.com/EUAd2ht.jpg';
@@ -121,6 +128,13 @@ const PersonalPage = ({
   if (isAnonymous) {
     return <Redirect to={routePathConfig.login} />;
   }
+
+  useEffect(() => {
+    if (!favoriteSpotIdsMeta.get('isLoading')) {
+      fetchFavoriteSpotIds();
+    }
+  }, []);
+
   return (
     <StyledPersonalPage
       coverImagePath={coverImagePath}
@@ -140,11 +154,14 @@ const PersonalPage = ({
 PersonalPage.propTypes = {
   user: PropTypes.instanceOf(Map),
   loginStatusMeta: PropTypes.instanceOf(Map),
+  favoriteSpotIdsMeta: PropTypes.instanceOf(Map).isRequired,
+  fetchFavoriteSpotIds: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   user: selectUser(),
   loginStatusMeta: selectLoginStatusMeta(),
+  favoriteSpotIdsMeta: selectFavoriteSpotIdsMeta(),
 });
 
-export default connect(mapStateToProps)(PersonalPage);
+export default connect(mapStateToProps, { fetchFavoriteSpotIds })(PersonalPage);

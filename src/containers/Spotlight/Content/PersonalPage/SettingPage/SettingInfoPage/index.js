@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const SettingInfoPage = () => {
-  return (
-    <div>Implement setting info page here</div>
-  );
-};
+const SettingInfoPage = () => (
+  <div>Implement setting info page here</div>
+);
 
 export default SettingInfoPage;

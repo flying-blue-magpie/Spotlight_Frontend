@@ -1,6 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { createStructuredSelector } from 'reselect';
+import {
+  selectFavoriteSpotIds,
+} from 'containers/Spotlight/selectors';
 import SpotCard from './SpotCard';
 
 const StyledSpotCollection = styled.div`
@@ -12,9 +18,9 @@ const StyledSpotCollection = styled.div`
 `;
 
 const SpotCollection = ({
-  handleOnClick,
+  favoriteSpotIds,
 }) => {
-  const cards = new Array(11).fill(0).map((x, index) => index);
+  const cards = favoriteSpotIds.map((value) => value);
   return (
     <StyledSpotCollection>
       {
@@ -22,7 +28,6 @@ const SpotCollection = ({
           <SpotCard
             key={card}
             spotId={card}
-            handleOnClick={handleOnClick}
           />
         ))
       }
@@ -31,11 +36,11 @@ const SpotCollection = ({
 };
 
 SpotCollection.propTypes = {
-  handleOnClick: PropTypes.func,
+  favoriteSpotIds: PropTypes.instanceOf(List),
 };
 
-SpotCollection.propTypes = {
-  handleOnClick: () => { },
-};
+const mapStateToProps = createStructuredSelector({
+  favoriteSpotIds: selectFavoriteSpotIds(),
+});
 
-export default SpotCollection;
+export default connect(mapStateToProps)(SpotCollection);
