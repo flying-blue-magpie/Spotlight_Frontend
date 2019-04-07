@@ -24,7 +24,12 @@ import {
   ErrorMessage,
   Logo,
   Container,
+  UserNameContainer,
+  PassWordContainer,
+  PasswordIcon,
+  RegisterLink,
 } from './Styled';
+import keyIcon from './key.svg';
 
 const { SpotlightContext } = Context;
 
@@ -56,30 +61,44 @@ const Login = (props) => {
     });
   };
 
-  const { setIsHeaderVisible } = useContext(SpotlightContext);
+  const {
+    setIsHeaderVisible,
+    setIsNavVisible,
+  } = useContext(SpotlightContext);
 
   useEffect(() => {
     if (loginStatusMeta.get('isLoaded') && user) {
       history.push(`/${PAGE_NAME.EXPLORE}`);
     }
+  }, [user]);
+
+  useEffect(() => {
     setIsHeaderVisible(false);
+    setIsNavVisible(false);
 
     return () => {
       setIsHeaderVisible(true);
+      setIsNavVisible(true);
     };
-  }, [user]);
+  }, []);
 
   return (
     loginStatusMeta.get('isLoaded') && !user ? (
       <Container>
-        <Logo src="https://avatars0.githubusercontent.com/u/48876369?s=200&v=4" />
-        <UserName ref={usernameRef} type="email" placeholder="輸入電子信箱/用戶名" />
-        <PassWord ref={passwordRef} type="password" placeholder="輸入密碼" />
+        <Logo>LOGO</Logo>
+        <UserNameContainer>
+          <UserName ref={usernameRef} type="email" placeholder="請輸入註冊的 E-mail" />
+        </UserNameContainer>
+        <PassWordContainer>
+          <PasswordIcon src={keyIcon} />
+          <PassWord ref={passwordRef} type="password" placeholder="輸入密碼" />
+        </PassWordContainer>
         <LoginButton onClick={handleLoginBtnClick}>登入</LoginButton>
         <RegisterRow>
-          <a href="/#" onClick={handleRegisterBtnClick}>
-            立即註冊
-          </a>
+          還沒有帳號嗎?
+          <RegisterLink href="/#" onClick={handleRegisterBtnClick}>
+            前往註冊
+          </RegisterLink>
         </RegisterRow>
         {loginMeta.get('error') && <ErrorMessage>登入失敗</ErrorMessage>}
       </Container>
