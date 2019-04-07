@@ -14,6 +14,14 @@ import personalHoverIconPath from 'assets/NavIcons/personal_icon_hover.svg';
 export const KEY_REDUCER = 'spotlight';
 export const INIT = `${KEY_REDUCER}/INIT`;
 
+export const FETCH_USER_BY_ID = `${KEY_REDUCER}/FETCH_USER_BY_ID`;
+export const SET_USER_LOADING = `${KEY_REDUCER}/SET_USER_LOADING`;
+export const SET_USER_DONE = `${KEY_REDUCER}/SET_USER_DONE`;
+
+export const FETCH_USERS = `${KEY_REDUCER}/FETCH_USERS`;
+export const SET_USERS_LOADING = `${KEY_REDUCER}/SET_USERS_LOADING`;
+export const SET_USERS_DONE = `${KEY_REDUCER}/SET_USERS_DONE`;
+
 export const FETCH_SPOT_BY_ID = `${KEY_REDUCER}/FETCH_SPOT_BY_ID`;
 export const SET_SPOT_LOADING = `${KEY_REDUCER}/SET_SPOT_LOADING`;
 export const SET_SPOT_DONE = `${KEY_REDUCER}/SET_SPOT_DONE`;

@@ -15,6 +15,8 @@ import message from 'antd/lib/message';
 import toQueryString from 'utils/query-string';
 import {
   INIT,
+  FETCH_USER_BY_ID,
+  FETCH_USERS,
   FETCH_SPOT_BY_ID,
   FETCH_SPOTS,
   FETCH_PROJECT_BY_ID,
@@ -35,6 +37,10 @@ import {
   CANCEL_LIKE_SPOT,
 } from './constants';
 import {
+  setUserLoading,
+  setUserDone,
+  setUsersLoading,
+  setUsersDone,
   setSpotLoading,
   setSpotDone,
   setSpotsLoading,
@@ -80,6 +86,44 @@ import {
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
+
+const fetchUserByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_USER_BY_ID),
+    flatMap((action) => request({
+      method: 'get',
+      url: `/user/${action.payload.id}`,
+    }).pipe(
+      flatMap((data) => of(
+        setUserDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setUserDone(error),
+      )),
+      startWith(setUserLoading()),
+    )),
+  )
+);
+
+const fetchUsersEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_USERS),
+    switchMap(() => request({
+      method: 'get',
+      url: '/users',
+    }).pipe(
+      flatMap((data) => of(
+        setUsersDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setUsersDone(error),
+      )),
+      startWith(setUsersLoading()),
+    )),
+  )
+);
 
 const fetchSpotByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
   action$.pipe(
@@ -500,6 +544,8 @@ const exploreNextSpotEpic = (action$, state$) => (
 export default [
   setInit,
   fetchOwnProjectsEpic,
+  fetchUserByIdEpic,
+  fetchUsersEpic,
   fetchSpotByIdEpic,
   fetchSpotsEpic,
   fetchProjectByIdEpic,

@@ -37,6 +37,11 @@ import {
   DELETE_PROJECT_LOADING,
   DELETE_PROJECT_DONE,
 
+  SET_USER_LOADING,
+  SET_USER_DONE,
+  SET_USERS_LOADING,
+  SET_USERS_DONE,
+
   SET_FAVORITE_SPOT_IDS_LOADING,
   SET_FAVORITE_SPOT_IDS_DONE,
   SET_FAVORITE_PROJECT_IDS_LOADING,
@@ -75,6 +80,10 @@ const initialState = fromJS({
   isModalVisible: false,
 
   user: null,
+  users: {},
+  usersResult: [],
+  setUserMeta: META,
+  setUsersMeta: META,
   ownProjects: [],
   exploringSpotId: 0,
   setFavoriteSpotIdsMeta: META,
@@ -85,6 +94,46 @@ const initialState = fromJS({
 
 function spotLightReducer(state = initialState, action) {
   switch (action.type) {
+    case SET_USER_LOADING:
+      return state.update('setUserMeta', updateMetaLoading);
+
+    case SET_USER_DONE: {
+      const {
+        error,
+        user,
+      } = action.payload;
+
+      if (error) {
+        return state.update('setUserMeta', updateMetaError);
+      }
+      if (!user) { // handle user is undefined
+        return state.update('setUserMeta', updateMetaDone);
+      }
+      return state
+        .mergeDeepIn(['users', user.user_id], fromJS(user))
+        .update('setUserMeta', updateMetaDone);
+    }
+
+    case SET_USERS_LOADING:
+      return state
+        .update('setUsersMeta', updateMetaLoading);
+
+    case SET_USERS_DONE: {
+      const {
+        error,
+        entities,
+        result,
+      } = action.payload;
+      if (error) {
+        return state.update('setUsersMeta', updateMetaError);
+      }
+      return state
+        .mergeDeepIn(['users'], fromJS(entities.users))
+        .set('usersResult', fromJS(result))
+        .update('setUsersMeta', updateMetaDone)
+        .set('exploringUserId', result[0]);
+    }
+
     case SET_SPOT_LOADING:
       return state.update('setSpotMeta', updateMetaLoading);
 

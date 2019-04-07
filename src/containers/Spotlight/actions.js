@@ -60,6 +60,13 @@ import {
   SET_FAVORITE_SPOT_IDS_DONE,
   SET_EXPLORING_SPOT_ID,
 
+  FETCH_USER_BY_ID,
+  SET_USER_LOADING,
+  SET_USER_DONE,
+  FETCH_USERS,
+  SET_USERS_LOADING,
+  SET_USERS_DONE,
+
   // modal
   SET_IS_MODAL_VISIBLE,
   ADD_FAVORITE_SPOT_ID,
@@ -72,10 +79,49 @@ const spotListSchema = new schema.Array(spotSchema);
 const projectSchema = new schema.Entity('projects', {}, { idAttribute: 'proj_id' });
 const projectListSchema = new schema.Array(projectSchema);
 
+const userSchema = new schema.Entity('users', {}, { idAttribute: 'user_id' });
+const userListSchema = new schema.Array(userSchema);
+
 export const setIsModalVisible = (isVisible) => ({
   type: SET_IS_MODAL_VISIBLE,
   payload: {
     isVisible,
+  },
+});
+
+export const fetchUserById = (id) => ({
+  type: FETCH_USER_BY_ID,
+  payload: {
+    id,
+  },
+});
+
+export const setUserLoading = () => ({
+  type: SET_USER_LOADING,
+});
+
+export const setUserDone = (error, user) => ({
+  type: SET_USER_DONE,
+  payload: {
+    error,
+    user,
+  },
+});
+
+export const fetchUsers = ({ zones = [], kw = '' } = {}) => ({
+  type: FETCH_USERS,
+  payload: { zones, kw },
+});
+
+export const setUsersLoading = () => ({
+  type: SET_USERS_LOADING,
+});
+
+export const setUsersDone = (error, users) => ({
+  type: SET_USERS_DONE,
+  payload: {
+    error,
+    ...normalize(users, userListSchema),
   },
 });
 
