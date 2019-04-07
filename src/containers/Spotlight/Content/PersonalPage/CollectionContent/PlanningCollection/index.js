@@ -1,6 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { createStructuredSelector } from 'reselect';
+import {
+  selectFavoriteProjectIds,
+} from 'containers/Spotlight/selectors';
+
 import PlanningCard from './PlanningCard';
 
 const StyledPlanningCollection = styled.div`
@@ -12,16 +19,17 @@ const StyledPlanningCollection = styled.div`
 `;
 
 const PlanningCollection = ({
+  favoriteProjectIds,
   handleOnClick,
 }) => {
-  const cards = new Array(11).fill(0).map((x, index) => index);
+  const cards = favoriteProjectIds.map((value) => value);
   return (
     <StyledPlanningCollection>
       {
         cards.map((card) => (
           <PlanningCard
             key={card}
-            planningId={card}
+            projectId={card}
             handleOnClick={handleOnClick}
           />
         ))
@@ -31,11 +39,12 @@ const PlanningCollection = ({
 };
 
 PlanningCollection.propTypes = {
-  handleOnClick: PropTypes.func,
+  favoriteProjectIds: PropTypes.instanceOf(List),
+  handleOnClick: PropTypes.func.isRequired,
 };
 
-PlanningCollection.propTypes = {
-  handleOnClick: () => { },
-};
+const mapStateToProps = createStructuredSelector({
+  favoriteProjectIds: selectFavoriteProjectIds(),
+});
 
-export default PlanningCollection;
+export default connect(mapStateToProps)(PlanningCollection);

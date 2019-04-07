@@ -12,9 +12,11 @@ import {
   selectUser,
   selectLoginStatusMeta,
   selectFavoriteSpotIdsMeta,
+  selectFavoriteProjectIdsMeta,
 } from 'containers/Spotlight/selectors';
 import {
   fetchFavoriteSpotIds,
+  fetchFavoriteProjectIds,
 } from 'containers/Spotlight/actions';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import Information from './Information';
@@ -106,7 +108,9 @@ const PersonalPage = ({
   user,
   loginStatusMeta,
   favoriteSpotIdsMeta,
+  favoriteProjectIdsMeta,
   fetchFavoriteSpotIds,
+  fetchFavoriteProjectIds,
 }) => {
   const [activeCollectionType, setActiveCollectionType] = useState('spot');
   const faviconPath = 'http://i.imgur.com/EUAd2ht.jpg';
@@ -133,6 +137,9 @@ const PersonalPage = ({
     if (!favoriteSpotIdsMeta.get('isLoading')) {
       fetchFavoriteSpotIds();
     }
+    if (!favoriteProjectIdsMeta.get('isLoading')) {
+      fetchFavoriteProjectIds();
+    }
   }, []);
 
   return (
@@ -155,13 +162,16 @@ PersonalPage.propTypes = {
   user: PropTypes.instanceOf(Map),
   loginStatusMeta: PropTypes.instanceOf(Map),
   favoriteSpotIdsMeta: PropTypes.instanceOf(Map).isRequired,
+  favoriteProjectIdsMeta: PropTypes.instanceOf(Map).isRequired,
   fetchFavoriteSpotIds: PropTypes.func.isRequired,
+  fetchFavoriteProjectIds: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   user: selectUser(),
   loginStatusMeta: selectLoginStatusMeta(),
   favoriteSpotIdsMeta: selectFavoriteSpotIdsMeta(),
+  favoriteProjectIdsMeta: selectFavoriteProjectIdsMeta(),
 });
 
-export default connect(mapStateToProps, { fetchFavoriteSpotIds })(PersonalPage);
+export default connect(mapStateToProps, { fetchFavoriteSpotIds, fetchFavoriteProjectIds })(PersonalPage);
