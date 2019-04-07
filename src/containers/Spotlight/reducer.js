@@ -38,6 +38,7 @@ import {
 
   // modal
   SET_IS_MODAL_VISIBLE,
+  ADD_FAVORITE_SPOT_ID,
 } from './constants';
 
 const initialState = fromJS({
@@ -251,6 +252,11 @@ function spotLightReducer(state = initialState, action) {
       } = action.payload;
       return state.set('isModalVisible', isVisible);
     }
+
+    case ADD_FAVORITE_SPOT_ID:
+      return state.update('favoriteSpotIds', (ids) => (
+        ids.toSet().add(action.payload).toList()
+      ));
 
     default:
       return state;
