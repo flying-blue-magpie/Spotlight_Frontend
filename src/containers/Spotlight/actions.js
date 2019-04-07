@@ -126,11 +126,11 @@ export const setProjectLoading = () => ({
   type: SET_PROJECT_LOADING,
 });
 
-export const setProjectDone = (error, spot) => ({
+export const setProjectDone = (error, project) => ({
   type: SET_PROJECT_DONE,
   payload: {
     error,
-    spot,
+    project,
   },
 });
 

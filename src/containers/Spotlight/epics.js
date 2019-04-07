@@ -127,7 +127,7 @@ const fetchProjectByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
     ofType(FETCH_PROJECT_BY_ID),
     flatMap((action) => request({
       method: 'get',
-      url: `/project/${action.payload.id}`,
+      url: `/proj/${action.payload.id}`,
     }).pipe(
       flatMap((data) => of(
         setProjectDone(null, data.content),
@@ -146,7 +146,7 @@ const fetchProjectsEpic = (action$, $state, { request, fetchErrorEpic }) => (
     ofType(FETCH_PROJECTS),
     switchMap((action) => request({
       method: 'get',
-      url: `/projects?${toQueryString({
+      url: `/projs?${toQueryString({
         owner: action.payload.owner,
         only_public: action.payload.onlyPublic,
       })}`,
@@ -456,12 +456,12 @@ const fetchFavoriteProjectIdsEpic = (action$, state$, { request, fetchErrorEpic 
     ofType(FETCH_FAVORITE_PROJECT_IDS),
     switchMap(() => request({
       method: 'get',
-      url: '/like/projects',
+      url: '/like/projs',
     }).pipe(
       flatMap((res) => {
         if (res.status === 'success') {
           return of(
-            setFavoriteProjectIdsDone(null, res.content.map((row) => row.project_id)),
+            setFavoriteProjectIdsDone(null, res.content.map((row) => row.proj_id)),
           );
         }
         return of(setFavoriteProjectIdsDone(res));

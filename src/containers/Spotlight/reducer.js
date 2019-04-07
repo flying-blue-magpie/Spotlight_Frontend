@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 import META, {
   updateMetaLoading,
   updateMetaDone,
@@ -80,6 +80,7 @@ const initialState = fromJS({
   setFavoriteSpotIdsMeta: META,
   setFavoriteProjectIdsMeta: META,
   favoriteSpotIds: [],
+  favoriteProjectIds: [],
 });
 
 function spotLightReducer(state = initialState, action) {
@@ -140,7 +141,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setProjectMeta', updateMetaDone);
       }
       return state
-        .mergeDeepIn(['projects', project.project_id], fromJS(project))
+        .mergeDeepIn(['projects', project.proj_id], fromJS(project))
         .update('setProjectMeta', updateMetaDone);
     }
 
