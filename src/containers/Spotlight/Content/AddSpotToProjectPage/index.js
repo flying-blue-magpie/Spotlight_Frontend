@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Map, List } from 'immutable';
 import { withRouter } from 'react-router';
+import moment from 'moment';
 
 import Spinner from 'components/Spinner';
 import {
@@ -15,13 +16,6 @@ import {
   selectOwnProjectsMeta,
 } from 'containers/Spotlight/selectors';
 import { Project } from './Styled';
-
-const formatDate = (date) => (
-  `${date.getFullYear()}年${date.getMonth()}月${date.getDate()}日`
-);
-const addDaysToDate = (date, days) => (
-  date.setDate(date.getDate() + days)
-);
 
 const AddSpotToProjectPage = ({
   ownProjectsMeta,
@@ -49,12 +43,14 @@ const AddSpotToProjectPage = ({
           >
             <div>{project.get('name')}</div>
             <div>
-              {formatDate(new Date(project.get('start_day')))}
+              {moment(project.get('start_day'), 'YYYY-MM-DD')
+                .format('YYYY年MM月DD日')
+              }
               {' - '}
-              {formatDate(new Date(addDaysToDate(
-                new Date(project.get('start_day')),
-                project.get('tot_days'),
-              )))}
+              {moment(project.get('start_day'), 'YYYY-MM-DD')
+                .add(project.get('tot_days') - 1, 'days')
+                .format('YYYY年MM月DD日')
+              }
               {' / '}
               {project.get('tot_days')}
               天
