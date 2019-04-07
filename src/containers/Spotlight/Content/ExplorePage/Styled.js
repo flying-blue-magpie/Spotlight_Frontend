@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  height: 100%;
+  min-height: 100%;
   background-color: #FAFAFA;
+  padding-bottom: 20px;
 `;
 
 export const Card = styled.div`
