@@ -4,10 +4,11 @@ import styled from 'styled-components';
 // http://front-ender.me/react-drag-list
 import ReactDragList from 'react-drag-list';
 import 'react-drag-list/assets/index.css';
-import { fromJS } from 'immutable';
+import { List } from 'immutable';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import history from 'utils/history';
 import mapPlusIconPath from 'assets/map_plus_icon.svg';
+import arrowLeftGreyIconPath from 'assets/arrow_left_grey_icon.svg';
 import {
   findAttributeInEvent,
 } from 'utils/event';
@@ -44,10 +45,29 @@ const StyledContent = styled.div`
   .content__spot-simple-drag {
     flex: 1 1 auto;
   }
+
+  .content__default-message-wrapper {
+    display: flex;
+    padding: 0px 15px;
+    align-items: center;
+  }
+  .content__default-message-text {
+    font-size: 18px;
+    color: #AAAAAA;
+    font-weight: 400;
+  }
+  .content__arrow-left_grey-icon {
+    width: 20px;
+    height: 14px;
+    margin-right: 9px;
+  }
 `;
 
 const SpotOperator = styled.div`
   height: ${HEIGHT_SPOT_CARD + HEIGHT_SPOT_TRAVEL_TIME}px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   .operator__number-wrapper {
     height: ${HEIGHT_SPOT_CARD}px;
     display: flex;
@@ -103,34 +123,37 @@ const SpotOperator = styled.div`
   }
 `;
 
-const mockSpotData = fromJS([
-  {
-    id: 0,
-    name: '台北101',
-    address: '110台北市信義區信義路五段7號',
-    startTime: '09:00',
-  },
-  {
-    id: 1,
-    name: '宏亞食品巧克力觀光工廠',
-    address: '桃園縣八德市建國路386號',
-    startTime: '10:00',
-  },
-  {
-    id: 2,
-    name: '臺灣菸酒(股)公司林口觀光酒廠',
-    address: '桃園縣龜山鄉文化一路55號',
-    startTime: '12:00',
-  },
-  {
-    id: 3,
-    name: '台灣金屬創意館',
-    address: '台南市永康區永科環路598號',
-    startTime: '15:00',
-  },
-]);
+// const mockSpotData = fromJS([
+//   {
+//     id: 0,
+//     name: '台北101',
+//     address: '110台北市信義區信義路五段7號',
+//     startTime: '09:00',
+//   },
+//   {
+//     id: 1,
+//     name: '宏亞食品巧克力觀光工廠',
+//     address: '桃園縣八德市建國路386號',
+//     startTime: '10:00',
+//   },
+//   {
+//     id: 2,
+//     name: '臺灣菸酒(股)公司林口觀光酒廠',
+//     address: '桃園縣龜山鄉文化一路55號',
+//     startTime: '12:00',
+//   },
+//   {
+//     id: 3,
+//     name: '台灣金屬創意館',
+//     address: '台南市永康區永科環路598號',
+//     startTime: '15:00',
+//   },
+// ]);
 
 const Content = (props) => {
+  const {
+    plan,
+  } = props;
   const handleGoToAddSpot = useCallback((event) => {
     const { projectId } = props.match.params;
     const { search } = props.location;
@@ -142,25 +165,52 @@ const Content = (props) => {
       state: { afterIndex: insertAfterIndex },
     });
   });
+  const searchParams = new URLSearchParams(window.location.search);
+  const day = parseInt(searchParams.get('day'), 10);
+  const arrange = plan.getIn([day - 1, 'arrange']);
+  console.log('arrange: ', arrange);
+  console.log('plan: ', plan.toJS());
+  if (arrange.size === 0) {
+    return (
+      <StyledContent>
+        <div className="content__spot-cards-wrapper">
+          <SpotOperator>
+            <div
+              role="presentation"
+              className="operator__map-marker-wrapper"
+              data-index={1}
+              onClick={handleGoToAddSpot}
+            >
+              <img src={mapPlusIconPath} className="operator__map-marker-icon" alt="" />
+            </div>
+          </SpotOperator>
+          <div className="content__default-message-wrapper">
+            <img className="content__arrow-left_grey-icon" src={arrowLeftGreyIconPath} alt="" />
+            <div className="content__default-message-text">按左側按鈕開始添加你的行程</div>
+          </div>
+        </div>
+      </StyledContent>
+    );
+  }
   return (
     <StyledContent>
       <div className="content__spot-cards-wrapper">
         <div>
           {
-            mockSpotData.map((spot, index) => (
-              <SpotOperator key={spot.get('id')}>
+            arrange.map((spot, index) => (
+              <SpotOperator key={spot.get('spot_id')}>
                 <div className="operator__number-wrapper">
                   {
                     Boolean(index) &&
                     <div className="operator__divider-line operator__divider-line-top" />
                   }
-                  <div className="operator__number-circle-border"><span>{spot.get('id') + 1}</span></div>
+                  <div className="operator__number-circle-border"><span>{index + 1}</span></div>
                   <div className="operator__divider-line operator__divider-line-bottom" />
                 </div>
                 <div
                   role="presentation"
                   className="operator__map-marker-wrapper"
-                  data-index={spot.get('id') + 1}
+                  data-index={index + 1}
                   onClick={handleGoToAddSpot}
                 >
                   <img src={mapPlusIconPath} className="operator__map-marker-icon" alt="" />
@@ -170,12 +220,13 @@ const Content = (props) => {
           }
         </div>
         <ReactDragList
-          dataSource={mockSpotData}
+          dataSource={arrange}
           row={(spot, index) => (
             <SpotCard
-              key={spot.get('id')}
-              spot={spot}
+              key={spot.get('spot_id')}
+              spotIndexInfo={spot}
               index={index}
+              {...props}
             />
           )}
           handles={false}
@@ -189,11 +240,13 @@ const Content = (props) => {
 };
 
 Content.propTypes = {
+  plan: PropTypes.instanceOf(List),
   location: PropTypes.object,
   match: PropTypes.object,
 };
 
 Content.defaultProps = {
+  plan: List(),
   location: {},
   match: {},
 };

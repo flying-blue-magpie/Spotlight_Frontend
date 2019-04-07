@@ -8,10 +8,12 @@ import moment from 'moment';
 import Spinner from 'components/Spinner';
 import {
   fetchOwnProjects,
+  fetchSpotById,
 } from 'containers/Spotlight/actions';
 import {
   selectOwnProjects,
   selectOwnProjectsMeta,
+  selectSpots,
 } from 'containers/Spotlight/selectors';
 import DateTabs from './DateTabs';
 import DateTimeInfo from './DateTimeInfo';
@@ -68,7 +70,7 @@ const DetailPlanningPage = (props) => {
         </div>
       </div>
       <DateTimeInfo plan={plan} startDay={startDay} {...props} />
-      <Content {...props} />
+      <Content plan={plan} {...props} />
     </DetailPlanningPageContainer>
   );
 };
@@ -90,10 +92,12 @@ DetailPlanningPage.defaultProps = {
 const mapStateToProps = createStructuredSelector({
   ownProjectsMeta: selectOwnProjectsMeta(),
   ownProjects: selectOwnProjects(),
+  spots: selectSpots(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleFetchOwnProjects: () => dispatch(fetchOwnProjects()),
+  handleFetchSpotById: (spotId) => dispatch(fetchSpotById(spotId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailPlanningPage);

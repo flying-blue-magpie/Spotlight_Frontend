@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Map } from 'immutable';
 
 export const HEIGHT_SPOT_CARD = 60;
 export const HEIGHT_SPOT_TRAVEL_TIME = 40;
@@ -56,38 +57,55 @@ const StyledSpotCard = styled.div`
   }
 `;
 
-const SpotCard = ({ spot }) => (
-  <StyledSpotCard>
-    <div className="spot-card__card-row">
-      <div className="spot-card__start-end-time-wrapper">
-        <div>8:00</div>
-        <div>|</div>
-        <div>10:00</div>
+const SpotCard = (props) => {
+  const {
+    spotIndexInfo,
+    spots,
+    handleFetchSpotById,
+  } = props;
+  const spot = spots.get(spotIndexInfo.get('spot_id'));
+  if (!spot) {
+    handleFetchSpotById(spotIndexInfo.get('spot_id'));
+    return null;
+  }
+
+  return (
+    <StyledSpotCard>
+      <div className="spot-card__card-row">
+        <div className="spot-card__start-end-time-wrapper">
+          <div>8:00</div>
+          <div>|</div>
+          <div>10:00</div>
+        </div>
+        <div className="spot-card__card-body">
+          <div className="spot-card__card-body-spot-title">{spot.get('name')}</div>
+          <div className="spot-card__card-body-address">{spot.get('address')}</div>
+        </div>
       </div>
-      <div className="spot-card__card-body">
-        <div className="spot-card__card-body-spot-title">{spot.get('name')}</div>
-        <div className="spot-card__card-body-address">{spot.get('address')}</div>
+      <div className="spot-card__travel-row-wrapper">
+        <div className="spot-card__travel-time-wrapper">
+          <i className="fas fa-car spot-card__travel-time-icon" />
+          <div>1時15分</div>
+        </div>
+        <div className="spot-card__travel-time-wrapper">
+          <i className="fas fa-running spot-card__travel-time-icon" />
+          <div>6時15分</div>
+        </div>
       </div>
-    </div>
-    <div className="spot-card__travel-row-wrapper">
-      <div className="spot-card__travel-time-wrapper">
-        <i className="fas fa-car spot-card__travel-time-icon" />
-        <div>1時15分</div>
-      </div>
-      <div className="spot-card__travel-time-wrapper">
-        <i className="fas fa-running spot-card__travel-time-icon" />
-        <div>6時15分</div>
-      </div>
-    </div>
-  </StyledSpotCard>
-);
+    </StyledSpotCard>
+  );
+};
 
 SpotCard.propTypes = {
-  spot: PropTypes.object,
+  spotIndexInfo: PropTypes.instanceOf(Map),
+  spots: PropTypes.instanceOf(Map),
+  handleFetchSpotById: PropTypes.func,
 };
 
 SpotCard.defaultProps = {
-  spot: {},
+  spotIndexInfo: Map(),
+  spots: Map(),
+  handleFetchSpotById: () => { },
 };
 
 export default SpotCard;
