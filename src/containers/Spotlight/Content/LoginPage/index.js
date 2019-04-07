@@ -1,4 +1,4 @@
-import React, { createRef, useEffect } from 'react';
+import React, { createRef, useEffect, useContext } from 'react';
 import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -14,6 +14,7 @@ import {
   selectUser,
 } from 'containers/Spotlight/selectors';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import Context from 'containers/Spotlight/Context';
 
 import {
   UserName,
@@ -24,6 +25,8 @@ import {
   Logo,
   Container,
 } from './Styled';
+
+const { SpotlightContext } = Context;
 
 const Login = (props) => {
   const usernameRef = createRef();
@@ -53,10 +56,17 @@ const Login = (props) => {
     });
   };
 
+  const { setIsHeaderVisible } = useContext(SpotlightContext);
+
   useEffect(() => {
     if (loginStatusMeta.get('isLoaded') && user) {
       history.push(`/${PAGE_NAME.EXPLORE}`);
     }
+    setIsHeaderVisible(false);
+
+    return () => {
+      setIsHeaderVisible(true);
+    };
   }, [user]);
 
   return (
