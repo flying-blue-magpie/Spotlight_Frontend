@@ -67,6 +67,10 @@ import {
   SET_USERS_LOADING,
   SET_USERS_DONE,
 
+  FETCH_USER_STATS,
+  SET_USER_STATS_LOADING,
+  SET_USER_STATS_DONE,
+
   // modal
   SET_IS_MODAL_VISIBLE,
   ADD_FAVORITE_SPOT_ID,
@@ -122,6 +126,26 @@ export const setUsersDone = (error, users) => ({
   payload: {
     error,
     ...normalize(users, userListSchema),
+  },
+});
+
+export const fetchUserStats = (id) => ({
+  type: FETCH_USER_STATS,
+  payload: {
+    id,
+  },
+});
+
+export const setUserStatsLoading = () => ({
+  type: SET_USER_STATS_LOADING,
+});
+
+export const setUserStatsDone = (error, stats, id) => ({
+  type: SET_USER_STATS_DONE,
+  payload: {
+    error,
+    stats,
+    userId: id,
   },
 });
 
