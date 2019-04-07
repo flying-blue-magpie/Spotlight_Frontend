@@ -4,8 +4,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import { createStructuredSelector } from 'reselect';
-import { selectProjects } from 'containers/Spotlight/selectors';
 import {
+  selectUsers,
+  selectProjects,
+} from 'containers/Spotlight/selectors';
+import {
+  fetchUserById,
   fetchProjectById,
 } from 'containers/Spotlight/actions';
 
@@ -50,24 +54,36 @@ const StyledProjectCard = styled.div`
 
 /* eslint no-shadow: 0 */
 const ProjectCard = ({
+  users,
   projects,
   projectId,
+  fetchUserById,
   fetchProjectById,
   handleOnClick,
 }) => {
   useEffect(() => {
-    if (!projects.get(projectId)) {
+    const project = projects.get(projectId);
+    if (!project) {
       fetchProjectById(projectId);
+    } else {
+      const ownerId = project.get('owner');
+      if (!users.get(ownerId)) {
+        fetchUserById(ownerId);
+      }
     }
-  }, []);
+  }, [users, projects]);
 
   const project = projects.get(projectId);
 
   if (!project) {
     return null;
   }
+
+  const ownerId = project.get('owner');
+  const user = users.get(ownerId);
+  const userName = user && (user.get('name') || '在地專業嚮導');
   const imagePath = 'https://cw1.tw/CW/opinion/images/common/201801/opinion-5a618a5f20fb8.jpg';
-  const faviconPath = 'https://img.ltn.com.tw/Upload/liveNews/BigPic/600_php7mZoYr.jpg';
+  const faviconPath = user && (user.get('protrait') || 'https://img.ltn.com.tw/Upload/liveNews/BigPic/600_php7mZoYr.jpg');
   return (
     <StyledProjectCard
       imagePath={imagePath}
@@ -77,27 +93,30 @@ const ProjectCard = ({
     >
       <div className="project-card__profile-wrapper">
         <img className="project-card__profile-favicon" src={faviconPath} alt="" />
-        <div className="project-card__profile-name">這裡是名字</div>
+        <div className="project-card__profile-name">{userName}</div>
       </div>
       <div className="project-card__title-wrapper">
-        <span className="project-card__title">台北購物之旅</span>
+        <span className="project-card__title">{project.get('name')}</span>
       </div>
     </StyledProjectCard>
   );
 };
 
 ProjectCard.propTypes = {
+  users: PropTypes.object.isRequired,
   projects: PropTypes.object.isRequired,
   projectId: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
   ]).isRequired,
+  fetchUserById: PropTypes.func.isRequired,
   fetchProjectById: PropTypes.func.isRequired,
   handleOnClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
+  users: selectUsers(),
   projects: selectProjects(),
 });
 
-export default connect(mapStateToProps, { fetchProjectById })(ProjectCard);
+export default connect(mapStateToProps, { fetchUserById, fetchProjectById })(ProjectCard);
