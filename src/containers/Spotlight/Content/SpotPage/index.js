@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectSpotMeta, selectSpots } from 'containers/Spotlight/selectors';
 import { fetchSpotById } from 'containers/Spotlight/actions';
 import Spinner from 'components/Spinner';
+import Context from 'containers/Spotlight/Context';
 
 import {
   Feature,
@@ -16,15 +17,25 @@ import {
   Paragraph,
 } from './Styled';
 
+const { SpotlightContext } = Context;
+
 const SpotPage = ({
   match,
   spots,
   handleFetchSpotById,
   setSpotMeta,
 }) => {
+  const { setIsHeaderVisible } = useContext(SpotlightContext);
+
   useEffect(() => {
     handleFetchSpotById(match.params.spotId);
+    setIsHeaderVisible(false);
+
+    return () => {
+      setIsHeaderVisible(true);
+    };
   }, []);
+
 
   if (setSpotMeta.get('isLoading')) {
     return <Spinner />;
