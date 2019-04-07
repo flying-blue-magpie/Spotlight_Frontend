@@ -138,7 +138,7 @@ const Content = (props) => {
     const addSpotToPlanPagePath = `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`;
     history.push({
       pathname: addSpotToPlanPagePath,
-      search,
+      search: `${search}?&afterIndex=${insertAfterIndex}`,
       state: { afterIndex: insertAfterIndex },
     });
   });

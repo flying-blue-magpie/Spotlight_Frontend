@@ -8,7 +8,7 @@ import ImageGallery from 'react-image-gallery';
 import Context from 'containers/Spotlight/Context';
 
 import redHeartCircleIconPath from 'assets/red_heart_circle_icon.svg';
-import checkIconPath from 'assets/check_icon.svg';
+import checkCircleIconPath from 'assets/check_circle_icon.svg';
 
 const { SpotlightContext } = Context;
 
@@ -90,6 +90,7 @@ const LikedSpotCardContainer = styled.div`
 const LikedSpotCard = ({
   spotId,
   spots,
+  match,
   handleFetchSpotById,
 }) => {
   const context = useContext(SpotlightContext);
@@ -99,7 +100,14 @@ const LikedSpotCard = ({
   } = context;
   const foundSpotDetail = spots.get(spotId);
   const handleSelectLikedSpot = useCallback(() => {
-    setSelectedLikedSpotId(spotId);
+    const searchParams = new URLSearchParams(window.location.search);
+    setSelectedLikedSpotId({
+      spotId,
+      projectId: match.params.projectId,
+      day: searchParams.get('day'),
+      afterIndex: searchParams.get('afterIndex'),
+      elapsedTime: '02:00',
+    });
   }, []);
   useEffect(() => {
     if (!foundSpotDetail) {
@@ -109,7 +117,10 @@ const LikedSpotCard = ({
   if (!foundSpotDetail) {
     return <Spinner height={HEIGHT_SPOT_CARD} />;
   }
-  const showMask = selectedLikedSpotId === spotId;
+  let showMask = false;
+  if (selectedLikedSpotId) {
+    showMask = selectedLikedSpotId.spotId === spotId;
+  }
   const pics = foundSpotDetail.get('pic').map((pic) => ({
     original: pic,
     thumbnail: pic,
@@ -141,7 +152,7 @@ const LikedSpotCard = ({
         showMask &&
         <>
           <div className="liked-spot-card__mask" />
-          <img className="liked-spot-card__check-icon" src={checkIconPath} alt="" />
+          <img className="liked-spot-card__check-icon" src={checkCircleIconPath} alt="" />
         </>
       }
     </LikedSpotCardContainer>
@@ -149,6 +160,7 @@ const LikedSpotCard = ({
 };
 
 LikedSpotCard.propTypes = {
+  match: PropTypes.object,
   spotId: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
@@ -158,6 +170,7 @@ LikedSpotCard.propTypes = {
 };
 
 LikedSpotCard.defaultProps = {
+  match: {},
   spots: Map(),
   handleFetchSpotById: () => { },
 };

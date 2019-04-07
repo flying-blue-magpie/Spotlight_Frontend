@@ -11,6 +11,7 @@ export const PAGE_NAME = {
   UPDATE_PLANNING: { name: 'updatePlanning', text: '修改旅程' },
   CREATE_PROJECT: { name: 'createPlanning', text: '增加旅程' },
   ADD_SPOT_TO_PLAN: { name: 'addSpotToPlan', text: '從收藏添加景點' },
+  SETTING_SPOT_CARD: { name: 'settingSpotCard', text: '景點設定' },
   ADD_SPOT_TO_PROJECT: { name: 'addSpotToProject', text: '加到我的行程' },
 };
 
