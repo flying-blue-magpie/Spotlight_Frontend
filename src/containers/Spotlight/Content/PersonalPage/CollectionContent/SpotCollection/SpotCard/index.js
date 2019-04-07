@@ -64,7 +64,7 @@ const SpotCard = ({
 };
 
 SpotCard.propTypes = {
-  spots: PropTypes.instanceOf(Map),
+  spots: PropTypes.object.isRequired,
   spotId: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
