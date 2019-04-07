@@ -17,6 +17,7 @@ import {
   Paragraph,
   SpotName,
   LikeLabel,
+  Container,
 } from './Styled';
 
 const { SpotlightContext } = Context;
@@ -48,7 +49,7 @@ const SpotPage = ({
     return <div>找不到該景點資料</div>;
   }
   return (
-    <div>
+    <Container>
       <Feature>
         <FeatureImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
         <FeatureInfo>
@@ -71,7 +72,7 @@ const SpotPage = ({
       <Paragraph>
         <a href={spot.get('website')}>{spot.get('website')}</a>
       </Paragraph>
-    </div>
+    </Container>
   );
 };
 

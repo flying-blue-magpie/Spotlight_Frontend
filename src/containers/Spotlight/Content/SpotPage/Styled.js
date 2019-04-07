@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 
+export const Container = styled.div`
+  background-color: #FAFAFA;
+`;
+
 export const Feature = styled.div`
   position: relative;
   padding-top: 175px;
+  margin-bottom: 20px;
 `;
 
 export const FeatureImage = styled.img`
@@ -38,9 +43,11 @@ export const SpotName = styled.span`
 `;
 
 export const Title = styled.div`
-  padding: 0 12px;
-  margin-bottom: 6px;
-  font-size: 15px;
+  padding: 0 15px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333333;
+  font-weight: bold;
 `;
 
 export const LikeLabel = styled.label`
@@ -52,10 +59,12 @@ export const LikeButton = styled.i`
 `;
 
 export const Paragraph = styled.p`
-  padding: 0 12px;
-  margin-bottom: 24px;
+  padding: 0 15px;
+  margin-bottom: 15px;
+  color: #AAAAAA;
 
   &:last-child {
     margin-bottom: 0;
+    padding-bottom: 35px;
   }
 `;
