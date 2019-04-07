@@ -11,6 +11,8 @@ import {
   map,
 } from 'rxjs/operators';
 import message from 'antd/lib/message';
+
+import toQueryString from 'utils/query-string';
 import {
   INIT,
   FETCH_SPOT_BY_ID,
@@ -26,6 +28,7 @@ import {
   SUBMIT_DELETE_PROJECT,
   LIKE_SPOT,
   FETCH_FAVORITE_SPOT_IDS,
+  FETCH_FAVORITE_PROJECT_IDS,
   EXPLORE_NEXT_SPOT,
   KEY_REDUCER,
   SUBMIT_UPDATE_PROJECT,
@@ -69,12 +72,12 @@ import {
   setLikeSpotDone,
   setFavoriteSpotIdsDone,
   setFavoriteSpotIdsLoading,
+  setFavoriteProjectIdsDone,
+  setFavoriteProjectIdsLoading,
   setExploringSpotId,
   deleteFavoriteSpotId,
   addFavoriteSpotId,
 } from './actions';
-
-import toQueryString from 'utils/query-string';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
 
@@ -448,6 +451,30 @@ const fetchFavoriteSpotIdsEpic = (action$, state$, { request, fetchErrorEpic }) 
   )
 );
 
+const fetchFavoriteProjectIdsEpic = (action$, state$, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_FAVORITE_PROJECT_IDS),
+    switchMap(() => request({
+      method: 'get',
+      url: '/like/projects',
+    }).pipe(
+      flatMap((res) => {
+        if (res.status === 'success') {
+          return of(
+            setFavoriteProjectIdsDone(null, res.content.map((row) => row.project_id)),
+          );
+        }
+        return of(setFavoriteProjectIdsDone(res));
+      }),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setFavoriteProjectIdsDone(error),
+      )),
+      startWith(setFavoriteProjectIdsLoading()),
+    )),
+  )
+);
+
 const exploreNextSpotEpic = (action$, state$) => (
   action$.pipe(
     ofType(EXPLORE_NEXT_SPOT),
@@ -487,5 +514,6 @@ export default [
   likeSpotEpic,
   cancelLikeSpotEpic,
   fetchFavoriteSpotIdsEpic,
+  fetchFavoriteProjectIdsEpic,
   exploreNextSpotEpic,
 ];

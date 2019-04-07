@@ -38,8 +38,10 @@ import {
   DELETE_PROJECT_DONE,
 
   SET_FAVORITE_SPOT_IDS_LOADING,
-  SET_LIKE_SPOT_DONE,
   SET_FAVORITE_SPOT_IDS_DONE,
+  SET_FAVORITE_PROJECT_IDS_LOADING,
+  SET_FAVORITE_PROJECT_IDS_DONE,
+  SET_LIKE_SPOT_DONE,
   SET_EXPLORING_SPOT_ID,
 
   // modal
@@ -76,6 +78,7 @@ const initialState = fromJS({
   ownProjects: [],
   exploringSpotId: 0,
   setFavoriteSpotIdsMeta: META,
+  setFavoriteProjectIdsMeta: META,
   favoriteSpotIds: [],
 });
 
@@ -318,6 +321,19 @@ function spotLightReducer(state = initialState, action) {
       return state
         .set('favoriteSpotIds', fromJS(ids))
         .update('setFavoriteSpotIdsMeta', updateMetaDone);
+    }
+
+    case SET_FAVORITE_PROJECT_IDS_LOADING:
+      return state.update('setFavoriteProjectIdsMeta', updateMetaLoading);
+
+    case SET_FAVORITE_PROJECT_IDS_DONE: {
+      const { error, ids } = action.payload;
+      if (error) {
+        return state.update('setFavoriteProjectIdsMeta', updateMetaError);
+      }
+      return state
+        .set('favoriteProjectIds', fromJS(ids))
+        .update('setFavoriteProjectIdsMeta', updateMetaDone);
     }
 
     // modal

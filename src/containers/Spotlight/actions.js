@@ -49,6 +49,10 @@ import {
   SET_PROJECTS_LOADING,
   SET_PROJECTS_DONE,
 
+  FETCH_FAVORITE_PROJECT_IDS,
+  SET_FAVORITE_PROJECT_IDS_LOADING,
+  SET_FAVORITE_PROJECT_IDS_DONE,
+
   LIKE_SPOT,
   SET_LIKE_SPOT_DONE,
   FETCH_FAVORITE_SPOT_IDS,
@@ -353,4 +357,20 @@ export const addFavoriteSpotId = (id) => ({
 export const deleteFavoriteSpotId = (id) => ({
   type: DELETE_FAVORITE_SPOT_ID,
   payload: id,
+});
+
+export const fetchFavoriteProjectIds = () => ({
+  type: FETCH_FAVORITE_PROJECT_IDS,
+});
+
+export const setFavoriteProjectIdsLoading = () => ({
+  type: SET_FAVORITE_PROJECT_IDS_LOADING,
+});
+
+export const setFavoriteProjectIdsDone = (error, ids) => ({
+  type: SET_FAVORITE_PROJECT_IDS_DONE,
+  payload: {
+    error,
+    ids,
+  },
 });
