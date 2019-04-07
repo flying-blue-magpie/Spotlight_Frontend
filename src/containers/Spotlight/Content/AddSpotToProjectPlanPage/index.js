@@ -14,7 +14,11 @@ import {
   selectOwnProjectsMeta,
 } from 'containers/Spotlight/selectors';
 import Context from 'containers/Spotlight/Context';
-import { ProjectTitle, Plan } from './Styled';
+import {
+  ProjectTitle,
+  Plan,
+  Container,
+} from './Styled';
 
 const DEFAULT_SPOT_DURATION = 60;
 
@@ -66,7 +70,7 @@ const AddSpotToProjectPlanPage = ({
   }
 
   return (
-    <div>
+    <Container>
       <ProjectTitle>{project.get('name')}</ProjectTitle>
       {project.get('plan').map((_plan, index) => (
         <Plan key={index /* eslint-disable-line react/no-array-index-key */}>
@@ -80,7 +84,7 @@ const AddSpotToProjectPlanPage = ({
           />
         </Plan>
       ))}
-    </div>
+    </Container>
   );
 };
 

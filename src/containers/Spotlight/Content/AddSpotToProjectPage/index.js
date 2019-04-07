@@ -6,6 +6,7 @@ import { Map, List } from 'immutable';
 import { withRouter } from 'react-router';
 import moment from 'moment';
 
+import { PAGE_NAME } from 'Styled/Settings/constants';
 import Spinner from 'components/Spinner';
 import {
   fetchOwnProjects,
@@ -15,7 +16,14 @@ import {
   selectOwnProjects,
   selectOwnProjectsMeta,
 } from 'containers/Spotlight/selectors';
-import { Project } from './Styled';
+import {
+  Container,
+  Project,
+  ProjectName,
+  ProjectDate,
+  CreateProjectButton,
+  AddIcon,
+} from './Styled';
 
 const AddSpotToProjectPage = ({
   ownProjectsMeta,
@@ -34,31 +42,33 @@ const AddSpotToProjectPage = ({
   }
 
   return (
-    <div>
-      <div>
-        {ownProjects.map((project) => (
-          <Project
-            key={project.get('proj_id')}
-            to={`${location.pathname}/${project.get('proj_id')}`}
-          >
-            <div>{project.get('name')}</div>
-            <div>
-              {moment(project.get('start_day'), 'YYYY-MM-DD')
-                .format('YYYY年MM月DD日')
-              }
-              {' - '}
-              {moment(project.get('start_day'), 'YYYY-MM-DD')
-                .add(project.get('tot_days') - 1, 'days')
-                .format('YYYY年MM月DD日')
-              }
-              {' / '}
-              {project.get('tot_days')}
-              天
-            </div>
-          </Project>
-        ))}
-      </div>
-    </div>
+    <Container>
+      {ownProjects.map((project) => (
+        <Project
+          key={project.get('proj_id')}
+          to={`${location.pathname}/${project.get('proj_id')}`}
+        >
+          <ProjectName>{project.get('name')}</ProjectName>
+          <ProjectDate>
+            {moment(project.get('start_day'), 'YYYY-MM-DD')
+              .format('YYYY年MM月DD日')
+            }
+            -
+            {moment(project.get('start_day'), 'YYYY-MM-DD')
+              .add(project.get('tot_days') - 1, 'days')
+              .format('YYYY年MM月DD日')
+            }
+            {' / '}
+            {project.get('tot_days')}
+            天
+          </ProjectDate>
+        </Project>
+      ))}
+      <CreateProjectButton to={`/${PAGE_NAME.CREATE_PROJECT}`}>
+        <AddIcon className="fas fa-plus" />
+        增加旅程
+      </CreateProjectButton>
+    </Container>
   );
 };
 
