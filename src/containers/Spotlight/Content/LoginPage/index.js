@@ -3,7 +3,6 @@ import { Map } from 'immutable';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import styled from 'styled-components';
 import history from 'utils/history';
 import {
   login,
@@ -16,52 +15,14 @@ import {
 } from 'containers/Spotlight/selectors';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 
-const row = `
-  width: 300px;
-  display: block;
-  margin: 0 auto 24px;
-`;
-
-const UserName = styled.input`
-  ${row}
-  margin-top: 24px;
-  border: solid 1px lightgray;
-  font-size: 16px;
-`;
-
-const PassWord = styled.input`
-  ${row}
-  border: solid 1px lightgray;
-  font-size: 16px;
-`;
-
-const LoginButton = styled.button`
-  ${row}
-  line-height: 1.5;
-  background-color: lightgray;
-  font-size: 16px;
-  cursor: pointer;
-  outline: none;
-`;
-
-const RegisterRow = styled.div`
-  ${row}
-  display: flex;
-  justify-content: center;
-`;
-
-const ErrorMessage = styled.div`
-  ${row}
-  color: red;
-`;
-
-const Logo = styled.img`
-  width: 125px;
-  display: block;
-  margin: 0 auto;
-  border-radius: 50%;
-  margin-top: 24px;
-`;
+import {
+  UserName,
+  PassWord,
+  LoginButton,
+  RegisterRow,
+  ErrorMessage,
+  Logo,
+} from './Styled';
 
 const Login = (props) => {
   const usernameRef = createRef();
