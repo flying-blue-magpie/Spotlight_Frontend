@@ -19,7 +19,7 @@ const ExplorePageHeader = ({ location }) => {
       <HeaderLeftButtons>
         {menu === 'zone' &&
           <HeaderLinkButton to={`/${PAGE_NAME.EXPLORE}`}>
-            <i className="fas fa-arrow-left" />
+            <i className="fas fa-times" />
           </HeaderLinkButton>
         }
       </HeaderLeftButtons>
