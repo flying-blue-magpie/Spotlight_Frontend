@@ -34,6 +34,7 @@ export const SpotlightContainer = styled.div`
     grid-area: navigation;
     display: flex;
     justify-content: center;
+    position: relative;
     z-index: 1;
   }
 `;
