@@ -15,6 +15,8 @@ import {
   INIT,
   FETCH_SPOT_BY_ID,
   FETCH_SPOTS,
+  FETCH_PROJECT_BY_ID,
+  FETCH_PROJECTS,
   LOGIN,
   LOGOUT,
   REGISTER,
@@ -34,6 +36,10 @@ import {
   setSpotDone,
   setSpotsLoading,
   setSpotsDone,
+  setProjectLoading,
+  setProjectDone,
+  setProjectsLoading,
+  setProjectsDone,
   setLoginLoading,
   setLoginDone,
   setLogoutLoading,
@@ -68,6 +74,8 @@ import {
   addFavoriteSpotId,
 } from './actions';
 
+import toQueryString from 'utils/query-string';
+
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
 
 const fetchSpotByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
@@ -85,6 +93,69 @@ const fetchSpotByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
         setSpotDone(error),
       )),
       startWith(setSpotLoading()),
+    )),
+  )
+);
+
+const fetchSpotsEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_SPOTS),
+    switchMap((action) => request({
+      method: 'get',
+      url: `/spots${getSearchSpotQueryString({
+        zones: action.payload.zones,
+        keyword: action.payload.kw,
+      })}`,
+    }).pipe(
+      flatMap((data) => of(
+        setSpotsDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setSpotsDone(error),
+      )),
+      startWith(setSpotsLoading()),
+    )),
+  )
+);
+
+const fetchProjectByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_PROJECT_BY_ID),
+    flatMap((action) => request({
+      method: 'get',
+      url: `/project/${action.payload.id}`,
+    }).pipe(
+      flatMap((data) => of(
+        setProjectDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setProjectDone(error),
+      )),
+      startWith(setProjectLoading()),
+    )),
+  )
+);
+
+const fetchProjectsEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_PROJECTS),
+    switchMap((action) => request({
+      method: 'get',
+      url: `/projects?${toQueryString({
+        owner: action.payload.owner,
+        only_public: action.payload.onlyPublic,
+      })}`,
+    }).pipe(
+      flatMap((data) => of(
+        setProjectsDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setProjectsDone(error),
+      )),
+      startWith(setProjectsLoading()),
     )),
   )
 );
@@ -225,28 +296,6 @@ const getSearchSpotQueryString = ({ zones, keyword }) => {
 
   return queryString.length > 0 ? `?${queryString}` : '';
 };
-
-const fetchSpotsEpic = (action$, $state, { request, fetchErrorEpic }) => (
-  action$.pipe(
-    ofType(FETCH_SPOTS),
-    switchMap((action) => request({
-      method: 'get',
-      url: `/spots${getSearchSpotQueryString({
-        zones: action.payload.zones,
-        keyword: action.payload.kw,
-      })}`,
-    }).pipe(
-      flatMap((data) => of(
-        setSpotsDone(null, data.content),
-      )),
-      catchError((error) => fetchErrorEpic(
-        error,
-        setSpotsDone(error),
-      )),
-      startWith(setSpotsLoading()),
-    )),
-  )
-);
 
 const loginEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
@@ -426,6 +475,8 @@ export default [
   fetchOwnProjectsEpic,
   fetchSpotByIdEpic,
   fetchSpotsEpic,
+  fetchProjectByIdEpic,
+  fetchProjectsEpic,
   loginEpic,
   logoutEpic,
   registerEpic,

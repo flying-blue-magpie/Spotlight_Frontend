@@ -19,6 +19,7 @@ import {
   FETCH_LOGIN_STATUS,
   SET_LOGIN_STATUS_LOADING,
   SET_LOGIN_STATUS_DONE,
+
   FETCH_OWN_PROJECTS,
   SET_OWN_PROJECTS_LOADING,
   SET_OWN_PROJECTS_DONE,
@@ -40,6 +41,14 @@ import {
 
   CANCEL_LIKE_SPOT,
   SET_CANCEL_LIKE_SPOT_DONE,
+
+  FETCH_PROJECT_BY_ID,
+  SET_PROJECT_LOADING,
+  SET_PROJECT_DONE,
+  FETCH_PROJECTS,
+  SET_PROJECTS_LOADING,
+  SET_PROJECTS_DONE,
+
   LIKE_SPOT,
   SET_LIKE_SPOT_DONE,
   FETCH_FAVORITE_SPOT_IDS,
@@ -55,6 +64,9 @@ import {
 
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
 const spotListSchema = new schema.Array(spotSchema);
+
+const projectSchema = new schema.Entity('projects', {}, { idAttribute: 'proj_id' });
+const projectListSchema = new schema.Array(projectSchema);
 
 export const setIsModalVisible = (isVisible) => ({
   type: SET_IS_MODAL_VISIBLE,
@@ -96,6 +108,42 @@ export const setSpotsDone = (error, spots) => ({
   payload: {
     error,
     ...normalize(spots, spotListSchema),
+  },
+});
+
+export const fetchProjectById = (id) => ({
+  type: FETCH_PROJECT_BY_ID,
+  payload: {
+    id,
+  },
+});
+
+export const setProjectLoading = () => ({
+  type: SET_PROJECT_LOADING,
+});
+
+export const setProjectDone = (error, spot) => ({
+  type: SET_PROJECT_DONE,
+  payload: {
+    error,
+    spot,
+  },
+});
+
+export const fetchProjects = ({ owner, onlyPublic } = {}) => ({
+  type: FETCH_PROJECTS,
+  payload: { owner, onlyPublic },
+});
+
+export const setProjectsLoading = () => ({
+  type: SET_PROJECTS_LOADING,
+});
+
+export const setProjectsDone = (error, projects) => ({
+  type: SET_PROJECTS_DONE,
+  payload: {
+    error,
+    ...normalize(projects, projectListSchema),
   },
 });
 

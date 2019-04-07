@@ -9,6 +9,10 @@ import {
   SET_SPOT_DONE,
   SET_SPOTS_LOADING,
   SET_SPOTS_DONE,
+  SET_PROJECT_LOADING,
+  SET_PROJECT_DONE,
+  SET_PROJECTS_LOADING,
+  SET_PROJECTS_DONE,
   SET_LOGIN_LOADING,
   SET_LOGIN_DONE,
   SET_LOGOUT_DONE,
@@ -50,6 +54,11 @@ const initialState = fromJS({
   setSpotsMeta: META,
   spots: {},
   spotsResult: [],
+
+  setProjectMeta: META,
+  setProjectsMeta: META,
+  projects: {},
+  projectsResult: [],
 
   loginMeta: META,
   logoutMeta: META,
@@ -110,6 +119,46 @@ function spotLightReducer(state = initialState, action) {
         .set('spotsResult', fromJS(result))
         .update('setSpotsMeta', updateMetaDone)
         .set('exploringSpotId', result[0]);
+    }
+
+    case SET_PROJECT_LOADING:
+      return state.update('setProjectMeta', updateMetaLoading);
+
+    case SET_PROJECT_DONE: {
+      const {
+        error,
+        project,
+      } = action.payload;
+
+      if (error) {
+        return state.update('setProjectMeta', updateMetaError);
+      }
+      if (!project) { // handle project is undefined
+        return state.update('setProjectMeta', updateMetaDone);
+      }
+      return state
+        .mergeDeepIn(['projects', project.project_id], fromJS(project))
+        .update('setProjectMeta', updateMetaDone);
+    }
+
+    case SET_PROJECTS_LOADING:
+      return state
+        .update('setProjectsMeta', updateMetaLoading);
+
+    case SET_PROJECTS_DONE: {
+      const {
+        error,
+        entities,
+        result,
+      } = action.payload;
+      if (error) {
+        return state.update('setProjectsMeta', updateMetaError);
+      }
+      return state
+        .mergeDeepIn(['projects'], fromJS(entities.projects))
+        .set('projectsResult', fromJS(result))
+        .update('setProjectsMeta', updateMetaDone)
+        .set('exploringProjectId', result[0]);
     }
 
     case SET_LOGIN_LOADING:
