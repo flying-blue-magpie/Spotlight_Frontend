@@ -18,9 +18,9 @@ const AddSpotToPlanPage = (props) => {
   const {
     selectedLikedSpotId,
   } = context;
+  const searchParams = new URLSearchParams(window.location.search);
+  const day = searchParams.get('day');
   const handleGoBackToDetailPlanning = useCallback(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const day = searchParams.get('day');
     const { projectId } = props.match.params;
     history.push({
       pathname: `/${PAGE_NAME.DETAIL_PLANNING.name}/${projectId}`,
@@ -32,9 +32,11 @@ const AddSpotToPlanPage = (props) => {
       message.warning('請選擇景點卡');
       return;
     }
-    const settingSpotCardPagePath = `/${PAGE_NAME.SETTING_SPOT_CARD.name}`;
+    const { projectId } = props.match.params;
+    const settingSpotCardPagePath = `/${PAGE_NAME.SETTING_SPOT_CARD.name}/${projectId}`;
     history.push({
       pathname: settingSpotCardPagePath,
+      search: `?day=${day}`,
     });
   }, [selectedLikedSpotId]);
   return (
@@ -56,12 +58,10 @@ const AddSpotToPlanPage = (props) => {
 
 AddSpotToPlanPage.propTypes = {
   match: PropTypes.object,
-  // handleSubmitUpdateProject: PropTypes.func,
 };
 
 AddSpotToPlanPage.defaultProps = {
   match: {},
-  // handleSubmitUpdateProject: () => { },
 };
 
 export default AddSpotToPlanPage;

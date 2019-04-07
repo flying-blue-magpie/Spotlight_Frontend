@@ -61,7 +61,7 @@ const SettingSpotCardPage = (props) => {
     setSelectedLikedSpotId,
   } = context;
   if (!selectedLikedSpotId) {
-    history.push(PAGE_NAME.PLANNING.name);
+    history.push(`/${PAGE_NAME.PLANNING.name}`);
     return null;
   }
   const {

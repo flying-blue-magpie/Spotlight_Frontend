@@ -25,7 +25,7 @@ export const routePathConfig = {
   detailPlanningPagePath: `/${PAGE_NAME.DETAIL_PLANNING.name}/:projectId`,
   updatePlanningPagePath: `/${PAGE_NAME.UPDATE_PLANNING.name}/:projectId`,
   addSpotToPlanPagePath: `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/:projectId`,
-  settingSpotCardPagePath: `/${PAGE_NAME.SETTING_SPOT_CARD.name}`,
+  settingSpotCardPagePath: `/${PAGE_NAME.SETTING_SPOT_CARD.name}/:projectId`,
   createProjectPagePath: `/${PAGE_NAME.CREATE_PROJECT.name}`,
   spotPagePath: `/${PAGE_NAME.EXPLORE.name}/:spotId`,
   addSpotToProjectPagePath: `/${PAGE_NAME.EXPLORE.name}/:spotId/${PAGE_NAME.ADD_SPOT_TO_PROJECT.name}`,
