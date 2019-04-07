@@ -37,11 +37,14 @@ const Spotlight = ({
     <SpotlightProvider>
       <SpotlightConsumer>
         {
-          ({ isNavVisible }) => (
-            <SpotlightContainer isNavVisible={isNavVisible}>
-              <div className="spot-light__header-container">
-                <Header />
-              </div>
+          ({ isNavVisible, isHeaderVisible }) => (
+            <SpotlightContainer isNavVisible={isNavVisible} isHeaderVisible={isHeaderVisible}>
+              {
+                isHeaderVisible &&
+                <div className="spot-light__header-container">
+                  <Header />
+                </div>
+              }
               <div className="spot-light__content-container">
                 {
                   (loginStatusMeta.get('isLoading'))

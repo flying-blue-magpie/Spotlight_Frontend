@@ -6,9 +6,13 @@ import {
 
 export const SpotlightContainer = styled.div`
   display: grid;
-  ${(props) => (props.isNavVisible
-    ? `grid-template-rows: ${HEIGHT_HEADER}px auto ${HEIGHT_NAVIGATION}px;`
-    : `grid-template-rows: ${HEIGHT_HEADER}px auto 0px`)}
+  ${(props) => (`
+    grid-template-rows:
+      ${props.isHeaderVisible ? HEIGHT_HEADER : 0}px
+      auto
+      ${props.isNavVisible ? HEIGHT_NAVIGATION : 0}px
+    ;
+  `)}
   grid-template-areas:
     "header"
     "content"
@@ -30,6 +34,7 @@ export const SpotlightContainer = styled.div`
     grid-area: navigation;
     display: flex;
     justify-content: center;
+    position: relative;
     z-index: 1;
   }
 `;
