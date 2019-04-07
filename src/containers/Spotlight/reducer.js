@@ -42,6 +42,9 @@ import {
   SET_USERS_LOADING,
   SET_USERS_DONE,
 
+  SET_USER_STATS_LOADING,
+  SET_USER_STATS_DONE,
+
   SET_FAVORITE_SPOT_IDS_LOADING,
   SET_FAVORITE_SPOT_IDS_DONE,
   SET_FAVORITE_PROJECT_IDS_LOADING,
@@ -84,6 +87,7 @@ const initialState = fromJS({
   usersResult: [],
   setUserMeta: META,
   setUsersMeta: META,
+  setUserStatsMeta: META,
   ownProjects: [],
   exploringSpotId: 0,
   setFavoriteSpotIdsMeta: META,
@@ -132,6 +136,24 @@ function spotLightReducer(state = initialState, action) {
         .set('usersResult', fromJS(result))
         .update('setUsersMeta', updateMetaDone)
         .set('exploringUserId', result[0]);
+    }
+
+    case SET_USER_STATS_LOADING:
+      return state
+        .update('setUserStatsMeta', updateMetaLoading);
+
+    case SET_USER_STATS_DONE: {
+      const {
+        error,
+        userId,
+        stats,
+      } = action.payload;
+      if (error) {
+        return state.update('setUserStatsMeta', updateMetaError);
+      }
+      return state
+        .mergeDeepIn(['users', userId], fromJS({ stats }))
+        .update('setUserStatsMeta', updateMetaDone);
     }
 
     case SET_SPOT_LOADING:

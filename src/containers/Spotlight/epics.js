@@ -17,6 +17,7 @@ import {
   INIT,
   FETCH_USER_BY_ID,
   FETCH_USERS,
+  FETCH_USER_STATS,
   FETCH_SPOT_BY_ID,
   FETCH_SPOTS,
   FETCH_PROJECT_BY_ID,
@@ -41,6 +42,8 @@ import {
   setUserDone,
   setUsersLoading,
   setUsersDone,
+  setUserStatsLoading,
+  setUserStatsDone,
   setSpotLoading,
   setSpotDone,
   setSpotsLoading,
@@ -121,6 +124,25 @@ const fetchUsersEpic = (action$, state$, { request, fetchErrorEpic }) => (
         setUsersDone(error),
       )),
       startWith(setUsersLoading()),
+    )),
+  )
+);
+
+const fetchUserStatsEpic = (action$, state$, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_USER_STATS),
+    switchMap((action) => request({
+      method: 'get',
+      url: `/stat/user/${action.payload.id}`,
+    }).pipe(
+      flatMap((data) => of(
+        setUserStatsDone(null, data.content, action.payload.id),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setUserStatsDone(error),
+      )),
+      startWith(setUserStatsLoading()),
     )),
   )
 );
@@ -546,6 +568,7 @@ export default [
   fetchOwnProjectsEpic,
   fetchUserByIdEpic,
   fetchUsersEpic,
+  fetchUserStatsEpic,
   fetchSpotByIdEpic,
   fetchSpotsEpic,
   fetchProjectByIdEpic,
