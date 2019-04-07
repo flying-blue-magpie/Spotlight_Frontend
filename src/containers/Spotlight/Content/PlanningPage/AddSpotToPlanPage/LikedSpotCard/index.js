@@ -25,13 +25,17 @@ const LikedSpotCardContainer = styled.div`
     height: 100px;
     border-radius: 10px;
   }
+
   .image-gallery-image {
     height: 100px;
     max-height: 100px;
   }
+  .image-gallery-slides {
+    border-radius: 10px 10px 0px 0px;
+  }
+
   .liked-spot-card__card-cover {
     height: 100%;
-
   }
   .liked-spot-card__card-name {
     height: 40px;
