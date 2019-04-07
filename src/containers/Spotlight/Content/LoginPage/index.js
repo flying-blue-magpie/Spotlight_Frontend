@@ -22,6 +22,7 @@ import {
   RegisterRow,
   ErrorMessage,
   Logo,
+  Container,
 } from './Styled';
 
 const Login = (props) => {
@@ -60,7 +61,7 @@ const Login = (props) => {
 
   return (
     loginStatusMeta.get('isLoaded') && !user ? (
-      <React.Fragment>
+      <Container>
         <Logo src="https://avatars0.githubusercontent.com/u/48876369?s=200&v=4" />
         <UserName ref={usernameRef} type="email" placeholder="輸入電子信箱/用戶名" />
         <PassWord ref={passwordRef} type="password" placeholder="輸入密碼" />
@@ -71,7 +72,7 @@ const Login = (props) => {
           </a>
         </RegisterRow>
         {loginMeta.get('error') && <ErrorMessage>登入失敗</ErrorMessage>}
-      </React.Fragment>
+      </Container>
     ) : null
   );
 };

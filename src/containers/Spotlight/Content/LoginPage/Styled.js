@@ -6,6 +6,11 @@ const row = `
   margin: 0 auto 24px;
 `;
 
+export const Container = styled.div`
+  background-color: #FAFAFA;
+  min-height: 100%;
+`;
+
 export const UserName = styled.input`
   ${row}
   margin-top: 24px;
