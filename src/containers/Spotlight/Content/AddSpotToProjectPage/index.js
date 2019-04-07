@@ -15,7 +15,7 @@ import {
   selectOwnProjects,
   selectOwnProjectsMeta,
 } from 'containers/Spotlight/selectors';
-import { Project } from './Styled';
+import { Container, Project } from './Styled';
 
 const AddSpotToProjectPage = ({
   ownProjectsMeta,
@@ -34,7 +34,7 @@ const AddSpotToProjectPage = ({
   }
 
   return (
-    <div>
+    <Container>
       {ownProjects.map((project) => (
         <Project
           key={project.get('proj_id')}
@@ -56,7 +56,7 @@ const AddSpotToProjectPage = ({
           </div>
         </Project>
       ))}
-    </div>
+    </Container>
   );
 };
 
