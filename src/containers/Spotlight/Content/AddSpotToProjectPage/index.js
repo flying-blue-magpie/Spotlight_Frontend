@@ -15,7 +15,12 @@ import {
   selectOwnProjects,
   selectOwnProjectsMeta,
 } from 'containers/Spotlight/selectors';
-import { Container, Project } from './Styled';
+import {
+  Container,
+  Project,
+  ProjectName,
+  ProjectDate,
+} from './Styled';
 
 const AddSpotToProjectPage = ({
   ownProjectsMeta,
@@ -40,12 +45,12 @@ const AddSpotToProjectPage = ({
           key={project.get('proj_id')}
           to={`${location.pathname}/${project.get('proj_id')}`}
         >
-          <div>{project.get('name')}</div>
-          <div>
+          <ProjectName>{project.get('name')}</ProjectName>
+          <ProjectDate>
             {moment(project.get('start_day'), 'YYYY-MM-DD')
               .format('YYYY年MM月DD日')
             }
-            {' - '}
+            -
             {moment(project.get('start_day'), 'YYYY-MM-DD')
               .add(project.get('tot_days') - 1, 'days')
               .format('YYYY年MM月DD日')
@@ -53,7 +58,7 @@ const AddSpotToProjectPage = ({
             {' / '}
             {project.get('tot_days')}
             天
-          </div>
+          </ProjectDate>
         </Project>
       ))}
     </Container>
