@@ -8,6 +8,7 @@ const { Provider, Consumer } = SpotlightContext;
 
 const useSelection = () => {
   const [isNavVisible, setIsNavVisible] = useState(true);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
 
   // create project
   const [newProject, setNewProject] = useState(fromJS(DEFAULT_PROJECT));
@@ -19,6 +20,9 @@ const useSelection = () => {
   return {
     isNavVisible,
     setIsNavVisible,
+
+    isHeaderVisible,
+    setIsHeaderVisible,
 
     // create project
     newProject,
