@@ -15,6 +15,8 @@ import {
   Title,
   LikeButton,
   Paragraph,
+  SpotName,
+  LikeLabel,
 } from './Styled';
 
 const { SpotlightContext } = Context;
@@ -50,11 +52,11 @@ const SpotPage = ({
       <Feature>
         <FeatureImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
         <FeatureInfo>
-          {spot.get('name')}
-          <label>
+          <SpotName>{spot.get('name')}</SpotName>
+          <LikeLabel>
             <LikeButton className="fas fa-heart" />
             666
-          </label>
+          </LikeLabel>
         </FeatureInfo>
       </Feature>
       <Title>景點介紹</Title>
