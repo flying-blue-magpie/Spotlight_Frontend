@@ -65,7 +65,7 @@ const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.emp
 const fetchSpotByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(FETCH_SPOT_BY_ID),
-    switchMap((action) => request({
+    flatMap((action) => request({
       method: 'get',
       url: `/spot/${action.payload.id}`,
     }).pipe(

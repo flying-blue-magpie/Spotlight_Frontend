@@ -7,9 +7,11 @@ import { Map, List } from 'immutable';
 import {
   selectFavoriteSpotIdsMeta,
   selectFavoriteSpotIds,
+  selectSpots,
 } from 'containers/Spotlight/selectors';
 import {
   fetchFavoriteSpotIds,
+  fetchSpotById,
 } from 'containers/Spotlight/actions';
 import Spinner from 'components/Spinner';
 import LikedSpotCard from './LikedSpotCard';
@@ -18,7 +20,7 @@ const AddSpotToPlanPageContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding: 15px 13px;
-  grid-gap: 10px 7px;
+  grid-gap: 7px 7px;
 `;
 
 const AddSpotToPlanPage = (props) => {
@@ -49,6 +51,7 @@ const AddSpotToPlanPage = (props) => {
           <LikedSpotCard
             key={spotId}
             spotId={spotId}
+            {...props}
           />
         ))
       }
@@ -71,10 +74,12 @@ AddSpotToPlanPage.defaultProps = {
 const mapStateToProps = createStructuredSelector({
   favoriteSpotIdsMeta: selectFavoriteSpotIdsMeta(),
   favoriteSpotIds: selectFavoriteSpotIds(),
+  spots: selectSpots(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleFetchFavoriteSpotIds: () => dispatch(fetchFavoriteSpotIds()),
+  handleFetchSpotById: (spotId) => dispatch(fetchSpotById(spotId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddSpotToPlanPage);
