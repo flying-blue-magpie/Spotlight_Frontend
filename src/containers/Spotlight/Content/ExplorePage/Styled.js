@@ -170,6 +170,7 @@ export const SearchInput = styled.input`
   padding: 9px 9px 9px ${searchInputLeftPadding};
   appearance: none;
   border: 0;
+  outline: none;
 `;
 
 export const ZonesRow = styled.div`
