@@ -8,9 +8,9 @@ import {
   selectFavoriteProjectIds,
 } from 'containers/Spotlight/selectors';
 
-import PlanningCard from './PlanningCard';
+import ProjectCard from './ProjectCard';
 
-const StyledPlanningCollection = styled.div`
+const StyledProjectCollection = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-row-gap: 10px;
@@ -18,27 +18,27 @@ const StyledPlanningCollection = styled.div`
   padding: 10px 28px;
 `;
 
-const PlanningCollection = ({
+const ProjectCollection = ({
   favoriteProjectIds,
   handleOnClick,
 }) => {
   const cards = favoriteProjectIds.map((value) => value);
   return (
-    <StyledPlanningCollection>
+    <StyledProjectCollection>
       {
         cards.map((card) => (
-          <PlanningCard
+          <ProjectCard
             key={card}
             projectId={card}
             handleOnClick={handleOnClick}
           />
         ))
       }
-    </StyledPlanningCollection>
+    </StyledProjectCollection>
   );
 };
 
-PlanningCollection.propTypes = {
+ProjectCollection.propTypes = {
   favoriteProjectIds: PropTypes.instanceOf(List),
   handleOnClick: PropTypes.func.isRequired,
 };
@@ -47,4 +47,4 @@ const mapStateToProps = createStructuredSelector({
   favoriteProjectIds: selectFavoriteProjectIds(),
 });
 
-export default connect(mapStateToProps)(PlanningCollection);
+export default connect(mapStateToProps)(ProjectCollection);

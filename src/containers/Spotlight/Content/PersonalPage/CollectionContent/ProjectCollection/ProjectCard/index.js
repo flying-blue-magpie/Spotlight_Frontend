@@ -9,7 +9,7 @@ import {
   fetchProjectById,
 } from 'containers/Spotlight/actions';
 
-const StyledPlanningCard = styled.div`
+const StyledProjectCard = styled.div`
   height: 100px;
   background-image: url(${(props) => props.imagePath});
   background-size: cover;
@@ -49,7 +49,7 @@ const StyledPlanningCard = styled.div`
 `;
 
 /* eslint no-shadow: 0 */
-const PlanningCard = ({
+const ProjectCard = ({
   projects,
   projectId,
   fetchProjectById,
@@ -69,7 +69,7 @@ const PlanningCard = ({
   const imagePath = 'https://cw1.tw/CW/opinion/images/common/201801/opinion-5a618a5f20fb8.jpg';
   const faviconPath = 'https://img.ltn.com.tw/Upload/liveNews/BigPic/600_php7mZoYr.jpg';
   return (
-    <StyledPlanningCard
+    <StyledProjectCard
       imagePath={imagePath}
       data-id={projectId}
       data-redirect-path={PAGE_NAME.DETAIL_PLANNING}
@@ -82,11 +82,11 @@ const PlanningCard = ({
       <div className="project-card__title-wrapper">
         <span className="project-card__title">台北購物之旅</span>
       </div>
-    </StyledPlanningCard>
+    </StyledProjectCard>
   );
 };
 
-PlanningCard.propTypes = {
+ProjectCard.propTypes = {
   projects: PropTypes.object.isRequired,
   projectId: PropTypes.oneOfType([
     PropTypes.number,
@@ -100,4 +100,4 @@ const mapStateToProps = createStructuredSelector({
   projects: selectProjects(),
 });
 
-export default connect(mapStateToProps, { fetchProjectById })(PlanningCard);
+export default connect(mapStateToProps, { fetchProjectById })(ProjectCard);

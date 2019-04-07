@@ -2,7 +2,7 @@ import React from 'react';
 import { findAttributeInEvent } from 'utils/event';
 import history from 'utils/history';
 import SpotCollection from './SpotCollection';
-import PlanningCollection from './PlanningCollection';
+import ProjectCollection from './ProjectCollection';
 
 const CollectionContent = () => {
   const searchParams = new URLSearchParams(window.location.search);
@@ -14,7 +14,7 @@ const CollectionContent = () => {
     });
   };
   if (searchParams.get('collectionType') === 'planning') {
-    return <PlanningCollection handleOnClick={handleOnCardClick} />;
+    return <ProjectCollection handleOnClick={handleOnCardClick} />;
   }
   return <SpotCollection handleOnClick={handleOnCardClick} />;
 };
