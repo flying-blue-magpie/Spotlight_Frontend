@@ -316,7 +316,7 @@ const fetchLoginStatusEpic = (action$, state$, { request, fetchErrorEpic }) => (
 const likeSpotEpic = (action$, state$, { request }) => (
   action$.pipe(
     ofType(LIKE_SPOT),
-    flatMap((action) => request({
+    switchMap((action) => request({
       method: 'post',
       url: `/like/spot/${action.payload}`,
     }).pipe(
