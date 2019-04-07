@@ -25,11 +25,6 @@ const AddSpotToPlanPageContainer = styled.div`
 
 const AddSpotToPlanPage = (props) => {
   const {
-    // location: {
-    //   state: {
-    //     afterIndex,
-    //   },
-    // },
     favoriteSpotIdsMeta,
     favoriteSpotIds,
     handleFetchFavoriteSpotIds,
@@ -60,14 +55,12 @@ const AddSpotToPlanPage = (props) => {
 };
 
 AddSpotToPlanPage.propTypes = {
-  // location: PropTypes.object,
   handleFetchFavoriteSpotIds: PropTypes.func.isRequired,
   favoriteSpotIdsMeta: PropTypes.instanceOf(Map).isRequired,
   favoriteSpotIds: PropTypes.instanceOf(List),
 };
 
 AddSpotToPlanPage.defaultProps = {
-  // location: {},
   favoriteSpotIds: List(),
 };
 

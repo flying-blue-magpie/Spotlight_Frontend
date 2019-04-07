@@ -123,33 +123,6 @@ const SpotOperator = styled.div`
   }
 `;
 
-// const mockSpotData = fromJS([
-//   {
-//     id: 0,
-//     name: '台北101',
-//     address: '110台北市信義區信義路五段7號',
-//     startTime: '09:00',
-//   },
-//   {
-//     id: 1,
-//     name: '宏亞食品巧克力觀光工廠',
-//     address: '桃園縣八德市建國路386號',
-//     startTime: '10:00',
-//   },
-//   {
-//     id: 2,
-//     name: '臺灣菸酒(股)公司林口觀光酒廠',
-//     address: '桃園縣龜山鄉文化一路55號',
-//     startTime: '12:00',
-//   },
-//   {
-//     id: 3,
-//     name: '台灣金屬創意館',
-//     address: '台南市永康區永科環路598號',
-//     startTime: '15:00',
-//   },
-// ]);
-
 const Content = (props) => {
   const {
     plan,
@@ -168,8 +141,6 @@ const Content = (props) => {
   const searchParams = new URLSearchParams(window.location.search);
   const day = parseInt(searchParams.get('day'), 10);
   const arrange = plan.getIn([day - 1, 'arrange']);
-  console.log('arrange: ', arrange);
-  console.log('plan: ', plan.toJS());
   if (arrange.size === 0) {
     return (
       <StyledContent>

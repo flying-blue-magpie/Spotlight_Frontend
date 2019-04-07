@@ -24,6 +24,7 @@ const SettingSpotCardPage = (props) => {
   const context = useContext(SpotlightContext);
   const {
     selectedLikedSpotId,
+    setSelectedLikedSpotId,
   } = context;
   if (!selectedLikedSpotId) {
     return null;
@@ -46,6 +47,7 @@ const SettingSpotCardPage = (props) => {
   const handleOnGoBack = useCallback(() => {
     history.goBack();
   }, []);
+
   const handleOnCheck = useCallback(() => {
     const time = elapsedTime.split(':');
     const during = parseInt(time[0], 10) * 60 + parseInt(time[1], 10);
@@ -54,24 +56,30 @@ const SettingSpotCardPage = (props) => {
         spot_id: parseInt(spotId, 10),
         during,
       });
-      const newArrange = arrange.size >= afterIndex
-        ? fromJS(arrange.toJS().splice(afterIndex, 0, newSpotCard))
-        : fromJS([
-          ...arrange,
-          newSpotCard,
-        ]);
-      return newArrange;
+      const updatedArrange = arrange.toJS();
+      const isIndexSmallThanSize = arrange.size >= parseInt(afterIndex, 10);
+      if (isIndexSmallThanSize) {
+        updatedArrange.splice(parseInt(afterIndex - 1, 10), 0, newSpotCard.toJS());
+        return updatedArrange;
+      }
+      return fromJS([
+        ...updatedArrange,
+        newSpotCard.toJS(),
+      ]);
     });
-    handleSubmitUpdateProject(project.get('proj_id'), fromJS({
-      plan: updatedPlan,
-    }));
 
+    const result = fromJS({
+      plan: updatedPlan.toJS(),
+    });
+    handleSubmitUpdateProject(project.get('proj_id'), result);
+    setSelectedLikedSpotId(null);
     const detailPlanningPagePath = `/${PAGE_NAME.DETAIL_PLANNING.name}`;
     history.push({
       pathname: `${detailPlanningPagePath}/${project.get('proj_id')}`,
       search: `?day=${day}`,
     });
-  }, []);
+  });
+
   return (
     <HeaderContainer>
       <div className="header-container__icon-wrapper icon-left">
