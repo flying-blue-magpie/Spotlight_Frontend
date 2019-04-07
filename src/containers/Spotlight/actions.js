@@ -9,6 +9,9 @@ import {
   LOGIN,
   SET_LOGIN_DONE,
   SET_LOGIN_LOADING,
+  LOGOUT,
+  SET_LOGOUT_DONE,
+  SET_LOGOUT_LOADING,
   REGISTER,
   SET_REGISTER_DONE,
   SET_REGISTER_LOADING,
@@ -16,6 +19,7 @@ import {
   FETCH_LOGIN_STATUS,
   SET_LOGIN_STATUS_LOADING,
   SET_LOGIN_STATUS_DONE,
+
   FETCH_OWN_PROJECTS,
   SET_OWN_PROJECTS_LOADING,
   SET_OWN_PROJECTS_DONE,
@@ -37,12 +41,31 @@ import {
 
   CANCEL_LIKE_SPOT,
   SET_CANCEL_LIKE_SPOT_DONE,
+
+  FETCH_PROJECT_BY_ID,
+  SET_PROJECT_LOADING,
+  SET_PROJECT_DONE,
+  FETCH_PROJECTS,
+  SET_PROJECTS_LOADING,
+  SET_PROJECTS_DONE,
+
+  FETCH_FAVORITE_PROJECT_IDS,
+  SET_FAVORITE_PROJECT_IDS_LOADING,
+  SET_FAVORITE_PROJECT_IDS_DONE,
+
   LIKE_SPOT,
   SET_LIKE_SPOT_DONE,
   FETCH_FAVORITE_SPOT_IDS,
   SET_FAVORITE_SPOT_IDS_LOADING,
   SET_FAVORITE_SPOT_IDS_DONE,
   SET_EXPLORING_SPOT_ID,
+
+  FETCH_USER_BY_ID,
+  SET_USER_LOADING,
+  SET_USER_DONE,
+  FETCH_USERS,
+  SET_USERS_LOADING,
+  SET_USERS_DONE,
 
   // modal
   SET_IS_MODAL_VISIBLE,
@@ -53,10 +76,52 @@ import {
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
 const spotListSchema = new schema.Array(spotSchema);
 
+const projectSchema = new schema.Entity('projects', {}, { idAttribute: 'proj_id' });
+const projectListSchema = new schema.Array(projectSchema);
+
+const userSchema = new schema.Entity('users', {}, { idAttribute: 'user_id' });
+const userListSchema = new schema.Array(userSchema);
+
 export const setIsModalVisible = (isVisible) => ({
   type: SET_IS_MODAL_VISIBLE,
   payload: {
     isVisible,
+  },
+});
+
+export const fetchUserById = (id) => ({
+  type: FETCH_USER_BY_ID,
+  payload: {
+    id,
+  },
+});
+
+export const setUserLoading = () => ({
+  type: SET_USER_LOADING,
+});
+
+export const setUserDone = (error, user) => ({
+  type: SET_USER_DONE,
+  payload: {
+    error,
+    user,
+  },
+});
+
+export const fetchUsers = ({ zones = [], kw = '' } = {}) => ({
+  type: FETCH_USERS,
+  payload: { zones, kw },
+});
+
+export const setUsersLoading = () => ({
+  type: SET_USERS_LOADING,
+});
+
+export const setUsersDone = (error, users) => ({
+  type: SET_USERS_DONE,
+  payload: {
+    error,
+    ...normalize(users, userListSchema),
   },
 });
 
@@ -96,6 +161,42 @@ export const setSpotsDone = (error, spots) => ({
   },
 });
 
+export const fetchProjectById = (id) => ({
+  type: FETCH_PROJECT_BY_ID,
+  payload: {
+    id,
+  },
+});
+
+export const setProjectLoading = () => ({
+  type: SET_PROJECT_LOADING,
+});
+
+export const setProjectDone = (error, project) => ({
+  type: SET_PROJECT_DONE,
+  payload: {
+    error,
+    project,
+  },
+});
+
+export const fetchProjects = ({ owner, onlyPublic } = {}) => ({
+  type: FETCH_PROJECTS,
+  payload: { owner, onlyPublic },
+});
+
+export const setProjectsLoading = () => ({
+  type: SET_PROJECTS_LOADING,
+});
+
+export const setProjectsDone = (error, projects) => ({
+  type: SET_PROJECTS_DONE,
+  payload: {
+    error,
+    ...normalize(projects, projectListSchema),
+  },
+});
+
 export const login = ({ acc = 'admin', pwd = 'admin' }) => ({
   type: LOGIN,
   payload: {
@@ -113,6 +214,21 @@ export const setLoginDone = (error, user) => ({
   payload: {
     error,
     user,
+  },
+});
+
+export const logout = () => ({
+  type: LOGOUT,
+});
+
+export const setLogoutLoading = () => ({
+  type: SET_LOGOUT_LOADING,
+});
+
+export const setLogoutDone = (error) => ({
+  type: SET_LOGOUT_DONE,
+  payload: {
+    error,
   },
 });
 
@@ -287,4 +403,20 @@ export const addFavoriteSpotId = (id) => ({
 export const deleteFavoriteSpotId = (id) => ({
   type: DELETE_FAVORITE_SPOT_ID,
   payload: id,
+});
+
+export const fetchFavoriteProjectIds = () => ({
+  type: FETCH_FAVORITE_PROJECT_IDS,
+});
+
+export const setFavoriteProjectIdsLoading = () => ({
+  type: SET_FAVORITE_PROJECT_IDS_LOADING,
+});
+
+export const setFavoriteProjectIdsDone = (error, ids) => ({
+  type: SET_FAVORITE_PROJECT_IDS_DONE,
+  payload: {
+    error,
+    ids,
+  },
 });

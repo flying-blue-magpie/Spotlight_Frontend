@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import { createStructuredSelector } from 'reselect';
+import { selectSpots } from 'containers/Spotlight/selectors';
+import {
+  fetchSpotById,
+} from 'containers/Spotlight/actions';
 
 const StyledSpotCard = styled.div`
   height: 100px;
@@ -24,8 +30,25 @@ const StyledSpotCard = styled.div`
   }
 `;
 
-const SpotCard = ({ spotId, handleOnClick }) => {
-  const imagePath = 'https://www.taipei-101.com.tw/upload/jn_now/201801/2018010102515956G575BF.jpg';
+/* eslint no-shadow: 0 */
+const SpotCard = ({
+  spots,
+  spotId,
+  fetchSpotById,
+  handleOnClick,
+}) => {
+  useEffect(() => {
+    if (!spots.get(spotId)) {
+      fetchSpotById(spotId);
+    }
+  }, []);
+
+  const spot = spots.get(spotId);
+
+  if (!spot) {
+    return null;
+  }
+  const imagePath = spot.get('pic').get(0);
   return (
     <StyledSpotCard
       imagePath={imagePath}
@@ -34,22 +57,24 @@ const SpotCard = ({ spotId, handleOnClick }) => {
       onClick={handleOnClick}
     >
       <div className="spot-card__title-wrapper">
-        <span className="spot-card__title">台北101</span>
+        <span className="spot-card__title">{spot.get('name')}</span>
       </div>
     </StyledSpotCard>
   );
 };
 
 SpotCard.propTypes = {
+  spots: PropTypes.object.isRequired,
   spotId: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
   ]).isRequired,
-  handleOnClick: PropTypes.func,
+  fetchSpotById: PropTypes.func.isRequired,
+  handleOnClick: PropTypes.func.isRequired,
 };
 
-SpotCard.propTypes = {
-  handleOnClick: () => { },
-};
+const mapStateToProps = createStructuredSelector({
+  spots: selectSpots(),
+});
 
-export default SpotCard;
+export default connect(mapStateToProps, { fetchSpotById })(SpotCard);

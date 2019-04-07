@@ -9,8 +9,14 @@ import {
   SET_SPOT_DONE,
   SET_SPOTS_LOADING,
   SET_SPOTS_DONE,
+  SET_PROJECT_LOADING,
+  SET_PROJECT_DONE,
+  SET_PROJECTS_LOADING,
+  SET_PROJECTS_DONE,
   SET_LOGIN_LOADING,
   SET_LOGIN_DONE,
+  SET_LOGOUT_DONE,
+  SET_LOGOUT_LOADING,
   SET_REGISTER_LOADING,
   SET_REGISTER_DONE,
   SET_LOGIN_STATUS_LOADING,
@@ -31,9 +37,16 @@ import {
   DELETE_PROJECT_LOADING,
   DELETE_PROJECT_DONE,
 
+  SET_USER_LOADING,
+  SET_USER_DONE,
+  SET_USERS_LOADING,
+  SET_USERS_DONE,
+
   SET_FAVORITE_SPOT_IDS_LOADING,
-  SET_LIKE_SPOT_DONE,
   SET_FAVORITE_SPOT_IDS_DONE,
+  SET_FAVORITE_PROJECT_IDS_LOADING,
+  SET_FAVORITE_PROJECT_IDS_DONE,
+  SET_LIKE_SPOT_DONE,
   SET_EXPLORING_SPOT_ID,
 
   // modal
@@ -49,7 +62,13 @@ const initialState = fromJS({
   spots: {},
   spotsResult: [],
 
+  setProjectMeta: META,
+  setProjectsMeta: META,
+  projects: {},
+  projectsResult: [],
+
   loginMeta: META,
+  logoutMeta: META,
   registerMeta: META,
   loginStatusMeta: META,
   ownProjectsMeta: META,
@@ -61,14 +80,60 @@ const initialState = fromJS({
   isModalVisible: false,
 
   user: null,
+  users: {},
+  usersResult: [],
+  setUserMeta: META,
+  setUsersMeta: META,
   ownProjects: [],
   exploringSpotId: 0,
   setFavoriteSpotIdsMeta: META,
+  setFavoriteProjectIdsMeta: META,
   favoriteSpotIds: [],
+  favoriteProjectIds: [],
 });
 
 function spotLightReducer(state = initialState, action) {
   switch (action.type) {
+    case SET_USER_LOADING:
+      return state.update('setUserMeta', updateMetaLoading);
+
+    case SET_USER_DONE: {
+      const {
+        error,
+        user,
+      } = action.payload;
+
+      if (error) {
+        return state.update('setUserMeta', updateMetaError);
+      }
+      if (!user) { // handle user is undefined
+        return state.update('setUserMeta', updateMetaDone);
+      }
+      return state
+        .mergeDeepIn(['users', user.user_id], fromJS(user))
+        .update('setUserMeta', updateMetaDone);
+    }
+
+    case SET_USERS_LOADING:
+      return state
+        .update('setUsersMeta', updateMetaLoading);
+
+    case SET_USERS_DONE: {
+      const {
+        error,
+        entities,
+        result,
+      } = action.payload;
+      if (error) {
+        return state.update('setUsersMeta', updateMetaError);
+      }
+      return state
+        .mergeDeepIn(['users'], fromJS(entities.users))
+        .set('usersResult', fromJS(result))
+        .update('setUsersMeta', updateMetaDone)
+        .set('exploringUserId', result[0]);
+    }
+
     case SET_SPOT_LOADING:
       return state.update('setSpotMeta', updateMetaLoading);
 
@@ -109,6 +174,46 @@ function spotLightReducer(state = initialState, action) {
         .set('exploringSpotId', result[0]);
     }
 
+    case SET_PROJECT_LOADING:
+      return state.update('setProjectMeta', updateMetaLoading);
+
+    case SET_PROJECT_DONE: {
+      const {
+        error,
+        project,
+      } = action.payload;
+
+      if (error) {
+        return state.update('setProjectMeta', updateMetaError);
+      }
+      if (!project) { // handle project is undefined
+        return state.update('setProjectMeta', updateMetaDone);
+      }
+      return state
+        .mergeDeepIn(['projects', project.proj_id], fromJS(project))
+        .update('setProjectMeta', updateMetaDone);
+    }
+
+    case SET_PROJECTS_LOADING:
+      return state
+        .update('setProjectsMeta', updateMetaLoading);
+
+    case SET_PROJECTS_DONE: {
+      const {
+        error,
+        entities,
+        result,
+      } = action.payload;
+      if (error) {
+        return state.update('setProjectsMeta', updateMetaError);
+      }
+      return state
+        .mergeDeepIn(['projects'], fromJS(entities.projects))
+        .set('projectsResult', fromJS(result))
+        .update('setProjectsMeta', updateMetaDone)
+        .set('exploringProjectId', result[0]);
+    }
+
     case SET_LOGIN_LOADING:
       return state.update('loginMeta', updateMetaLoading);
 
@@ -124,6 +229,19 @@ function spotLightReducer(state = initialState, action) {
       return state
         .set('user', user && fromJS(user))
         .update('loginMeta', user === null ? updateMetaError : updateMetaDone);
+    }
+
+    case SET_LOGOUT_LOADING:
+      return state.update('logoutMeta', updateMetaLoading);
+
+    case SET_LOGOUT_DONE: {
+      const { error } = action.payload;
+      if (error) {
+        return state.update('logoutMeta', updateMetaError);
+      }
+      return state
+        .set('user', null)
+        .update('logoutMeta', updateMetaDone);
     }
 
     case SET_REGISTER_LOADING:
@@ -253,6 +371,19 @@ function spotLightReducer(state = initialState, action) {
       return state
         .set('favoriteSpotIds', fromJS(ids))
         .update('setFavoriteSpotIdsMeta', updateMetaDone);
+    }
+
+    case SET_FAVORITE_PROJECT_IDS_LOADING:
+      return state.update('setFavoriteProjectIdsMeta', updateMetaLoading);
+
+    case SET_FAVORITE_PROJECT_IDS_DONE: {
+      const { error, ids } = action.payload;
+      if (error) {
+        return state.update('setFavoriteProjectIdsMeta', updateMetaError);
+      }
+      return state
+        .set('favoriteProjectIds', fromJS(ids))
+        .update('setFavoriteProjectIdsMeta', updateMetaDone);
     }
 
     // modal

@@ -1,7 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Map } from 'immutable';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { findAttributeInEvent } from 'utils/event';
 import history from 'utils/history';
+import { routePathConfig } from 'containers/Spotlight/Content/Routes';
+import {
+  selectUser,
+  selectLoginStatusMeta,
+  selectFavoriteSpotIdsMeta,
+  selectFavoriteProjectIdsMeta,
+} from 'containers/Spotlight/selectors';
+import {
+  fetchFavoriteSpotIds,
+  fetchFavoriteProjectIds,
+} from 'containers/Spotlight/actions';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import Information from './Information';
 import CollectionTabs from './CollectionTabs';
@@ -87,9 +103,17 @@ const StyledPersonalPage = styled.div`
   }
 `;
 
-const PersonalPage = () => {
+/* eslint no-shadow: 0 */
+const PersonalPage = ({
+  user,
+  loginStatusMeta,
+  favoriteSpotIdsMeta,
+  favoriteProjectIdsMeta,
+  fetchFavoriteSpotIds,
+  fetchFavoriteProjectIds,
+}) => {
   const [activeCollectionType, setActiveCollectionType] = useState('spot');
-  const faviconPath = 'http://i.imgur.com/EUAd2ht.jpg';
+  const faviconPath = (user && user.get('protrait')) || 'http://i.imgur.com/EUAd2ht.jpg';
   const faviconSize = 90;
   const coverImagePath = 'http://cdn01.dcfever.com/media/travel/poi/2016/02/10963_poi_banner.jpg';
   const handleOnTabClick = (event) => {
@@ -101,6 +125,23 @@ const PersonalPage = () => {
       search: `?collectionType=${type}`,
     });
   };
+  const isAnonymous = loginStatusMeta.get('isLoaded') && !user;
+  if (!loginStatusMeta.get('isLoaded')) {
+    return null;
+  }
+  if (isAnonymous) {
+    return <Redirect to={routePathConfig.login} />;
+  }
+
+  useEffect(() => {
+    if (!favoriteSpotIdsMeta.get('isLoading')) {
+      fetchFavoriteSpotIds();
+    }
+    if (!favoriteProjectIdsMeta.get('isLoading')) {
+      fetchFavoriteProjectIds();
+    }
+  }, []);
+
   return (
     <StyledPersonalPage
       coverImagePath={coverImagePath}
@@ -108,7 +149,9 @@ const PersonalPage = () => {
       faviconSize={faviconSize}
     >
       <div className="personal-page__cover-image" />
-      <Information />
+      <Information
+        user={user}
+      />
       <CollectionTabs
         handleOnClick={handleOnTabClick}
       />
@@ -117,4 +160,20 @@ const PersonalPage = () => {
   );
 };
 
-export default PersonalPage;
+PersonalPage.propTypes = {
+  user: PropTypes.instanceOf(Map),
+  loginStatusMeta: PropTypes.instanceOf(Map),
+  favoriteSpotIdsMeta: PropTypes.instanceOf(Map).isRequired,
+  favoriteProjectIdsMeta: PropTypes.instanceOf(Map).isRequired,
+  fetchFavoriteSpotIds: PropTypes.func.isRequired,
+  fetchFavoriteProjectIds: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+  user: selectUser(),
+  loginStatusMeta: selectLoginStatusMeta(),
+  favoriteSpotIdsMeta: selectFavoriteSpotIdsMeta(),
+  favoriteProjectIdsMeta: selectFavoriteProjectIdsMeta(),
+});
+
+export default connect(mapStateToProps, { fetchFavoriteSpotIds, fetchFavoriteProjectIds })(PersonalPage);

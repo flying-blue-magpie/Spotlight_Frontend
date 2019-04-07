@@ -1,11 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Favicon from './Favicon';
 
-const Information = () => (
+const Information = ({
+  user,
+}) => (
   <div className="personal-page__info-wrapper">
-    <Favicon />
+    <Favicon user={user} />
     <div className="personal-page__profile-wrapper">
-      <div className="personal-page__profile-name">這裡是名字</div>
+      <div className="personal-page__profile-name">{user.get('name')}</div>
       <div className="personal-page__profile-travel-info">
         <div className="
           personal-page__profile-travel-info-item-wrapper
@@ -38,5 +41,9 @@ const Information = () => (
     </div>
   </div>
 );
+
+Information.propTypes = {
+  user: PropTypes.object.isRequired,
+};
 
 export default Information;

@@ -7,6 +7,8 @@ export const PAGE_NAME = {
   PLANNING: '計畫旅程',
   TRAVEL_WALL: '旅遊牆',
   PERSONAL_PAGE: '我的',
+  SETTING: '設定',
+  SETTING_INFO: '修改資訊',
   DETAIL_PLANNING: '旅程內容',
   UPDATE_PLANNING: '修改旅程',
   CREATE_PROJECT: '增加旅程',

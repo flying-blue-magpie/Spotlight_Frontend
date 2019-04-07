@@ -5,11 +5,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { createStructuredSelector } from 'reselect';
 import {
-  selectFavoriteSpotIds,
+  selectFavoriteProjectIds,
 } from 'containers/Spotlight/selectors';
-import SpotCard from './SpotCard';
 
-const StyledSpotCollection = styled.div`
+import ProjectCard from './ProjectCard';
+
+const StyledProjectCollection = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-row-gap: 10px;
@@ -17,33 +18,33 @@ const StyledSpotCollection = styled.div`
   padding: 10px 28px;
 `;
 
-const SpotCollection = ({
-  favoriteSpotIds,
+const ProjectCollection = ({
+  favoriteProjectIds,
   handleOnClick,
 }) => {
-  const cards = favoriteSpotIds.map((value) => value);
+  const cards = favoriteProjectIds.map((value) => value);
   return (
-    <StyledSpotCollection>
+    <StyledProjectCollection>
       {
         cards.map((card) => (
-          <SpotCard
+          <ProjectCard
             key={card}
-            spotId={card}
+            projectId={card}
             handleOnClick={handleOnClick}
           />
         ))
       }
-    </StyledSpotCollection>
+    </StyledProjectCollection>
   );
 };
 
-SpotCollection.propTypes = {
-  favoriteSpotIds: PropTypes.instanceOf(List),
+ProjectCollection.propTypes = {
+  favoriteProjectIds: PropTypes.instanceOf(List),
   handleOnClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  favoriteSpotIds: selectFavoriteSpotIds(),
+  favoriteProjectIds: selectFavoriteProjectIds(),
 });
 
-export default connect(mapStateToProps)(SpotCollection);
+export default connect(mapStateToProps)(ProjectCollection);

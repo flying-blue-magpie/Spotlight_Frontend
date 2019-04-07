@@ -6,6 +6,21 @@ import {
 
 const selectSpotlight = (state) => state.get(KEY_REDUCER);
 
+export const selectUserMeta = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('setUserMeta'),
+);
+
+export const selectUsersMeta = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('setUsersMeta'),
+);
+
+export const selectUsers = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('users'),
+);
+
 export const selectSpotMeta = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('setSpotMeta'),
@@ -19,6 +34,11 @@ export const selectSpotsMeta = () => createSelector(
 export const selectSpots = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('spots'),
+);
+
+export const selectProjects = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('projects'),
 );
 
 export const selectLoginMeta = () => createSelector(
@@ -73,6 +93,16 @@ export const selectFavoriteSpotIdsMeta = () => createSelector(
 export const selectFavoriteSpotIds = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('favoriteSpotIds'),
+);
+
+export const selectFavoriteProjectIdsMeta = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('setFavoriteProjectIdsMeta'),
+);
+
+export const selectFavoriteProjectIds = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('favoriteProjectIds'),
 );
 
 export const selectIsModalVisible = () => createSelector(

@@ -11,11 +11,18 @@ import {
   map,
 } from 'rxjs/operators';
 import message from 'antd/lib/message';
+
+import toQueryString from 'utils/query-string';
 import {
   INIT,
+  FETCH_USER_BY_ID,
+  FETCH_USERS,
   FETCH_SPOT_BY_ID,
   FETCH_SPOTS,
+  FETCH_PROJECT_BY_ID,
+  FETCH_PROJECTS,
   LOGIN,
+  LOGOUT,
   REGISTER,
   FETCH_LOGIN_STATUS,
   FETCH_OWN_PROJECTS,
@@ -23,18 +30,29 @@ import {
   SUBMIT_DELETE_PROJECT,
   LIKE_SPOT,
   FETCH_FAVORITE_SPOT_IDS,
+  FETCH_FAVORITE_PROJECT_IDS,
   EXPLORE_NEXT_SPOT,
   KEY_REDUCER,
   SUBMIT_UPDATE_PROJECT,
   CANCEL_LIKE_SPOT,
 } from './constants';
 import {
+  setUserLoading,
+  setUserDone,
+  setUsersLoading,
+  setUsersDone,
   setSpotLoading,
   setSpotDone,
   setSpotsLoading,
   setSpotsDone,
+  setProjectLoading,
+  setProjectDone,
+  setProjectsLoading,
+  setProjectsDone,
   setLoginLoading,
   setLoginDone,
+  setLogoutLoading,
+  setLogoutDone,
   setRegisterDone,
   setRegisterLoading,
   setLoginStatusDone,
@@ -60,6 +78,8 @@ import {
   setLikeSpotDone,
   setFavoriteSpotIdsDone,
   setFavoriteSpotIdsLoading,
+  setFavoriteProjectIdsDone,
+  setFavoriteProjectIdsLoading,
   setExploringSpotId,
   deleteFavoriteSpotId,
   addFavoriteSpotId,
@@ -67,10 +87,48 @@ import {
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
 
+const fetchUserByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_USER_BY_ID),
+    flatMap((action) => request({
+      method: 'get',
+      url: `/user/${action.payload.id}`,
+    }).pipe(
+      flatMap((data) => of(
+        setUserDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setUserDone(error),
+      )),
+      startWith(setUserLoading()),
+    )),
+  )
+);
+
+const fetchUsersEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_USERS),
+    switchMap(() => request({
+      method: 'get',
+      url: '/users',
+    }).pipe(
+      flatMap((data) => of(
+        setUsersDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setUsersDone(error),
+      )),
+      startWith(setUsersLoading()),
+    )),
+  )
+);
+
 const fetchSpotByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(FETCH_SPOT_BY_ID),
-    switchMap((action) => request({
+    flatMap((action) => request({
       method: 'get',
       url: `/spot/${action.payload.id}`,
     }).pipe(
@@ -82,6 +140,69 @@ const fetchSpotByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
         setSpotDone(error),
       )),
       startWith(setSpotLoading()),
+    )),
+  )
+);
+
+const fetchSpotsEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_SPOTS),
+    switchMap((action) => request({
+      method: 'get',
+      url: `/spots${getSearchSpotQueryString({
+        zones: action.payload.zones,
+        keyword: action.payload.kw,
+      })}`,
+    }).pipe(
+      flatMap((data) => of(
+        setSpotsDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setSpotsDone(error),
+      )),
+      startWith(setSpotsLoading()),
+    )),
+  )
+);
+
+const fetchProjectByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_PROJECT_BY_ID),
+    flatMap((action) => request({
+      method: 'get',
+      url: `/proj/${action.payload.id}`,
+    }).pipe(
+      flatMap((data) => of(
+        setProjectDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setProjectDone(error),
+      )),
+      startWith(setProjectLoading()),
+    )),
+  )
+);
+
+const fetchProjectsEpic = (action$, $state, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_PROJECTS),
+    switchMap((action) => request({
+      method: 'get',
+      url: `/projs?${toQueryString({
+        owner: action.payload.owner,
+        only_public: action.payload.onlyPublic,
+      })}`,
+    }).pipe(
+      flatMap((data) => of(
+        setProjectsDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setProjectsDone(error),
+      )),
+      startWith(setProjectsLoading()),
     )),
   )
 );
@@ -223,28 +344,6 @@ const getSearchSpotQueryString = ({ zones, keyword }) => {
   return queryString.length > 0 ? `?${queryString}` : '';
 };
 
-const fetchSpotsEpic = (action$, $state, { request, fetchErrorEpic }) => (
-  action$.pipe(
-    ofType(FETCH_SPOTS),
-    switchMap((action) => request({
-      method: 'get',
-      url: `/spots${getSearchSpotQueryString({
-        zones: action.payload.zones,
-        keyword: action.payload.kw,
-      })}`,
-    }).pipe(
-      flatMap((data) => of(
-        setSpotsDone(null, data.content),
-      )),
-      catchError((error) => fetchErrorEpic(
-        error,
-        setSpotsDone(error),
-      )),
-      startWith(setSpotsLoading()),
-    )),
-  )
-);
-
 const loginEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(LOGIN),
@@ -264,6 +363,25 @@ const loginEpic = (action$, state$, { request, fetchErrorEpic }) => (
         setLoginDone(error),
       )),
       startWith(setLoginLoading()),
+    )),
+  )
+);
+
+const logoutEpic = (action$, stat$, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(LOGOUT),
+    switchMap(() => request({
+      method: 'post',
+      url: '/logout',
+    }).pipe(
+      flatMap(() => (
+        of(setLogoutDone(null))
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setLogoutDone(error),
+      )),
+      startWith(setLogoutLoading()),
     )),
   )
 );
@@ -377,6 +495,30 @@ const fetchFavoriteSpotIdsEpic = (action$, state$, { request, fetchErrorEpic }) 
   )
 );
 
+const fetchFavoriteProjectIdsEpic = (action$, state$, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_FAVORITE_PROJECT_IDS),
+    switchMap(() => request({
+      method: 'get',
+      url: '/like/projs',
+    }).pipe(
+      flatMap((res) => {
+        if (res.status === 'success') {
+          return of(
+            setFavoriteProjectIdsDone(null, res.content.map((row) => row.proj_id)),
+          );
+        }
+        return of(setFavoriteProjectIdsDone(res));
+      }),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setFavoriteProjectIdsDone(error),
+      )),
+      startWith(setFavoriteProjectIdsLoading()),
+    )),
+  )
+);
+
 const exploreNextSpotEpic = (action$, state$) => (
   action$.pipe(
     ofType(EXPLORE_NEXT_SPOT),
@@ -402,9 +544,14 @@ const exploreNextSpotEpic = (action$, state$) => (
 export default [
   setInit,
   fetchOwnProjectsEpic,
+  fetchUserByIdEpic,
+  fetchUsersEpic,
   fetchSpotByIdEpic,
   fetchSpotsEpic,
+  fetchProjectByIdEpic,
+  fetchProjectsEpic,
   loginEpic,
+  logoutEpic,
   registerEpic,
   fetchLoginStatusEpic,
   createProjectEpic,
@@ -413,5 +560,6 @@ export default [
   likeSpotEpic,
   cancelLikeSpotEpic,
   fetchFavoriteSpotIdsEpic,
+  fetchFavoriteProjectIdsEpic,
   exploreNextSpotEpic,
 ];
