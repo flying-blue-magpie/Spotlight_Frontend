@@ -21,6 +21,11 @@ export const selectSpots = () => createSelector(
   (spotlightState) => spotlightState.get('spots'),
 );
 
+export const selectProjects = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('projects'),
+);
+
 export const selectLoginMeta = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('loginMeta'),
@@ -73,6 +78,16 @@ export const selectFavoriteSpotIdsMeta = () => createSelector(
 export const selectFavoriteSpotIds = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('favoriteSpotIds'),
+);
+
+export const selectFavoriteProjectIdsMeta = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('setFavoriteProjectIdsMeta'),
+);
+
+export const selectFavoriteProjectIds = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('favoriteProjectIds'),
 );
 
 export const selectIsModalVisible = () => createSelector(
