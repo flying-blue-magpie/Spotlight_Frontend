@@ -34,6 +34,9 @@ import {
   SUBMIT_DELETE_PROJECT,
   DELETE_PROJECT_LOADING,
   DELETE_PROJECT_DONE,
+
+  CANCEL_LIKE_SPOT,
+  SET_CANCEL_LIKE_SPOT_DONE,
   LIKE_SPOT,
   SET_LIKE_SPOT_DONE,
   FETCH_FAVORITE_SPOT_IDS,
@@ -241,6 +244,19 @@ export const likeSpot = (id) => ({
 
 export const setLikeSpotDone = (error, id) => ({
   type: SET_LIKE_SPOT_DONE,
+  payload: {
+    error,
+    id,
+  },
+});
+
+export const cancelLikeSpot = (id) => ({
+  type: CANCEL_LIKE_SPOT,
+  payload: id,
+});
+
+export const setCancelLikeSpotDone = (error, id) => ({
+  type: SET_CANCEL_LIKE_SPOT_DONE,
   payload: {
     error,
     id,
