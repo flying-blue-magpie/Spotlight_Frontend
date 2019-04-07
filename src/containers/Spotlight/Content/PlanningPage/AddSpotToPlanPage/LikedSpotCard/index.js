@@ -6,6 +6,8 @@ import { Map } from 'immutable';
 import Spinner from 'components/Spinner';
 import ImageGallery from 'react-image-gallery';
 
+import redHeartCircleIconPath from 'assets/red-heart-circle-icon.svg';
+
 const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const HEIGHT_SPOT_CARD = 140;
@@ -37,10 +39,31 @@ const LikedSpotCardContainer = styled.div`
   .liked-spot-card__card-cover {
     height: 100%;
   }
-  .liked-spot-card__card-name {
+  .liked-spot-card__card-title-wrapper {
     height: 40px;
     background: white;
     border-radius: 0px 0px 10px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+  }
+  .liked-spot-card__card-title {
+    font-size: 14px;
+    color: #333333;
+    font-weight: 500;
+
+    overflow : hidden;
+    text-overflow : ellipsis;
+    white-space : nowrap;
+  }
+  .liked-spot-card__card-like-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  .liked-spot-card__card-heart-icon {
+    width: 30px;
+    height: 30px;
   }
   .liked-spot-card__mask {
     position: absolute;
@@ -87,7 +110,13 @@ const LikedSpotCard = ({
             slideInterval={getRandom(3000, 5000)}
           />
         </div>
-        <div className="liked-spot-card__card-name">{foundSpotDetail.get('name')}</div>
+        <div className="liked-spot-card__card-title-wrapper">
+          <div className="liked-spot-card__card-title">{foundSpotDetail.get('name')}</div>
+          <div className="liked-spot-card__card-like-wrapper">
+            <img src={redHeartCircleIconPath} className="liked-spot-card__card-heart-icon" alt="" />
+            <div>666</div>
+          </div>
+        </div>
       </div>
       {
         showMask &&
