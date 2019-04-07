@@ -70,6 +70,11 @@ export const selectFavoriteSpotIdsMeta = () => createSelector(
   (spotlightState) => spotlightState.get('setFavoriteSpotIdsMeta'),
 );
 
+export const selectFavoriteSpotIds = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('favoriteSpotIds'),
+);
+
 export const selectIsModalVisible = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('isModalVisible'),

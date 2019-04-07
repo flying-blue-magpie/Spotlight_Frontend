@@ -34,6 +34,9 @@ import {
   SUBMIT_DELETE_PROJECT,
   DELETE_PROJECT_LOADING,
   DELETE_PROJECT_DONE,
+
+  CANCEL_LIKE_SPOT,
+  SET_CANCEL_LIKE_SPOT_DONE,
   LIKE_SPOT,
   SET_LIKE_SPOT_DONE,
   FETCH_FAVORITE_SPOT_IDS,
@@ -43,6 +46,8 @@ import {
 
   // modal
   SET_IS_MODAL_VISIBLE,
+  ADD_FAVORITE_SPOT_ID,
+  DELETE_FAVORITE_SPOT_ID,
 } from './constants';
 
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
@@ -245,6 +250,19 @@ export const setLikeSpotDone = (error, id) => ({
   },
 });
 
+export const cancelLikeSpot = (id) => ({
+  type: CANCEL_LIKE_SPOT,
+  payload: id,
+});
+
+export const setCancelLikeSpotDone = (error, id) => ({
+  type: SET_CANCEL_LIKE_SPOT_DONE,
+  payload: {
+    error,
+    id,
+  },
+});
+
 export const fetchFavoriteSpotIds = () => ({
   type: FETCH_FAVORITE_SPOT_IDS,
 });
@@ -259,4 +277,14 @@ export const setFavoriteSpotIdsDone = (error, ids) => ({
     error,
     ids,
   },
+});
+
+export const addFavoriteSpotId = (id) => ({
+  type: ADD_FAVORITE_SPOT_ID,
+  payload: id,
+});
+
+export const deleteFavoriteSpotId = (id) => ({
+  type: DELETE_FAVORITE_SPOT_ID,
+  payload: id,
 });

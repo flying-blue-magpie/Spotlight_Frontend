@@ -38,6 +38,9 @@ import {
 
   // modal
   SET_IS_MODAL_VISIBLE,
+  ADD_FAVORITE_SPOT_ID,
+  DELETE_FAVORITE_SPOT_ID,
+  SET_CANCEL_LIKE_SPOT_DONE,
 } from './constants';
 
 const initialState = fromJS({
@@ -228,7 +231,15 @@ function spotLightReducer(state = initialState, action) {
         return state;
       }
       return state
-        .updateIn(['spots', String(id), 'like_num'], (likeNum) => likeNum + 1);
+        .updateIn(['spots', id, 'like_num'], (likeNum) => likeNum + 1);
+    }
+
+    case SET_CANCEL_LIKE_SPOT_DONE: {
+      const { error, id } = action.payload;
+      if (error) {
+        return state;
+      }
+      return state.updateIn(['spots', id, 'like_num'], (likeNum) => likeNum - 1);
     }
 
     case SET_FAVORITE_SPOT_IDS_LOADING:
@@ -251,6 +262,20 @@ function spotLightReducer(state = initialState, action) {
       } = action.payload;
       return state.set('isModalVisible', isVisible);
     }
+
+    case ADD_FAVORITE_SPOT_ID:
+      return state.update('favoriteSpotIds', (ids) => (
+        ids.toSet().add(action.payload).toList()
+      ));
+
+    case DELETE_FAVORITE_SPOT_ID:
+      return state.update('favoriteSpotIds', (ids) => {
+        const index = ids.indexOf(action.payload);
+        if (index !== -1) {
+          return ids.delete(index);
+        }
+        return ids;
+      });
 
     default:
       return state;

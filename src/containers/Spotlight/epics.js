@@ -26,6 +26,7 @@ import {
   EXPLORE_NEXT_SPOT,
   KEY_REDUCER,
   SUBMIT_UPDATE_PROJECT,
+  CANCEL_LIKE_SPOT,
 } from './constants';
 import {
   setSpotLoading,
@@ -54,10 +55,14 @@ import {
   // delete project
   deleteProjectLoading,
   deleteProjectDone,
+
+  setCancelLikeSpotDone,
   setLikeSpotDone,
   setFavoriteSpotIdsDone,
   setFavoriteSpotIdsLoading,
   setExploringSpotId,
+  deleteFavoriteSpotId,
+  addFavoriteSpotId,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -311,15 +316,39 @@ const fetchLoginStatusEpic = (action$, state$, { request, fetchErrorEpic }) => (
 const likeSpotEpic = (action$, state$, { request }) => (
   action$.pipe(
     ofType(LIKE_SPOT),
-    flatMap((action) => request({
+    switchMap((action) => request({
       method: 'post',
       url: `/like/spot/${action.payload}`,
     }).pipe(
-      flatMap((res) => of(
-        res.status === 'success'
-          ? setLikeSpotDone(null, action.payload)
-          : setLikeSpotDone(res),
-      )),
+      flatMap((res) => {
+        if (res.status === 'success') {
+          return of(
+            setLikeSpotDone(null, action.payload),
+            addFavoriteSpotId(action.payload),
+          );
+        }
+        return of(setLikeSpotDone(res));
+      }),
+    )),
+  )
+);
+
+const cancelLikeSpotEpic = (action$, state$, { request }) => (
+  action$.pipe(
+    ofType(CANCEL_LIKE_SPOT),
+    switchMap((action) => request({
+      method: 'delete',
+      url: `/like/spot/${action.payload}`,
+    }).pipe(
+      flatMap((res) => {
+        if (res.status === 'success') {
+          return of(
+            setCancelLikeSpotDone(null, action.payload),
+            deleteFavoriteSpotId(action.payload),
+          );
+        }
+        return of(setCancelLikeSpotDone(res));
+      }),
     )),
   )
 );
@@ -382,6 +411,7 @@ export default [
   updateProjectEpic,
   deleteProjectEpic,
   likeSpotEpic,
+  cancelLikeSpotEpic,
   fetchFavoriteSpotIdsEpic,
   exploreNextSpotEpic,
 ];
