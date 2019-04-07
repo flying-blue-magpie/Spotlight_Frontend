@@ -19,6 +19,7 @@
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-drag-list": "^1.1.0",
+    "react-image-gallery": "^0.8.16",
     "react-mobile-picker-scroll": "^0.2.14",
     "react-redux": "^6.0.1",
     "react-router": "^5.0.0",
