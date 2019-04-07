@@ -62,6 +62,7 @@ import {
   setFavoriteSpotIdsLoading,
   setExploringSpotId,
   deleteFavoriteSpotId,
+  addFavoriteSpotId,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -319,11 +320,15 @@ const likeSpotEpic = (action$, state$, { request }) => (
       method: 'post',
       url: `/like/spot/${action.payload}`,
     }).pipe(
-      flatMap((res) => of(
-        res.status === 'success'
-          ? setLikeSpotDone(null, action.payload)
-          : setLikeSpotDone(res),
-      )),
+      flatMap((res) => {
+        if (res.status === 'success') {
+          return of(
+            setLikeSpotDone(null, action.payload),
+            addFavoriteSpotId(action.payload),
+          );
+        }
+        return of(setLikeSpotDone(res));
+      }),
     )),
   )
 );
