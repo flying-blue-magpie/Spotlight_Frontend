@@ -56,7 +56,7 @@ export const HeaderLinkButton = styled(Link)`
   &:focus,
   &:visited,
   &:active {
-    color: #fff;
+    color: #333333;
   }
 `;
 
@@ -68,7 +68,7 @@ export const HeaderButton = styled.button`
   &:focus,
   &:visited,
   &:active {
-    color: #fff;
+    color: #333333;
     background-color: transparent;
   }
 `;
