@@ -59,6 +59,7 @@ export const SpotName = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: bold;
 `;
 
 export const Title = styled.div`
@@ -71,16 +72,30 @@ export const Title = styled.div`
 
 export const LikeLabel = styled.label`
   flex-shrink: 0;
+  color: #AAAAAA;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
 `;
 
 export const LikeButton = styled.i`
-  margin-right: 3px;
+  margin-right: 6px;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, .16);
+  color: #EB715A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Paragraph = styled.p`
   padding: 0 15px;
   margin-bottom: 15px;
   color: #AAAAAA;
+  line-height: 1.75;
 
   &:last-child {
     margin-bottom: 0;
