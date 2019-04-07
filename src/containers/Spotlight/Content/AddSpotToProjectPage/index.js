@@ -35,29 +35,27 @@ const AddSpotToProjectPage = ({
 
   return (
     <div>
-      <div>
-        {ownProjects.map((project) => (
-          <Project
-            key={project.get('proj_id')}
-            to={`${location.pathname}/${project.get('proj_id')}`}
-          >
-            <div>{project.get('name')}</div>
-            <div>
-              {moment(project.get('start_day'), 'YYYY-MM-DD')
-                .format('YYYY年MM月DD日')
-              }
-              {' - '}
-              {moment(project.get('start_day'), 'YYYY-MM-DD')
-                .add(project.get('tot_days') - 1, 'days')
-                .format('YYYY年MM月DD日')
-              }
-              {' / '}
-              {project.get('tot_days')}
-              天
-            </div>
-          </Project>
-        ))}
-      </div>
+      {ownProjects.map((project) => (
+        <Project
+          key={project.get('proj_id')}
+          to={`${location.pathname}/${project.get('proj_id')}`}
+        >
+          <div>{project.get('name')}</div>
+          <div>
+            {moment(project.get('start_day'), 'YYYY-MM-DD')
+              .format('YYYY年MM月DD日')
+            }
+            {' - '}
+            {moment(project.get('start_day'), 'YYYY-MM-DD')
+              .add(project.get('tot_days') - 1, 'days')
+              .format('YYYY年MM月DD日')
+            }
+            {' / '}
+            {project.get('tot_days')}
+            天
+          </div>
+        </Project>
+      ))}
     </div>
   );
 };
