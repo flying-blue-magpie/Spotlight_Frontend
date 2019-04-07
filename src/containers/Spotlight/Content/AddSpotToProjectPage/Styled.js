@@ -30,3 +30,25 @@ export const ProjectDate = styled.div`
   color: #AAAAAA;
   font-size: 12px;
 `;
+
+export const CreateProjectButton = styled(Link)`
+  margin: 0 15px;
+  padding: 25px 0;
+  border-bottom: solid 1px #DFDFDF;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+
+  &,
+  &:hover,
+  &:active,
+  &:focus,
+  &:visited {
+    color: #333333;
+  }
+`;
+
+export const AddIcon = styled.i`
+  font-size: 18px;
+  margin-right: 6px;
+`;

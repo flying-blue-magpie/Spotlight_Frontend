@@ -6,6 +6,7 @@ import { Map, List } from 'immutable';
 import { withRouter } from 'react-router';
 import moment from 'moment';
 
+import { PAGE_NAME } from 'Styled/Settings/constants';
 import Spinner from 'components/Spinner';
 import {
   fetchOwnProjects,
@@ -20,6 +21,8 @@ import {
   Project,
   ProjectName,
   ProjectDate,
+  CreateProjectButton,
+  AddIcon,
 } from './Styled';
 
 const AddSpotToProjectPage = ({
@@ -61,6 +64,10 @@ const AddSpotToProjectPage = ({
           </ProjectDate>
         </Project>
       ))}
+      <CreateProjectButton to={`/${PAGE_NAME.CREATE_PROJECT}`}>
+        <AddIcon className="fas fa-plus" />
+        增加旅程
+      </CreateProjectButton>
     </Container>
   );
 };
