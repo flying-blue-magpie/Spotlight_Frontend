@@ -231,7 +231,7 @@ function spotLightReducer(state = initialState, action) {
         return state;
       }
       return state
-        .updateIn(['spots', String(id), 'like_num'], (likeNum) => likeNum + 1);
+        .updateIn(['spots', id, 'like_num'], (likeNum) => likeNum + 1);
     }
 
     case SET_CANCEL_LIKE_SPOT_DONE: {
