@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import message from 'antd/lib/message';
-import { Region, ZoneLabel } from './Styled';
+import { Region, ZoneLabel, Container } from './Styled';
 
 const ZoneMenu = ({
   zonesState,
@@ -11,7 +11,7 @@ const ZoneMenu = ({
   const regions = zonesState.map((zone) => zone.get('region')).toSet();
 
   return (
-    <div>
+    <Container>
       {regions.map((region) => (
         <React.Fragment key={region}>
           <Region>{region}</Region>
@@ -43,7 +43,7 @@ const ZoneMenu = ({
           }
         </React.Fragment>
       ))}
-    </div>
+    </Container>
   );
 };
 
