@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import Spinner from 'components/Spinner';
 import ImageGallery from 'react-image-gallery';
+import Context from 'containers/Spotlight/Context';
 
-import redHeartCircleIconPath from 'assets/red-heart-circle-icon.svg';
+import redHeartCircleIconPath from 'assets/red_heart_circle_icon.svg';
+import checkIconPath from 'assets/check_icon.svg';
+
+const { SpotlightContext } = Context;
 
 const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -74,6 +78,13 @@ const LikedSpotCardContainer = styled.div`
     border: 4px solid #AAAAAA;
     border-radius: 10px;
   }
+  .liked-spot-card__check-icon {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 0px;
+    margin: 5px;
+  }
 `;
 
 const LikedSpotCard = ({
@@ -81,7 +92,15 @@ const LikedSpotCard = ({
   spots,
   handleFetchSpotById,
 }) => {
+  const context = useContext(SpotlightContext);
+  const {
+    selectedLikedSpotId,
+    setSelectedLikedSpotId,
+  } = context;
   const foundSpotDetail = spots.get(spotId);
+  const handleSelectLikedSpot = useCallback(() => {
+    setSelectedLikedSpotId(spotId);
+  }, []);
   useEffect(() => {
     if (!foundSpotDetail) {
       handleFetchSpotById(spotId);
@@ -90,7 +109,7 @@ const LikedSpotCard = ({
   if (!foundSpotDetail) {
     return <Spinner height={HEIGHT_SPOT_CARD} />;
   }
-  const showMask = false;
+  const showMask = selectedLikedSpotId === spotId;
   const pics = foundSpotDetail.get('pic').map((pic) => ({
     original: pic,
     thumbnail: pic,
@@ -98,7 +117,7 @@ const LikedSpotCard = ({
 
   return (
     <LikedSpotCardContainer>
-      <div className="liked-spot-card__card-wrapper">
+      <div role="presentation" className="liked-spot-card__card-wrapper" onClick={handleSelectLikedSpot}>
         <div className="liked-spot-card__card-cover">
           <ImageGallery
             items={pics}
@@ -120,7 +139,10 @@ const LikedSpotCard = ({
       </div>
       {
         showMask &&
-        <div className="liked-spot-card__mask">Mask</div>
+        <>
+          <div className="liked-spot-card__mask" />
+          <img className="liked-spot-card__check-icon" src={checkIconPath} alt="" />
+        </>
       }
     </LikedSpotCardContainer>
   );
