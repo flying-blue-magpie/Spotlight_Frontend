@@ -39,6 +39,7 @@ import {
   // modal
   SET_IS_MODAL_VISIBLE,
   ADD_FAVORITE_SPOT_ID,
+  DELETE_FAVORITE_SPOT_ID,
 } from './constants';
 
 const initialState = fromJS({
@@ -257,6 +258,15 @@ function spotLightReducer(state = initialState, action) {
       return state.update('favoriteSpotIds', (ids) => (
         ids.toSet().add(action.payload).toList()
       ));
+
+    case DELETE_FAVORITE_SPOT_ID:
+      return state.update('favoriteSpotIds', (ids) => {
+        const index = ids.indexOf(action.payload);
+        if (index !== -1) {
+          return ids.delete(index);
+        }
+        return ids;
+      });
 
     default:
       return state;
