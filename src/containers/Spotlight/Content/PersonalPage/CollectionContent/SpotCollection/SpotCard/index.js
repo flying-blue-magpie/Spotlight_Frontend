@@ -35,6 +35,7 @@ const SpotCard = ({
   spots,
   spotId,
   fetchSpotById,
+  handleOnClick,
 }) => {
   useEffect(() => {
     if (!spots.get(spotId)) {
@@ -53,6 +54,7 @@ const SpotCard = ({
       imagePath={imagePath}
       data-id={spotId}
       data-redirect-path={PAGE_NAME.EXPLORE}
+      onClick={handleOnClick}
     >
       <div className="spot-card__title-wrapper">
         <span className="spot-card__title">{spot.get('name')}</span>
@@ -68,7 +70,7 @@ SpotCard.propTypes = {
     PropTypes.string,
   ]).isRequired,
   fetchSpotById: PropTypes.func.isRequired,
-
+  handleOnClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

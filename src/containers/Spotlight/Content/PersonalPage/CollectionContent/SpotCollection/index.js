@@ -19,6 +19,7 @@ const StyledSpotCollection = styled.div`
 
 const SpotCollection = ({
   favoriteSpotIds,
+  handleOnClick,
 }) => {
   const cards = favoriteSpotIds.map((value) => value);
   return (
@@ -28,6 +29,7 @@ const SpotCollection = ({
           <SpotCard
             key={card}
             spotId={card}
+            handleOnClick={handleOnClick}
           />
         ))
       }
@@ -37,6 +39,7 @@ const SpotCollection = ({
 
 SpotCollection.propTypes = {
   favoriteSpotIds: PropTypes.instanceOf(List),
+  handleOnClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
