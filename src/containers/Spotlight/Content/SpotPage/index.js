@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router';
 import { selectSpotMeta, selectSpots } from 'containers/Spotlight/selectors';
 import { fetchSpotById } from 'containers/Spotlight/actions';
 import Spinner from 'components/Spinner';
 import Context from 'containers/Spotlight/Context';
+import { PAGE_NAME } from 'Styled/Settings/constants';
 
 import {
   Feature,
@@ -18,6 +20,8 @@ import {
   SpotName,
   LikeLabel,
   Container,
+  BackButton,
+  AddButton,
 } from './Styled';
 
 const { SpotlightContext } = Context;
@@ -27,6 +31,7 @@ const SpotPage = ({
   spots,
   handleFetchSpotById,
   setSpotMeta,
+  location,
 }) => {
   const { setIsHeaderVisible } = useContext(SpotlightContext);
 
@@ -51,6 +56,12 @@ const SpotPage = ({
   return (
     <Container>
       <Feature>
+        <BackButton to={`/${PAGE_NAME.EXPLORE}`}>
+          <i className="fas fa-arrow-left" />
+        </BackButton>
+        <AddButton to={`${location.pathname}/${PAGE_NAME.ADD_SPOT_TO_PROJECT}`}>
+          <i className="fas fa-plus" />
+        </AddButton>
         <FeatureImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
         <FeatureInfo>
           <SpotName>{spot.get('name')}</SpotName>
@@ -81,6 +92,7 @@ SpotPage.propTypes = {
   spots: PropTypes.instanceOf(Map),
   setSpotMeta: PropTypes.instanceOf(Map),
   handleFetchSpotById: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -92,4 +104,4 @@ const mapDispatchToProps = (dispatch) => ({
   handleFetchSpotById: (id) => dispatch(fetchSpotById(id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SpotPage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SpotPage));

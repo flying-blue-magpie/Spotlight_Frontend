@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   background-color: #FAFAFA;
@@ -8,6 +9,24 @@ export const Feature = styled.div`
   position: relative;
   padding-top: 175px;
   margin-bottom: 20px;
+`;
+
+export const BackButton = styled(Link)`
+  position: absolute;
+  z-index: 1;
+  font-size: 18px;
+  color: #fff;
+  left: 15px;
+  top: 20px;
+`;
+
+export const AddButton = styled(Link)`
+  position: absolute;
+  z-index: 1;
+  font-size: 18px;
+  color: #fff;
+  right: 15px;
+  top: 20px;
 `;
 
 export const FeatureImage = styled.img`
