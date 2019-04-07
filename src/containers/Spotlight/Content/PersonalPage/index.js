@@ -10,11 +10,13 @@ import history from 'utils/history';
 import { routePathConfig } from 'containers/Spotlight/Content/Routes';
 import {
   selectUser,
+  selectUsers,
   selectLoginStatusMeta,
   selectFavoriteSpotIdsMeta,
   selectFavoriteProjectIdsMeta,
 } from 'containers/Spotlight/selectors';
 import {
+  fetchUserStats,
   fetchFavoriteSpotIds,
   fetchFavoriteProjectIds,
 } from 'containers/Spotlight/actions';
@@ -106,11 +108,13 @@ const StyledPersonalPage = styled.div`
 /* eslint no-shadow: 0 */
 const PersonalPage = ({
   user,
+  users,
   loginStatusMeta,
   favoriteSpotIdsMeta,
   favoriteProjectIdsMeta,
   fetchFavoriteSpotIds,
   fetchFavoriteProjectIds,
+  fetchUserStats,
 }) => {
   const [activeCollectionType, setActiveCollectionType] = useState('spot');
   const faviconPath = (user && user.get('protrait')) || 'http://i.imgur.com/EUAd2ht.jpg';
@@ -140,7 +144,13 @@ const PersonalPage = ({
     if (!favoriteProjectIdsMeta.get('isLoading')) {
       fetchFavoriteProjectIds();
     }
-  }, []);
+    if (user) {
+      const userId = user.get('user_id');
+      if (userId) {
+        fetchUserStats(userId);
+      }
+    }
+  }, [users]);
 
   return (
     <StyledPersonalPage
@@ -151,6 +161,7 @@ const PersonalPage = ({
       <div className="personal-page__cover-image" />
       <Information
         user={user}
+        users={users}
       />
       <CollectionTabs
         handleOnClick={handleOnTabClick}
@@ -162,18 +173,21 @@ const PersonalPage = ({
 
 PersonalPage.propTypes = {
   user: PropTypes.instanceOf(Map),
+  users: PropTypes.instanceOf(Map),
   loginStatusMeta: PropTypes.instanceOf(Map),
   favoriteSpotIdsMeta: PropTypes.instanceOf(Map).isRequired,
   favoriteProjectIdsMeta: PropTypes.instanceOf(Map).isRequired,
   fetchFavoriteSpotIds: PropTypes.func.isRequired,
   fetchFavoriteProjectIds: PropTypes.func.isRequired,
+  fetchUserStats: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   user: selectUser(),
+  users: selectUsers(),
   loginStatusMeta: selectLoginStatusMeta(),
   favoriteSpotIdsMeta: selectFavoriteSpotIdsMeta(),
   favoriteProjectIdsMeta: selectFavoriteProjectIdsMeta(),
 });
 
-export default connect(mapStateToProps, { fetchFavoriteSpotIds, fetchFavoriteProjectIds })(PersonalPage);
+export default connect(mapStateToProps, { fetchFavoriteSpotIds, fetchFavoriteProjectIds, fetchUserStats })(PersonalPage);
