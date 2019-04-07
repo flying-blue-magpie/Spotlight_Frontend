@@ -87,7 +87,7 @@ import {
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
 
-const fetchUserByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
+const fetchUserByIdEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(FETCH_USER_BY_ID),
     flatMap((action) => request({
@@ -106,7 +106,7 @@ const fetchUserByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
   )
 );
 
-const fetchUsersEpic = (action$, $state, { request, fetchErrorEpic }) => (
+const fetchUsersEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(FETCH_USERS),
     switchMap(() => request({
@@ -125,7 +125,7 @@ const fetchUsersEpic = (action$, $state, { request, fetchErrorEpic }) => (
   )
 );
 
-const fetchSpotByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
+const fetchSpotByIdEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(FETCH_SPOT_BY_ID),
     flatMap((action) => request({
@@ -144,7 +144,7 @@ const fetchSpotByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
   )
 );
 
-const fetchSpotsEpic = (action$, $state, { request, fetchErrorEpic }) => (
+const fetchSpotsEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(FETCH_SPOTS),
     switchMap((action) => request({
@@ -166,7 +166,7 @@ const fetchSpotsEpic = (action$, $state, { request, fetchErrorEpic }) => (
   )
 );
 
-const fetchProjectByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
+const fetchProjectByIdEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(FETCH_PROJECT_BY_ID),
     flatMap((action) => request({
@@ -185,7 +185,7 @@ const fetchProjectByIdEpic = (action$, $state, { request, fetchErrorEpic }) => (
   )
 );
 
-const fetchProjectsEpic = (action$, $state, { request, fetchErrorEpic }) => (
+const fetchProjectsEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(FETCH_PROJECTS),
     switchMap((action) => request({
@@ -207,7 +207,7 @@ const fetchProjectsEpic = (action$, $state, { request, fetchErrorEpic }) => (
   )
 );
 
-const createProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
+const createProjectEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(SUBMIT_CREATE_PROJECT),
     switchMap((action) => {
@@ -240,7 +240,7 @@ const createProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
 );
 
 // PUT /own/proj/<int:proj_id>
-const updateProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
+const updateProjectEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(SUBMIT_UPDATE_PROJECT),
     switchMap((action) => {
@@ -273,7 +273,7 @@ const updateProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
   )
 );
 
-const deleteProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
+const deleteProjectEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(SUBMIT_DELETE_PROJECT),
     switchMap((action) => {
@@ -304,7 +304,7 @@ const deleteProjectEpic = (action$, $state, { request, fetchErrorEpic }) => (
   )
 );
 
-const fetchOwnProjectsEpic = (action$, $state, { request, fetchErrorEpic }) => (
+const fetchOwnProjectsEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(FETCH_OWN_PROJECTS),
     switchMap(() => request({
@@ -367,7 +367,7 @@ const loginEpic = (action$, state$, { request, fetchErrorEpic }) => (
   )
 );
 
-const logoutEpic = (action$, stat$, { request, fetchErrorEpic }) => (
+const logoutEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(LOGOUT),
     switchMap(() => request({
