@@ -18,10 +18,10 @@ const NavigationContainer = styled.div`
 
 const Navigation = () => (
   <NavigationContainer>
-    <NavTab title={PAGE_NAME.EXPLORE} iconPath={NavIcon.explore} />
-    <NavTab title={PAGE_NAME.PLANNING} iconPath={NavIcon.planning} />
-    <NavTab title={PAGE_NAME.TRAVEL_WALL} iconPath={NavIcon.travelWall} />
-    <NavTab title={PAGE_NAME.PERSONAL_PAGE} iconPath={NavIcon.personal} />
+    <NavTab page={PAGE_NAME.EXPLORE} iconPath={NavIcon.explore} />
+    <NavTab page={PAGE_NAME.PLANNING} iconPath={NavIcon.planning} />
+    <NavTab page={PAGE_NAME.TRAVEL_WALL} iconPath={NavIcon.travelWall} />
+    <NavTab page={PAGE_NAME.PERSONAL_PAGE} iconPath={NavIcon.personal} />
   </NavigationContainer>
 );
 

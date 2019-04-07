@@ -6,6 +6,8 @@ import {
 } from 'utils/event';
 import history from 'utils/history';
 
+const setNavTabActive = (isActive) => (isActive ? 'nav-tab__active' : '');
+
 const NavTabWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -32,28 +34,31 @@ const NavTabWrapper = styled.div`
       background-image: url(${(props) => props.iconPath.hover});
     }
   }
+  .nav-tab__active {
+    background-image: url(${(props) => props.iconPath.hover});
+  }
 `;
 
 const NavTab = (props) => {
   const {
-    title,
+    page,
     iconPath,
   } = props;
   const handleRedirect = (event) => {
     const pagePath = findAttributeInEvent(event, 'data-page-path');
     history.push(`/${pagePath}`);
   };
-
+  const isActive = window.location.pathname.includes(page.name);
   return (
-    <NavTabWrapper iconPath={iconPath} data-page-path={title} onClick={handleRedirect}>
-      <div className="nav-tab__image" />
-      <div>{title}</div>
+    <NavTabWrapper iconPath={iconPath} data-page-path={page.name} onClick={handleRedirect}>
+      <div className={`nav-tab__image ${setNavTabActive(isActive)}`} />
+      <div>{page.text}</div>
     </NavTabWrapper>
   );
 };
 
 NavTab.propTypes = {
-  title: PropTypes.string.isRequired,
+  page: PropTypes.object.isRequired,
   iconPath: PropTypes.object.isRequired,
 };
 

@@ -20,7 +20,7 @@ export default () => {
     };
   }, []);
   const handleGoBackToPlanning = useCallback(() => {
-    history.push(`/${PAGE_NAME.PERSONAL_PAGE}`);
+    history.push(`/${PAGE_NAME.PERSONAL_PAGE.name}`);
   }, []);
   return (
     <HeaderContainer>

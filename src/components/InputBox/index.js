@@ -37,7 +37,12 @@ const InputBox = ({
 }) => (
   <InputBoxWrapper className="input-box__input-wrapper">
     <div className="input-box__label-box"><span>{title}</span></div>
-    <input type={inputType} defaultValue={defaultValue} className="input-box__input" onChange={handleOnChange} />
+    <input
+      type={inputType}
+      defaultValue={defaultValue}
+      className="input-box__input"
+      onChange={handleOnChange}
+    />
   </InputBoxWrapper>
 );
 

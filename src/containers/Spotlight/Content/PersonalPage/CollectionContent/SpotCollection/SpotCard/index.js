@@ -53,7 +53,7 @@ const SpotCard = ({
     <StyledSpotCard
       imagePath={imagePath}
       data-id={spotId}
-      data-redirect-path={PAGE_NAME.EXPLORE}
+      data-redirect-path={PAGE_NAME.EXPLORE.name}
       onClick={handleOnClick}
     >
       <div className="spot-card__title-wrapper">

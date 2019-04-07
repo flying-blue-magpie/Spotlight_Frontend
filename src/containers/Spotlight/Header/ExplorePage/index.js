@@ -18,17 +18,17 @@ const ExplorePageHeader = ({ location }) => {
     <HeaderContainer>
       <HeaderLeftButtons>
         {menu === 'zone' &&
-          <HeaderLinkButton to={`/${PAGE_NAME.EXPLORE}`}>
-            <i className="fas fa-times" />
+          <HeaderLinkButton to={`/${PAGE_NAME.EXPLORE.name}`}>
+            <i className="fas fa-arrow-left" />
           </HeaderLinkButton>
         }
       </HeaderLeftButtons>
       <HeaderTitle>
-        {menu === 'zone' ? '縣市選擇' : PAGE_NAME.EXPLORE}
+        {menu === 'zone' ? '縣市選擇' : PAGE_NAME.EXPLORE.text}
       </HeaderTitle>
       <HeaderRightButtons>
         {menu === 'zone' &&
-          <HeaderLinkButton to={`/${PAGE_NAME.EXPLORE}`}>
+          <HeaderLinkButton to={`/${PAGE_NAME.EXPLORE.name}`}>
             <i className="fas fa-check" />
           </HeaderLinkButton>
         }

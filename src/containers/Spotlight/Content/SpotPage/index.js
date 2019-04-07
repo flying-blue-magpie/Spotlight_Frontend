@@ -75,10 +75,10 @@ const SpotPage = ({
   return (
     <Container>
       <Feature>
-        <BackButton to={`/${PAGE_NAME.EXPLORE}`}>
+        <BackButton to={`/${PAGE_NAME.EXPLORE.name}`}>
           <i className="fas fa-arrow-left" />
         </BackButton>
-        <AddButton to={`${location.pathname}/${PAGE_NAME.ADD_SPOT_TO_PROJECT}`}>
+        <AddButton to={`${location.pathname}/${PAGE_NAME.ADD_SPOT_TO_PROJECT.name}`}>
           <i className="fas fa-plus" />
         </AddButton>
         <FeatureImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />

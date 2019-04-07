@@ -6,6 +6,6 @@ import {
 
 export default () => (
   <HeaderContainer>
-    {PAGE_NAME.TRAVEL_WALL}
+    {PAGE_NAME.TRAVEL_WALL.text}
   </HeaderContainer>
 );

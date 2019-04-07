@@ -17,6 +17,9 @@ const useSelection = () => {
   // update project
   const [updateProject, setUpdateProject] = useState(Map());
 
+  // select liked spot
+  const [selectedLikedSpotId, setSelectedLikedSpotId] = useState();
+
   return {
     isNavVisible,
     setIsNavVisible,
@@ -34,6 +37,10 @@ const useSelection = () => {
 
     isEditMode,
     setIsEditMode,
+
+    // select liked spot
+    selectedLikedSpotId,
+    setSelectedLikedSpotId,
   };
 };
 

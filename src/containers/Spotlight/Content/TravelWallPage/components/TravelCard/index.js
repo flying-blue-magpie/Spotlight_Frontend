@@ -74,7 +74,7 @@ const StyledTravelCard = styled.div`
 const TravelCard = ({ projectId }) => {
   const imagePath = 'https://www.silverkris.com/wp-content/uploads/2017/08/taipei-ximending.jpg';
   const handleOnClick = useCallback(() => {
-    const detailPlanningPagePath = `/${PAGE_NAME.DETAIL_PLANNING}`;
+    const detailPlanningPagePath = `/${PAGE_NAME.DETAIL_PLANNING.name}`;
     const defaultDay = 1;
     history.push({
       pathname: `${detailPlanningPagePath}/${projectId}`,

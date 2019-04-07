@@ -7,11 +7,11 @@ import {
 
 export default () => {
   const handleGoToSetting = useCallback(() => {
-    history.push(`/${PAGE_NAME.SETTING}`);
+    history.push(`/${PAGE_NAME.SETTING.name}`);
   });
   return (
     <HeaderContainer>
-      <div>{PAGE_NAME.PERSONAL_PAGE}</div>
+      <div>{PAGE_NAME.PERSONAL_PAGE.text}</div>
       <div className="header-container__icon-wrapper icon-right">
         <i role="presentation" className="fas fa-cog icon-style" onClick={handleGoToSetting} />
       </div>
