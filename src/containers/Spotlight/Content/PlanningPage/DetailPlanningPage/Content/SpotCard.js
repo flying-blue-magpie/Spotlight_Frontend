@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
+import moment from 'moment';
 
 export const HEIGHT_SPOT_CARD = 60;
 export const HEIGHT_SPOT_TRAVEL_TIME = 40;
@@ -59,6 +60,8 @@ const StyledSpotCard = styled.div`
 
 const SpotCard = (props) => {
   const {
+    plan,
+    index,
     spotIndexInfo,
     spots,
     handleFetchSpotById,
@@ -68,14 +71,24 @@ const SpotCard = (props) => {
     handleFetchSpotById(spotIndexInfo.get('spot_id'));
     return null;
   }
-
+  const searchParams = new URLSearchParams(window.location.search);
+  const day = parseInt(searchParams.get('day'), 10);
+  const planIndex = day - 1;
+  const dayPlan = plan.get(planIndex);
+  const dayStartTime = dayPlan.get('start_time');
+  const arrange = dayPlan.get('arrange');
+  const startTime = index === 0
+    ? dayStartTime
+    : moment(dayStartTime, 'HH:mm:ss').add(arrange.map((arr) => arr.get('during')).toJS().splice(0, index).reduce((a, b) => a + b), 'minutes');
+  const duringTime = arrange.getIn([index, 'during']);
+  const endTime = moment(startTime, 'HH:mm:ss').add(duringTime, 'minutes');
   return (
     <StyledSpotCard>
       <div className="spot-card__card-row">
         <div className="spot-card__start-end-time-wrapper">
-          <div>8:00</div>
+          <div>{moment(startTime, 'HH:mm:ss').format('HH:mm')}</div>
           <div>|</div>
-          <div>10:00</div>
+          <div>{moment(endTime, 'HH:mm:ss').format('HH:mm')}</div>
         </div>
         <div className="spot-card__card-body">
           <div className="spot-card__card-body-spot-title">{spot.get('name')}</div>
@@ -97,12 +110,16 @@ const SpotCard = (props) => {
 };
 
 SpotCard.propTypes = {
+  index: PropTypes.number,
+  plan: PropTypes.instanceOf(List),
   spotIndexInfo: PropTypes.instanceOf(Map),
   spots: PropTypes.instanceOf(Map),
   handleFetchSpotById: PropTypes.func,
 };
 
 SpotCard.defaultProps = {
+  index: 0,
+  plan: List(),
   spotIndexInfo: Map(),
   spots: Map(),
   handleFetchSpotById: () => { },
