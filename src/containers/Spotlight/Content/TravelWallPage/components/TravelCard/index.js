@@ -1,75 +1,8 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import history from 'utils/history';
 import { PAGE_NAME } from 'Styled/Settings/constants';
-
-const StyledTravelCard = styled.div`
-  margin-top: 10px;
-  .travel-card__header-wrapper {
-    display: flex;
-    align-items: center;
-    padding: 5px 10px;
-    background: #D3D3D3;
-    .travel-card__header-image {
-      font-size: 30px;
-      color: white;
-    }
-    .travel-card__profile-wrapper {
-      margin-left: 10px;
-    }
-    .travel-card__header-name {
-      font-size: 12px;
-      color: #707070;
-    }
-    .travel-card__header-time {
-      font-size: 12px;
-      color: #A4A4A4;
-    }
-  }
-  .travel-card__body-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 120px;
-    background: black;
-    color: white;
-    position: relative;
-    cursor: pointer;
-    .travel-card__body-cover {
-      opacity: 0.5;
-      background-image: url(${(props) => props.imagePath});
-      background-size: cover;
-      height: 100%;
-    }
-    .travel-card__body-text-wrapper {
-      position: absolute;
-      padding: 10px;
-      .travel-card__body-title {
-        font-size: 16px;
-        color: white;
-      }
-      .travel-card__body-period {
-        font-size: 12px;
-      }
-    }
-  }
-  .travel-card__footer-wrapper {
-    background: #D3D3D3;
-    padding: 13px 12px;
-    display: flex;
-    align-items: center;
-    .travel-card__footer-icon {
-      font-size: 16px;
-      color: #707070;
-    }
-    .travel-card__footer-number {
-      font-size: 12px;
-      color: #707070;
-      margin-left: 5px;
-    }
-  }
-`;
+import { Container } from './Styled';
 
 const TravelCard = ({ projectId }) => {
   const imagePath = 'https://www.silverkris.com/wp-content/uploads/2017/08/taipei-ximending.jpg';
@@ -82,7 +15,7 @@ const TravelCard = ({ projectId }) => {
     });
   });
   return (
-    <StyledTravelCard imagePath={imagePath}>
+    <Container imagePath={imagePath}>
       <div className="travel-card__header-wrapper">
         <i className="fas fa-user-circle travel-card__header-image" />
         <div className="travel-card__profile-wrapper">
@@ -101,7 +34,7 @@ const TravelCard = ({ projectId }) => {
         <i className="far fa-heart travel-card__footer-icon" />
         <div className="travel-card__footer-number">666</div>
       </div>
-    </StyledTravelCard>
+    </Container>
   );
 };
 
