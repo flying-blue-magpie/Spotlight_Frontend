@@ -12,7 +12,7 @@ export const Feature = styled.div`
   margin-bottom: 20px;
 `;
 
-export const BackButton = styled(Link)`
+export const BackButton = styled.button`
   position: absolute;
   z-index: 1;
   font-size: 18px;
