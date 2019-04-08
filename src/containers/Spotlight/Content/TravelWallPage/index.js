@@ -1,15 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
 import TravelCard from './components/TravelCard';
-
-const StyledTravelWallPage = styled.div`
-  padding: 5px 28px;
-`;
+import { Container } from './Styled';
 
 const TravelWallPage = () => {
   const cards = new Array(10).fill(0).map((x, index) => index);
   return (
-    <StyledTravelWallPage>
+    <Container>
       {
         cards.map((card, index) => (
           <TravelCard
@@ -18,7 +14,7 @@ const TravelWallPage = () => {
           />
         ))
       }
-    </StyledTravelWallPage>
+    </Container>
   );
 };
 
