@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 // http://front-ender.me/react-drag-list
@@ -6,17 +6,25 @@ import ReactDragList from 'react-drag-list';
 import 'react-drag-list/assets/index.css';
 import { List } from 'immutable';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import Modal from 'components/Modal';
 import history from 'utils/history';
 import mapPlusIconPath from 'assets/map_plus_icon.svg';
 import arrowLeftGreyIconPath from 'assets/arrow_left_grey_icon.svg';
 import {
   findAttributeInEvent,
 } from 'utils/event';
+import SpotOperationBtn from './SpotOperationBtn';
 
 import SpotCard, {
   HEIGHT_SPOT_CARD,
   HEIGHT_SPOT_TRAVEL_TIME,
 } from './SpotCard';
+
+const modalStyle = {
+  bottom: '0px',
+  width: '100%',
+  // height: '245px',
+};
 
 const StyledContent = styled.div`
   padding: 15px 15px;
@@ -124,6 +132,7 @@ const SpotOperator = styled.div`
 `;
 
 const Content = (props) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const {
     plan,
   } = props;
@@ -138,6 +147,13 @@ const Content = (props) => {
       state: { afterIndex: insertAfterIndex },
     });
   });
+  const handleShowModal = useCallback(() => {
+    setIsModalVisible(true);
+  }, []);
+  const handleHideModal = useCallback(() => {
+    setIsModalVisible(false);
+  }, []);
+
   const searchParams = new URLSearchParams(window.location.search);
   const day = parseInt(searchParams.get('day'), 10);
   const arrange = plan.getIn([day - 1, 'arrange']);
@@ -175,7 +191,13 @@ const Content = (props) => {
                     Boolean(index) &&
                     <div className="operator__divider-line operator__divider-line-top" />
                   }
-                  <div className="operator__number-circle-border"><span>{index + 1}</span></div>
+                  <div
+                    role="presentation"
+                    className="operator__number-circle-border"
+                    onClick={handleShowModal}
+                  >
+                    <span>{index + 1}</span>
+                  </div>
                   <div className="operator__divider-line operator__divider-line-bottom" />
                 </div>
                 <div
@@ -206,6 +228,14 @@ const Content = (props) => {
           onUpdate={() => { }}
         />
       </div>
+      <Modal
+        optionStyle={modalStyle}
+        isVisible={isModalVisible}
+      >
+        <SpotOperationBtn
+          handleHideModal={handleHideModal}
+        />
+      </Modal>
     </StyledContent>
   );
 };

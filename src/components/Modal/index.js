@@ -30,7 +30,7 @@ const ModalWrapper = styled.div`
     height: 100%;
     z-index: 999;
     opacity: 0.65;
-    animation: 0.2s ease-in-out ${fade};
+    animation: 0.15s ease-in-out ${fade};
     position: absolute;
     bottom: 0;
   }
@@ -63,8 +63,13 @@ class Modal extends React.Component {
     const {
       isVisible,
     } = this.props;
-    this.el = document.createElement('div');
-    this.el.setAttribute('id', 'modal-root-element');
+    const hasModalRoot = document.getElementById('modal-root-element');
+    if (hasModalRoot) {
+      this.el = hasModalRoot;
+    } else {
+      this.el = document.createElement('div');
+      this.el.setAttribute('id', 'modal-root-element');
+    }
     if (isVisible === true) {
       this.el.style.position = 'absolute';
       this.el.style.top = '0px';
@@ -79,7 +84,12 @@ class Modal extends React.Component {
   }
 
   componentDidMount() {
-    if (this.el) {
+    const hasModalRoot = document.getElementById('modal-root-element');
+    if (hasModalRoot) {
+      this.el = hasModalRoot;
+    } else {
+      this.el = document.createElement('div');
+      this.el.setAttribute('id', 'modal-root-element');
       document.body.appendChild(this.el);
     }
   }
@@ -103,7 +113,8 @@ class Modal extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.el) {
+    const hasModalRoot = document.getElementById('modal-root-element');
+    if (hasModalRoot) {
       document.body.removeChild(this.el);
     }
   }

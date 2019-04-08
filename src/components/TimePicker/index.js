@@ -63,7 +63,7 @@ class TimePicker extends Component {
   }
 
   static defaultProps = {
-    startTime: '',
+    startTime: '08:00',
     handleOnOk: () => { },
     handleOnCancel: () => { },
   }
