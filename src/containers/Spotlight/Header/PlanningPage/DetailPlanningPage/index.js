@@ -22,7 +22,7 @@ const DetailPlanningPage = (props) => {
     };
   }, []);
   const handleGoBackToPlanning = useCallback(() => {
-    history.goBack();
+    history.push(`/${PAGE_NAME.PLANNING.name}`);
   }, []);
   const handleGoToUpdatePlanningPage = useCallback(() => {
     const searchParams = new URLSearchParams(window.location.search);
