@@ -60,63 +60,29 @@ class Modal extends React.Component {
 
   constructor(props) {
     super(props);
-    const {
-      isVisible,
-    } = this.props;
-    const hasModalRoot = document.getElementById('modal-root-element');
-    if (hasModalRoot) {
-      this.el = hasModalRoot;
-    } else {
-      this.el = document.createElement('div');
-      this.el.setAttribute('id', 'modal-root-element');
-    }
-    if (isVisible === true) {
-      this.el.style.position = 'absolute';
-      this.el.style.top = '0px';
-      this.el.style.width = '100%';
-      this.el.style.height = '100%';
-      this.el.style.zIndex = '1';
-      this.el.style.display = '';
-    } else {
-      this.el.style = {};
-      this.el.style.display = 'none';
-    }
-  }
-
-  componentDidMount() {
-    const hasModalRoot = document.getElementById('modal-root-element');
-    if (hasModalRoot) {
-      this.el = hasModalRoot;
-    } else {
-      this.el = document.createElement('div');
-      this.el.setAttribute('id', 'modal-root-element');
-      document.body.appendChild(this.el);
-    }
+    this.el = document.getElementById('modal-root-element');
   }
 
   componentDidUpdate() {
     const {
       isVisible,
     } = this.props;
-    const modalRootEl = document.getElementById('modal-root-element');
+    const modalRoot = document.getElementById('modal-root-element');
     if (isVisible === true) {
-      this.el.style.position = 'absolute';
-      this.el.style.top = '0px';
-      this.el.style.width = '100%';
-      this.el.style.height = '100%';
-      this.el.style.zIndex = '1';
-      this.el.style.display = '';
+      modalRoot.style.position = 'absolute';
+      modalRoot.style.top = '0px';
+      modalRoot.style.width = '100%';
+      modalRoot.style.height = '100%';
+      modalRoot.style.zIndex = '1';
+      modalRoot.style.display = '';
     } else {
-      this.el.style = {};
-      modalRootEl.style.display = 'none';
+      modalRoot.style = {};
+      document.getElementById('modal-root-element').style.display = 'none';
     }
   }
 
   componentWillUnmount() {
-    const hasModalRoot = document.getElementById('modal-root-element');
-    if (hasModalRoot) {
-      document.body.removeChild(this.el);
-    }
+    document.getElementById('modal-root-element').style.display = 'none';
   }
 
   render() {

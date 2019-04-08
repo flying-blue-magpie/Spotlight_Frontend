@@ -59,7 +59,7 @@ const SettingSpotCardPage = (props) => {
       const updatedArrange = arrange.toJS();
       const isIndexSmallThanSize = arrange.size >= parseInt(afterIndex, 10);
       if (isIndexSmallThanSize) {
-        updatedArrange.splice(parseInt(afterIndex - 1, 10), 0, newSpotCard.toJS());
+        updatedArrange.splice(parseInt(afterIndex, 10), 0, newSpotCard.toJS());
         return updatedArrange;
       }
       return fromJS([
