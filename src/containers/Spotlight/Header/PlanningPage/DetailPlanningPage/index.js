@@ -24,7 +24,7 @@ const DetailPlanningPage = (props) => {
   const handleGoBackToPlanning = useCallback(() => {
     history.push(`/${PAGE_NAME.PLANNING.name}`);
   }, []);
-  const handleGoToUpdatePlanning = useCallback(() => {
+  const handleGoToUpdatePlanningPage = useCallback(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const day = searchParams.get('day');
     const { projectId } = props.match.params;
@@ -40,7 +40,7 @@ const DetailPlanningPage = (props) => {
       </div>
       <div>{PAGE_NAME.DETAIL_PLANNING.text}</div>
       <div className="header-container__icon-wrapper icon-right">
-        <i role="presentation" className="fas fa-pen icon-style" onClick={handleGoToUpdatePlanning} />
+        <i role="presentation" className="fas fa-pen icon-style" onClick={handleGoToUpdatePlanningPage} />
         <img src={uploadTravelWallIconPath} className="icon-style" alt="" />
       </div>
     </HeaderContainer>

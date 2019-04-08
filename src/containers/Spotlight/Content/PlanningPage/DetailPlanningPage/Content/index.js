@@ -185,6 +185,16 @@ const Content = (props) => {
       },
     });
   }, [selectedSpotId]);
+  const handleGoToUpdatingPage = useCallback(() => {
+    const { search } = window.location;
+    const { projectId } = match.params;
+    const updatingSpotCardPagePath = `/${PAGE_NAME.UPDATING_SPOT_CARD.name}/${projectId}`;
+    history.push({
+      pathname: updatingSpotCardPagePath,
+      search,
+      state: { selectedSpotId },
+    });
+  }, [selectedSpotId]);
 
   if (arrange.size === 0) {
     return (
@@ -265,6 +275,7 @@ const Content = (props) => {
         <SpotOperationBtn
           handleDeleteSpot={handleDeleteSelectedSpot}
           handleHideModal={handleHideModal}
+          handleUpdate={handleGoToUpdatingPage}
         />
       </Modal>
     </StyledContent>

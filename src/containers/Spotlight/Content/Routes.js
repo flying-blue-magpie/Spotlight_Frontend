@@ -14,6 +14,7 @@ import UpdatePlanningPage from 'containers/Spotlight/Content/PlanningPage/Update
 import CreateProjectPage from 'containers/Spotlight/Content/PlanningPage/CreateProjectPage';
 import AddSpotToPlanPage from 'containers/Spotlight/Content/PlanningPage/AddSpotToPlanPage';
 import SettingSpotCardPage from 'containers/Spotlight/Content/PlanningPage/SettingSpotCardPage';
+import UpdatingSpotCardPage from 'containers/Spotlight/Content/PlanningPage/UpdatingSpotCardPage';
 import SpotPage from 'containers/Spotlight/Content/SpotPage';
 import AddSpotToProjectPage from 'containers/Spotlight/Content/AddSpotToProjectPage';
 import AddSpotToProjectPlanPage from 'containers/Spotlight/Content/AddSpotToProjectPlanPage';
@@ -30,6 +31,7 @@ export const routePathConfig = {
   updatePlanningPagePath: `/${PAGE_NAME.UPDATE_PLANNING.name}/:projectId`,
   addSpotToPlanPagePath: `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/:projectId`,
   settingSpotCardPagePath: `/${PAGE_NAME.SETTING_SPOT_CARD.name}/:projectId`,
+  updatingSpotCardPagePath: `/${PAGE_NAME.UPDATING_SPOT_CARD.name}/:projectId`,
   createProjectPagePath: `/${PAGE_NAME.CREATE_PROJECT.name}`,
   spotPagePath: `/${PAGE_NAME.EXPLORE.name}/:spotId`,
   addSpotToProjectPagePath: `/${PAGE_NAME.EXPLORE.name}/:spotId/${PAGE_NAME.ADD_SPOT_TO_PROJECT.name}`,
@@ -49,6 +51,7 @@ export default () => (
       <Route exact path={routePathConfig.detailPlanningPagePath} component={DetailPlanningPage} />
       <Route exact path={routePathConfig.updatePlanningPagePath} component={UpdatePlanningPage} />
       <Route exact path={routePathConfig.settingSpotCardPagePath} component={SettingSpotCardPage} />
+      <Route exact path={routePathConfig.updatingSpotCardPagePath} component={UpdatingSpotCardPage} />
       <Route exact path={routePathConfig.addSpotToPlanPagePath} component={AddSpotToPlanPage} />
       <Route exact path={routePathConfig.createProjectPagePath} component={CreateProjectPage} />
       <Route exact path={routePathConfig.spotPagePath} component={SpotPage} />

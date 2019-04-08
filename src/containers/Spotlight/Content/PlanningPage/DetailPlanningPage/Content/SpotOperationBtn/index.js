@@ -30,9 +30,10 @@ const SpotOperationBtnContainer = styled.div`
 const SpotOperationBtn = ({
   handleHideModal,
   handleDeleteSpot,
+  handleUpdate,
 }) => (
   <SpotOperationBtnContainer>
-    <button className="spot-operation__button" type="button">
+    <button className="spot-operation__button" type="button" onClick={handleUpdate}>
       <span>景點設定</span>
     </button>
     <button className="spot-operation__button spot-operation__button--normal" type="button" onClick={handleDeleteSpot}>
@@ -47,11 +48,13 @@ const SpotOperationBtn = ({
 SpotOperationBtn.propTypes = {
   handleHideModal: PropTypes.func,
   handleDeleteSpot: PropTypes.func,
+  handleUpdate: PropTypes.func,
 };
 
 SpotOperationBtn.defaultProps = {
-  handleHideModal: () => {},
-  handleDeleteSpot: () => {},
+  handleHideModal: () => { },
+  handleDeleteSpot: () => { },
+  handleUpdate: () => { },
 };
 
 export default SpotOperationBtn;

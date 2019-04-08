@@ -36,9 +36,10 @@ const TimePickerWrapper = styled.div`
     padding: 0px 15px;
     font-size: 16px;
     cursor: pointer;
+    color: #333333;
+    font-weight: 500;
     &:hover {
-      color: #333333;
-      font-weight: 500;
+      font-weight: 600;
     }
   }
 
