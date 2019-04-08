@@ -14,6 +14,7 @@ import {
 import Spinner from 'components/Spinner';
 import Context from 'containers/Spotlight/Context';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import history from 'utils/history';
 
 import {
   Feature,
@@ -74,7 +75,7 @@ const SpotPage = ({
   return (
     <Container>
       <Feature>
-        <BackButton to={`/${PAGE_NAME.EXPLORE.name}`}>
+        <BackButton onClick={() => history.goBack()}>
           <i className="fas fa-arrow-left" />
         </BackButton>
         <AddButton to={`${location.pathname}/${PAGE_NAME.ADD_SPOT_TO_PROJECT.name}`}>
