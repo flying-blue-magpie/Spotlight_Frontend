@@ -52,7 +52,7 @@ const Tab = (props) => {
     location,
   } = props;
   const handleOnClick = () => {
-    history.push({
+    history.replace({
       pathname: `${location.pathname}`,
       search: `?day=${id + 1}`,
     });

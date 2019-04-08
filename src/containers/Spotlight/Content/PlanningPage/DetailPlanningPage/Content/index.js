@@ -195,6 +195,10 @@ const Content = (props) => {
       state: { selectedSpotId },
     });
   }, [selectedSpotId]);
+  const handleOnDragUpdate = useCallback((value) => {
+    console.log('oldIndex: ', value.oldIndex);
+    console.log('newIndex: ', value.newIndex);
+  }, []);
 
   if (!arrange || arrange.size === 0) {
     return (
@@ -265,7 +269,7 @@ const Content = (props) => {
           handles={false}
           className="simple-drag content__spot-simple-drag"
           rowClassName="simple-drag-row"
-          onUpdate={() => { }}
+          onUpdate={handleOnDragUpdate}
         />
       </div>
       <Modal
