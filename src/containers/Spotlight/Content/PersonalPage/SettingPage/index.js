@@ -10,7 +10,7 @@ import { StyledSettingPage } from './styles';
 const SettingPage = (props) => {
   const handleLogoutClick = () => {
     props.logout();
-    history.push(`/${PAGE_NAME.EXPLORE}`);
+    history.push(`/${PAGE_NAME.EXPLORE.name}`);
   };
   return (
     <StyledSettingPage>
