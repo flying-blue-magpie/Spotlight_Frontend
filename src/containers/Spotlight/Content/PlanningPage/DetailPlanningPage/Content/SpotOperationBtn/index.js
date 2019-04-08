@@ -13,6 +13,7 @@ const SpotOperationBtnContainer = styled.div`
     font-size: 16px;
     color: #333333;
     outline: none;
+    border: none;
     cursor: pointer;
     &:hover {
       background: #eee;
