@@ -26,61 +26,75 @@ import CollectionTabs from './CollectionTabs';
 import CollectionContent from './CollectionContent';
 
 const StyledPersonalPage = styled.div`
-  .personal-page__cover-image {
-    height: 120px;
+  height: 100%;
+  .personal-page__cover-container {
+    height: 30%;
     background-image: url(${(props) => props.coverImagePath});
     background-size: cover;
-  }
-  .personal-page__info-wrapper {
     display: flex;
-    position: relative;
-    padding: 0px 20px;
-    .personal-page__favicon-wrapper {
-      width: 150px;
-    }
-    .personal-page__favicon {
-      border-radius: 100%;
-      border: 3px solid white;
-      background-image: url(${(props) => props.faviconPath});
-      background-size: cover;
-      height: ${(props) => props.faviconSize}px;
-      width: ${(props) => props.faviconSize}px;
-      position: absolute;
-      top: -30px;
-    }
-    .personal-page__profile-wrapper {
-      padding: 10px 10px;
-      width: 100%;
-      .personal-page__profile-name {
-        font-size: 16px;
-        color: #707070;
-        margin-bottom: 10px;
-      }
-      .personal-page__profile-travel-info {
+    align-items: flex-end;
+    justify-content: center;
+    padding: 15px;
+    .personal-page__info-wrapper {
+      height: 100px;
+      border-radius: 15px;
+      background-color: white;
+      display: flex;
+      position: relative;
+      padding: 0px 15px;
+      width: 100vw;
+      opacity: 0.85;
+      .personal-page__favicon-wrapper {
         display: flex;
-        .personal-page__profile-travel-info-item-wrapper {
+        align-items: center;
+      }
+      .personal-page__favicon {
+        display: block;
+        border-radius: 100%;
+        border: 3px solid white;
+        background-image: url(${(props) => props.faviconPath});
+        background-size: cover;
+        height: ${(props) => props.faviconSize}px;
+        width: ${(props) => props.faviconSize}px;
+      }
+      .personal-page__profile-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 5px 10px;
+        width: 100%;
+        .personal-page__profile-name {
+          font-size: 16px;
+          margin-bottom: 10px;
+          font-weight: bold;
+        }
+        .personal-page__profile-travel-info {
           display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          .personal-page__profile-travel-info-item-title {
-            font-size: 12px;
-            color: #707070;
-            margin-bottom: 3px;
+          .personal-page__profile-travel-info-item-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            .personal-page__profile-travel-info-item-title {
+              font-size: 12px;
+              color: #707070;
+              margin-bottom: 3px;
+            }
+            .personal-page__profile-travel-info-item-number {
+              font-size: 12px;
+              color: black;
+              font-weight: bold;
+            }
           }
-          .personal-page__profile-travel-info-item-number {
-            font-size: 12px;
-            color: #707070;
+          .personal-page__profile-travel-info-item-divier {
+            border-right: 1px solid #D1D1D1;
           }
-        }
-        .personal-page__profile-travel-info-item-divier {
-          border-right: 1px solid #D1D1D1;
-        }
-        .personal-page__profile-travel-info-item-padding-right {
-          padding-right: 20px;
-        }
-        .personal-page__profile-travel-info-item-padding-left {
-          padding-left: 20px;
+          .personal-page__profile-travel-info-item-padding-right {
+            padding-right: 10px;
+          }
+          .personal-page__profile-travel-info-item-padding-left {
+            padding-left: 10px;
+          }
         }
       }
     }
@@ -118,7 +132,7 @@ const PersonalPage = ({
 }) => {
   const [activeCollectionType, setActiveCollectionType] = useState('spot');
   const faviconPath = (user && user.get('protrait')) || 'http://i.imgur.com/EUAd2ht.jpg';
-  const faviconSize = 90;
+  const faviconSize = 70;
   const coverImagePath = 'http://cdn01.dcfever.com/media/travel/poi/2016/02/10963_poi_banner.jpg';
   const handleOnTabClick = (event) => {
     const type = findAttributeInEvent(event, 'data-collection-type');
@@ -158,11 +172,12 @@ const PersonalPage = ({
       faviconPath={faviconPath}
       faviconSize={faviconSize}
     >
-      <div className="personal-page__cover-image" />
-      <Information
-        user={user}
-        users={users}
-      />
+      <div className="personal-page__cover-container">
+        <Information
+          user={user}
+          users={users}
+        />
+      </div>
       <CollectionTabs
         handleOnClick={handleOnTabClick}
       />

@@ -5,28 +5,42 @@ import styled from 'styled-components';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import { createStructuredSelector } from 'reselect';
 import { selectSpots } from 'containers/Spotlight/selectors';
+import redHeartCircleIconPath from 'assets/red_heart_circle_icon.svg';
 import {
   fetchSpotById,
 } from 'containers/Spotlight/actions';
 
 const StyledSpotCard = styled.div`
-  height: 100px;
+  height: 140px;
   background-image: url(${(props) => props.imagePath});
   background-size: cover;
   position: relative;
   cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+  overflow: hidden;
   .spot-card__title-wrapper {
     position: absolute;
     bottom: 0;
     background: white;
     width: 100%;
-    opacity: 0.7;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    align-items: center;
     padding: 5px 0px;
+    font-weight: 500;
   }
   .spot-card__title {
-    font-size: 11px;
+    font-size: 12px;
+  }
+  .spot-card__heart-wrapper {
+    display: flex;
+    align-items: center;
+    .spot-card__heart-icon {
+      padding-right: 6px;
+      width: 30px;
+      height: 30px;
+    }
   }
 `;
 
@@ -58,6 +72,10 @@ const SpotCard = ({
     >
       <div className="spot-card__title-wrapper">
         <span className="spot-card__title">{spot.get('name')}</span>
+        <div className="spot-card__heart-wrapper">
+          <img src={redHeartCircleIconPath} className="spot-card__heart-icon" alt="" />
+          <div>{spot.get('like_num') || 0}</div>
+        </div>
       </div>
     </StyledSpotCard>
   );
