@@ -1,12 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin-top: 10px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
-
-  &:first-child {
-    margin-top: 0;
-  }
 `;
 
 export const Header = styled.div`
@@ -16,10 +11,12 @@ export const Header = styled.div`
   background: #FFFFFF;
 `;
 
-export const UserImage = styled.i`
+export const UserImage = styled.img`
   flex-shrink: 0;
-  font-size: 45px;
-  color: gray;
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 50%;
   margin-right: 5px;
 `;
 

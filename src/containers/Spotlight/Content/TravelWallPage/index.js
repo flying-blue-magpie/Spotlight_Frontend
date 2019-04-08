@@ -1,16 +1,22 @@
 import React from 'react';
-import TravelCard from './components/TravelCard';
-import { Container } from './Styled';
+import { PAGE_NAME } from 'Styled/Settings/constants';
+import { Container, TravelCard } from './Styled';
 
 const TravelWallPage = () => {
   const cards = new Array(10).fill(0).map((x, index) => index);
+  const detailPlanningPagePath = `/${PAGE_NAME.DETAIL_PLANNING.name}`;
+  const defaultDay = 1;
+
   return (
     <Container>
       {
         cards.map((card, index) => (
           <TravelCard
             key={card}
-            projectId={index}
+            to={{
+              pathname: `${detailPlanningPagePath}/${index}`,
+              search: `?day=${defaultDay}`,
+            }}
           />
         ))
       }
