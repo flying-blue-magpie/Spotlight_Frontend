@@ -4,7 +4,7 @@ import { StyledFaviBanner } from './styles';
 
 const FaviBanner = () => (
   <StyledFaviBanner
-    to={`/${PAGE_NAME.SETTING_INFO}`}
+    to={`/${PAGE_NAME.SETTING_INFO.name}`}
   >
     <div className="favi-banner__favicon-container">
       <div className="favi-banner__favicon" />

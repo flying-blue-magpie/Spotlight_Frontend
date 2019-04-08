@@ -64,7 +64,7 @@ const AddSpotToProjectPage = ({
           </ProjectDate>
         </Project>
       ))}
-      <CreateProjectButton to={`/${PAGE_NAME.CREATE_PROJECT}`}>
+      <CreateProjectButton to={`/${PAGE_NAME.CREATE_PROJECT.name}`}>
         <AddIcon className="fas fa-plus" />
         增加旅程
       </CreateProjectButton>
