@@ -23,7 +23,6 @@ import {
   LikeButton,
   Paragraph,
   SpotName,
-  LikeLabel,
   Container,
   BackButton,
   AddButton,
@@ -84,16 +83,11 @@ const SpotPage = ({
         <FeatureImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
         <FeatureInfo>
           <SpotName>{spot.get('name')}</SpotName>
-          <LikeLabel onClick={handleLikeOnClick}>
-            <LikeButton
-              className={`${
-                isSpotFavorite
-                  ? 'fas fa-heart'
-                  : 'far fa-heart'
-              }`}
-            />
-            {spot.get('like_num')}
-          </LikeLabel>
+          <LikeButton
+            onClick={handleLikeOnClick}
+            isActive={isSpotFavorite}
+            likeNumber={spot.get('like_num')}
+          />
         </FeatureInfo>
       </Feature>
       <Title>景點介紹</Title>
