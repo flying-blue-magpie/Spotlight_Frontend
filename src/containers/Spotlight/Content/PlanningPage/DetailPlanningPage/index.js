@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import moment from 'moment';
@@ -77,14 +77,14 @@ const DetailPlanningPage = (props) => {
 
 DetailPlanningPage.propTypes = {
   match: PropTypes.object,
-  ownProjectsMeta: PropTypes.object,
+  ownProjectsMeta: PropTypes.instanceOf(Map),
   ownProjects: PropTypes.instanceOf(List),
   handleFetchOwnProjects: PropTypes.func,
 };
 
 DetailPlanningPage.defaultProps = {
   match: {},
-  ownProjectsMeta: null,
+  ownProjectsMeta: Map(),
   ownProjects: List(),
   handleFetchOwnProjects: () => { },
 };
