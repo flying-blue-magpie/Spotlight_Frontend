@@ -66,6 +66,7 @@ const StyledPersonalPage = styled.div`
         .personal-page__profile-name {
           font-size: 16px;
           margin-bottom: 10px;
+          color: black;
           font-weight: bold;
         }
         .personal-page__profile-travel-info {
