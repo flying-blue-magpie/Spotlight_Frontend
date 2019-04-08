@@ -2,7 +2,20 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import history from 'utils/history';
 import { PAGE_NAME } from 'Styled/Settings/constants';
-import { Container } from './Styled';
+import Likes from 'components/Likes';
+import {
+  Container,
+  Header,
+  UserImage,
+  HeaderInfo,
+  UserName,
+  CardDate,
+  CardImage,
+  CardTitle,
+  CardSubtitle,
+  Footer,
+  FooterInfo,
+} from './Styled';
 
 const TravelCard = ({ projectId }) => {
   const imagePath = 'https://www.silverkris.com/wp-content/uploads/2017/08/taipei-ximending.jpg';
@@ -14,26 +27,28 @@ const TravelCard = ({ projectId }) => {
       search: `?day=${defaultDay}`,
     });
   });
+
+  const handleOnLikeClick = useCallback((event) => {
+    event.stopPropagation();
+  });
+
   return (
-    <Container imagePath={imagePath}>
-      <div className="travel-card__header-wrapper">
-        <i className="fas fa-user-circle travel-card__header-image" />
-        <div className="travel-card__profile-wrapper">
-          <div className="travel-card__header-name">這裡是名字</div>
-          <div className="travel-card__header-time">1天前</div>
-        </div>
-      </div>
-      <div role="presentation" className="travel-card__body-wrapper" onClick={handleOnClick}>
-        <div className="travel-card__body-cover" />
-        <div className="travel-card__body-text-wrapper">
-          <div className="travel-card__body-title">台北購物之旅</div>
-          <div className="travel-card__body-period">2019年6月5日-2019年6月9日 / 4天</div>
-        </div>
-      </div>
-      <div className="travel-card__footer-wrapper">
-        <i className="far fa-heart travel-card__footer-icon" />
-        <div className="travel-card__footer-number">666</div>
-      </div>
+    <Container imagePath={imagePath} onClick={handleOnClick}>
+      <Header>
+        <UserImage className="fas fa-user-circle" />
+        <HeaderInfo>
+          <UserName>這裡是名字</UserName>
+          <CardDate>1天前</CardDate>
+        </HeaderInfo>
+      </Header>
+      <CardImage src={imagePath} />
+      <Footer>
+        <FooterInfo>
+          <CardTitle>台北購物之旅</CardTitle>
+          <CardSubtitle>2019年6月5日-2019年6月9日 / 4天</CardSubtitle>
+        </FooterInfo>
+        <Likes onClick={handleOnLikeClick} />
+      </Footer>
     </Container>
   );
 };
@@ -43,9 +58,6 @@ TravelCard.propTypes = {
     PropTypes.number,
     PropTypes.string,
   ]).isRequired,
-};
-
-TravelCard.propTypes = {
 };
 
 export default TravelCard;
