@@ -27,7 +27,7 @@ export default () => {
       <div className="header-container__icon-wrapper icon-left">
         <i role="presentation" className="fas fa-arrow-left icon-style" onClick={handleGoBackToPlanning} />
       </div>
-      <div>{PAGE_NAME.SETTING}</div>
+      <div>{PAGE_NAME.SETTING.text}</div>
     </HeaderContainer>
   );
 };
