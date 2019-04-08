@@ -196,7 +196,7 @@ const Content = (props) => {
     });
   }, [selectedSpotId]);
 
-  if (arrange.size === 0) {
+  if (!arrange || arrange.size === 0) {
     return (
       <StyledContent>
         <div className="content__spot-cards-wrapper">
