@@ -19,7 +19,6 @@ const HEIGHT_SPOT_CARD = 140;
 const LikedSpotCardContainer = styled.div`
   width: 100%;
   height: ${HEIGHT_SPOT_CARD}px;
-  background: red;
   position: relative;
   box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
   border-radius: 10px;
