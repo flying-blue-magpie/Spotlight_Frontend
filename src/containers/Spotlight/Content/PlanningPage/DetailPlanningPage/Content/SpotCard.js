@@ -75,6 +75,9 @@ const SpotCard = (props) => {
   const day = parseInt(searchParams.get('day'), 10);
   const planIndex = day - 1;
   const dayPlan = plan.get(planIndex);
+  if (!dayPlan) {
+    return null;
+  }
   const dayStartTime = dayPlan.get('start_time');
   const arrange = dayPlan.get('arrange');
   const startTime = index === 0
