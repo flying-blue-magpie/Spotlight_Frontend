@@ -45,6 +45,10 @@ const ModalWrapper = styled.div`
 
 class Modal extends React.Component {
   static propTypes = {
+    id: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
     children: PropTypes.any,
     isVisible: PropTypes.bool,
     optionStyle: PropTypes.object,
@@ -52,6 +56,7 @@ class Modal extends React.Component {
   }
 
   static defaultProps = {
+    id: 'modal-root-element',
     children: null,
     isVisible: false,
     optionStyle: {},
@@ -60,29 +65,45 @@ class Modal extends React.Component {
 
   constructor(props) {
     super(props);
-    this.el = document.getElementById('modal-root-element');
+    this.el = document.getElementById(props.id);
+    if (!document.getElementById(props.id)) {
+      this.el = document.createElement('div');
+      this.el.setAttribute('id', props.id);
+      document.body.appendChild(this.el);
+    }
   }
 
   componentDidUpdate() {
     const {
       isVisible,
+      id,
     } = this.props;
-    const modalRoot = document.getElementById('modal-root-element');
+    if (!document.getElementById(id)) {
+      this.el = document.createElement('div');
+      this.el.setAttribute('id', id);
+      document.body.appendChild(this.el);
+    }
     if (isVisible === true) {
-      modalRoot.style.position = 'absolute';
-      modalRoot.style.top = '0px';
-      modalRoot.style.width = '100%';
-      modalRoot.style.height = '100%';
-      modalRoot.style.zIndex = '1';
-      modalRoot.style.display = '';
+      this.el.style.position = 'absolute';
+      this.el.style.top = '0px';
+      this.el.style.width = '100%';
+      this.el.style.height = '100%';
+      this.el.style.zIndex = '1';
+      this.el.style.display = '';
     } else {
-      modalRoot.style = {};
-      document.getElementById('modal-root-element').style.display = 'none';
+      this.el.style = {};
+      this.el.style.display = 'none';
+      this.el.innerHTML = null;
     }
   }
 
   componentWillUnmount() {
-    document.getElementById('modal-root-element').style.display = 'none';
+    const {
+      id,
+    } = this.props;
+    if (document.getElementById(id)) {
+      document.getElementById(id).remove();
+    }
   }
 
   render() {

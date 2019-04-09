@@ -12,6 +12,8 @@ export const HeaderContainer = styled.div`
   .header-container__icon-wrapper {
     position: absolute;
     margin: 0px 6px;
+    display: flex;
+    align-items: center;
   }
   .icon-style {
     color: rgba(51, 51, 51, 1);

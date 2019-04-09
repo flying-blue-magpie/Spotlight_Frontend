@@ -96,6 +96,7 @@ const DateTimeInfo = (props) => {
         </div>
       </StyledDateTimeInfo>
       <Modal
+        id="TimePicker"
         optionStyle={modalStyle}
         isVisible={isModalVisible}
         heightGrowing

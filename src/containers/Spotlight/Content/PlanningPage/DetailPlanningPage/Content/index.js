@@ -275,6 +275,7 @@ const Content = (props) => {
         />
       </div>
       <Modal
+        id="SpotOperationBtn"
         optionStyle={modalStyle}
         isVisible={isModalVisible}
       >

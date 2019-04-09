@@ -141,6 +141,7 @@ const UpdatingSpotCardPage = (props) => {
           {elapsedTime}
         </div>
         <Modal
+          id="TimePicker"
           optionStyle={modalStyle}
           isVisible={isModalVisible}
           heightGrowing
