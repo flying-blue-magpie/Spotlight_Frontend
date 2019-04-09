@@ -16,6 +16,7 @@ export const PAGE_NAME = {
   SETTING_SPOT_CARD: { name: 'settingSpotCard', text: '景點設定' },
   UPDATING_SPOT_CARD: { name: 'updatingSpotCard', text: '景點設定' },
   ADD_SPOT_TO_PROJECT: { name: 'addSpotToProject', text: '加到我的行程' },
+  EDIT_PLANNING_DAY: { name: 'editPlanningDay', text: '編輯天數' },
 };
 
 export const mixinWidthWrapper = () => `

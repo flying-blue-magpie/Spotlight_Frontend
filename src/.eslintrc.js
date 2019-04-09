@@ -23,5 +23,6 @@ module.exports = {
     "import/no-extraneous-dependencies": 0,
     "no-use-before-define": 0,
     "max-len": 0,
+    "react/no-array-index-key": 0,
   },
 };

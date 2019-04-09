@@ -72,7 +72,7 @@ const DetailPlanningPage = (props) => {
           <div className="detail-planning__cover-period">
             {`${startDay} - ${endDay} / ${days}天`}
           </div>
-          <DateTabs isOwner={isOwner} days={days} {...props} />
+          <DateTabs projectId={projectId} isOwner={isOwner} days={days} {...props} />
         </div>
       </div>
       <DateTimeInfo isOwner={isOwner} plan={plan} startDay={startDay} {...props} />
