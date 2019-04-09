@@ -60,7 +60,7 @@ const EditPlanningDayPage = (props) => {
     });
   }, [selectedDays, updateProject]);
   const handleOnCheck = useCallback(() => {
-    console.log('check updateProject: ', updateProject.toJS());
+    handleSubmitUpdateProject(projectId, updateProject);
   }, [selectedDays, updateProject]);
 
   useEffect(() => {
