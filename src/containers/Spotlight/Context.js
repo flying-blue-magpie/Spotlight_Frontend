@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { fromJS, Map } from 'immutable';
+import { fromJS, Map, List } from 'immutable';
 import { DEFAULT_PROJECT } from './constants';
 
 const SpotlightContext = createContext();
@@ -19,6 +19,8 @@ const useSelection = () => {
 
   // select liked spot
   const [selectedLikedSpotId, setSelectedLikedSpotId] = useState();
+
+  const [selectedDays, setSelectedDays] = useState(List());
 
   return {
     isNavVisible,
@@ -41,6 +43,9 @@ const useSelection = () => {
     // select liked spot
     selectedLikedSpotId,
     setSelectedLikedSpotId,
+
+    selectedDays,
+    setSelectedDays,
   };
 };
 

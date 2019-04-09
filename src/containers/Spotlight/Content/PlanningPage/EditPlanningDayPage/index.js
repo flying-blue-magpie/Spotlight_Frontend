@@ -1,6 +1,9 @@
 import React, { useContext, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import {
+  findAttributeInEvent,
+} from 'utils/event';
 import { List, Map, fromJS } from 'immutable';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -11,19 +14,20 @@ import {
   submitUpdateProject,
 } from 'containers/Spotlight/actions';
 import history from 'utils/history';
-// import Modal from 'antd/lib/modal';
 import Context from 'containers/Spotlight/Context';
 
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import { DEFAULT_PLAN } from 'containers/Spotlight/constants';
-import plusIconPath from 'assets/plus_icon.svg';
 
-// const { confirm } = Modal;
+import plusIconPath from 'assets/plus_icon.svg';
+import checkIconPath from 'assets/check_icon.svg';
 
 const EditPlanningDayContainer = styled.div`
   padding: 4px 15px;
   font-size: 14px;
   .edit-planning-day__row {
+    display: flex;
+    justify-content: space-between;
     border-bottom: 2px solid #EEEEEE;
     line-height: 40px;
     cursor: pointer;
@@ -41,6 +45,10 @@ const EditPlanningDayContainer = styled.div`
     width: 18px;
     margin-right: 6px;
   }
+  .edit-planning-day__check-icon {
+    height: 40px;
+    width: 16px;
+  }
 `;
 
 const EditPlanningDayPage = (props) => {
@@ -48,6 +56,8 @@ const EditPlanningDayPage = (props) => {
   const {
     updateProject,
     setUpdateProject,
+    selectedDays,
+    setSelectedDays,
   } = useContext(SpotlightContext);
   const {
     match,
@@ -62,15 +72,16 @@ const EditPlanningDayPage = (props) => {
     history.push(`/${PAGE_NAME.PLANNING.name}`);
     return null;
   }
-  const handleOnDayRowClick = useCallback(() => {
-    console.log('day');
-  }, []);
+  const handleOnDayRowClick = useCallback((event) => {
+    const day = parseInt(findAttributeInEvent(event, 'data-day'), 10);
+    setSelectedDays((d) => (d.includes(day) ? d.delete(d.indexOf(day)) : d.push(day)));
+  });
   const handleAddDay = useCallback(() => {
     setUpdateProject((proj) => fromJS({
       plan: proj.get('plan').push(fromJS(DEFAULT_PLAN)),
       tot_days: proj.get('tot_days') + 1,
     }));
-  }, []);
+  }, [updateProject]);
   const ownProject = ownProjects.find((project) => project.get('proj_id').toString() === projectId);
   if (!ownProject) {
     return <div>找不到該旅行計劃資料</div>;
@@ -94,9 +105,14 @@ const EditPlanningDayPage = (props) => {
             role="presentation"
             key={`${dayPlan}-${index}`}
             className="edit-planning-day__row"
+            data-day={index + 1}
             onClick={handleOnDayRowClick}
           >
-            <span>{`第${index + 1}天`}</span>
+            <div>{`第${index + 1}天`}</div>
+            {
+              selectedDays.includes(index + 1) &&
+              <img className="edit-planning-day__check-icon" src={checkIconPath} alt="" />
+            }
           </div>
         ))
       }
@@ -115,20 +131,15 @@ const EditPlanningDayPage = (props) => {
 };
 
 EditPlanningDayPage.propTypes = {
-  // user: PropTypes.instanceOf(Map),
   match: PropTypes.object,
   ownProjects: PropTypes.instanceOf(List).isRequired,
-  // handleSubmitUpdateProject: PropTypes.func,
 };
 
 EditPlanningDayPage.defaultProps = {
-  // user: Map(),
   match: {},
-  // handleSubmitUpdateProject: () => { },
 };
 
 const mapStateToProps = createStructuredSelector({
-  // user: selectUser(),
   ownProjects: selectOwnProjects(),
 });
 
