@@ -61,6 +61,7 @@ const EditPlanningDayPage = (props) => {
   }, [selectedDays, updateProject]);
   const handleOnCheck = useCallback(() => {
     handleSubmitUpdateProject(projectId, updateProject);
+    setSelectedDays(List());
   }, [selectedDays, updateProject]);
 
   useEffect(() => {
