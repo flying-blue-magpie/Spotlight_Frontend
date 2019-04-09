@@ -146,15 +146,16 @@ const Content = (props) => {
     match,
     plan,
     spots,
+    location,
     handleSubmitUpdateProject,
   } = props;
   const { projectId } = match.params;
-  const searchParams = new URLSearchParams(window.location.search);
+  const searchParams = new URLSearchParams(location.search);
+  const { search } = location;
   const day = parseInt(searchParams.get('day'), 10);
   const arrange = plan.getIn([day - 1, 'arrange']);
 
   const handleGoToAddSpot = useCallback((event) => {
-    const { search } = props.location;
     const insertAfterIndex = findAttributeInEvent(event, 'data-index');
     const addSpotToPlanPagePath = `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`;
     history.push({
@@ -162,7 +163,7 @@ const Content = (props) => {
       search: `${search}&afterIndex=${insertAfterIndex}`,
       state: { afterIndex: insertAfterIndex },
     });
-  }, [projectId]);
+  }, [projectId, search]);
   const handleShowModal = useCallback((event) => {
     const spotId = parseInt(findAttributeInEvent(event, 'data-spotid'), 10);
     setSelectedSpotId(spotId);
@@ -186,14 +187,13 @@ const Content = (props) => {
     });
   }, [selectedSpotId, projectId]);
   const handleGoToUpdatingPage = useCallback(() => {
-    const { search } = window.location;
     const updatingSpotCardPagePath = `/${PAGE_NAME.UPDATING_SPOT_CARD.name}/${projectId}`;
     history.push({
       pathname: updatingSpotCardPagePath,
       search,
       state: { selectedSpotId },
     });
-  }, [selectedSpotId, projectId]);
+  }, [selectedSpotId, projectId, search]);
   const handleOnDragUpdate = useCallback((value) => {
     const { oldIndex } = value;
     const { newIndex } = value;

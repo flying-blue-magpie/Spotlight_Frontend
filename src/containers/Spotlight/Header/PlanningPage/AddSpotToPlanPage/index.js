@@ -14,31 +14,33 @@ import arrowLeftIconPath from 'assets/arrow_left_icon.svg';
 const { SpotlightContext } = Context;
 
 const AddSpotToPlanPage = (props) => {
+  const {
+    match,
+  } = props;
   const context = useContext(SpotlightContext);
   const {
     selectedLikedSpotId,
   } = context;
+  const { projectId } = match.params;
   const searchParams = new URLSearchParams(window.location.search);
   const day = searchParams.get('day');
   const handleGoBackToDetailPlanning = useCallback(() => {
-    const { projectId } = props.match.params;
     history.push({
       pathname: `/${PAGE_NAME.DETAIL_PLANNING.name}/${projectId}`,
       search: `?day=${day}`,
     });
-  }, []);
+  }, [day, projectId]);
   const handleOnCheckBtn = useCallback(() => {
     if (!selectedLikedSpotId) {
       message.warning('請選擇景點卡');
       return;
     }
-    const { projectId } = props.match.params;
     const settingSpotCardPagePath = `/${PAGE_NAME.SETTING_SPOT_CARD.name}/${projectId}`;
     history.push({
       pathname: settingSpotCardPagePath,
       search: `?day=${day}`,
     });
-  }, [selectedLikedSpotId]);
+  }, [selectedLikedSpotId, day]);
   return (
     <HeaderContainer>
       <div className="header-container__icon-wrapper icon-left">
