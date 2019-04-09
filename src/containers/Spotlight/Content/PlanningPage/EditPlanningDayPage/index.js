@@ -13,6 +13,7 @@ import {
 import history from 'utils/history';
 
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import plusIconPath from 'assets/plus_icon.svg';
 
 const EditPlanningDayContainer = styled.div`
   padding: 4px 15px;
@@ -24,6 +25,16 @@ const EditPlanningDayContainer = styled.div`
     &:hover {
       background: #EEEEEE;
     }
+  }
+  .edit-planning-day__add-btn-wrapper {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+  }
+  .edit-planning-day__add-icon {
+    height: 18px;
+    width: 18px;
+    margin-right: 6px;
   }
 `;
 
@@ -64,6 +75,16 @@ const EditPlanningDayPage = (props) => {
           </div>
         ))
       }
+      <div
+        role="presentation"
+        className="edit-planning-day__row"
+        onClick={() => console.log('add')}
+      >
+        <div className="edit-planning-day__add-btn-wrapper">
+          <img className="edit-planning-day__add-icon" src={plusIconPath} alt="" />
+          <span>增加天數</span>
+        </div>
+      </div>
     </EditPlanningDayContainer>
   );
 };
