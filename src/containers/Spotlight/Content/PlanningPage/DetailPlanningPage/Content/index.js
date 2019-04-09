@@ -147,12 +147,12 @@ const Content = (props) => {
     spots,
     handleSubmitUpdateProject,
   } = props;
+  const { projectId } = match.params;
   const searchParams = new URLSearchParams(window.location.search);
   const day = parseInt(searchParams.get('day'), 10);
   const arrange = plan.getIn([day - 1, 'arrange']);
 
   const handleGoToAddSpot = useCallback((event) => {
-    const { projectId } = props.match.params;
     const { search } = props.location;
     const insertAfterIndex = findAttributeInEvent(event, 'data-index');
     const addSpotToPlanPagePath = `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`;
@@ -161,7 +161,7 @@ const Content = (props) => {
       search: `${search}&afterIndex=${insertAfterIndex}`,
       state: { afterIndex: insertAfterIndex },
     });
-  });
+  }, [projectId]);
   const handleShowModal = useCallback((event) => {
     const spotId = parseInt(findAttributeInEvent(event, 'data-spotid'), 10);
     setSelectedSpotId(spotId);
@@ -179,25 +179,27 @@ const Content = (props) => {
       okText: '刪除',
       okType: 'danger',
       onOk: () => {
-        const { projectId } = match.params;
         const updatedPlan = plan.updateIn([day - 1, 'arrange'], (arrs) => arrs.filter((arr) => arr.get('spot_id') !== selectedSpotId));
         handleSubmitUpdateProject(projectId, fromJS({ plan: updatedPlan }));
       },
     });
-  }, [selectedSpotId]);
+  }, [selectedSpotId, projectId]);
   const handleGoToUpdatingPage = useCallback(() => {
     const { search } = window.location;
-    const { projectId } = match.params;
     const updatingSpotCardPagePath = `/${PAGE_NAME.UPDATING_SPOT_CARD.name}/${projectId}`;
     history.push({
       pathname: updatingSpotCardPagePath,
       search,
       state: { selectedSpotId },
     });
-  }, [selectedSpotId]);
+  }, [selectedSpotId, projectId]);
   const handleOnDragUpdate = useCallback((value) => {
-    console.log('oldIndex: ', value.oldIndex);
-    console.log('newIndex: ', value.newIndex);
+    const { oldIndex } = value;
+    const { newIndex } = value;
+    const selectedSpotCard = arrange.get(oldIndex);
+    const updatedArrange = arrange.delete(oldIndex).insert(newIndex, selectedSpotCard);
+    const updatedPlan = plan.setIn([day - 1, 'arrange'], updatedArrange);
+    handleSubmitUpdateProject(projectId, fromJS({ plan: updatedPlan }));
   }, []);
 
   if (!arrange || arrange.size === 0) {
@@ -299,7 +301,7 @@ Content.defaultProps = {
   location: {},
   match: {},
   spots: Map(),
-  handleSubmitUpdateProject: () => {},
+  handleSubmitUpdateProject: () => { },
 };
 
 
