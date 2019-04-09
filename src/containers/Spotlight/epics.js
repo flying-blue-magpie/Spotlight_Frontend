@@ -36,6 +36,8 @@ import {
   KEY_REDUCER,
   SUBMIT_UPDATE_PROJECT,
   CANCEL_LIKE_SPOT,
+  LIKE_PROJECT,
+  CANCEL_LIKE_PROJECT,
 } from './constants';
 import {
   setUserLoading,
@@ -86,6 +88,10 @@ import {
   setExploringSpotId,
   deleteFavoriteSpotId,
   addFavoriteSpotId,
+  setLikeProjectDone,
+  addFavoriteProjectId,
+  setCancelLikeProjectDone,
+  deleteFavoriteProjectId,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -493,6 +499,46 @@ const cancelLikeSpotEpic = (action$, state$, { request }) => (
   )
 );
 
+const likeProjectEpic = (action$, state$, { request }) => (
+  action$.pipe(
+    ofType(LIKE_PROJECT),
+    switchMap((action) => request({
+      method: 'post',
+      url: `/like/proj/${action.payload}`,
+    }).pipe(
+      flatMap((res) => {
+        if (res.status === 'success') {
+          return of(
+            setLikeProjectDone(null, action.payload),
+            addFavoriteProjectId(action.payload),
+          );
+        }
+        return of(setLikeProjectDone(res));
+      }),
+    )),
+  )
+);
+
+const cancelLikeProjectEpic = (action$, state$, { request }) => (
+  action$.pipe(
+    ofType(CANCEL_LIKE_PROJECT),
+    switchMap((action) => request({
+      method: 'delete',
+      url: `/like/proj/${action.payload}`,
+    }).pipe(
+      flatMap((res) => {
+        if (res.status === 'success') {
+          return of(
+            setCancelLikeProjectDone(null, action.payload),
+            deleteFavoriteProjectId(action.payload),
+          );
+        }
+        return of(setCancelLikeProjectDone(res));
+      }),
+    )),
+  )
+);
+
 const fetchFavoriteSpotIdsEpic = (action$, state$, { request, fetchErrorEpic }) => (
   action$.pipe(
     ofType(FETCH_FAVORITE_SPOT_IDS),
@@ -582,6 +628,8 @@ export default [
   deleteProjectEpic,
   likeSpotEpic,
   cancelLikeSpotEpic,
+  likeProjectEpic,
+  cancelLikeProjectEpic,
   fetchFavoriteSpotIdsEpic,
   fetchFavoriteProjectIdsEpic,
   exploreNextSpotEpic,

@@ -1,21 +1,53 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import { List } from 'immutable';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import {
+  fetchProjects,
+  fetchFavoriteProjectIds,
+  likeProject,
+  cancelLikeProject,
+} from 'containers/Spotlight/actions';
+import { selectPublicProjects, selectFavoriteProjectIds } from 'containers/Spotlight/selectors';
 import { Container, TravelCard } from './Styled';
 
-const TravelWallPage = () => {
-  const cards = new Array(10).fill(0).map((x, index) => index);
-  const detailPlanningPagePath = `/${PAGE_NAME.DETAIL_PLANNING.name}`;
-  const defaultDay = 1;
+const TravelWallPage = ({
+  handleFetchProjects,
+  publicProjects,
+  handleFetchFavoriteProjectIds,
+  favoriteProjectIds,
+  handleLikeProject,
+  handleCancelLikeProject,
+}) => {
+  useEffect(() => {
+    handleFetchProjects();
+    handleFetchFavoriteProjectIds();
+  }, []);
 
   return (
     <Container>
       {
-        cards.map((card, index) => (
+        publicProjects.map((project) => (
           <TravelCard
-            key={card}
+            key={project.get('proj_id')}
             to={{
-              pathname: `${detailPlanningPagePath}/${index}`,
-              search: `?day=${defaultDay}`,
+              pathname: `/${PAGE_NAME.DETAIL_PLANNING.name}/${project.get('proj_id')}`,
+              search: '?day=1',
+            }}
+            cardTitle={project.get('name')}
+            cardDate={project.get('created_time')}
+            cardSubtitle={`${moment(project.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日')}-${moment(project.get('start_day'), 'YYYY-MM-DD').add(project.get('tot_days') - 1, 'days').format('YYYY年MM月DD日')} / ${project.get('tot_days')}天`}
+            likeNumber={project.get('like_num')}
+            isLikeActive={favoriteProjectIds.includes(project.get('proj_id'))}
+            onLikeClick={() => {
+              if (favoriteProjectIds.includes(project.get('proj_id'))) {
+                handleCancelLikeProject(project.get('proj_id'));
+              } else {
+                handleLikeProject(project.get('proj_id'));
+              }
             }}
           />
         ))
@@ -24,4 +56,26 @@ const TravelWallPage = () => {
   );
 };
 
-export default TravelWallPage;
+TravelWallPage.propTypes = {
+  handleFetchProjects: PropTypes.func.isRequired,
+  publicProjects: PropTypes.instanceOf(List).isRequired,
+  handleFetchFavoriteProjectIds: PropTypes.func.isRequired,
+  favoriteProjectIds: PropTypes.instanceOf(List).isRequired,
+  handleLikeProject: PropTypes.func.isRequired,
+  handleCancelLikeProject: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+  publicProjects: selectPublicProjects(),
+  favoriteProjectIds: selectFavoriteProjectIds(),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleFetchProjects: () => dispatch(fetchProjects({ onlyPublic: true })),
+  handleFetchFavoriteProjectIds: () => dispatch(fetchFavoriteProjectIds()),
+  handleLikeProject: (id) => dispatch(likeProject(id)),
+  handleCancelLikeProject: (id) => dispatch(cancelLikeProject(id)),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TravelWallPage);

@@ -57,6 +57,10 @@ import {
   ADD_FAVORITE_SPOT_ID,
   DELETE_FAVORITE_SPOT_ID,
   SET_CANCEL_LIKE_SPOT_DONE,
+  ADD_FAVORITE_PROJECT_ID,
+  DELETE_FAVORITE_PROJECT_ID,
+  SET_LIKE_PROJECT_DONE,
+  SET_CANCEL_LIKE_PROJECT_DONE,
 } from './constants';
 
 const initialState = fromJS({
@@ -212,7 +216,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setProjectMeta', updateMetaDone);
       }
       return state
-        .mergeDeepIn(['projects', project.proj_id], fromJS(project))
+        .mergeDeepIn(['projects'], fromJS({ [project.proj_id]: project }))
         .update('setProjectMeta', updateMetaDone);
     }
 
@@ -232,8 +236,7 @@ function spotLightReducer(state = initialState, action) {
       return state
         .mergeDeepIn(['projects'], fromJS(entities.projects))
         .set('projectsResult', fromJS(result))
-        .update('setProjectsMeta', updateMetaDone)
-        .set('exploringProjectId', result[0]);
+        .update('setProjectsMeta', updateMetaDone);
     }
 
     case SET_LOGIN_LOADING:
@@ -382,6 +385,23 @@ function spotLightReducer(state = initialState, action) {
       return state.updateIn(['spots', id, 'like_num'], (likeNum) => likeNum - 1);
     }
 
+    case SET_LIKE_PROJECT_DONE: {
+      const { error, id } = action.payload;
+      if (error) {
+        return state;
+      }
+      return state
+        .updateIn(['projects', String(id), 'like_num'], (likeNum) => likeNum + 1);
+    }
+
+    case SET_CANCEL_LIKE_PROJECT_DONE: {
+      const { error, id } = action.payload;
+      if (error) {
+        return state;
+      }
+      return state.updateIn(['projects', String(id), 'like_num'], (likeNum) => likeNum - 1);
+    }
+
     case SET_FAVORITE_SPOT_IDS_LOADING:
       return state.update('setFavoriteSpotIdsMeta', updateMetaLoading);
 
@@ -423,6 +443,20 @@ function spotLightReducer(state = initialState, action) {
 
     case DELETE_FAVORITE_SPOT_ID:
       return state.update('favoriteSpotIds', (ids) => {
+        const index = ids.indexOf(action.payload);
+        if (index !== -1) {
+          return ids.delete(index);
+        }
+        return ids;
+      });
+
+    case ADD_FAVORITE_PROJECT_ID:
+      return state.update('favoriteProjectIds', (ids) => (
+        ids.toSet().add(action.payload).toList()
+      ));
+
+    case DELETE_FAVORITE_PROJECT_ID:
+      return state.update('favoriteProjectIds', (ids) => {
         const index = ids.indexOf(action.payload);
         if (index !== -1) {
           return ids.delete(index);
