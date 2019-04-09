@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-const row = `
-  width: 300px;
-  display: block;
-  margin: 0 auto 24px;
-`;
-
 export const Container = styled.div`
   background-color: #FAFAFA;
   min-height: 100%;
@@ -107,7 +101,9 @@ export const RegisterLink = styled.a`
 `;
 
 export const ErrorMessage = styled.div`
-  ${row}
+  display: block;
+  text-align: center;
+  margin-top: 15px;
   color: red;
 `;
 
