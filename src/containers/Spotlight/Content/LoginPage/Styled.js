@@ -1,13 +1,6 @@
 import styled from 'styled-components';
 
-const row = `
-  width: 300px;
-  display: block;
-  margin: 0 auto 24px;
-`;
-
 export const Container = styled.div`
-  background-color: #FAFAFA;
   min-height: 100%;
 `;
 
@@ -107,13 +100,17 @@ export const RegisterLink = styled.a`
 `;
 
 export const ErrorMessage = styled.div`
-  ${row}
+  display: block;
+  text-align: center;
+  margin-top: 15px;
   color: red;
 `;
 
-export const Logo = styled.div`
+export const Logo = styled.img`
   color: #333333;
   font-size: 37px;
-  padding: 115px 0 58px;
-  text-align: center;
+  padding: 100px 0 64px;
+  display: block;
+  margin: 0 auto;
+  width: 260px;
 `;
