@@ -46,8 +46,11 @@ const DetailPlanningPage = (props) => {
   if (isLoading) {
     return <Spinner />;
   }
-  if (!ownProjects.size) {
+  if (!ownProjects || !ownProjects.size) {
     return <div>尚無任何旅行計劃</div>;
+  }
+  if (!user) {
+    return null;
   }
   const ownProject = ownProjects.find((project) => project.get('proj_id').toString() === projectId);
   if (!ownProject) {

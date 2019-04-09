@@ -46,6 +46,9 @@ const DetailPlanningPage = (props) => {
     handleSubmitUpdateProject,
   } = props;
   const { projectId } = match.params;
+  if (!ownProjects) {
+    return null;
+  }
   const ownProject = ownProjects.find((proj) => proj.get('proj_id').toString() === projectId);
   useEffect(() => {
     setIsNavVisible(false);
