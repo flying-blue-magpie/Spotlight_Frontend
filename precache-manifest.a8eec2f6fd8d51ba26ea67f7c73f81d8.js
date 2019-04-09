@@ -96,7 +96,7 @@ self.__precacheManifest = [
     "url": "/static/media/check_circle_icon.2d19e090.svg"
   },
   {
-    "revision": "04e9ac2627db29aa40207b497664b916",
+    "revision": "0be0ad71163ad035eacfef1bf4cb4be0",
     "url": "/index.html"
   }
 ];
