@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useContext } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import {
   HeaderContainer,
 } from 'containers/Spotlight/Header/Styled';
-// import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
@@ -14,29 +14,60 @@ import {
 } from 'containers/Spotlight/actions';
 import history from 'utils/history';
 import Context from 'containers/Spotlight/Context';
+import Modal from 'antd/lib/modal';
 
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import timesIconPath from 'assets/times_icon.svg';
 import checkIconPath from 'assets/check_icon.svg';
+import trashIconPath from 'assets/trash_icon.svg';
 
-const EditPlanningDayPage = () => {
+const { confirm } = Modal;
+
+const EditPlanningDayPage = (props) => {
+  const {
+    handleSubmitUpdateProject,
+  } = props;
   const { SpotlightContext } = Context;
   const {
     setIsNavVisible,
     // updateProject,
+    selectedDays,
+    setSelectedDays,
+    updateProject,
+    setUpdateProject,
   } = useContext(SpotlightContext);
-  // const {
-  //   match,
-  //   ownProjects,
-  // } = props;
+  const {
+    match,
+    // ownProjects,
+  } = props;
+  const { projectId } = match.params;
   const handleOnCancel = useCallback(() => {
     history.goBack();
   }, []);
+  const handleOnDelete = useCallback(() => {
+    const submitProject = updateProject
+      .update('plan', (plan) => plan.filter((p, index) => !selectedDays.includes(index + 1)))
+      .update('tot_days', (totDays) => totDays - selectedDays.size);
+    confirm({
+      title: '刪除',
+      content: '確認是否刪除選取項目？',
+      okText: '刪除',
+      okType: 'danger',
+      onOk: () => {
+        handleSubmitUpdateProject(projectId, submitProject);
+      },
+    });
+  }, [selectedDays, updateProject]);
+  const handleOnCheck = useCallback(() => {
+    console.log('check updateProject: ', updateProject.toJS());
+  }, [selectedDays, updateProject]);
 
   useEffect(() => {
     setIsNavVisible(false);
     return () => {
       setIsNavVisible(true);
+      setSelectedDays(List());
+      setUpdateProject(Map());
     };
   }, []);
   return (
@@ -48,8 +79,8 @@ const EditPlanningDayPage = () => {
       </div>
       <div>{PAGE_NAME.EDIT_PLANNING_DAY.text}</div>
       <div className="header-container__icon-wrapper icon-right">
-        <div role="presentation" onClick={() => {}}>
-          <img className="icon-style" src={checkIconPath} alt="" />
+        <div role="presentation" onClick={selectedDays.size ? handleOnDelete : handleOnCheck}>
+          <img className="icon-style" src={selectedDays.size ? trashIconPath : checkIconPath} alt="" />
         </div>
       </div>
     </HeaderContainer>
@@ -58,15 +89,15 @@ const EditPlanningDayPage = () => {
 
 EditPlanningDayPage.propTypes = {
   // user: PropTypes.instanceOf(Map),
-  // match: PropTypes.object,
+  match: PropTypes.object,
   // ownProjects: PropTypes.instanceOf(List).isRequired,
-  // handleSubmitUpdateProject: PropTypes.func,
+  handleSubmitUpdateProject: PropTypes.func,
 };
 
 EditPlanningDayPage.defaultProps = {
   // user: Map(),
   match: {},
-  // handleSubmitUpdateProject: () => { },
+  handleSubmitUpdateProject: () => { },
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -244,7 +244,7 @@ const Content = (props) => {
         <div>
           {
             arrange.map((spot, index) => (
-              <SpotOperator key={spot.get('spot_id')}>
+              <SpotOperator key={`day-${day}-${spot.get('spot_id')}-${index}`}>
                 <div className="operator__number-wrapper">
                   {
                     Boolean(index) &&
