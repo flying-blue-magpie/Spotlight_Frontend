@@ -75,6 +75,8 @@ import {
   SET_IS_MODAL_VISIBLE,
   ADD_FAVORITE_SPOT_ID,
   DELETE_FAVORITE_SPOT_ID,
+  ADD_FAVORITE_PROJECT_ID,
+  DELETE_FAVORITE_PROJECT_ID,
 } from './constants';
 
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
@@ -426,6 +428,16 @@ export const addFavoriteSpotId = (id) => ({
 
 export const deleteFavoriteSpotId = (id) => ({
   type: DELETE_FAVORITE_SPOT_ID,
+  payload: id,
+});
+
+export const addFavoriteProjectId = (id) => ({
+  type: ADD_FAVORITE_PROJECT_ID,
+  payload: id,
+});
+
+export const deleteFavoriteProjectId = (id) => ({
+  type: DELETE_FAVORITE_PROJECT_ID,
   payload: id,
 });
 

@@ -57,6 +57,8 @@ import {
   ADD_FAVORITE_SPOT_ID,
   DELETE_FAVORITE_SPOT_ID,
   SET_CANCEL_LIKE_SPOT_DONE,
+  ADD_FAVORITE_PROJECT_ID,
+  DELETE_FAVORITE_PROJECT_ID,
 } from './constants';
 
 const initialState = fromJS({
@@ -423,6 +425,20 @@ function spotLightReducer(state = initialState, action) {
 
     case DELETE_FAVORITE_SPOT_ID:
       return state.update('favoriteSpotIds', (ids) => {
+        const index = ids.indexOf(action.payload);
+        if (index !== -1) {
+          return ids.delete(index);
+        }
+        return ids;
+      });
+
+    case ADD_FAVORITE_PROJECT_ID:
+      return state.update('favoriteProjectIds', (ids) => (
+        ids.toSet().add(action.payload).toList()
+      ));
+
+    case DELETE_FAVORITE_PROJECT_ID:
+      return state.update('favoriteProjectIds', (ids) => {
         const index = ids.indexOf(action.payload);
         if (index !== -1) {
           return ids.delete(index);
