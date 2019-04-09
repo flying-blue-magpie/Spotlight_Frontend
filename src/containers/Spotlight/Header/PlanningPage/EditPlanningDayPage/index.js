@@ -55,6 +55,7 @@ const EditPlanningDayPage = (props) => {
       okType: 'danger',
       onOk: () => {
         handleSubmitUpdateProject(projectId, submitProject);
+        setSelectedDays(List());
       },
     });
   }, [selectedDays, updateProject]);
