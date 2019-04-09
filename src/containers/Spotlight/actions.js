@@ -77,6 +77,8 @@ import {
   DELETE_FAVORITE_SPOT_ID,
   ADD_FAVORITE_PROJECT_ID,
   DELETE_FAVORITE_PROJECT_ID,
+  LIKE_PROJECT,
+  SET_LIKE_PROJECT_DONE,
 } from './constants';
 
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
@@ -399,6 +401,19 @@ export const cancelLikeSpot = (id) => ({
 
 export const setCancelLikeSpotDone = (error, id) => ({
   type: SET_CANCEL_LIKE_SPOT_DONE,
+  payload: {
+    error,
+    id,
+  },
+});
+
+export const likeProject = (id) => ({
+  type: LIKE_PROJECT,
+  payload: id,
+});
+
+export const setLikeProjectDone = (error, id) => ({
+  type: SET_LIKE_PROJECT_DONE,
   payload: {
     error,
     id,
