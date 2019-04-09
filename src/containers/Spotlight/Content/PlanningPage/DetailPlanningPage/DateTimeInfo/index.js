@@ -42,13 +42,14 @@ const StyledDateTimeInfo = styled.div`
     display: flex;
     align-items: center;
     line-height: 20px;
-    background: rgba(51, 51, 51, 1);
-    color: white;
+    background: ${(props) => (props.isOwner ? 'rgba(51, 51, 51, 1)' : 'white')};
+    color: ${(props) => (props.isOwner ? 'white' : 'rgba(51, 51, 51, 1)')};
+
     padding: 6px 8px;
     border-radius: 16px;
     cursor: pointer;
     &:hover {
-      background: rgba(51, 51, 51, 0.8);
+      background: ${(props) => (props.isOwner ? 'rgba(51, 51, 51, 0.8)' : 'white')};
     }
   }
   .date-time-info__clock-icon {
@@ -59,6 +60,7 @@ const StyledDateTimeInfo = styled.div`
 
 const DateTimeInfo = (props) => {
   const {
+    isOwner,
     match,
     startDay,
     plan,
@@ -88,9 +90,9 @@ const DateTimeInfo = (props) => {
 
   return (
     <>
-      <StyledDateTimeInfo>
+      <StyledDateTimeInfo isOwner={isOwner}>
         <div className="date-time-info__date-text">{`${date} ${weekday}`}</div>
-        <div role="presentation" className="date-time-info__start-time-wrapper" onClick={handleShowModal}>
+        <div role="presentation" className="date-time-info__start-time-wrapper" onClick={isOwner ? handleShowModal : () => {}}>
           <i className="far fa-clock date-time-info__clock-icon" />
           <span>{`出發時間 ${startTime}`}</span>
         </div>
@@ -112,6 +114,7 @@ const DateTimeInfo = (props) => {
 };
 
 DateTimeInfo.propTypes = {
+  isOwner: PropTypes.bool,
   match: PropTypes.object,
   startDay: PropTypes.string,
   isModalVisible: PropTypes.bool,
@@ -121,6 +124,7 @@ DateTimeInfo.propTypes = {
 };
 
 DateTimeInfo.defaultProps = {
+  isOwner: false,
   match: {},
   startDay: '',
   isModalVisible: false,

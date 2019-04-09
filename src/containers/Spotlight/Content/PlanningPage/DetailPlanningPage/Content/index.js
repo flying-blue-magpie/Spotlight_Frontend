@@ -142,6 +142,7 @@ const Content = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedSpotId, setSelectedSpotId] = useState();
   const {
+    isOwner,
     match,
     plan,
     spots,
@@ -206,20 +207,33 @@ const Content = (props) => {
     return (
       <StyledContent>
         <div className="content__spot-cards-wrapper">
-          <SpotOperator>
-            <div
-              role="presentation"
-              className="operator__map-marker-wrapper"
-              data-index={1}
-              onClick={handleGoToAddSpot}
-            >
-              <img src={mapPlusIconPath} className="operator__map-marker-icon" alt="" />
-            </div>
-          </SpotOperator>
-          <div className="content__default-message-wrapper">
-            <img className="content__arrow-left_grey-icon" src={arrowLeftGreyIconPath} alt="" />
-            <div className="content__default-message-text">按左側按鈕開始添加你的行程</div>
-          </div>
+          {
+            isOwner
+              ? (
+                <>
+                  <SpotOperator>
+                    <div
+                      role="presentation"
+                      className="operator__map-marker-wrapper"
+                      data-index={1}
+                      onClick={handleGoToAddSpot}
+                    >
+                      <img src={mapPlusIconPath} className="operator__map-marker-icon" alt="" />
+                    </div>
+                  </SpotOperator>
+                  <div className="content__default-message-wrapper">
+                    <img className="content__arrow-left_grey-icon" src={arrowLeftGreyIconPath} alt="" />
+                    <div className="content__default-message-text">按左側按鈕開始添加你的行程</div>
+                  </div>
+                </>
+              )
+              : (
+                <div className="content__default-message-wrapper">
+                  <div className="content__default-message-text">尚未添加行程</div>
+                </div>
+              )
+          }
+
         </div>
       </StyledContent>
     );
@@ -240,11 +254,14 @@ const Content = (props) => {
                     role="presentation"
                     className="operator__number-circle-border"
                     data-spotid={spot.get('spot_id')}
-                    onClick={handleShowModal}
+                    onClick={isOwner ? handleShowModal : () => { }}
                   >
                     <span>{index + 1}</span>
                   </div>
-                  <div className="operator__divider-line operator__divider-line-bottom" />
+                  {
+                    !((spot.size === index) && !isOwner) &&
+                    <div className="operator__divider-line operator__divider-line-bottom" />
+                  }
                 </div>
                 <div
                   role="presentation"
@@ -252,7 +269,7 @@ const Content = (props) => {
                   data-index={index + 1}
                   onClick={handleGoToAddSpot}
                 >
-                  <img src={mapPlusIconPath} className="operator__map-marker-icon" alt="" />
+                  <img src={isOwner ? mapPlusIconPath : ''} className="operator__map-marker-icon" alt="" />
                 </div>
               </SpotOperator>
             ))
@@ -290,6 +307,7 @@ const Content = (props) => {
 };
 
 Content.propTypes = {
+  isOwner: PropTypes.bool,
   plan: PropTypes.instanceOf(List),
   location: PropTypes.object,
   match: PropTypes.object,
@@ -298,6 +316,7 @@ Content.propTypes = {
 };
 
 Content.defaultProps = {
+  isOwner: false,
   plan: List(),
   location: {},
   match: {},

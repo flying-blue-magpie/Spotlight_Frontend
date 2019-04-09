@@ -14,6 +14,7 @@ import {
   selectOwnProjects,
   selectOwnProjectsMeta,
   selectSpots,
+  selectUser,
 } from 'containers/Spotlight/selectors';
 import DateTabs from './DateTabs';
 import DateTimeInfo from './DateTimeInfo';
@@ -24,6 +25,7 @@ import {
 
 const DetailPlanningPage = (props) => {
   const {
+    user,
     match,
     ownProjectsMeta,
     ownProjects,
@@ -51,6 +53,10 @@ const DetailPlanningPage = (props) => {
   if (!ownProject) {
     return <div>找不到該旅行計劃資料</div>;
   }
+  const owner = ownProject.get('owner');
+  const userId = user.get('user_id');
+  const isOwner = userId === owner;
+
   const name = ownProject.get('name');
   const days = ownProject.get('tot_days');
   const startDay = moment(ownProject.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日');
@@ -66,16 +72,17 @@ const DetailPlanningPage = (props) => {
           <div className="detail-planning__cover-period">
             {`${startDay} - ${endDay} / ${days}天`}
           </div>
-          <DateTabs days={days} {...props} />
+          <DateTabs isOwner={isOwner} days={days} {...props} />
         </div>
       </div>
-      <DateTimeInfo plan={plan} startDay={startDay} {...props} />
-      <Content plan={plan} {...props} />
+      <DateTimeInfo isOwner={isOwner} plan={plan} startDay={startDay} {...props} />
+      <Content isOwner={isOwner} plan={plan} {...props} />
     </DetailPlanningPageContainer>
   );
 };
 
 DetailPlanningPage.propTypes = {
+  user: PropTypes.instanceOf(Map),
   match: PropTypes.object,
   ownProjectsMeta: PropTypes.instanceOf(Map),
   ownProjects: PropTypes.instanceOf(List),
@@ -83,6 +90,7 @@ DetailPlanningPage.propTypes = {
 };
 
 DetailPlanningPage.defaultProps = {
+  user: Map(),
   match: {},
   ownProjectsMeta: Map(),
   ownProjects: List(),
@@ -93,6 +101,7 @@ const mapStateToProps = createStructuredSelector({
   ownProjectsMeta: selectOwnProjectsMeta(),
   ownProjects: selectOwnProjects(),
   spots: selectSpots(),
+  user: selectUser(),
 });
 
 const mapDispatchToProps = (dispatch) => ({

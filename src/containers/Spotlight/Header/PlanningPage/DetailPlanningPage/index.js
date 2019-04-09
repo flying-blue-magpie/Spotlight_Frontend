@@ -2,7 +2,7 @@ import React, {
   useState, useContext, useEffect, useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
-import { List, fromJS } from 'immutable';
+import { List, Map, fromJS } from 'immutable';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { PAGE_NAME } from 'Styled/Settings/constants';
@@ -12,6 +12,7 @@ import {
 } from 'containers/Spotlight/actions';
 import {
   selectOwnProjects,
+  selectUser,
 } from 'containers/Spotlight/selectors';
 import {
   HeaderContainer,
@@ -39,6 +40,7 @@ const DetailPlanningPage = (props) => {
     setIsNavVisible,
   } = context;
   const {
+    user,
     match,
     ownProjects,
     handleSubmitUpdateProject,
@@ -81,6 +83,13 @@ const DetailPlanningPage = (props) => {
   const handleOnCancel = useCallback(() => {
     setIsModalVisible(false);
   }, []);
+  if (!ownProject || !user) {
+    return null;
+  }
+  const owner = ownProject.get('owner');
+  const userId = user.get('user_id');
+  const isOwner = userId === owner;
+
   return (
     <>
       <HeaderContainer>
@@ -88,12 +97,15 @@ const DetailPlanningPage = (props) => {
           <i role="presentation" className="fas fa-arrow-left icon-style" onClick={handleGoBackToPlanning} />
         </div>
         <div>{PAGE_NAME.DETAIL_PLANNING.text}</div>
-        <div className="header-container__icon-wrapper icon-right">
-          <i role="presentation" className="fas fa-pen icon-style" onClick={handleGoToUpdatePlanningPage} />
-          <div role="presentation" onClick={handleUploadToTravelWall}>
-            <img src={uploadTravelWallIconPath} className="icon-style" alt="" />
+        {
+          isOwner &&
+          <div className="header-container__icon-wrapper icon-right">
+            <i role="presentation" className="fas fa-pen icon-style" onClick={handleGoToUpdatePlanningPage} />
+            <div role="presentation" onClick={handleUploadToTravelWall}>
+              <img src={uploadTravelWallIconPath} className="icon-style" alt="" />
+            </div>
           </div>
-        </div>
+        }
       </HeaderContainer>
       <Modal
         id="UploadToTravelWallConfirm"
@@ -111,17 +123,20 @@ const DetailPlanningPage = (props) => {
 };
 
 DetailPlanningPage.propTypes = {
+  user: PropTypes.instanceOf(Map),
   match: PropTypes.object,
   ownProjects: PropTypes.instanceOf(List).isRequired,
   handleSubmitUpdateProject: PropTypes.func,
 };
 
 DetailPlanningPage.defaultProps = {
+  user: Map(),
   match: {},
   handleSubmitUpdateProject: () => { },
 };
 
 const mapStateToProps = createStructuredSelector({
+  user: selectUser(),
   ownProjects: selectOwnProjects(),
 });
 

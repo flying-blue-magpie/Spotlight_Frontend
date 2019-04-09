@@ -29,6 +29,7 @@ const DateTabsContainer = styled.div`
 const DateTabs = (props) => {
   const {
     days,
+    isOwner,
   } = props;
   const tabs = new Array(days).fill(0).map((x, index) => index);
   return (
@@ -44,17 +45,22 @@ const DateTabs = (props) => {
           ))
         }
       </div>
-      <img src={editDayIcon} className="date-tab__edit-day-icon" alt="" />
+      {
+        isOwner &&
+        <img src={editDayIcon} className="date-tab__edit-day-icon" alt="" />
+      }
     </DateTabsContainer>
   );
 };
 
 DateTabs.propTypes = {
   days: PropTypes.number,
+  isOwner: PropTypes.bool,
 };
 
 DateTabs.defaultProps = {
   days: 0,
+  isOwner: false,
 };
 
 export default DateTabs;
