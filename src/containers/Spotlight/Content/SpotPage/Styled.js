@@ -19,6 +19,8 @@ export const BackButton = styled.button`
   color: #fff;
   left: 15px;
   top: 20px;
+  background-color: transparent;
+  border: 0;
 `;
 
 export const AddButton = styled(Link)`
