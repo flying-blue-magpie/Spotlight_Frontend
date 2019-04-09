@@ -391,7 +391,7 @@ function spotLightReducer(state = initialState, action) {
         return state;
       }
       return state
-        .updateIn(['projects', id, 'like_num'], (likeNum) => likeNum + 1);
+        .updateIn(['projects', String(id), 'like_num'], (likeNum) => likeNum + 1);
     }
 
     case SET_CANCEL_LIKE_PROJECT_DONE: {
@@ -399,7 +399,7 @@ function spotLightReducer(state = initialState, action) {
       if (error) {
         return state;
       }
-      return state.updateIn(['projects', id, 'like_num'], (likeNum) => likeNum - 1);
+      return state.updateIn(['projects', String(id), 'like_num'], (likeNum) => likeNum - 1);
     }
 
     case SET_FAVORITE_SPOT_IDS_LOADING:
