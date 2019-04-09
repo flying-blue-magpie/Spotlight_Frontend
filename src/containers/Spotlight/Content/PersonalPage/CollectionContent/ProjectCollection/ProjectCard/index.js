@@ -62,7 +62,7 @@ const ProjectCard = ({
   handleOnClick,
 }) => {
   useEffect(() => {
-    const project = projects.get(projectId);
+    const project = projects.get(String(projectId));
     if (!project) {
       fetchProjectById(projectId);
     } else {
@@ -73,7 +73,7 @@ const ProjectCard = ({
     }
   }, [users, projects]);
 
-  const project = projects.get(projectId);
+  const project = projects.get(String(projectId));
 
   if (!project) {
     return null;
