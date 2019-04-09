@@ -60,6 +60,7 @@ import {
   ADD_FAVORITE_PROJECT_ID,
   DELETE_FAVORITE_PROJECT_ID,
   SET_LIKE_PROJECT_DONE,
+  SET_CANCEL_LIKE_PROJECT_DONE,
 } from './constants';
 
 const initialState = fromJS({
@@ -392,6 +393,14 @@ function spotLightReducer(state = initialState, action) {
       }
       return state
         .updateIn(['projects', String(id), 'like_num'], (likeNum) => likeNum + 1);
+    }
+
+    case SET_CANCEL_LIKE_PROJECT_DONE: {
+      const { error, id } = action.payload;
+      if (error) {
+        return state;
+      }
+      return state.updateIn(['projects', String(id), 'like_num'], (likeNum) => likeNum - 1);
     }
 
     case SET_FAVORITE_SPOT_IDS_LOADING:
