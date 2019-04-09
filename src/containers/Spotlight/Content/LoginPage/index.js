@@ -30,6 +30,7 @@ import {
   RegisterLink,
 } from './Styled';
 import keyIcon from './key.svg';
+import LogoSrc from './logo.png';
 
 const { SpotlightContext } = Context;
 
@@ -85,7 +86,7 @@ const Login = (props) => {
   return (
     loginStatusMeta.get('isLoaded') && !user ? (
       <Container>
-        <Logo>LOGO</Logo>
+        <Logo src={LogoSrc} />
         <UserNameContainer>
           <UserName ref={usernameRef} type="email" placeholder="請輸入註冊的 E-mail" />
         </UserNameContainer>

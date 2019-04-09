@@ -107,9 +107,11 @@ export const ErrorMessage = styled.div`
   color: red;
 `;
 
-export const Logo = styled.div`
+export const Logo = styled.img`
   color: #333333;
   font-size: 37px;
-  padding: 115px 0 58px;
-  text-align: center;
+  padding: 100px 0 64px;
+  display: block;
+  margin: 0 auto;
+  width: 260px;
 `;
