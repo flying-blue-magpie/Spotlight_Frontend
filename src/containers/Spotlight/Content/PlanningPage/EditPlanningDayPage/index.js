@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useContext, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { List } from 'immutable';
+import { List, Map, fromJS } from 'immutable';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
@@ -11,9 +11,14 @@ import {
   submitUpdateProject,
 } from 'containers/Spotlight/actions';
 import history from 'utils/history';
+// import Modal from 'antd/lib/modal';
+import Context from 'containers/Spotlight/Context';
 
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import { DEFAULT_PLAN } from 'containers/Spotlight/constants';
 import plusIconPath from 'assets/plus_icon.svg';
+
+// const { confirm } = Modal;
 
 const EditPlanningDayContainer = styled.div`
   padding: 4px 15px;
@@ -39,6 +44,11 @@ const EditPlanningDayContainer = styled.div`
 `;
 
 const EditPlanningDayPage = (props) => {
+  const { SpotlightContext } = Context;
+  const {
+    updateProject,
+    setUpdateProject,
+  } = useContext(SpotlightContext);
   const {
     match,
     ownProjects,
@@ -55,16 +65,31 @@ const EditPlanningDayPage = (props) => {
   const handleOnDayRowClick = useCallback(() => {
     console.log('day');
   }, []);
+  const handleAddDay = useCallback(() => {
+    setUpdateProject((proj) => fromJS({
+      plan: proj.get('plan').push(fromJS(DEFAULT_PLAN)),
+      tot_days: proj.get('tot_days') + 1,
+    }));
+  }, []);
   const ownProject = ownProjects.find((project) => project.get('proj_id').toString() === projectId);
   if (!ownProject) {
     return <div>找不到該旅行計劃資料</div>;
   }
   const plan = ownProject.get('plan');
+  useEffect(() => {
+    setUpdateProject(Map({
+      plan,
+      tot_days: ownProject.get('tot_days'),
+    }));
+  }, [plan]);
+  if (!updateProject.size) {
+    return null;
+  }
 
   return (
     <EditPlanningDayContainer>
       {
-        plan.map((dayPlan, index) => (
+        updateProject.get('plan').map((dayPlan, index) => (
           <div
             role="presentation"
             key={`${dayPlan}-${index}`}
@@ -78,7 +103,7 @@ const EditPlanningDayPage = (props) => {
       <div
         role="presentation"
         className="edit-planning-day__row"
-        onClick={() => console.log('add')}
+        onClick={handleAddDay}
       >
         <div className="edit-planning-day__add-btn-wrapper">
           <img className="edit-planning-day__add-icon" src={plusIconPath} alt="" />

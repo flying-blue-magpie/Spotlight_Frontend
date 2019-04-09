@@ -23,6 +23,7 @@ const EditPlanningDayPage = () => {
   const { SpotlightContext } = Context;
   const {
     setIsNavVisible,
+    // updateProject,
   } = useContext(SpotlightContext);
   // const {
   //   match,
