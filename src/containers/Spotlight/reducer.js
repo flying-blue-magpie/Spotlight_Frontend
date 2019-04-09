@@ -216,7 +216,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setProjectMeta', updateMetaDone);
       }
       return state
-        .mergeDeepIn(['projects', project.proj_id], fromJS(project))
+        .mergeDeepIn(['projects'], fromJS({ [project.proj_id]: project }))
         .update('setProjectMeta', updateMetaDone);
     }
 
