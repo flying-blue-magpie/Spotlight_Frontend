@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+  cursor: pointer;
 `;
 
 export const Header = styled.div`

@@ -8,7 +8,6 @@ export const PAGE_NAME = {
   TRAVEL_WALL: { name: 'travelWall', text: '旅遊牆' },
   PERSONAL_PAGE: { name: 'personal', text: '我的' },
   SETTING: { name: 'setting', text: '設定' },
-  SETTING_INFO: { name: 'settingInfo', text: '修改資訊' },
   DETAIL_PLANNING: { name: 'detailPlanning', text: '旅程內容' },
   UPDATE_PLANNING: { name: 'updatePlanning', text: '修改旅程' },
   CREATE_PROJECT: { name: 'createPlanning', text: '增加旅程' },
@@ -21,5 +20,4 @@ export const PAGE_NAME = {
 
 export const mixinWidthWrapper = () => `
   width: 100%;
-  max-width: ${MAX_WIDTH}px;
 `;

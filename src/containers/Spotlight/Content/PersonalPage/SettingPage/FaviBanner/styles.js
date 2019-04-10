@@ -13,9 +13,10 @@ export const StyledFaviBanner = styled(Link)`
     width: 100px;
     padding: 15px;
     .favi-banner__favicon {
+      background-image: url(${(props) => props.faviconPath});
+      background-size: cover;
       height: 100%;
       width: 100%;
-      background-color: ${GRAY};
       border-radius: 50%;
     }
   }

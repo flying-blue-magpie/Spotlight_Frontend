@@ -8,7 +8,6 @@ import PlanningPage from 'containers/Spotlight/Content/PlanningPage';
 import TravelWallPage from 'containers/Spotlight/Content/TravelWallPage';
 import PersonalPage from 'containers/Spotlight/Content/PersonalPage';
 import SettingPage from 'containers/Spotlight/Content/PersonalPage/SettingPage';
-import SettingInfoPage from 'containers/Spotlight/Content/PersonalPage/SettingPage/SettingInfoPage';
 import DetailPlanningPage from 'containers/Spotlight/Content/PlanningPage/DetailPlanningPage';
 import UpdatePlanningPage from 'containers/Spotlight/Content/PlanningPage/UpdatePlanningPage';
 import CreateProjectPage from 'containers/Spotlight/Content/PlanningPage/CreateProjectPage';
@@ -27,7 +26,6 @@ export const routePathConfig = {
   travelWallPagePath: `/${PAGE_NAME.TRAVEL_WALL.name}`,
   personalPagePath: `/${PAGE_NAME.PERSONAL_PAGE.name}`,
   settingPath: `/${PAGE_NAME.SETTING.name}`,
-  settingInfoPath: `/${PAGE_NAME.SETTING_INFO.name}`,
   detailPlanningPagePath: `/${PAGE_NAME.DETAIL_PLANNING.name}/:projectId`,
   updatePlanningPagePath: `/${PAGE_NAME.UPDATE_PLANNING.name}/:projectId`,
   addSpotToPlanPagePath: `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/:projectId`,
@@ -49,7 +47,6 @@ export default () => (
       <Route exact path={routePathConfig.travelWallPagePath} component={TravelWallPage} />
       <Route exact path={routePathConfig.personalPagePath} component={PersonalPage} />
       <Route exact path={routePathConfig.settingPath} component={SettingPage} />
-      <Route exact path={routePathConfig.settingInfoPath} component={SettingInfoPage} />
       <Route exact path={routePathConfig.detailPlanningPagePath} component={DetailPlanningPage} />
       <Route exact path={routePathConfig.updatePlanningPagePath} component={UpdatePlanningPage} />
       <Route exact path={routePathConfig.settingSpotCardPagePath} component={SettingSpotCardPage} />

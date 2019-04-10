@@ -2,10 +2,13 @@ import styled from 'styled-components';
 import {
   HEIGHT_HEADER,
   HEIGHT_NAVIGATION,
+  MAX_WIDTH,
 } from 'Styled/Settings/constants';
 
 export const SpotlightContainer = styled.div`
   display: grid;
+  max-width: ${MAX_WIDTH}px;
+  margin: 0 auto;
   ${(props) => (`
     grid-template-rows:
       ${props.isHeaderVisible ? HEIGHT_HEADER : 0}px
@@ -28,7 +31,7 @@ export const SpotlightContainer = styled.div`
     grid-area: content;
     display: flex;
     justify-content: center;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
   .spot-light__navigation-container {
     grid-area: navigation;

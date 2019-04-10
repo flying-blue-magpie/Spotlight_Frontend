@@ -28,11 +28,9 @@ const TravelCard = ({
   likeNumber,
   isLikeActive,
   onLikeClick,
-  onCardClick,
 }) => {
   const handleOnClick = useCallback(() => {
     history.push(to);
-    onCardClick();
   });
 
   const handleOnLikeClick = useCallback((event) => {
