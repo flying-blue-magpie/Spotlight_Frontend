@@ -2,6 +2,7 @@ import express from 'express';
 import proxy from 'http-proxy-middleware';
 import http from 'http';
 import path from 'path';
+import compression from 'compression';
 
 const PORT = process.env.PORT || 5000;
 
@@ -12,6 +13,7 @@ const app = express();
 // express
 app.set('port', PORT);
 
+app.use(compression());
 app.use(express.static('./build'));
 
 app.use(proxy('/api', {
