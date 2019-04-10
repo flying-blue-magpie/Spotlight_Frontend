@@ -4,8 +4,6 @@ import { List } from 'immutable';
 import PropTypes from 'prop-types';
 import Sortable from 'react-sortablejs';
 
-import SpotCard from 'containers/Spotlight/Content/PlanningPage/DetailPlanningPage/Content/SpotCard';
-
 import styled from 'styled-components';
 
 const StyledContainer = styled.div`
@@ -20,22 +18,14 @@ const StyledContainer = styled.div`
 
 // Functional Component
 const DragSortableList = (props) => {
-  const { items, onChange } = props;
-  // let sortable = null; // sortable instance
-  // const reverseOrder = (evt) => {
-  //   const order = sortable.toArray();
-  //   onChange(order.reverse());
-  // };
-
-  const listItems = items.map((val, index) => (
-    <div key={uniqueId()} data-id={JSON.stringify(val.toJS())}>
-      <SpotCard
-        spotIndexInfo={val}
-        index={index}
-        {...props}
-      />
-    </div>
-  ));
+  const { dataSource, onChange, row } = props;
+  const listItems = dataSource
+    .map(row)
+    .map((rowItem, index) => (
+      <div key={uniqueId()} data-id={JSON.stringify(dataSource.get(index).toJS())}>
+        {rowItem}
+      </div>
+    ));
 
   return (
     <StyledContainer>
@@ -83,13 +73,15 @@ const DragSortableList = (props) => {
 };
 
 DragSortableList.propTypes = {
-  items: PropTypes.instanceOf(List),
+  dataSource: PropTypes.instanceOf(List),
   onChange: PropTypes.func,
+  row: PropTypes.func,
 };
 
 DragSortableList.defaultProps = {
-  items: List(),
+  dataSource: List(),
   onChange: () => { },
+  row: () => { },
 };
 
 export default DragSortableList;

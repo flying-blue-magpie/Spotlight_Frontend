@@ -20,7 +20,7 @@ import {
 import SpotOperationBtn from './SpotOperationBtn';
 
 import
-// SpotCard,
+SpotCard,
 {
   HEIGHT_SPOT_CARD,
   HEIGHT_SPOT_TRAVEL_TIME,
@@ -240,7 +240,7 @@ const Content = (props) => {
       </StyledContent>
     );
   }
-  console.log('arrangeState: ', arrangeState.toJS());
+
   return (
     <StyledContent>
       <div className="content__spot-cards-wrapper">
@@ -278,8 +278,8 @@ const Content = (props) => {
             ))
           }
         </div>
-        {/* <ReactDragList
-          dataSource={arrange}
+        <DragSortableList
+          dataSource={arrangeState}
           row={(spot, index) => (
             <SpotCard
               key={spot.get('spot_id')}
@@ -288,13 +288,6 @@ const Content = (props) => {
               {...props}
             />
           )}
-          handles={false}
-          className="simple-drag content__spot-simple-drag"
-          rowClassName="simple-drag-row"
-          onUpdate={handleOnDragUpdate}
-        /> */}
-        <DragSortableList
-          items={arrangeState}
           onChange={(updatedItems) => {
             handleOnDragUpdate(updatedItems);
           }}
