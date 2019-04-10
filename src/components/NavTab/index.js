@@ -26,7 +26,9 @@ const NavTabWrapper = styled.div`
     width: 30px;
     margin: 2px;
     background-image: url(${(props) => props.iconPath.normal});
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     &:hover {
       background-image: url(${(props) => props.iconPath.hover});
     }
