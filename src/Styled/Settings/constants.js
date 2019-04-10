@@ -21,5 +21,4 @@ export const PAGE_NAME = {
 
 export const mixinWidthWrapper = () => `
   width: 100%;
-  max-width: ${MAX_WIDTH}px;
 `;
