@@ -14,7 +14,7 @@ const CollectionContent = () => {
     });
   };
   if (searchParams.get('collectionType') === 'planning') {
-    return <ProjectCollection handleOnClick={handleOnCardClick} />;
+    return <ProjectCollection />;
   }
   return <SpotCollection handleOnClick={handleOnCardClick} />;
 };
