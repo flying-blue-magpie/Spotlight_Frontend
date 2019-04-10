@@ -92,6 +92,7 @@ import {
   addFavoriteProjectId,
   setCancelLikeProjectDone,
   deleteFavoriteProjectId,
+  fetchUserById,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -225,6 +226,10 @@ const fetchProjectsEpic = (action$, state$, { request, fetchErrorEpic }) => (
     }).pipe(
       flatMap((data) => of(
         setProjectsDone(null, data.content),
+        ...data.content
+          .map((project) => project.owner)
+          .filter((ownerId, index, ownerIds) => ownerIds.indexOf(ownerId) === index)
+          .map((ownerId) => fetchUserById(ownerId)),
       )),
       catchError((error) => fetchErrorEpic(
         error,
