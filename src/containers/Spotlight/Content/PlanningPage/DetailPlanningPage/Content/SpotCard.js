@@ -69,14 +69,15 @@ const SpotCard = (props) => {
   const spot = spots.get(spotIndexInfo.get('spot_id'));
   if (!spot) {
     handleFetchSpotById(spotIndexInfo.get('spot_id'));
-    return null;
+    return <div>spot is null</div>;
   }
+
   const searchParams = new URLSearchParams(window.location.search);
   const day = parseInt(searchParams.get('day'), 10);
   const planIndex = day - 1;
   const dayPlan = plan.get(planIndex);
   if (!dayPlan) {
-    return null;
+    return <div>dayPlan is null</div>;
   }
   const dayStartTime = dayPlan.get('start_time');
   const arrange = dayPlan.get('arrange');

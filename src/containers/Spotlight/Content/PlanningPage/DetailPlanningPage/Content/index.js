@@ -1,10 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 // http://front-ender.me/react-drag-list
-import ReactDragList from 'react-drag-list';
+// import ReactDragList from 'react-drag-list';
+import DragSortableList from 'components/DragSortableList';
 import 'react-drag-list/assets/index.css';
 import { List, Map, fromJS } from 'immutable';
 import { PAGE_NAME } from 'Styled/Settings/constants';
@@ -21,7 +22,9 @@ import {
 } from 'containers/Spotlight/actions';
 import SpotOperationBtn from './SpotOperationBtn';
 
-import SpotCard, {
+import
+// SpotCard,
+{
   HEIGHT_SPOT_CARD,
   HEIGHT_SPOT_TRAVEL_TIME,
 } from './SpotCard';
@@ -141,6 +144,7 @@ const SpotOperator = styled.div`
 const Content = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedSpotId, setSelectedSpotId] = useState();
+  const [arrangeState, setArrangeState] = useState(Map());
   const {
     isOwner,
     match,
@@ -153,8 +157,11 @@ const Content = (props) => {
   const searchParams = new URLSearchParams(location.search);
   const { search } = location;
   const day = parseInt(searchParams.get('day'), 10);
-  const arrange = plan.getIn([day - 1, 'arrange']);
 
+  useEffect(() => {
+    const arrange = plan.getIn([day - 1, 'arrange']);
+    setArrangeState(arrange);
+  }, []);
   const handleGoToAddSpot = useCallback((event) => {
     const insertAfterIndex = findAttributeInEvent(event, 'data-index');
     const addSpotToPlanPagePath = `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`;
@@ -194,16 +201,14 @@ const Content = (props) => {
       state: { selectedSpotId },
     });
   }, [selectedSpotId, projectId, search]);
-  const handleOnDragUpdate = useCallback((value) => {
-    const { oldIndex } = value;
-    const { newIndex } = value;
-    const selectedSpotCard = arrange.get(oldIndex);
-    const updatedArrange = arrange.delete(oldIndex).insert(newIndex, selectedSpotCard);
+  const handleOnDragUpdate = useCallback((order) => {
+    const updatedArrange = order.map((item) => JSON.parse(item));
+    setArrangeState(fromJS(updatedArrange));
     const updatedPlan = plan.setIn([day - 1, 'arrange'], updatedArrange);
     handleSubmitUpdateProject(projectId, fromJS({ plan: updatedPlan }));
-  }, []);
+  }, [plan]);
 
-  if (!arrange || arrange.size === 0) {
+  if (!arrangeState || arrangeState.size === 0) {
     return (
       <StyledContent>
         <div className="content__spot-cards-wrapper">
@@ -243,7 +248,7 @@ const Content = (props) => {
       <div className="content__spot-cards-wrapper">
         <div>
           {
-            arrange.map((spot, index) => (
+            arrangeState.map((spot, index) => (
               <SpotOperator key={`day-${day}-${spot.get('spot_id')}-${index}`}>
                 <div className="operator__number-wrapper">
                   {
@@ -275,7 +280,7 @@ const Content = (props) => {
             ))
           }
         </div>
-        <ReactDragList
+        {/* <ReactDragList
           dataSource={arrange}
           row={(spot, index) => (
             <SpotCard
@@ -289,6 +294,13 @@ const Content = (props) => {
           className="simple-drag content__spot-simple-drag"
           rowClassName="simple-drag-row"
           onUpdate={handleOnDragUpdate}
+        /> */}
+        <DragSortableList
+          items={arrangeState}
+          onChange={(updatedItems) => {
+            handleOnDragUpdate(updatedItems);
+          }}
+          {...props}
         />
       </div>
       <Modal
