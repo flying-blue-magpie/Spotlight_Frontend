@@ -69,7 +69,7 @@ const SpotCard = (props) => {
   const spot = spots.get(spotIndexInfo.get('spot_id'));
   if (!spot) {
     handleFetchSpotById(spotIndexInfo.get('spot_id'));
-    return <div>spot is null</div>;
+    return null;
   }
 
   const searchParams = new URLSearchParams(window.location.search);
@@ -81,6 +81,9 @@ const SpotCard = (props) => {
   }
   const dayStartTime = dayPlan.get('start_time');
   const arrange = dayPlan.get('arrange');
+  if (!arrange.size) {
+    return null;
+  }
   const startTime = index === 0
     ? dayStartTime
     : moment(dayStartTime, 'HH:mm:ss').add(arrange.map((arr) => arr.get('during')).toJS().splice(0, index).reduce((a, b) => a + b), 'minutes');

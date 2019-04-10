@@ -161,7 +161,7 @@ const Content = (props) => {
   useEffect(() => {
     const arrange = plan.getIn([day - 1, 'arrange']);
     setArrangeState(arrange);
-  }, []);
+  }, [day]);
   const handleGoToAddSpot = useCallback((event) => {
     const insertAfterIndex = findAttributeInEvent(event, 'data-index');
     const addSpotToPlanPagePath = `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`;
@@ -206,7 +206,7 @@ const Content = (props) => {
     setArrangeState(fromJS(updatedArrange));
     const updatedPlan = plan.setIn([day - 1, 'arrange'], updatedArrange);
     handleSubmitUpdateProject(projectId, fromJS({ plan: updatedPlan }));
-  }, [plan]);
+  }, [plan, day]);
 
   if (!arrangeState || arrangeState.size === 0) {
     return (
@@ -243,6 +243,7 @@ const Content = (props) => {
       </StyledContent>
     );
   }
+  console.log('arrangeState: ', arrangeState.toJS());
   return (
     <StyledContent>
       <div className="content__spot-cards-wrapper">
