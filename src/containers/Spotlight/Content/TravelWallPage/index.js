@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import {
   fetchProjects,
@@ -11,7 +11,11 @@ import {
   likeProject,
   cancelLikeProject,
 } from 'containers/Spotlight/actions';
-import { selectPublicProjects, selectFavoriteProjectIds } from 'containers/Spotlight/selectors';
+import {
+  selectPublicProjects,
+  selectFavoriteProjectIds,
+  selectUsers,
+} from 'containers/Spotlight/selectors';
 import { Container, TravelCard } from './Styled';
 
 const TravelWallPage = ({
@@ -21,6 +25,7 @@ const TravelWallPage = ({
   favoriteProjectIds,
   handleLikeProject,
   handleCancelLikeProject,
+  users,
 }) => {
   useEffect(() => {
     handleFetchProjects();
@@ -49,6 +54,7 @@ const TravelWallPage = ({
                 handleLikeProject(project.get('proj_id'));
               }
             }}
+            userName={users.getIn([project.get('owner'), 'name'])}
           />
         ))
       }
@@ -63,11 +69,13 @@ TravelWallPage.propTypes = {
   favoriteProjectIds: PropTypes.instanceOf(List).isRequired,
   handleLikeProject: PropTypes.func.isRequired,
   handleCancelLikeProject: PropTypes.func.isRequired,
+  users: PropTypes.instanceOf(Map).isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   publicProjects: selectPublicProjects(),
   favoriteProjectIds: selectFavoriteProjectIds(),
+  users: selectUsers(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
