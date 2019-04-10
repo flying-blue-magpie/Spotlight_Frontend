@@ -11,16 +11,11 @@ import {
 import ProjectCard from './ProjectCard';
 
 const StyledProjectCollection = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-row-gap: 10px;
-  grid-column-gap: 10px;
-  padding: 10px 28px;
+  display: block;
 `;
 
 const ProjectCollection = ({
   favoriteProjectIds,
-  handleOnClick,
 }) => {
   const cards = favoriteProjectIds.map((value) => value);
   return (
@@ -30,7 +25,6 @@ const ProjectCollection = ({
           <ProjectCard
             key={card}
             projectId={card}
-            handleOnClick={handleOnClick}
           />
         ))
       }
@@ -40,7 +34,6 @@ const ProjectCollection = ({
 
 ProjectCollection.propTypes = {
   favoriteProjectIds: PropTypes.instanceOf(List),
-  handleOnClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
