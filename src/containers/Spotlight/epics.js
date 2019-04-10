@@ -382,7 +382,7 @@ const loginEpic = (action$, state$, { request, fetchErrorEpic }) => (
     }).pipe(
       flatMap((data) => {
         const user = data.status === 'success'
-          ? { name: data.content.user }
+          ? data.content
           : null;
         return of(setLoginDone(null, user));
       }),
