@@ -3,6 +3,8 @@ import styled from 'styled-components';
 const tempCoverPath = 'https://attach.setn.com/newsimages/2016/12/30/761776-XXL.jpg';
 
 export const DetailPlanningPageContainer = styled.div`
+  position: relative;
+  height: 100%;
   .detail-planning__cover {
     position: relative;
     background-image: url(${tempCoverPath});

@@ -154,11 +154,11 @@ const Content = (props) => {
   const searchParams = new URLSearchParams(location.search);
   const { search } = location;
   const day = parseInt(searchParams.get('day'), 10);
+  const arrange = plan.getIn([day - 1, 'arrange']);
 
   useEffect(() => {
-    const arrange = plan.getIn([day - 1, 'arrange']);
     setArrangeState(arrange);
-  }, [day]);
+  }, [day, arrange]);
   const handleGoToAddSpot = useCallback((event) => {
     const insertAfterIndex = findAttributeInEvent(event, 'data-index');
     const addSpotToPlanPagePath = `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`;
@@ -175,7 +175,6 @@ const Content = (props) => {
   }, []);
   const handleHideModal = useCallback(() => {
     setIsModalVisible(false);
-    setIsModalVisible(null);
   }, []);
   const handleDeleteSelectedSpot = useCallback(() => {
     const foundSpot = spots.get(selectedSpotId);
@@ -187,6 +186,7 @@ const Content = (props) => {
       onOk: () => {
         const updatedPlan = plan.updateIn([day - 1, 'arrange'], (arrs) => arrs.filter((arr) => arr.get('spot_id') !== selectedSpotId));
         handleSubmitUpdateProject(projectId, fromJS({ plan: updatedPlan }));
+        setIsModalVisible(false);
       },
     });
   }, [selectedSpotId, projectId]);

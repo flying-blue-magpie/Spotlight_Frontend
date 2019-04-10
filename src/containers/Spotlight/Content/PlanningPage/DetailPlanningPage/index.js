@@ -43,9 +43,7 @@ const DetailPlanningPage = (props) => {
       handleFetchOwnProjects();
     }
   }, []);
-  if (isLoading) {
-    return <Spinner />;
-  }
+
   if (!ownProjects || !ownProjects.size) {
     return <div>尚無任何旅行計劃</div>;
   }
@@ -67,6 +65,10 @@ const DetailPlanningPage = (props) => {
   const plan = ownProject.get('plan');
   return (
     <DetailPlanningPageContainer>
+      {
+        isLoading &&
+        <Spinner type="opacity" />
+      }
       <div className="detail-planning__cover">
         <div className="detail-planning__info_wrapper">
           <div className="detail-planning__cover-title">
