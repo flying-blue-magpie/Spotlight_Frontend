@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-// http://front-ender.me/react-drag-list
-// import ReactDragList from 'react-drag-list';
 import DragSortableList from 'components/DragSortableList';
-import 'react-drag-list/assets/index.css';
 import { List, Map, fromJS } from 'immutable';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import Modal from 'components/Modal';
