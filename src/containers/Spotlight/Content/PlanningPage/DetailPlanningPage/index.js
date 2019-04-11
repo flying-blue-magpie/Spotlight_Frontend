@@ -71,11 +71,16 @@ const DetailPlanningPage = (props) => {
       }
       <div className="detail-planning__cover">
         <div className="detail-planning__info_wrapper">
-          <div className="detail-planning__cover-title">
-            <span>{name}</span>
-          </div>
-          <div className="detail-planning__cover-period">
-            {`${startDay} - ${endDay} / ${days}天`}
+          <div className="detail-planning__info_direction_wrapper">
+            <img src="http://i.imgur.com/EUAd2ht.jpg" className="detail-planning__favicon" alt="" />
+            <div className="detail-planning__info_title_wrapper">
+              <div className="detail-planning__cover-title">
+                <span>{name}</span>
+              </div>
+              <div className="detail-planning__cover-period">
+                {`${startDay} - ${endDay} / ${days}天`}
+              </div>
+            </div>
           </div>
           <DateTabs projectId={projectId} isOwner={isOwner} days={days} {...props} />
         </div>

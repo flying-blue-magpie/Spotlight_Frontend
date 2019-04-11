@@ -24,10 +24,30 @@ export const DetailPlanningPageContainer = styled.div`
       font-size: 12px;
       color: white;
       font-weight: 500;
-      margin-bottom: 10px;
     }
   }
   .detail-planning__info_wrapper {
     transform: translateY(32px);
+  }
+
+  .detail-planning__info_direction_wrapper {
+    display: inline-flex;
+    margin-bottom: 15px;
+    cursor: pointer;
+  }
+
+  .detail-planning__info_title_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 45px;
+  }
+
+  .detail-planning__favicon {
+    width: 45px;
+    height: 45px;
+    background-size: cover;
+    border-radius: 100%;
+    margin-right: 5px;
   }
 `;
