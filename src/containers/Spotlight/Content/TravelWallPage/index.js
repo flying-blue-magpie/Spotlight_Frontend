@@ -55,6 +55,7 @@ const TravelWallPage = ({
               }
             }}
             userName={users.getIn([String(project.get('owner')), 'name'])}
+            userImageTo={`/${PAGE_NAME.TRAVELER.name}/${project.get('owner')}`}
           />
         ))
       }
