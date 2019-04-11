@@ -1,25 +1,38 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import moment from 'moment';
 import UserCard from 'components/UserCard';
-import { fetchUserById, fetchUserStats } from 'containers/Spotlight/actions';
-import { selectUsers } from 'containers/Spotlight/selectors';
-import { Container, Header } from './Styled';
+import { fetchUserById, fetchUserStats, fetchProjects } from 'containers/Spotlight/actions';
+import { selectUsers, selectProjectsByUserId } from 'containers/Spotlight/selectors';
+import { PAGE_NAME } from 'Styled/Settings/constants';
+import {
+  Container,
+  Header,
+  Cards,
+  ProjectCard,
+} from './Styled';
 
 const TravelerPage = ({
   match,
   users,
   handleFetchUser,
   handleFetchUserStats,
+  handleFetchUserProjects,
+  projects,
 }) => {
   const { userId } = match.params;
   const user = users.get(userId);
   useEffect(() => {
-    if (!user) {
+    if (!user || !user.get('name')) {
       handleFetchUser(userId);
+    }
+    if (!user || !user.get('stats')) {
       handleFetchUserStats(userId);
+    }
+    if (!projects || !projects.size) {
+      handleFetchUserProjects(userId);
     }
   }, []);
 
@@ -36,8 +49,16 @@ const TravelerPage = ({
           projectsLikedCount={user && user.getIn(['stats', 'projs_liked_count'])}
         />
       </Header>
-      Traveler Page:
-      {match.params.userId}
+      <Cards>
+        {projects && projects.map(((project) => (
+          <ProjectCard
+            key={project.get('proj_id')}
+            to={`/${PAGE_NAME.DETAIL_PLANNING.name}/${project.get('proj_id')}?day=1`}
+            title={project.get('name')}
+            subtitle={`${moment(project.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日')}-${moment(project.get('start_day'), 'YYYY-MM-DD').add(project.get('tot_days') - 1, 'days').format('YYYY年MM月DD日')} / ${project.get('tot_days')}天`}
+          />
+        )))}
+      </Cards>
     </Container>
   );
 };
@@ -47,15 +68,19 @@ TravelerPage.propTypes = {
   users: PropTypes.instanceOf(Map),
   handleFetchUser: PropTypes.func.isRequired,
   handleFetchUserStats: PropTypes.func.isRequired,
+  handleFetchUserProjects: PropTypes.func.isRequired,
+  projects: PropTypes.instanceOf(List),
 };
 
-const mapStateToProps = createStructuredSelector({
-  users: selectUsers(),
+const mapStateToProps = (state, ownProps) => ({
+  users: selectUsers()(state),
+  projects: selectProjectsByUserId(ownProps.match.params.userId)(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleFetchUser: (userId) => dispatch(fetchUserById(userId)),
   handleFetchUserStats: (userId) => dispatch(fetchUserStats(userId)),
+  handleFetchUserProjects: (userId) => dispatch(fetchProjects({ owner: userId, onlyPublic: true })),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TravelerPage);
