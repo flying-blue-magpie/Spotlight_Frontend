@@ -46,6 +46,11 @@ export const selectPublicProjects = () => createSelector(
   (projects) => projects.filter((project) => project.get('is_public')).toList(),
 );
 
+export const selectProjectsByUserId = (id) => createSelector(
+  selectProjects(),
+  (projects) => projects.filter((project) => project.get('owner') === Number(id)).toList(),
+);
+
 export const selectLoginMeta = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('loginMeta'),
