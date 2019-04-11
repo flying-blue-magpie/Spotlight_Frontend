@@ -118,7 +118,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setUserMeta', updateMetaDone);
       }
       return state
-        .mergeDeepIn(['users', user.user_id], fromJS(user))
+        .mergeDeepIn(['users'], fromJS({ [user.user_id]: user }))
         .update('setUserMeta', updateMetaDone);
     }
 

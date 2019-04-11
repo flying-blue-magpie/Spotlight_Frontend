@@ -16,6 +16,7 @@ import UpdatingSpotCardPage from 'containers/Spotlight/Header/PlanningPage/Updat
 import SpotPage from 'containers/Spotlight/Header/SpotPage';
 import AddSpotToProjectPage from 'containers/Spotlight/Header/AddSpotToProjectPage';
 import AddSpotToProjectPlanPage from 'containers/Spotlight/Header/AddSpotToProjectPlanPage';
+import TravelerPage from 'containers/Spotlight/Header/TravelerPage';
 import { routePathConfig } from 'containers/Spotlight/Content/Routes';
 
 export default () => (
@@ -36,6 +37,7 @@ export default () => (
       <Route exact path={routePathConfig.spotPagePath} component={SpotPage} />
       <Route exact path={routePathConfig.addSpotToProjectPagePath} component={AddSpotToProjectPage} />
       <Route exact path={routePathConfig.addSpotToProjectPlanPagePath} component={AddSpotToProjectPlanPage} />
+      <Route exact path={routePathConfig.travelerPagePath} component={TravelerPage} />
     </Switch>
   </Router>
 );
