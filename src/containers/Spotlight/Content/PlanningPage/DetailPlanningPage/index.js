@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { PAGE_NAME } from 'Styled/Settings/constants';
 import moment from 'moment';
+import history from 'utils/history';
 
 import Spinner from 'components/Spinner';
 import {
@@ -58,6 +60,11 @@ const DetailPlanningPage = (props) => {
   const userId = user.get('user_id');
   const isOwner = userId === owner;
 
+  const handleGoToTravelerPage = () => {
+    const travelerPagePath = `/${PAGE_NAME.TRAVELER.name}/${owner}`;
+    history.push(travelerPagePath);
+  };
+
   const name = ownProject.get('name');
   const days = ownProject.get('tot_days');
   const startDay = moment(ownProject.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日');
@@ -71,7 +78,7 @@ const DetailPlanningPage = (props) => {
       }
       <div className="detail-planning__cover">
         <div className="detail-planning__info_wrapper">
-          <div className="detail-planning__info_direction_wrapper">
+          <div role="presentation" className="detail-planning__info_direction_wrapper" onClick={handleGoToTravelerPage}>
             <img src="http://i.imgur.com/EUAd2ht.jpg" className="detail-planning__favicon" alt="" />
             <div className="detail-planning__info_title_wrapper">
               <div className="detail-planning__cover-title">
