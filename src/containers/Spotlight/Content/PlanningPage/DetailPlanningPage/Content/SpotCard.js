@@ -16,8 +16,8 @@ const StyledSpotCard = styled.div`
   .spot-card__card-body {
     width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
     padding: 0px 15px;
     box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
     border-radius: 10px;
@@ -56,10 +56,14 @@ const StyledSpotCard = styled.div`
     margin-right: 5px;
     color: rgba(51, 51, 51, 1);
   }
+  .my-handle {
+    cursor: move;
+  }
 `;
 
 const SpotCard = (props) => {
   const {
+    isOwner,
     plan,
     index,
     spotIndexInfo,
@@ -98,8 +102,13 @@ const SpotCard = (props) => {
           <div>{moment(endTime, 'HH:mm:ss').format('HH:mm')}</div>
         </div>
         <div className="spot-card__card-body">
-          <div className="spot-card__card-body-spot-title">{spot.get('name')}</div>
-          <div className="spot-card__card-body-address">{spot.get('address')}</div>
+          <div>
+            <div className="spot-card__card-body-spot-title">{spot.get('name')}</div>
+            <div className="spot-card__card-body-address">{spot.get('address')}</div>
+          </div>
+          {
+            isOwner && <i className="fas fa-bars my-handle" />
+          }
         </div>
       </div>
       <div className="spot-card__travel-row-wrapper">
@@ -117,6 +126,7 @@ const SpotCard = (props) => {
 };
 
 SpotCard.propTypes = {
+  isOwner: PropTypes.bool,
   index: PropTypes.number,
   plan: PropTypes.instanceOf(List),
   spotIndexInfo: PropTypes.instanceOf(Map),
@@ -125,6 +135,7 @@ SpotCard.propTypes = {
 };
 
 SpotCard.defaultProps = {
+  isOwner: false,
   index: 0,
   plan: List(),
   spotIndexInfo: Map(),

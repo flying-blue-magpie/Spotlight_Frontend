@@ -37,6 +37,7 @@ const DragSortableList = (props) => {
           ghostClass: 'sortable-ghost', // Class name for the drop placeholder
           chosenClass: 'sortable-chosen', // Class name for the chosen item
           dragClass: 'sortable-drag', // Class name for the dragging item
+          handle: '.my-handle',
           // delay: 300, // time in milliseconds to define when the sorting should start
         }}
 
