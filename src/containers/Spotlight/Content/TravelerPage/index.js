@@ -1,3 +1,15 @@
 import React from 'react';
+import PropTyps from 'prop-types';
 
-export default () => <div>Traveler Page</div>;
+const TravelerPage = ({ match }) => (
+  <div>
+    Traveler Page:
+    {match.params.userId}
+  </div>
+);
+
+TravelerPage.propTypes = {
+  match: PropTyps.object.isRequired,
+};
+
+export default TravelerPage;
