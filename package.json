@@ -60,6 +60,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "compression": "^1.7.4",
     "eslint": "^5.15.3",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-react": "^7.12.4",
