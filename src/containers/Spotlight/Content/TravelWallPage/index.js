@@ -54,7 +54,7 @@ const TravelWallPage = ({
                 handleLikeProject(project.get('proj_id'));
               }
             }}
-            userName={users.getIn([project.get('owner'), 'name'])}
+            userName={users.getIn([String(project.get('owner')), 'name'])}
           />
         ))
       }
