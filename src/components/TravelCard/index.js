@@ -28,9 +28,12 @@ const TravelCard = ({
   likeNumber,
   isLikeActive,
   onLikeClick,
+  onCardClick,
+  userImageTo,
 }) => {
   const handleOnClick = useCallback(() => {
     history.push(to);
+    onCardClick();
   });
 
   const handleOnLikeClick = useCallback((event) => {
@@ -38,10 +41,15 @@ const TravelCard = ({
     onLikeClick();
   });
 
+  const handleOnUserImageClick = useCallback((event) => {
+    event.stopPropagation();
+    history.push(userImageTo);
+  });
+
   return (
     <Container onClick={handleOnClick} className={className}>
       <Header>
-        <UserImage src={userImageSrc} />
+        <UserImage src={userImageSrc} onClick={handleOnUserImageClick} />
         <HeaderInfo>
           <UserName>{userName}</UserName>
           <CardDate>{cardDate}</CardDate>
@@ -79,6 +87,10 @@ TravelCard.propTypes = {
   isLikeActive: PropTypes.bool,
   onLikeClick: PropTypes.func,
   onCardClick: PropTypes.func,
+  userImageTo: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string,
+  ]).isRequired,
 };
 
 TravelCard.defaultProps = {
