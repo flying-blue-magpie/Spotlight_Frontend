@@ -58,6 +58,7 @@ const StyledSpotCard = styled.div`
   }
   .my-handle {
     cursor: move;
+    font-size: 25px;
   }
 `;
 
