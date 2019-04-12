@@ -99,10 +99,15 @@ const SpotPage = ({
       <Paragraph>{spot.get('address')}</Paragraph>
       <Title>電話</Title>
       <Paragraph>{spot.get('tel')}</Paragraph>
-      <Title>網址</Title>
-      <Paragraph>
-        <a href={spot.get('website')}>{spot.get('website')}</a>
-      </Paragraph>
+      {
+        spot.get('website') &&
+        <>
+          <Title>網址</Title>
+          <Paragraph>
+            <a href={spot.get('website')}>{spot.get('website')}</a>
+          </Paragraph>
+        </>
+      }
     </Container>
   );
 };
