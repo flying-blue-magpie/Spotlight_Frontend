@@ -219,7 +219,13 @@ function spotLightReducer(state = initialState, action) {
       }
       return state
         .mergeDeepIn(['spots'], fromJS(entities.spots))
-        .set('recSpotsResult', fromJS(result))
+        .update(
+          'recSpotsResult',
+          (recSpotsResult) => result.reduce(
+            (ids, id) => (ids.indexOf(id) !== -1 ? ids : ids.push(id)),
+            recSpotsResult,
+          ),
+        )
         .update('setRecSpotsMeta', updateMetaDone)
         // only update exploring spot id for initial value
         .update('exploringSpotId', (id) => (id === null ? result[0] : id));
