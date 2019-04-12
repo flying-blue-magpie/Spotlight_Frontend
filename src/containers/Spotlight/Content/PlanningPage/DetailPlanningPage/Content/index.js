@@ -262,7 +262,7 @@ const Content = (props) => {
                     <span>{index + 1}</span>
                   </div>
                   {
-                    !((spot.size === index) && !isOwner) &&
+                    ((arrangeState.size - 1 !== index) || isOwner) &&
                     <div className="operator__divider-line operator__divider-line-bottom" />
                   }
                 </div>
