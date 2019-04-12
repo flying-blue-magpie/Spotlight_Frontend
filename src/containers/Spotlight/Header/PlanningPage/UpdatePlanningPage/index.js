@@ -35,7 +35,7 @@ const UpdatePlanningPage = (props) => {
     const searchParams = new URLSearchParams(window.location.search);
     const day = searchParams.get('day');
     const { projectId } = props.match.params;
-    history.push({
+    history.replace({
       pathname: `/${PAGE_NAME.DETAIL_PLANNING.name}/${projectId}`,
       search: `?day=${day}`,
     });
@@ -48,7 +48,7 @@ const UpdatePlanningPage = (props) => {
     handleSubmitUpdateProject(projectId, updateProject);
     setUpdateProject(Map());
 
-    history.push({
+    history.replace({
       pathname: `/${PAGE_NAME.DETAIL_PLANNING.name}/${projectId}`,
       search: `?day=${day}`,
     });

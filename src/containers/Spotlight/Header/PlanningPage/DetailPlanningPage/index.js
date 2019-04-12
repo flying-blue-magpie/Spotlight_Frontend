@@ -62,7 +62,7 @@ const DetailPlanningPage = (props) => {
   const handleGoToUpdatePlanningPage = useCallback(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const day = searchParams.get('day');
-    history.push({
+    history.replace({
       pathname: `/${PAGE_NAME.UPDATE_PLANNING.name}/${projectId}`,
       search: `?day=${day}`,
     });
