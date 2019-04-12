@@ -2,7 +2,7 @@ import React, {
   useState, useContext, useEffect, useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
-import { List, Map, fromJS } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { PAGE_NAME } from 'Styled/Settings/constants';
@@ -11,8 +11,8 @@ import {
   submitUpdateProject,
 } from 'containers/Spotlight/actions';
 import {
-  selectOwnProjects,
   selectUser,
+  selectProjects,
 } from 'containers/Spotlight/selectors';
 import {
   HeaderContainer,
@@ -42,14 +42,15 @@ const DetailPlanningPage = (props) => {
   const {
     user,
     match,
-    ownProjects,
+    // ownProjects,
+    projects,
     handleSubmitUpdateProject,
   } = props;
   const { projectId } = match.params;
-  if (!ownProjects) {
+  if (!projects) {
     return null;
   }
-  const ownProject = ownProjects.find((proj) => proj.get('proj_id').toString() === projectId);
+  const project = projects.find((proj) => proj.get('proj_id').toString() === projectId);
   useEffect(() => {
     setIsNavVisible(false);
     return () => {
@@ -68,16 +69,16 @@ const DetailPlanningPage = (props) => {
     });
   }, []);
   const handleUploadToTravelWall = useCallback(() => {
-    if (!ownProject) {
+    if (!project) {
       return;
     }
-    const hasPublic = ownProject.get('is_public');
+    const hasPublic = project.get('is_public');
     if (hasPublic) {
       message.info('已經上傳至旅遊牆');
       return;
     }
     setIsModalVisible(true);
-  }, [ownProjects]);
+  }, [projects]);
   const handleOnOk = useCallback(() => {
     const updatedProject = fromJS({ is_public: true });
     handleSubmitUpdateProject(projectId, updatedProject);
@@ -86,10 +87,10 @@ const DetailPlanningPage = (props) => {
   const handleOnCancel = useCallback(() => {
     setIsModalVisible(false);
   }, []);
-  if (!ownProject || !user) {
+  if (!project || !user) {
     return null;
   }
-  const owner = ownProject.get('owner');
+  const owner = project.get('owner');
   const userId = user.get('user_id');
   const isOwner = userId === owner;
 
@@ -128,7 +129,7 @@ const DetailPlanningPage = (props) => {
 DetailPlanningPage.propTypes = {
   user: PropTypes.instanceOf(Map),
   match: PropTypes.object,
-  ownProjects: PropTypes.instanceOf(List).isRequired,
+  projects: PropTypes.instanceOf(Map).isRequired,
   handleSubmitUpdateProject: PropTypes.func,
 };
 
@@ -140,7 +141,7 @@ DetailPlanningPage.defaultProps = {
 
 const mapStateToProps = createStructuredSelector({
   user: selectUser(),
-  ownProjects: selectOwnProjects(),
+  projects: selectProjects(),
 });
 
 const mapDispatchToProps = (dispatch) => ({

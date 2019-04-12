@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { PAGE_NAME } from 'Styled/Settings/constants';
@@ -11,12 +11,14 @@ import Spinner from 'components/Spinner';
 import {
   fetchOwnProjects,
   fetchSpotById,
+  fetchProjectById,
 } from 'containers/Spotlight/actions';
 import {
   selectOwnProjects,
   selectOwnProjectsMeta,
   selectSpots,
   selectUser,
+  selectProjects,
 } from 'containers/Spotlight/selectors';
 import DateTabs from './DateTabs';
 import DateTimeInfo from './DateTimeInfo';
@@ -30,33 +32,34 @@ const DetailPlanningPage = (props) => {
     user,
     match,
     ownProjectsMeta,
-    ownProjects,
-    handleFetchOwnProjects,
+    projects,
+    handleFetchProjectById,
   } = props;
   const {
     params: {
       projectId,
     },
   } = match;
-  const isLoaded = ownProjectsMeta.get('isLoaded');
   const isLoading = ownProjectsMeta.get('isLoading');
   useEffect(() => {
-    if (!isLoaded) {
-      handleFetchOwnProjects();
+    if (!projects.get(projectId)) {
+      handleFetchProjectById(projectId);
     }
-  }, []);
+  }, [projectId]);
 
-  if (!ownProjects || !ownProjects.size) {
+  if (!projects || !projects.size) {
     return <div>尚無任何旅行計劃</div>;
   }
   if (!user) {
     return null;
   }
-  const ownProject = ownProjects.find((project) => project.get('proj_id').toString() === projectId);
-  if (!ownProject) {
+
+  const project = projects.get(projectId);
+  if (!project) {
     return <div>找不到該旅行計劃資料</div>;
   }
-  const owner = ownProject.get('owner');
+
+  const owner = project.get('owner');
   const userId = user.get('user_id');
   const isOwner = userId === owner;
 
@@ -65,11 +68,11 @@ const DetailPlanningPage = (props) => {
     history.push(travelerPagePath);
   };
 
-  const name = ownProject.get('name');
-  const days = ownProject.get('tot_days');
-  const startDay = moment(ownProject.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日');
-  const endDay = moment(ownProject.get('start_day'), 'YYYY-MM-DD').add(days - 1, 'days').format('YYYY年MM月DD日');
-  const plan = ownProject.get('plan');
+  const name = project.get('name');
+  const days = project.get('tot_days');
+  const startDay = moment(project.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日');
+  const endDay = moment(project.get('start_day'), 'YYYY-MM-DD').add(days - 1, 'days').format('YYYY年MM月DD日');
+  const plan = project.get('plan');
   return (
     <DetailPlanningPageContainer>
       {
@@ -102,21 +105,23 @@ DetailPlanningPage.propTypes = {
   user: PropTypes.instanceOf(Map),
   match: PropTypes.object,
   ownProjectsMeta: PropTypes.instanceOf(Map),
-  ownProjects: PropTypes.instanceOf(List),
+  projects: PropTypes.instanceOf(Map).isRequired,
   handleFetchOwnProjects: PropTypes.func,
+  handleFetchProjectById: PropTypes.func,
 };
 
 DetailPlanningPage.defaultProps = {
   user: Map(),
   match: {},
   ownProjectsMeta: Map(),
-  ownProjects: List(),
   handleFetchOwnProjects: () => { },
+  handleFetchProjectById: () => { },
 };
 
 const mapStateToProps = createStructuredSelector({
   ownProjectsMeta: selectOwnProjectsMeta(),
   ownProjects: selectOwnProjects(),
+  projects: selectProjects(),
   spots: selectSpots(),
   user: selectUser(),
 });
@@ -124,6 +129,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch) => ({
   handleFetchOwnProjects: () => dispatch(fetchOwnProjects()),
   handleFetchSpotById: (spotId) => dispatch(fetchSpotById(spotId)),
+  handleFetchProjectById: (id) => dispatch(fetchProjectById(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailPlanningPage);
