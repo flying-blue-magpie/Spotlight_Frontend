@@ -1,8 +1,13 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Map, fromJS } from 'immutable';
+import { Map, fromJS, List } from 'immutable';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
@@ -10,12 +15,14 @@ import {
   selectExploringSpot,
   selectSpotsMeta,
   selectFavoriteSpotIdsMeta,
+  selectRecSpotIds,
 } from 'containers/Spotlight/selectors';
 import {
   exploreNextSpot,
   fetchSpots,
   likeSpot,
   fetchFavoriteSpotIds,
+  fetchRecSpots,
 } from 'containers/Spotlight/actions';
 import Spinner from 'components/Spinner';
 import { PAGE_NAME } from 'Styled/Settings/constants';
@@ -46,17 +53,21 @@ import {
   ButtonHeartIcon,
 } from './Styled';
 
+const REC_SPOTS_BUFFER_COUNT = 3;
+
 const ExplorePage = (props) => {
   const {
     spot,
-    handleSwipeLeft,
-    createHandleSwipeRight,
     handleFetchSpots,
     setSpotsMeta,
     location,
     history,
     handleFetchFavoriteSpotIds,
     favoriteSpotIdsMeta,
+    handleFetchRecSpots,
+    handleLikeSpot,
+    handleExploreNextSpot,
+    recSpotIds,
   } = props;
 
   const [zonesState, dispatch] = useReducer(zoneReducer, fromJS(zonesData));
@@ -75,13 +86,27 @@ const ExplorePage = (props) => {
   };
 
   useEffect(() => {
-    if (!setSpotsMeta.get('isLoading')) {
-      handleFetchSpots();
-    }
     if (!favoriteSpotIdsMeta.get('isLoading')) {
       handleFetchFavoriteSpotIds();
     }
+
+    if (recSpotIds.slice(recSpotIds.indexOf(spot.get('spot_id'))).size < REC_SPOTS_BUFFER_COUNT) {
+      for (let i = 0; i < REC_SPOTS_BUFFER_COUNT; i += 1) {
+        handleFetchRecSpots({ kw: keyword, zones: selectedZones });
+      }
+    }
   }, []);
+
+  const handleOnLikeClick = useCallback(() => {
+    handleLikeSpot(spot.get('spot_id'));
+    handleExploreNextSpot();
+    handleFetchRecSpots({ kw: keyword, zones: selectedZones });
+  });
+
+  const handleOnSkipClick = useCallback(() => {
+    handleExploreNextSpot();
+    handleFetchRecSpots({ kw: keyword, zones: selectedZones });
+  });
 
   const query = queryString.parse(location.search);
 
@@ -143,13 +168,13 @@ const ExplorePage = (props) => {
             </CardRow>
             <ButtonRow>
               <ButtonLabel>
-                <Button onClick={handleSwipeLeft}>
+                <Button onClick={handleOnSkipClick}>
                   <ButtonCrossIcon className="fas fa-times" />
                 </Button>
                 <span>跳過</span>
               </ButtonLabel>
               <ButtonLabel>
-                <Button onClick={createHandleSwipeRight(spot.get('spot_id'))}>
+                <Button onClick={handleOnLikeClick}>
                   <ButtonHeartIcon className="fas fa-heart" />
                 </Button>
                 <span>想去</span>
@@ -164,30 +189,32 @@ const ExplorePage = (props) => {
 
 ExplorePage.propTypes = {
   spot: PropTypes.instanceOf(Map),
-  handleSwipeLeft: PropTypes.func.isRequired,
-  createHandleSwipeRight: PropTypes.func.isRequired,
   handleFetchSpots: PropTypes.func.isRequired,
   setSpotsMeta: PropTypes.object,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   handleFetchFavoriteSpotIds: PropTypes.func.isRequired,
   favoriteSpotIdsMeta: PropTypes.instanceOf(Map).isRequired,
+  handleFetchRecSpots: PropTypes.func.isRequired,
+  handleLikeSpot: PropTypes.func.isRequired,
+  handleExploreNextSpot: PropTypes.func.isRequired,
+  recSpotIds: PropTypes.instanceOf(List).isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   spot: selectExploringSpot(),
   setSpotsMeta: selectSpotsMeta(),
   favoriteSpotIdsMeta: selectFavoriteSpotIdsMeta(),
+  recSpotIds: selectRecSpotIds(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleSwipeLeft: () => dispatch(exploreNextSpot()),
-  createHandleSwipeRight: (spotId) => () => {
-    dispatch(likeSpot(spotId));
-    dispatch(exploreNextSpot());
-  },
   handleFetchSpots: ({ kw, zones } = {}) => dispatch(fetchSpots({ kw, zones })),
   handleFetchFavoriteSpotIds: () => dispatch(fetchFavoriteSpotIds()),
+  handleFetchRecSpots: ({ kw, zones }) => dispatch(fetchRecSpots({ kw, zones })),
+  handleLikeSpot: (id) => dispatch(likeSpot(id)),
+  handleExploreNextSpot: () => dispatch(exploreNextSpot()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExplorePage));
