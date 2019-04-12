@@ -97,7 +97,7 @@ const initialState = fromJS({
   setUsersMeta: META,
   setUserStatsMeta: META,
   ownProjects: [],
-  exploringSpotId: 0,
+  exploringSpotId: null,
   setFavoriteSpotIdsMeta: META,
   setFavoriteProjectIdsMeta: META,
   favoriteSpotIds: [],
@@ -220,7 +220,9 @@ function spotLightReducer(state = initialState, action) {
       return state
         .mergeDeepIn(['spots'], fromJS(entities.spots))
         .set('recSpotsResult', fromJS(result))
-        .update('setRecSpotsMeta', updateMetaDone);
+        .update('setRecSpotsMeta', updateMetaDone)
+        // only update exploring spot id for initial value
+        .update('exploringSpotId', (id) => (id === null ? result[0] : id));
     }
 
     case SET_PROJECT_LOADING:

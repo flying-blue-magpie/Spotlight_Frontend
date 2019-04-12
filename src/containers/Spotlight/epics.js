@@ -210,7 +210,6 @@ const fetchRecSpotsEpic = (action$, state$, { request, fetchErrorEpic }) => (
     }).pipe(
       flatMap((data) => of(
         setRecSpotsDone(null, data.content),
-        setExploringSpotId(data.content[0].spot_id),
       )),
       catchError((error) => fetchErrorEpic(
         error,
