@@ -38,6 +38,7 @@ import {
   CANCEL_LIKE_SPOT,
   LIKE_PROJECT,
   CANCEL_LIKE_PROJECT,
+  FETCH_REC_SPOTS,
 } from './constants';
 import {
   setUserLoading,
@@ -93,6 +94,8 @@ import {
   setCancelLikeProjectDone,
   deleteFavoriteProjectId,
   fetchUserById,
+  setRecSpotsDone,
+  setRecSpotsLoading,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -191,6 +194,29 @@ const fetchSpotsEpic = (action$, state$, { request, fetchErrorEpic }) => (
         setSpotsDone(error),
       )),
       startWith(setSpotsLoading()),
+    )),
+  )
+);
+
+const fetchRecSpotsEpic = (action$, state$, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_REC_SPOTS),
+    flatMap((action) => request({
+      method: 'get',
+      url: `/rec/spots${getSearchSpotQueryString({
+        zones: action.payload.zones,
+        keyword: action.payload.kw,
+      })}`,
+    }).pipe(
+      flatMap((data) => of(
+        setRecSpotsDone(null, data.content),
+        setExploringSpotId(data.content[0].spot_id),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setRecSpotsDone(error),
+      )),
+      startWith(setRecSpotsLoading()),
     )),
   )
 );
@@ -622,6 +648,7 @@ export default [
   fetchUserStatsEpic,
   fetchSpotByIdEpic,
   fetchSpotsEpic,
+  fetchRecSpotsEpic,
   fetchProjectByIdEpic,
   fetchProjectsEpic,
   loginEpic,
