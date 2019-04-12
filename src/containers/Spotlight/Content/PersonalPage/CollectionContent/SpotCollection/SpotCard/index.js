@@ -59,10 +59,10 @@ const SpotCard = ({
 
   const spot = spots.get(spotId);
 
-  if (!spot) {
+  if (!spot || !spot.get('spot_id')) {
     return null;
   }
-  const imagePath = spot.get('pic').get(0);
+  const imagePath = spot.get('pic') || 'https://i.imgur.com/mJ0NvPe.jpg';
   return (
     <StyledSpotCard
       imagePath={imagePath}
