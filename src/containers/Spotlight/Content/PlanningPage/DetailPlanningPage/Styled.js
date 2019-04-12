@@ -46,7 +46,9 @@ export const DetailPlanningPageContainer = styled.div`
   .detail-planning__favicon {
     width: 45px;
     height: 45px;
-    background-size: cover;
+    background-image: url(${(props) => props.faviconPath});
+    background-size: contain;
+    background-position: center;
     border-radius: 100%;
     margin-right: 5px;
   }

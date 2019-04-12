@@ -65,7 +65,9 @@ export const ButtonRow = styled.div`
 `;
 
 export const Button = styled.button`
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 60px;
   height: 60px;
   background: #fff;
@@ -75,6 +77,8 @@ export const Button = styled.button`
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
   appearance: none;
   border: 0;
+  outline: none;
+  cursor: pointer;
 `;
 
 export const ButtonCrossIcon = styled.i`

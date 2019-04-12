@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
 import ImageGallery from 'react-image-gallery';
+import message from 'antd/lib/message';
 import {
   selectExploringSpot,
   selectSpotsMeta,
@@ -99,6 +100,7 @@ const ExplorePage = (props) => {
   }, []);
 
   const handleOnLikeClick = useCallback(() => {
+    message.success('加入收藏');
     handleLikeSpot(spot.get('spot_id'));
     handleExploreNextSpot();
     handleFetchRecSpots({ kw: keyword, zones: selectedZones });

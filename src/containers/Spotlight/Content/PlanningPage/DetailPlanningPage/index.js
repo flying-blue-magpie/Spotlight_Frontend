@@ -73,8 +73,9 @@ const DetailPlanningPage = (props) => {
   const startDay = moment(project.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日');
   const endDay = moment(project.get('start_day'), 'YYYY-MM-DD').add(days - 1, 'days').format('YYYY年MM月DD日');
   const plan = project.get('plan');
+  const faviconPath = 'http://i.imgur.com/EUAd2ht.jpg';
   return (
-    <DetailPlanningPageContainer>
+    <DetailPlanningPageContainer faviconPath={faviconPath}>
       {
         isLoading &&
         <Spinner type="opacity" />
@@ -82,7 +83,7 @@ const DetailPlanningPage = (props) => {
       <div className="detail-planning__cover">
         <div className="detail-planning__info_wrapper">
           <div role="presentation" className="detail-planning__info_direction_wrapper" onClick={handleGoToTravelerPage}>
-            <img src="http://i.imgur.com/EUAd2ht.jpg" className="detail-planning__favicon" alt="" />
+            <img src="" className="detail-planning__favicon" alt="" />
             <div className="detail-planning__info_title_wrapper">
               <div className="detail-planning__cover-title">
                 <span>{name}</span>
