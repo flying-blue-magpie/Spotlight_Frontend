@@ -36,6 +36,11 @@ export const selectSpots = () => createSelector(
   (spotlightState) => spotlightState.get('spots'),
 );
 
+export const selectRecSpotIds = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('recSpotsResult'),
+);
+
 export const selectProjects = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('projects'),

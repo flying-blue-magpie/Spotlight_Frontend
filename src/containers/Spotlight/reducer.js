@@ -61,13 +61,17 @@ import {
   DELETE_FAVORITE_PROJECT_ID,
   SET_LIKE_PROJECT_DONE,
   SET_CANCEL_LIKE_PROJECT_DONE,
+  SET_REC_SPOTS_LOADING,
+  SET_REC_SPOTS_DONE,
 } from './constants';
 
 const initialState = fromJS({
   setSpotMeta: META,
   setSpotsMeta: META,
+  setRecSpotsMeta: META,
   spots: {},
   spotsResult: [],
+  recSpotsResult: [],
 
   setProjectMeta: META,
   setProjectsMeta: META,
@@ -93,7 +97,7 @@ const initialState = fromJS({
   setUsersMeta: META,
   setUserStatsMeta: META,
   ownProjects: [],
-  exploringSpotId: 0,
+  exploringSpotId: null,
   setFavoriteSpotIdsMeta: META,
   setFavoriteProjectIdsMeta: META,
   favoriteSpotIds: [],
@@ -198,6 +202,33 @@ function spotLightReducer(state = initialState, action) {
         .set('spotsResult', fromJS(result))
         .update('setSpotsMeta', updateMetaDone)
         .set('exploringSpotId', result[0]);
+    }
+
+    case SET_REC_SPOTS_LOADING:
+      return state
+        .update('setRecSpotsMeta', updateMetaLoading);
+
+    case SET_REC_SPOTS_DONE: {
+      const {
+        error,
+        entities,
+        result,
+      } = action.payload;
+      if (error) {
+        return state.update('setRecSpotsMeta', updateMetaError);
+      }
+      return state
+        .mergeDeepIn(['spots'], fromJS(entities.spots))
+        .update(
+          'recSpotsResult',
+          (recSpotsResult) => result.reduce(
+            (ids, id) => (ids.indexOf(id) !== -1 ? ids : ids.push(id)),
+            recSpotsResult,
+          ),
+        )
+        .update('setRecSpotsMeta', updateMetaDone)
+        // only update exploring spot id for initial value
+        .update('exploringSpotId', (id) => (id === null ? result[0] : id));
     }
 
     case SET_PROJECT_LOADING:

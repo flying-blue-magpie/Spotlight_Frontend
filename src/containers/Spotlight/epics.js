@@ -38,6 +38,7 @@ import {
   CANCEL_LIKE_SPOT,
   LIKE_PROJECT,
   CANCEL_LIKE_PROJECT,
+  FETCH_REC_SPOTS,
 } from './constants';
 import {
   setUserLoading,
@@ -93,6 +94,8 @@ import {
   setCancelLikeProjectDone,
   deleteFavoriteProjectId,
   fetchUserById,
+  setRecSpotsDone,
+  setRecSpotsLoading,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -191,6 +194,28 @@ const fetchSpotsEpic = (action$, state$, { request, fetchErrorEpic }) => (
         setSpotsDone(error),
       )),
       startWith(setSpotsLoading()),
+    )),
+  )
+);
+
+const fetchRecSpotsEpic = (action$, state$, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(FETCH_REC_SPOTS),
+    flatMap((action) => request({
+      method: 'get',
+      url: `/rec/spots${getSearchSpotQueryString({
+        zones: action.payload.zones,
+        keyword: action.payload.kw,
+      })}`,
+    }).pipe(
+      flatMap((data) => of(
+        setRecSpotsDone(null, data.content),
+      )),
+      catchError((error) => fetchErrorEpic(
+        error,
+        setRecSpotsDone(error),
+      )),
+      startWith(setRecSpotsLoading()),
     )),
   )
 );
@@ -598,15 +623,14 @@ const exploreNextSpotEpic = (action$, state$) => (
     map(() => {
       const state = state$.value.get(KEY_REDUCER);
       const favoriteSpotIds = state.get('favoriteSpotIds');
-      const spotIds = state.get('spotsResult');
+      const spotIds = state.get('recSpotsResult');
       const exploringSpotId = state.get('exploringSpotId');
-      const nextSpot = spotIds
+      const nextSpotId = spotIds
         .slice(spotIds.indexOf(exploringSpotId) + 1)
-        .map((id) => state.getIn(['spots', String(id)]))
-        .find((spot) => !favoriteSpotIds.includes(spot.get('spot_id')));
+        .find((notExploredId) => !favoriteSpotIds.includes(notExploredId));
 
-      if (nextSpot) {
-        return setExploringSpotId(nextSpot.get('spot_id'));
+      if (nextSpotId) {
+        return setExploringSpotId(nextSpotId);
       }
 
       return setExploringSpotId(exploringSpotId);
@@ -622,6 +646,7 @@ export default [
   fetchUserStatsEpic,
   fetchSpotByIdEpic,
   fetchSpotsEpic,
+  fetchRecSpotsEpic,
   fetchProjectByIdEpic,
   fetchProjectsEpic,
   loginEpic,
