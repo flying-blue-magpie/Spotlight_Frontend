@@ -81,6 +81,9 @@ import {
   SET_LIKE_PROJECT_DONE,
   CANCEL_LIKE_PROJECT,
   SET_CANCEL_LIKE_PROJECT_DONE,
+  FETCH_REC_SPOTS,
+  SET_REC_SPOTS_LOADING,
+  SET_REC_SPOTS_DONE,
 } from './constants';
 
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
@@ -185,6 +188,23 @@ export const setSpotsLoading = () => ({
 
 export const setSpotsDone = (error, spots) => ({
   type: SET_SPOTS_DONE,
+  payload: {
+    error,
+    ...normalize(spots, spotListSchema),
+  },
+});
+
+export const fetchRecSpots = ({ zones = [], kw = '' } = {}) => ({
+  type: FETCH_REC_SPOTS,
+  payload: { zones, kw },
+});
+
+export const setRecSpotsLoading = () => ({
+  type: SET_REC_SPOTS_LOADING,
+});
+
+export const setRecSpotsDone = (error, spots) => ({
+  type: SET_REC_SPOTS_DONE,
   payload: {
     error,
     ...normalize(spots, spotListSchema),
