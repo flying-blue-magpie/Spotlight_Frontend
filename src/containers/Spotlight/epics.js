@@ -623,15 +623,14 @@ const exploreNextSpotEpic = (action$, state$) => (
     map(() => {
       const state = state$.value.get(KEY_REDUCER);
       const favoriteSpotIds = state.get('favoriteSpotIds');
-      const spotIds = state.get('spotsResult');
+      const spotIds = state.get('recSpotsResult');
       const exploringSpotId = state.get('exploringSpotId');
-      const nextSpot = spotIds
+      const nextSpotId = spotIds
         .slice(spotIds.indexOf(exploringSpotId) + 1)
-        .map((id) => state.getIn(['spots', String(id)]))
-        .find((spot) => !favoriteSpotIds.includes(spot.get('spot_id')));
+        .find((notExploredId) => !favoriteSpotIds.includes(notExploredId));
 
-      if (nextSpot) {
-        return setExploringSpotId(nextSpot.get('spot_id'));
+      if (nextSpotId) {
+        return setExploringSpotId(nextSpotId);
       }
 
       return setExploringSpotId(exploringSpotId);
