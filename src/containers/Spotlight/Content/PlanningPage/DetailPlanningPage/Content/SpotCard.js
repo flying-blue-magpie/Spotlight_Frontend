@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Map, List } from 'immutable';
 import moment from 'moment';
+import moveIconPath from 'assets/move_icon.svg';
 
 export const HEIGHT_SPOT_CARD = 60;
 export const HEIGHT_SPOT_TRAVEL_TIME = 40;
@@ -56,9 +57,8 @@ const StyledSpotCard = styled.div`
     margin-right: 5px;
     color: rgba(51, 51, 51, 1);
   }
-  .my-handle {
+  .spot-card__move-icon {
     cursor: move;
-    font-size: 25px;
   }
 `;
 
@@ -108,7 +108,7 @@ const SpotCard = (props) => {
             <div className="spot-card__card-body-address">{spot.get('address')}</div>
           </div>
           {
-            isOwner && <i className="fas fa-bars my-handle" />
+            isOwner && <img src={moveIconPath} className="spot-card__move-icon my-handle" alt="" />
           }
         </div>
       </div>
