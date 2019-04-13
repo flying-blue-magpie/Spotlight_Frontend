@@ -36,7 +36,7 @@ import Context from 'containers/Spotlight/Context';
 import ZoneMenu from './ZoneMenu';
 import { zoneReducer } from './reducer';
 import { zones as zonesData } from './constants';
-
+import emptySpotImage from './empty-spot.png';
 import {
   Container,
   CardRow,
@@ -192,7 +192,14 @@ const ExplorePage = (props) => {
                   {(spot.get('pic') && spot.get('pic').size > 0)
                     ? (
                       <ImageGallery
-                        items={spot.get('pic').map((pic) => ({ original: pic })).toJS()}
+                        items={
+                          spot.get('pic')
+                            .reduce(
+                              (pics, pic, i) => pics.set(i, { original: pic }),
+                              List(Array(3).fill({ original: emptySpotImage })),
+                            )
+                            .toJS()
+                        }
                         renderItem={(items) => <CardImage src={items.original} />}
                         showThumbnails={false}
                         showFullscreenButton={false}
@@ -203,7 +210,7 @@ const ExplorePage = (props) => {
                         disableSwipe
                       />
                     ) : (
-                      <CardImage src="https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg" />
+                      <CardImage src={emptySpotImage} />
                     )
                   }
                   <CardInfo>
