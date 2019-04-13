@@ -227,7 +227,7 @@ export const setSearchRecSpotsDone = (error, spots) => ({
   type: SET_SEARCH_REC_SPOTS_DONE,
   payload: {
     error,
-    ...normalize(spots, spotListSchema),
+    ...(spots ? normalize(spots, spotListSchema) : {}),
   },
 });
 
