@@ -4,6 +4,7 @@ import {
 } from 'containers/Spotlight/Header/Styled';
 import {
   HEIGHT_HEADER,
+  MAX_WIDTH,
 } from 'Styled/Settings/constants';
 
 export const Container = styled.div`
@@ -46,4 +47,5 @@ export const HeaderContainer = styled(HeaderContainerComponent)`
   position: fixed;
   top: 0;
   width: 100%;
+  max-width: ${MAX_WIDTH}px;
 `;
