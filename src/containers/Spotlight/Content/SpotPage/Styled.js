@@ -13,23 +13,33 @@ export const Feature = styled.div`
 `;
 
 export const BackButton = styled.button`
-  position: absolute;
+  position: fixed;
   z-index: 1;
   font-size: 18px;
-  color: #fff;
+  color: #333333;
   left: 15px;
-  top: 20px;
-  background-color: transparent;
+  top: 14px;
+  background-color: rgba(255, 255, 255, .6);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
   border: 0;
 `;
 
 export const AddButton = styled(Link)`
-  position: absolute;
+  position: fixed;
   z-index: 1;
   font-size: 18px;
-  color: #fff;
+  color: #333333;
   right: 15px;
-  top: 20px;
+  top: 14px;
+  background-color: rgba(255, 255, 255, .6);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const FeatureImage = styled.img`
