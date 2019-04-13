@@ -14,7 +14,6 @@ import { Map, fromJS, List } from 'immutable';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
-import ImageGallery from 'react-image-gallery';
 import message from 'antd/lib/message';
 import {
   selectExploringSpot,
@@ -36,12 +35,11 @@ import Context from 'containers/Spotlight/Context';
 import ZoneMenu from './ZoneMenu';
 import { zoneReducer } from './reducer';
 import { zones as zonesData } from './constants';
-import emptySpotImage from './empty-spot.png';
+import CardImage from './CardImage';
 import {
   Container,
   CardRow,
   Card,
-  CardImage,
   CardInfo,
   ButtonRow,
   Button,
@@ -189,30 +187,7 @@ const ExplorePage = (props) => {
             <CardRow>
               <Link to={`/${PAGE_NAME.EXPLORE.name}/${spot.get('spot_id')}`}>
                 <Card>
-                  {(spot.get('pic') && spot.get('pic').size > 0)
-                    ? (
-                      <ImageGallery
-                        items={
-                          spot.get('pic')
-                            .reduce(
-                              (pics, pic, i) => pics.set(i, { original: pic }),
-                              List(Array(3).fill({ original: emptySpotImage })),
-                            )
-                            .toJS()
-                        }
-                        renderItem={(items) => <CardImage src={items.original} />}
-                        showThumbnails={false}
-                        showFullscreenButton={false}
-                        showPlayButton={false}
-                        showNav={false}
-                        autoPlay
-                        slideInterval={3000}
-                        disableSwipe
-                      />
-                    ) : (
-                      <CardImage src={emptySpotImage} />
-                    )
-                  }
+                  <CardImage pics={spot.get('pic')} />
                   <CardInfo>
                     <SpotName>{spot.get('name')}</SpotName>
                     <SpotLikes>
