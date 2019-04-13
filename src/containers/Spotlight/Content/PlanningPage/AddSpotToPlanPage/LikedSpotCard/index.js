@@ -97,7 +97,7 @@ const LikedSpotCard = ({
     selectedLikedSpotId,
     setSelectedLikedSpotId,
   } = context;
-  const foundSpotDetail = spots.get(spotId);
+  const foundSpotDetail = spots.get(String(spotId));
   const handleSelectLikedSpot = useCallback(() => {
     const searchParams = new URLSearchParams(window.location.search);
     setSelectedLikedSpotId({
