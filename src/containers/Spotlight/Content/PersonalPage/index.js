@@ -132,7 +132,7 @@ const PersonalPage = ({
   fetchUserStats,
 }) => {
   const [activeCollectionType, setActiveCollectionType] = useState('spot');
-  const faviconPath = (user && user.get('protrait')) || 'http://i.imgur.com/EUAd2ht.jpg';
+  const faviconPath = (user && user.get('portrait_link')) || 'http://i.imgur.com/EUAd2ht.jpg';
   const faviconSize = 70;
   const coverImagePath = 'http://cdn01.dcfever.com/media/travel/poi/2016/02/10963_poi_banner.jpg';
   const handleOnTabClick = (event) => {

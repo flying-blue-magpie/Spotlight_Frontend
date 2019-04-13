@@ -44,7 +44,7 @@ const ProjectCard = ({
   const user = users.get(ownerId);
   const userName = user && (user.get('name') || '在地專業嚮導');
   const imagePath = 'https://cw1.tw/CW/opinion/images/common/201801/opinion-5a618a5f20fb8.jpg';
-  const faviconPath = user && (user.get('protrait') || 'https://img.ltn.com.tw/Upload/liveNews/BigPic/600_php7mZoYr.jpg');
+  const faviconPath = user && (user.get('portrait_link') || 'https://img.ltn.com.tw/Upload/liveNews/BigPic/600_php7mZoYr.jpg');
   return (
     <TravelCard
       userName={userName}

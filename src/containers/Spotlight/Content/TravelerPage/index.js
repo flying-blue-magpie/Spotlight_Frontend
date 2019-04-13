@@ -47,7 +47,7 @@ const TravelerPage = ({
             user.getIn(['stats', 'collected_spots_count'])
           )}
           projectsLikedCount={user && user.getIn(['stats', 'projs_liked_count'])}
-          userImage={(user && user.get('protrait_link')) || undefined}
+          userImage={(user && user.get('portrait_link')) || undefined}
         />
       </Header>
       <Cards>
