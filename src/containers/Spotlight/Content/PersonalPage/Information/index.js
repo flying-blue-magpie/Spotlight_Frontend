@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Favicon from './Favicon';
+import { UserCard } from './Styled';
 
 const Information = ({
   user,
@@ -13,41 +13,13 @@ const Information = ({
   const publishedProjectsCount = (users && users.getIn([userId, 'stats', 'published_projs_count'])) || 0;
 
   return (
-    <div className="personal-page__info-wrapper">
-      <Favicon user={user} />
-      <div className="personal-page__profile-wrapper">
-        <div className="personal-page__profile-name">{user.get('name')}</div>
-        <div className="personal-page__profile-travel-info">
-          <div className="
-            personal-page__profile-travel-info-item-wrapper
-            personal-page__profile-travel-info-item-divier
-            personal-page__profile-travel-info-item-padding-right
-          "
-          >
-            <div className="personal-page__profile-travel-info-item-title">旅程發表</div>
-            <div className="personal-page__profile-travel-info-item-number">{publishedProjectsCount}</div>
-          </div>
-          <div className="
-            personal-page__profile-travel-info-item-wrapper
-            personal-page__profile-travel-info-item-divier
-            personal-page__profile-travel-info-item-padding-right
-            personal-page__profile-travel-info-item-padding-left
-          "
-          >
-            <div className="personal-page__profile-travel-info-item-title">收藏數</div>
-            <div className="personal-page__profile-travel-info-item-number">{collectedSpotsCount + collectedProjectsCount}</div>
-          </div>
-          <div className="
-            personal-page__profile-travel-info-item-wrapper
-            personal-page__profile-travel-info-item-padding-left
-          "
-          >
-            <div className="personal-page__profile-travel-info-item-title">被收藏</div>
-            <div className="personal-page__profile-travel-info-item-number">{projectsLikedCount}</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <UserCard
+      userName={user.get('name')}
+      userImage={user.get('portrait_link') || undefined}
+      publishedProjectsCount={publishedProjectsCount}
+      collectedCount={collectedSpotsCount + collectedProjectsCount}
+      projectsLikedCount={projectsLikedCount}
+    />
   );
 };
 
