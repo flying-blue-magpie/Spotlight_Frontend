@@ -85,12 +85,6 @@ const ExplorePage = (props) => {
     .toJS();
 
   const [keyword, setKeyword] = useState('');
-  const handleSearchInputKeyUp = (event) => {
-    if (event.key === 'Enter') {
-      handleSearchRecSpots({ kw: keyword, zones: selectedZones });
-      event.currentTarget.blur();
-    }
-  };
 
   const { setIsHeaderVisible } = useContext(SpotlightContext);
 
@@ -175,7 +169,6 @@ const ExplorePage = (props) => {
                   },
                 }));
               }}
-              onKeyUp={handleSearchInputKeyUp}
               ref={keywordInputRef}
             />
           </SearchInputContainer>
