@@ -158,22 +158,23 @@ const ExplorePage = (props) => {
             <CardRow>
               <Link to={`/${PAGE_NAME.EXPLORE.name}/${spot.get('spot_id')}`}>
                 <Card>
-                  <ImageGallery
-                    items={spot.get('pic')
-                      ? spot.get('pic').map((pic) => ({
-                        original: pic,
-                      })).toJS()
-                      : ['https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg']
-                    }
-                    renderItem={(items) => <CardImage src={items.original} />}
-                    showThumbnails={false}
-                    showFullscreenButton={false}
-                    showPlayButton={false}
-                    showNav={false}
-                    autoPlay
-                    slideInterval={3000}
-                    disableSwipe
-                  />
+                  {(spot.get('pic') && spot.get('pic').size > 0)
+                    ? (
+                      <ImageGallery
+                        items={spot.get('pic').map((pic) => ({ original: pic })).toJS()}
+                        renderItem={(items) => <CardImage src={items.original} />}
+                        showThumbnails={false}
+                        showFullscreenButton={false}
+                        showPlayButton={false}
+                        showNav={false}
+                        autoPlay
+                        slideInterval={3000}
+                        disableSwipe
+                      />
+                    ) : (
+                      <CardImage src="https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg" />
+                    )
+                  }
                   <CardInfo>
                     <SpotName>{spot.get('name')}</SpotName>
                     <SpotLikes>
