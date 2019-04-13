@@ -62,7 +62,7 @@ const ProjectCard = ({
       cardTitle={project.get('name')}
       likeNumber={project.get('like_num')}
       isLikeActive
-      to={`${PAGE_NAME.DETAIL_PLANNING.name}/${projectId}`}
+      to={`${PAGE_NAME.DETAIL_PLANNING.name}/${projectId}?day=1`}
     />
   );
 };
