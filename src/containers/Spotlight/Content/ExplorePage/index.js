@@ -141,7 +141,7 @@ const ExplorePage = (props) => {
     <Container>
       <SearchRow>
         <SearchBar>
-          <SelectCountyButton onClick={() => history.push(`${location.pathname}?menu=zone`)}>
+          <SelectCountyButton onClick={() => history.replace(`${location.pathname}?menu=zone`)}>
             縣市選擇
             <i className="fas fa-caret-right" />
           </SelectCountyButton>
