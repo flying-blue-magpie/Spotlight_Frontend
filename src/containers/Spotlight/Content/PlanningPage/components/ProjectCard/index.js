@@ -60,7 +60,8 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 100%;
-    background: white;
+    background: #8e8f94;
+    border: 1px solid #EEEEEE;
     position: absolute;
     right: 0;
     margin: 15px;
