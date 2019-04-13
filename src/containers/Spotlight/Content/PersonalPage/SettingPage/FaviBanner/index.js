@@ -9,7 +9,7 @@ import { StyledFaviBanner } from './styles';
 const FaviBanner = ({
   user,
 }) => {
-  const faviconPath = (user && user.get('protrait')) || 'http://i.imgur.com/EUAd2ht.jpg';
+  const faviconPath = (user && user.get('portrait_link')) || 'http://i.imgur.com/EUAd2ht.jpg';
   return (
     <StyledFaviBanner
       faviconPath={faviconPath}
