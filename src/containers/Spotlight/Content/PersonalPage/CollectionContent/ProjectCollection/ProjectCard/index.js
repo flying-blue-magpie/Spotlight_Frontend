@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import { createStructuredSelector } from 'reselect';
 import {
@@ -13,6 +14,12 @@ import {
 } from 'containers/Spotlight/actions';
 
 import TravelCard from 'components/TravelCard';
+
+const StyledTravelCard = styled(TravelCard)`
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+`;
 
 /* eslint no-shadow: 0 */
 const ProjectCard = ({
@@ -46,7 +53,7 @@ const ProjectCard = ({
   const imagePath = 'https://cw1.tw/CW/opinion/images/common/201801/opinion-5a618a5f20fb8.jpg';
   const faviconPath = user && (user.get('portrait_link') || 'https://img.ltn.com.tw/Upload/liveNews/BigPic/600_php7mZoYr.jpg');
   return (
-    <TravelCard
+    <StyledTravelCard
       userName={userName}
       cardImageSrc={imagePath}
       userImageSrc={faviconPath}
