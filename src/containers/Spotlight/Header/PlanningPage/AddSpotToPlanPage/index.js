@@ -25,11 +25,8 @@ const AddSpotToPlanPage = (props) => {
   const searchParams = new URLSearchParams(window.location.search);
   const day = searchParams.get('day');
   const handleGoBackToDetailPlanning = useCallback(() => {
-    history.push({
-      pathname: `/${PAGE_NAME.DETAIL_PLANNING.name}/${projectId}`,
-      search: `?day=${day}`,
-    });
-  }, [day, projectId]);
+    history.goBack();
+  }, []);
   const handleOnCheckBtn = useCallback(() => {
     if (!selectedLikedSpotId) {
       message.warning('請選擇景點卡');
