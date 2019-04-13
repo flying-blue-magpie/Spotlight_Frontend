@@ -5,6 +5,8 @@ import React, {
   useCallback,
   useContext,
 } from 'react';
+import { fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -112,6 +114,18 @@ const ExplorePage = (props) => {
     });
   });
 
+  const keywordInputRef = useCallback((node) => {
+    if (node !== null) {
+      const changes = fromEvent(node, 'changeForRx').pipe(debounceTime(300));
+      changes.subscribe((event) => {
+        handleSearchRecSpots({
+          kw: event.detail.keyword,
+          zones: event.detail.zones,
+        });
+      });
+    }
+  }, []);
+
   const handleOnLikeClick = useCallback(() => {
     message.success('加入收藏');
     handleLikeSpot(spot.get('spot_id'));
@@ -152,8 +166,17 @@ const ExplorePage = (props) => {
               type="text"
               placeholder="搜尋景點關鍵字"
               value={keyword}
-              onChange={(event) => setKeyword(event.target.value)}
+              onChange={(event) => {
+                setKeyword(event.target.value);
+                event.currentTarget.dispatchEvent(new CustomEvent('changeForRx', {
+                  detail: {
+                    keyword: event.target.value,
+                    zones: selectedZones,
+                  },
+                }));
+              }}
               onKeyUp={handleSearchInputKeyUp}
+              ref={keywordInputRef}
             />
           </SearchInputContainer>
         </SearchBar>
