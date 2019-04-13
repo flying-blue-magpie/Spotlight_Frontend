@@ -40,7 +40,7 @@ const StyledPersonalPage = styled.div`
 
   .personal-page__collection-group {
     display: flex;
-    background: #D1D1D1;
+    background: #EEEEEE;
     height: 40px;
     .personal-page__collection-tab {
       display: flex;
@@ -48,11 +48,12 @@ const StyledPersonalPage = styled.div`
       align-items: center;
       width: 50%;;
       font-size: 14px;
-      color: #707070;
+      color: #333333;
+      font-weight: bold;
       cursor: pointer;
     }
     .personal-page__collection-tab--active {
-      background: #B7B7B7;
+      background: #F9D94A;
     }
   }
 `;
