@@ -14,6 +14,7 @@ const StyledProjectCollection = styled.div`
   display: block;
   min-height: 100%;
   background-color: #FAFAFA;
+  padding-bottom: 20px;
 `;
 
 const ProjectCollection = ({
