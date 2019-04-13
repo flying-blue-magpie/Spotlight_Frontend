@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import ImageGallery from 'react-image-gallery';
 import history from 'utils/history';
 import Likes from 'components/Likes';
+import peopleIconPath from 'assets/people_icon_100.svg';
+
 import {
   Container,
   Header,
@@ -113,7 +115,7 @@ TravelCard.propTypes = {
 
 TravelCard.defaultProps = {
   cardImageSrc: 'https://www.silverkris.com/wp-content/uploads/2017/08/taipei-ximending.jpg',
-  userImageSrc: 'http://i.imgur.com/EUAd2ht.jpg',
+  userImageSrc: peopleIconPath,
   userName: '使用者',
   cardDate: '????年??月??日',
   cardTitle: '卡片標題',
