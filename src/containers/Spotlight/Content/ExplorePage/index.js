@@ -3,6 +3,7 @@ import React, {
   useEffect,
   useReducer,
   useCallback,
+  useContext,
 } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -29,6 +30,7 @@ import {
 import { REC_SPOTS_BUFFER_COUNT } from 'containers/Spotlight/constants';
 import Spinner from 'components/Spinner';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import Context from 'containers/Spotlight/Context';
 import ZoneMenu from './ZoneMenu';
 import { zoneReducer } from './reducer';
 import { zones as zonesData } from './constants';
@@ -55,6 +57,8 @@ import {
   ButtonCrossIcon,
   ButtonHeartIcon,
 } from './Styled';
+
+const { SpotlightContext } = Context;
 
 const ExplorePage = (props) => {
   const {
@@ -86,6 +90,8 @@ const ExplorePage = (props) => {
     }
   };
 
+  const { setIsHeaderVisible } = useContext(SpotlightContext);
+
   useEffect(() => {
     if (!favoriteSpotIdsMeta.get('isLoading')) {
       handleFetchFavoriteSpotIds();
@@ -95,6 +101,16 @@ const ExplorePage = (props) => {
       handleSearchRecSpots({ kw: keyword, zones: selectedZones });
     }
   }, []);
+
+  useEffect(() => {
+    if (query.menu === 'zone') {
+      setIsHeaderVisible(false);
+    }
+
+    return (() => {
+      setIsHeaderVisible(true);
+    });
+  });
 
   const handleOnLikeClick = useCallback(() => {
     message.success('加入收藏');

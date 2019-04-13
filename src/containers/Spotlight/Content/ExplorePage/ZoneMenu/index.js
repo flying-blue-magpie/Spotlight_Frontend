@@ -2,7 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import message from 'antd/lib/message';
-import { Region, ZoneLabel, Container } from './Styled';
+import {
+  HeaderLeftButtons,
+  HeaderLinkButton,
+  HeaderTitle,
+  HeaderRightButtons,
+} from 'containers/Spotlight/Header/Styled';
+import { PAGE_NAME } from 'Styled/Settings/constants';
+import {
+  HeaderContainer,
+  Region,
+  ZoneLabel,
+  Container,
+} from './Styled';
 
 const ZoneMenu = ({
   zonesState,
@@ -12,6 +24,21 @@ const ZoneMenu = ({
 
   return (
     <Container>
+      <HeaderContainer>
+        <HeaderLeftButtons>
+          <HeaderLinkButton to={`/${PAGE_NAME.EXPLORE.name}`}>
+            <i className="fas fa-times" />
+          </HeaderLinkButton>
+        </HeaderLeftButtons>
+        <HeaderTitle>
+          縣市選擇
+        </HeaderTitle>
+        <HeaderRightButtons>
+          <HeaderLinkButton to={`/${PAGE_NAME.EXPLORE.name}`}>
+            <i className="fas fa-check" />
+          </HeaderLinkButton>
+        </HeaderRightButtons>
+      </HeaderContainer>
       {regions.map((region) => (
         <React.Fragment key={region}>
           <Region>{region}</Region>

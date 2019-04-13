@@ -1,8 +1,15 @@
 import styled from 'styled-components';
+import {
+  HeaderContainer as HeaderContainerComponent,
+} from 'containers/Spotlight/Header/Styled';
+import {
+  HEIGHT_HEADER,
+} from 'Styled/Settings/constants';
 
 export const Container = styled.div`
   min-height: 100%;
   background-color: #FAFAFA;
+  padding-top: ${HEIGHT_HEADER}px;
 `;
 
 export const Region = styled.div`
@@ -30,4 +37,13 @@ export const ZoneLabel = styled.label`
     margin-bottom: 0;
     padding-bottom: 15px;
   }
+`;
+
+export const HeaderContainer = styled(HeaderContainerComponent)`
+  height: ${HEIGHT_HEADER}px;
+  background-color: #F9D94A;
+  font-weight: bold;
+  position: fixed;
+  top: 0;
+  width: 100%;
 `;
