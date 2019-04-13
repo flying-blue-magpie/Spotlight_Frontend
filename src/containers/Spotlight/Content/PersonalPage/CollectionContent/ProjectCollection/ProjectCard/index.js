@@ -57,6 +57,7 @@ const ProjectCard = ({
       userName={userName}
       cardImageSrc={imagePath}
       userImageSrc={faviconPath}
+      userImageTo={`/${PAGE_NAME.TRAVELER.name}/${ownerId}`}
       cardDate={project.get('created_time')}
       cardTitle={project.get('name')}
       likeNumber={project.get('like_num')}
