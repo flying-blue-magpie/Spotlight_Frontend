@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import ImageGallery from 'react-image-gallery';
 import history from 'utils/history';
 import Likes from 'components/Likes';
 import {
@@ -30,6 +31,7 @@ const TravelCard = ({
   onLikeClick,
   onCardClick,
   userImageTo,
+  cardImageSrcList,
 }) => {
   const handleOnClick = useCallback(() => {
     history.push(to);
@@ -55,7 +57,22 @@ const TravelCard = ({
           <CardDate>{cardDate}</CardDate>
         </HeaderInfo>
       </Header>
-      <CardImage src={cardImageSrc} />
+      {(cardImageSrcList && cardImageSrcList.length > 0)
+        ? (
+          <ImageGallery
+            items={cardImageSrcList.map((pic) => ({ original: pic }))}
+            renderItem={(items) => <CardImage src={items.original} />}
+            showThumbnails={false}
+            showFullscreenButton={false}
+            showPlayButton={false}
+            showNav={false}
+            autoPlay
+            slideInterval={Math.floor(Math.random() * (3000 - 2000 + 1)) + 2000}
+            disableSwipe
+          />
+        )
+        : <CardImage src={cardImageSrc} />
+      }
       <Footer>
         <FooterInfo>
           <CardTitle>{cardTitle}</CardTitle>
@@ -74,6 +91,7 @@ const TravelCard = ({
 TravelCard.propTypes = {
   className: PropTypes.string,
   cardImageSrc: PropTypes.string,
+  cardImageSrcList: PropTypes.array,
   to: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.string,

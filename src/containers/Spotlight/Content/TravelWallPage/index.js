@@ -68,11 +68,10 @@ const TravelWallPage = ({
             userName={users.getIn([String(project.get('owner')), 'name'])}
             userImageTo={`/${PAGE_NAME.TRAVELER.name}/${project.get('owner')}`}
             userImageSrc={users.getIn([String(project.get('owner')), 'protrait_link']) || undefined}
-            cardImageSrc={spots.getIn([
+            cardImageSrcList={spots.getIn([
               String(project.getIn(['plan', 0, 'arrange', 0, 'spot_id'])),
               'pic',
-              0,
-            ])}
+            ], List()).toJS()}
           />
         ))
       }
