@@ -199,3 +199,7 @@ export const ZoneLabel = styled.span`
 export const ZoneLabelCrossIcon = styled.i`
   margin-left: 5px;
 `;
+
+export const SpotNotFound = styled.div`
+  text-align: center;
+`;

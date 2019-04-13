@@ -56,6 +56,7 @@ import {
   ZoneLabelCrossIcon,
   ButtonCrossIcon,
   ButtonHeartIcon,
+  SpotNotFound,
 } from './Styled';
 
 const { SpotlightContext } = Context;
@@ -180,41 +181,44 @@ const ExplorePage = (props) => {
           </ZoneLabel>
         ))}
       </ZonesRow>
-      {searchRecSpotsMeta.get('isLoading')
-        ? <Spinner />
-        : (
-          <React.Fragment>
-            <CardRow>
-              <Link to={`/${PAGE_NAME.EXPLORE.name}/${spot.get('spot_id')}`}>
-                <Card>
-                  <CardImage pics={spot.get('pic')} />
-                  <CardInfo>
-                    <SpotName>{spot.get('name')}</SpotName>
-                    <SpotLikes>
-                      {spot.get('like_num')}
-                      人收藏
-                    </SpotLikes>
-                  </CardInfo>
-                </Card>
-              </Link>
-            </CardRow>
-            <ButtonRow>
-              <ButtonLabel>
-                <Button onClick={handleOnSkipClick}>
-                  <ButtonCrossIcon className="fas fa-times" />
-                </Button>
-                <span>跳過</span>
-              </ButtonLabel>
-              <ButtonLabel>
-                <Button onClick={handleOnLikeClick}>
-                  <ButtonHeartIcon className="fas fa-heart" />
-                </Button>
-                <span>想去</span>
-              </ButtonLabel>
-            </ButtonRow>
-          </React.Fragment>
-        )
-      }
+      {searchRecSpotsMeta.get('isLoading') && <Spinner />}
+      {(searchRecSpotsMeta.get('isLoaded') && recSpotIds.size > 0) && (
+        <React.Fragment>
+          <CardRow>
+            <Link to={`/${PAGE_NAME.EXPLORE.name}/${spot.get('spot_id')}`}>
+              <Card>
+                <CardImage pics={spot.get('pic')} />
+                <CardInfo>
+                  <SpotName>{spot.get('name')}</SpotName>
+                  <SpotLikes>
+                    {spot.get('like_num')}
+                    人收藏
+                  </SpotLikes>
+                </CardInfo>
+              </Card>
+            </Link>
+          </CardRow>
+          <ButtonRow>
+            <ButtonLabel>
+              <Button onClick={handleOnSkipClick}>
+                <ButtonCrossIcon className="fas fa-times" />
+              </Button>
+              <span>跳過</span>
+            </ButtonLabel>
+            <ButtonLabel>
+              <Button onClick={handleOnLikeClick}>
+                <ButtonHeartIcon className="fas fa-heart" />
+              </Button>
+              <span>想去</span>
+            </ButtonLabel>
+          </ButtonRow>
+        </React.Fragment>
+      )}
+      {(!searchRecSpotsMeta.get('isLoading') && recSpotIds.size === 0) && (
+        <SpotNotFound>
+          {'找不到景點 >"<'}
+        </SpotNotFound>
+      )}
     </Container>
   );
 };
