@@ -3,7 +3,10 @@ import React, {
   useEffect,
   useReducer,
   useCallback,
+  useContext,
 } from 'react';
+import { fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -11,7 +14,6 @@ import { Map, fromJS, List } from 'immutable';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
-import ImageGallery from 'react-image-gallery';
 import message from 'antd/lib/message';
 import {
   selectExploringSpot,
@@ -29,15 +31,15 @@ import {
 import { REC_SPOTS_BUFFER_COUNT } from 'containers/Spotlight/constants';
 import Spinner from 'components/Spinner';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import Context from 'containers/Spotlight/Context';
 import ZoneMenu from './ZoneMenu';
 import { zoneReducer } from './reducer';
 import { zones as zonesData } from './constants';
-
+import CardImage from './CardImage';
 import {
   Container,
   CardRow,
   Card,
-  CardImage,
   CardInfo,
   ButtonRow,
   Button,
@@ -55,6 +57,8 @@ import {
   ButtonCrossIcon,
   ButtonHeartIcon,
 } from './Styled';
+
+const { SpotlightContext } = Context;
 
 const ExplorePage = (props) => {
   const {
@@ -79,12 +83,8 @@ const ExplorePage = (props) => {
     .toJS();
 
   const [keyword, setKeyword] = useState('');
-  const handleSearchInputKeyUp = (event) => {
-    if (event.key === 'Enter') {
-      handleSearchRecSpots({ kw: keyword, zones: selectedZones });
-      event.currentTarget.blur();
-    }
-  };
+
+  const { setIsHeaderVisible } = useContext(SpotlightContext);
 
   useEffect(() => {
     if (!favoriteSpotIdsMeta.get('isLoading')) {
@@ -93,6 +93,28 @@ const ExplorePage = (props) => {
 
     if (recSpotIds.slice(recSpotIds.indexOf(spot.get('spot_id'))).size < REC_SPOTS_BUFFER_COUNT) {
       handleSearchRecSpots({ kw: keyword, zones: selectedZones });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (query.menu === 'zone') {
+      setIsHeaderVisible(false);
+    }
+
+    return (() => {
+      setIsHeaderVisible(true);
+    });
+  });
+
+  const keywordInputRef = useCallback((node) => {
+    if (node !== null) {
+      const changes = fromEvent(node, 'changeForRx').pipe(debounceTime(300));
+      changes.subscribe((event) => {
+        handleSearchRecSpots({
+          kw: event.detail.keyword,
+          zones: event.detail.zones,
+        });
+      });
     }
   }, []);
 
@@ -117,6 +139,8 @@ const ExplorePage = (props) => {
         history={history}
         zonesState={zonesState}
         dispatch={dispatch}
+        keyword={keyword}
+        handleSearchRecSpots={handleSearchRecSpots}
       />
     );
   }
@@ -125,7 +149,7 @@ const ExplorePage = (props) => {
     <Container>
       <SearchRow>
         <SearchBar>
-          <SelectCountyButton onClick={() => history.push(`${location.pathname}?menu=zone`)}>
+          <SelectCountyButton onClick={() => history.replace(`${location.pathname}?menu=zone`)}>
             縣市選擇
             <i className="fas fa-caret-right" />
           </SelectCountyButton>
@@ -134,8 +158,16 @@ const ExplorePage = (props) => {
               type="text"
               placeholder="搜尋景點關鍵字"
               value={keyword}
-              onChange={(event) => setKeyword(event.target.value)}
-              onKeyUp={handleSearchInputKeyUp}
+              onChange={(event) => {
+                setKeyword(event.target.value);
+                event.currentTarget.dispatchEvent(new CustomEvent('changeForRx', {
+                  detail: {
+                    keyword: event.target.value,
+                    zones: selectedZones,
+                  },
+                }));
+              }}
+              ref={keywordInputRef}
             />
           </SearchInputContainer>
         </SearchBar>
@@ -155,23 +187,7 @@ const ExplorePage = (props) => {
             <CardRow>
               <Link to={`/${PAGE_NAME.EXPLORE.name}/${spot.get('spot_id')}`}>
                 <Card>
-                  {(spot.get('pic') && spot.get('pic').size > 0)
-                    ? (
-                      <ImageGallery
-                        items={spot.get('pic').map((pic) => ({ original: pic })).toJS()}
-                        renderItem={(items) => <CardImage src={items.original} />}
-                        showThumbnails={false}
-                        showFullscreenButton={false}
-                        showPlayButton={false}
-                        showNav={false}
-                        autoPlay
-                        slideInterval={3000}
-                        disableSwipe
-                      />
-                    ) : (
-                      <CardImage src="https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg" />
-                    )
-                  }
+                  <CardImage pics={spot.get('pic')} />
                   <CardInfo>
                     <SpotName>{spot.get('name')}</SpotName>
                     <SpotLikes>
