@@ -21,7 +21,6 @@ import {
 } from 'containers/Spotlight/selectors';
 import {
   exploreNextSpot,
-  fetchSpots,
   likeSpot,
   fetchFavoriteSpotIds,
   fetchRecSpots,
@@ -60,7 +59,6 @@ const REC_SPOTS_BUFFER_COUNT = 3;
 const ExplorePage = (props) => {
   const {
     spot,
-    handleFetchSpots,
     setSpotsMeta,
     location,
     history,
@@ -82,7 +80,7 @@ const ExplorePage = (props) => {
   const [keyword, setKeyword] = useState('');
   const handleSearchInputKeyUp = (event) => {
     if (event.key === 'Enter') {
-      handleFetchSpots({ kw: keyword, zones: selectedZones });
+      handleFetchRecSpots({ kw: keyword, zones: selectedZones });
       event.currentTarget.blur();
     }
   };
@@ -208,7 +206,6 @@ const ExplorePage = (props) => {
 
 ExplorePage.propTypes = {
   spot: PropTypes.instanceOf(Map),
-  handleFetchSpots: PropTypes.func.isRequired,
   setSpotsMeta: PropTypes.object,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
@@ -228,8 +225,6 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSwipeLeft: () => dispatch(exploreNextSpot()),
-  handleFetchSpots: ({ kw, zones } = {}) => dispatch(fetchSpots({ kw, zones })),
   handleFetchFavoriteSpotIds: () => dispatch(fetchFavoriteSpotIds()),
   handleFetchRecSpots: ({ kw, zones }) => dispatch(fetchRecSpots({ kw, zones })),
   handleLikeSpot: (id) => dispatch(likeSpot(id)),
