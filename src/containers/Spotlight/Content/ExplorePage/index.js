@@ -15,17 +15,18 @@ import ImageGallery from 'react-image-gallery';
 import message from 'antd/lib/message';
 import {
   selectExploringSpot,
-  selectSpotsMeta,
+  selectSearchRecSpotsMeta,
   selectFavoriteSpotIdsMeta,
   selectRecSpotIds,
 } from 'containers/Spotlight/selectors';
 import {
   exploreNextSpot,
-  fetchSpots,
   likeSpot,
   fetchFavoriteSpotIds,
   fetchRecSpots,
+  searchRecSpots,
 } from 'containers/Spotlight/actions';
+import { REC_SPOTS_BUFFER_COUNT } from 'containers/Spotlight/constants';
 import Spinner from 'components/Spinner';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import ZoneMenu from './ZoneMenu';
@@ -55,13 +56,10 @@ import {
   ButtonHeartIcon,
 } from './Styled';
 
-const REC_SPOTS_BUFFER_COUNT = 3;
-
 const ExplorePage = (props) => {
   const {
     spot,
-    handleFetchSpots,
-    setSpotsMeta,
+    searchRecSpotsMeta,
     location,
     history,
     handleFetchFavoriteSpotIds,
@@ -70,6 +68,7 @@ const ExplorePage = (props) => {
     handleLikeSpot,
     handleExploreNextSpot,
     recSpotIds,
+    handleSearchRecSpots,
   } = props;
 
   const [zonesState, dispatch] = useReducer(zoneReducer, fromJS(zonesData));
@@ -82,7 +81,7 @@ const ExplorePage = (props) => {
   const [keyword, setKeyword] = useState('');
   const handleSearchInputKeyUp = (event) => {
     if (event.key === 'Enter') {
-      handleFetchSpots({ kw: keyword, zones: selectedZones });
+      handleSearchRecSpots({ kw: keyword, zones: selectedZones });
       event.currentTarget.blur();
     }
   };
@@ -93,9 +92,7 @@ const ExplorePage = (props) => {
     }
 
     if (recSpotIds.slice(recSpotIds.indexOf(spot.get('spot_id'))).size < REC_SPOTS_BUFFER_COUNT) {
-      for (let i = 0; i < REC_SPOTS_BUFFER_COUNT; i += 1) {
-        handleFetchRecSpots({ kw: keyword, zones: selectedZones });
-      }
+      handleSearchRecSpots({ kw: keyword, zones: selectedZones });
     }
   }, []);
 
@@ -151,29 +148,30 @@ const ExplorePage = (props) => {
           </ZoneLabel>
         ))}
       </ZonesRow>
-      {setSpotsMeta.get('isLoading')
+      {searchRecSpotsMeta.get('isLoading')
         ? <Spinner />
         : (
           <React.Fragment>
             <CardRow>
               <Link to={`/${PAGE_NAME.EXPLORE.name}/${spot.get('spot_id')}`}>
                 <Card>
-                  <ImageGallery
-                    items={spot.get('pic')
-                      ? spot.get('pic').map((pic) => ({
-                        original: pic,
-                      })).toJS()
-                      : ['https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg']
-                    }
-                    renderItem={(items) => <CardImage src={items.original} />}
-                    showThumbnails={false}
-                    showFullscreenButton={false}
-                    showPlayButton={false}
-                    showNav={false}
-                    autoPlay
-                    slideInterval={3000}
-                    disableSwipe
-                  />
+                  {(spot.get('pic') && spot.get('pic').size > 0)
+                    ? (
+                      <ImageGallery
+                        items={spot.get('pic').map((pic) => ({ original: pic })).toJS()}
+                        renderItem={(items) => <CardImage src={items.original} />}
+                        showThumbnails={false}
+                        showFullscreenButton={false}
+                        showPlayButton={false}
+                        showNav={false}
+                        autoPlay
+                        slideInterval={3000}
+                        disableSwipe
+                      />
+                    ) : (
+                      <CardImage src="https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg" />
+                    )
+                  }
                   <CardInfo>
                     <SpotName>{spot.get('name')}</SpotName>
                     <SpotLikes>
@@ -207,8 +205,7 @@ const ExplorePage = (props) => {
 
 ExplorePage.propTypes = {
   spot: PropTypes.instanceOf(Map),
-  handleFetchSpots: PropTypes.func.isRequired,
-  setSpotsMeta: PropTypes.object,
+  searchRecSpotsMeta: PropTypes.object,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   handleFetchFavoriteSpotIds: PropTypes.func.isRequired,
@@ -217,22 +214,22 @@ ExplorePage.propTypes = {
   handleLikeSpot: PropTypes.func.isRequired,
   handleExploreNextSpot: PropTypes.func.isRequired,
   recSpotIds: PropTypes.instanceOf(List).isRequired,
+  handleSearchRecSpots: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   spot: selectExploringSpot(),
-  setSpotsMeta: selectSpotsMeta(),
+  searchRecSpotsMeta: selectSearchRecSpotsMeta(),
   favoriteSpotIdsMeta: selectFavoriteSpotIdsMeta(),
   recSpotIds: selectRecSpotIds(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  handleSwipeLeft: () => dispatch(exploreNextSpot()),
-  handleFetchSpots: ({ kw, zones } = {}) => dispatch(fetchSpots({ kw, zones })),
   handleFetchFavoriteSpotIds: () => dispatch(fetchFavoriteSpotIds()),
   handleFetchRecSpots: ({ kw, zones }) => dispatch(fetchRecSpots({ kw, zones })),
   handleLikeSpot: (id) => dispatch(likeSpot(id)),
   handleExploreNextSpot: () => dispatch(exploreNextSpot()),
+  handleSearchRecSpots: ({ kw, zones }) => dispatch(searchRecSpots({ kw, zones })),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExplorePage));

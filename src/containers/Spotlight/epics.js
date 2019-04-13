@@ -2,13 +2,15 @@ import { Observable } from 'rxjs/Rx';
 import {
   ofType,
 } from 'redux-observable';
-import { of } from 'rxjs';
+import { of, from } from 'rxjs';
 import {
   switchMap,
   flatMap,
   catchError,
   startWith,
   map,
+  reduce,
+  mergeAll,
 } from 'rxjs/operators';
 import message from 'antd/lib/message';
 
@@ -39,6 +41,8 @@ import {
   LIKE_PROJECT,
   CANCEL_LIKE_PROJECT,
   FETCH_REC_SPOTS,
+  SEARCH_REC_SPOTS,
+  REC_SPOTS_BUFFER_COUNT,
 } from './constants';
 import {
   setUserLoading,
@@ -96,6 +100,8 @@ import {
   fetchUserById,
   setRecSpotsDone,
   setRecSpotsLoading,
+  setSearchRecSpotsLoading,
+  setSearchRecSpotsDone,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -216,6 +222,33 @@ const fetchRecSpotsEpic = (action$, state$, { request, fetchErrorEpic }) => (
         setRecSpotsDone(error),
       )),
       startWith(setRecSpotsLoading()),
+    )),
+  )
+);
+
+const searchRecSpotsEpic = (action$, state$, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(SEARCH_REC_SPOTS),
+    switchMap((action) => (
+      from([...Array(REC_SPOTS_BUFFER_COUNT)].map(() => request({
+        method: 'get',
+        url: `/rec/spots${getSearchSpotQueryString({
+          zones: action.payload.zones,
+          keyword: action.payload.kw,
+        })}`,
+      }))).pipe(
+        mergeAll(),
+        reduce((aggregateRes, data) => ([
+          ...aggregateRes,
+          ...data.content,
+        ]), []),
+        map((aggregateRes) => setSearchRecSpotsDone(null, aggregateRes)),
+        startWith(setSearchRecSpotsLoading()),
+        catchError((error) => fetchErrorEpic(
+          error,
+          setSearchRecSpotsDone(error),
+        )),
+      )
     )),
   )
 );
@@ -647,6 +680,7 @@ export default [
   fetchSpotByIdEpic,
   fetchSpotsEpic,
   fetchRecSpotsEpic,
+  searchRecSpotsEpic,
   fetchProjectByIdEpic,
   fetchProjectsEpic,
   loginEpic,

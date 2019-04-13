@@ -31,6 +31,11 @@ export const selectSpotsMeta = () => createSelector(
   (spotlightState) => spotlightState.get('setSpotsMeta'),
 );
 
+export const selectSearchRecSpotsMeta = () => createSelector(
+  selectSpotlight,
+  (spotlightState) => spotlightState.get('setSearchRecSpotsMeta'),
+);
+
 export const selectSpots = () => createSelector(
   selectSpotlight,
   (spotlightState) => spotlightState.get('spots'),
