@@ -71,7 +71,7 @@ const SpotCard = (props) => {
     spots,
     handleFetchSpotById,
   } = props;
-  const spot = spots.get(spotIndexInfo.get('spot_id'));
+  const spot = spots.get(String(spotIndexInfo.get('spot_id')));
   if (!spot) {
     handleFetchSpotById(spotIndexInfo.get('spot_id'));
     return null;
