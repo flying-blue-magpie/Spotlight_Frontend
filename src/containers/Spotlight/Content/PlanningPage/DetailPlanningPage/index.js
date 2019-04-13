@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import moment from 'moment';
 import history from 'utils/history';
+import peopleIconPath from 'assets/people_icon_100.svg';
 
 import Spinner from 'components/Spinner';
 import {
@@ -73,7 +74,8 @@ const DetailPlanningPage = (props) => {
   const startDay = moment(project.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日');
   const endDay = moment(project.get('start_day'), 'YYYY-MM-DD').add(days - 1, 'days').format('YYYY年MM月DD日');
   const plan = project.get('plan');
-  const faviconPath = 'http://i.imgur.com/EUAd2ht.jpg';
+  const faviconPath = user.get('portrait_link') || peopleIconPath;
+
   return (
     <DetailPlanningPageContainer faviconPath={faviconPath}>
       {

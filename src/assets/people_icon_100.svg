@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <g id="people_icon_100" transform="translate(-21 -132)">
+    <path id="Path_481" data-name="Path 481" d="M50,0A50,50,0,1,1,0,50,50,50,0,0,1,50,0Z" transform="translate(21 132)" fill="#eee"/>
+    <path id="Intersection_1" data-name="Intersection 1" d="M36.741,75.555A49.863,49.863,0,0,1,0,59.469C4.864,48.08,25.657,42.348,36.742,42.348S68.617,48.08,73.483,59.467A49.867,49.867,0,0,1,36.741,75.555ZM20.12,16.622A16.622,16.622,0,1,1,36.742,33.244,16.622,16.622,0,0,1,20.12,16.622Z" transform="translate(34.259 156.445)" fill="#707070"/>
+  </g>
+</svg>
