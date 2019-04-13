@@ -32,7 +32,7 @@ const CreateProjectPage = (props) => {
     setNewProject(fromJS(DEFAULT_PROJECT));
   };
   const handleOnCancelBtn = () => {
-    history.push(PAGE_NAME.PLANNING.name);
+    history.goBack();
   };
   const handleOnCheckBtn = () => {
     const {
@@ -54,7 +54,7 @@ const CreateProjectPage = (props) => {
       start_day: startDay,
       tot_days: days,
     });
-    history.push(`/${PAGE_NAME.PLANNING.name}`);
+    history.goBack();
   };
   useEffect(() => {
     setIsNavVisible(false);
