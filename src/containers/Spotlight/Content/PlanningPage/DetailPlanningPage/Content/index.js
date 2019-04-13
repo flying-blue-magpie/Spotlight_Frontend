@@ -24,6 +24,7 @@ SpotCard,
   HEIGHT_SPOT_TRAVEL_TIME,
 } from './SpotCard';
 import EditExistingSpotModal from './EditExistingSpotModal';
+import AddSpotModal from './AddSpotModal';
 
 const { confirm } = AntdModal;
 
@@ -134,6 +135,8 @@ const SpotOperator = styled.div`
 
 const Content = (props) => {
   const [isEditExistingSpotModalVisible, setIsEditExistingSpotModalVisible] = useState(false);
+  const [isAddSpotModalVisible, setIsAddSpotModalVisible] = useState(false);
+  const [addSpotAfterIndex, setAddSpotAfterIndex] = useState(null);
   const [selectedSpotId, setSelectedSpotId] = useState();
   const [arrangeState, setArrangeState] = useState(Map());
   const {
@@ -264,7 +267,11 @@ const Content = (props) => {
                   role="presentation"
                   className="operator__map-marker-wrapper"
                   data-index={index + 1}
-                  onClick={handleGoToAddSpot}
+                  onClick={(event) => {
+                    const insertAfterIndex = findAttributeInEvent(event, 'data-index');
+                    setIsAddSpotModalVisible(true);
+                    setAddSpotAfterIndex(insertAfterIndex);
+                  }}
                 >
                   <img src={isOwner ? mapPlusIconPath : ''} className="operator__map-marker-icon" alt="" />
                 </div>
@@ -293,6 +300,20 @@ const Content = (props) => {
           onDeleteSpotClick={handleDeleteSelectedSpot}
           onCancelClick={handleHideModal}
           onEditSpotClick={handleGoToUpdatingPage}
+        />
+      )}
+      {isAddSpotModalVisible && (
+        <AddSpotModal
+          onAddFromFavoriteClick={() => {
+            setIsAddSpotModalVisible(false);
+            history.push({
+              pathname: `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`,
+              search: `${search}&afterIndex=${addSpotAfterIndex}`,
+              state: { afterIndex: addSpotAfterIndex },
+            });
+            setAddSpotAfterIndex(null);
+          }}
+          onCancelClick={() => setIsAddSpotModalVisible(false)}
         />
       )}
     </StyledContent>
