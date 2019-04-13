@@ -24,11 +24,12 @@ import { PAGE_NAME } from 'Styled/Settings/constants';
 import Information from './Information';
 import CollectionTabs from './CollectionTabs';
 import CollectionContent from './CollectionContent';
+import coverImagePath from './header-image.png';
 
 const StyledPersonalPage = styled.div`
   height: 100%;
   .personal-page__cover-container {
-    height: 30%;
+    height: 200px;
     background-image: url(${(props) => props.coverImagePath});
     background-size: cover;
     display: flex;
@@ -134,7 +135,6 @@ const PersonalPage = ({
   const [activeCollectionType, setActiveCollectionType] = useState('spot');
   const faviconPath = (user && user.get('portrait_link')) || 'http://i.imgur.com/EUAd2ht.jpg';
   const faviconSize = 70;
-  const coverImagePath = 'http://cdn01.dcfever.com/media/travel/poi/2016/02/10963_poi_banner.jpg';
   const handleOnTabClick = (event) => {
     const type = findAttributeInEvent(event, 'data-collection-type');
     setActiveCollectionType(type);
