@@ -8,7 +8,7 @@ import {
 } from 'containers/Spotlight/Header/Styled';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import {
-  selectOwnProjectById,
+  selectProjects,
 } from 'containers/Spotlight/selectors';
 import {
   submitUpdateProject,
@@ -108,7 +108,7 @@ SettingSpotCardPage.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  project: selectOwnProjectById(ownProps.match.params.projectId)(state),
+  project: selectProjects()(state).get(ownProps.match.params.projectId),
 });
 
 const mapDispatchToProps = (dispatch) => ({

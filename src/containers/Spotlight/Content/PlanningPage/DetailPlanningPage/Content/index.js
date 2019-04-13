@@ -6,7 +6,6 @@ import { createStructuredSelector } from 'reselect';
 import DragSortableList from 'components/DragSortableList';
 import { List, Map, fromJS } from 'immutable';
 import { PAGE_NAME } from 'Styled/Settings/constants';
-import Modal from 'components/Modal';
 import AntdModal from 'antd/lib/modal';
 import history from 'utils/history';
 import mapPlusIconPath from 'assets/map_plus_icon.svg';
@@ -17,7 +16,6 @@ import {
 import {
   submitUpdateProject,
 } from 'containers/Spotlight/actions';
-import SpotOperationBtn from './SpotOperationBtn';
 
 import
 SpotCard,
@@ -25,13 +23,10 @@ SpotCard,
   HEIGHT_SPOT_CARD,
   HEIGHT_SPOT_TRAVEL_TIME,
 } from './SpotCard';
+import EditExistingSpotModal from './EditExistingSpotModal';
+import AddSpotModal from './AddSpotModal';
 
 const { confirm } = AntdModal;
-
-const modalStyle = {
-  bottom: '0px',
-  width: '100%',
-};
 
 const StyledContent = styled.div`
   padding: 15px 15px;
@@ -139,7 +134,9 @@ const SpotOperator = styled.div`
 `;
 
 const Content = (props) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isEditExistingSpotModalVisible, setIsEditExistingSpotModalVisible] = useState(false);
+  const [isAddSpotModalVisible, setIsAddSpotModalVisible] = useState(false);
+  const [addSpotAfterIndex, setAddSpotAfterIndex] = useState(null);
   const [selectedSpotId, setSelectedSpotId] = useState();
   const [arrangeState, setArrangeState] = useState(Map());
   const {
@@ -171,10 +168,10 @@ const Content = (props) => {
   const handleShowModal = useCallback((event) => {
     const spotId = parseInt(findAttributeInEvent(event, 'data-spotid'), 10);
     setSelectedSpotId(spotId);
-    setIsModalVisible(true);
+    setIsEditExistingSpotModalVisible(true);
   }, []);
   const handleHideModal = useCallback(() => {
-    setIsModalVisible(false);
+    setIsEditExistingSpotModalVisible(false);
   }, []);
   const handleDeleteSelectedSpot = useCallback(() => {
     const foundSpot = spots.get(selectedSpotId);
@@ -186,7 +183,7 @@ const Content = (props) => {
       onOk: () => {
         const updatedPlan = plan.updateIn([day - 1, 'arrange'], (arrs) => arrs.filter((arr) => arr.get('spot_id') !== selectedSpotId));
         handleSubmitUpdateProject(projectId, fromJS({ plan: updatedPlan }));
-        setIsModalVisible(false);
+        setIsEditExistingSpotModalVisible(false);
       },
     });
   }, [selectedSpotId, projectId]);
@@ -270,7 +267,11 @@ const Content = (props) => {
                   role="presentation"
                   className="operator__map-marker-wrapper"
                   data-index={index + 1}
-                  onClick={handleGoToAddSpot}
+                  onClick={(event) => {
+                    const insertAfterIndex = findAttributeInEvent(event, 'data-index');
+                    setIsAddSpotModalVisible(true);
+                    setAddSpotAfterIndex(insertAfterIndex);
+                  }}
                 >
                   <img src={isOwner ? mapPlusIconPath : ''} className="operator__map-marker-icon" alt="" />
                 </div>
@@ -294,17 +295,27 @@ const Content = (props) => {
           {...props}
         />
       </div>
-      <Modal
-        id="SpotOperationBtn"
-        optionStyle={modalStyle}
-        isVisible={isModalVisible}
-      >
-        <SpotOperationBtn
-          handleDeleteSpot={handleDeleteSelectedSpot}
-          handleHideModal={handleHideModal}
-          handleUpdate={handleGoToUpdatingPage}
+      {isEditExistingSpotModalVisible && (
+        <EditExistingSpotModal
+          onDeleteSpotClick={handleDeleteSelectedSpot}
+          onCancelClick={handleHideModal}
+          onEditSpotClick={handleGoToUpdatingPage}
         />
-      </Modal>
+      )}
+      {isAddSpotModalVisible && (
+        <AddSpotModal
+          onAddFromFavoriteClick={() => {
+            setIsAddSpotModalVisible(false);
+            history.push({
+              pathname: `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`,
+              search: `${search}&afterIndex=${addSpotAfterIndex}`,
+              state: { afterIndex: addSpotAfterIndex },
+            });
+            setAddSpotAfterIndex(null);
+          }}
+          onCancelClick={() => setIsAddSpotModalVisible(false)}
+        />
+      )}
     </StyledContent>
   );
 };
