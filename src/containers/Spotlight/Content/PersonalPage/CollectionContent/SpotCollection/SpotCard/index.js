@@ -52,17 +52,17 @@ const SpotCard = ({
   handleOnClick,
 }) => {
   useEffect(() => {
-    if (!spots.get(spotId)) {
+    if (!spots.get(String(spotId))) {
       fetchSpotById(spotId);
     }
   }, []);
 
-  const spot = spots.get(spotId);
+  const spot = spots.get(String(spotId));
 
   if (!spot || !spot.get('spot_id')) {
     return null;
   }
-  const imagePath = spot.get('pic') || 'https://i.imgur.com/mJ0NvPe.jpg';
+  const imagePath = spot.getIn(['pic', 0]) || 'https://i.imgur.com/mJ0NvPe.jpg';
   return (
     <StyledSpotCard
       imagePath={imagePath}
