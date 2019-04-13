@@ -10,11 +10,13 @@ import {
   fetchFavoriteProjectIds,
   likeProject,
   cancelLikeProject,
+  fetchSpotById,
 } from 'containers/Spotlight/actions';
 import {
   selectPublicProjects,
   selectFavoriteProjectIds,
   selectUsers,
+  selectSpots,
 } from 'containers/Spotlight/selectors';
 import { Container, TravelCard } from './Styled';
 
@@ -26,11 +28,20 @@ const TravelWallPage = ({
   handleLikeProject,
   handleCancelLikeProject,
   users,
+  spots,
+  handleFetchSpotById,
 }) => {
   useEffect(() => {
     handleFetchProjects();
     handleFetchFavoriteProjectIds();
   }, []);
+
+  useEffect(() => {
+    publicProjects
+      .map((project) => project.getIn(['plan', 0, 'arrange', 0, 'spot_id']))
+      .filter((spotId) => !spots.getIn([String(spotId), 'pic']))
+      .map((spotId) => handleFetchSpotById(spotId));
+  }, [publicProjects]);
 
   return (
     <Container>
@@ -57,6 +68,11 @@ const TravelWallPage = ({
             userName={users.getIn([String(project.get('owner')), 'name'])}
             userImageTo={`/${PAGE_NAME.TRAVELER.name}/${project.get('owner')}`}
             userImageSrc={users.getIn([String(project.get('owner')), 'protrait_link']) || undefined}
+            cardImageSrc={spots.getIn([
+              String(project.getIn(['plan', 0, 'arrange', 0, 'spot_id'])),
+              'pic',
+              0,
+            ])}
           />
         ))
       }
@@ -72,12 +88,15 @@ TravelWallPage.propTypes = {
   handleLikeProject: PropTypes.func.isRequired,
   handleCancelLikeProject: PropTypes.func.isRequired,
   users: PropTypes.instanceOf(Map).isRequired,
+  spots: PropTypes.instanceOf(Map).isRequired,
+  handleFetchSpotById: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   publicProjects: selectPublicProjects(),
   favoriteProjectIds: selectFavoriteProjectIds(),
   users: selectUsers(),
+  spots: selectSpots(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -85,6 +104,7 @@ const mapDispatchToProps = (dispatch) => ({
   handleFetchFavoriteProjectIds: () => dispatch(fetchFavoriteProjectIds()),
   handleLikeProject: (id) => dispatch(likeProject(id)),
   handleCancelLikeProject: (id) => dispatch(cancelLikeProject(id)),
+  handleFetchSpotById: (id) => dispatch(fetchSpotById(id)),
 });
 
 
