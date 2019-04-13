@@ -13,13 +13,14 @@ import {
 } from './Styled';
 
 const UserCard = ({
+  className,
   userName,
   userImage,
   publishedProjectsCount,
   collectedCount,
   projectsLikedCount,
 }) => (
-  <Container>
+  <Container className={className}>
     <UserImage src={userImage} />
     <UserInfo>
       <UserName>{userName}</UserName>
@@ -42,6 +43,7 @@ const UserCard = ({
 );
 
 UserCard.propTypes = {
+  className: PropTypes.string,
   userName: PropTypes.string,
   userImage: PropTypes.string,
   publishedProjectsCount: PropTypes.number,
