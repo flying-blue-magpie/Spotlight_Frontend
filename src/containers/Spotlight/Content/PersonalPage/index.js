@@ -35,7 +35,7 @@ const StyledPersonalPage = styled.div`
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    padding: 15px;
+    padding: 20px 15px;
   }
 
   .personal-page__collection-group {
