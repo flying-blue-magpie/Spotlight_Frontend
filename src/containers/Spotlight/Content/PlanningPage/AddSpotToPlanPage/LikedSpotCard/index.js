@@ -143,7 +143,7 @@ const LikedSpotCard = ({
           <div className="liked-spot-card__card-title">{foundSpotDetail.get('name')}</div>
           <div className="liked-spot-card__card-like-wrapper">
             <img src={redHeartCircleIconPath} className="liked-spot-card__card-heart-icon" alt="" />
-            <div>666</div>
+            <div>{foundSpotDetail.get('like_num')}</div>
           </div>
         </div>
       </div>
