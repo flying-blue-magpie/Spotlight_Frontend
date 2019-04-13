@@ -15,7 +15,7 @@ import ImageGallery from 'react-image-gallery';
 import message from 'antd/lib/message';
 import {
   selectExploringSpot,
-  selectSpotsMeta,
+  selectSearchRecSpotsMeta,
   selectFavoriteSpotIdsMeta,
   selectRecSpotIds,
 } from 'containers/Spotlight/selectors';
@@ -24,7 +24,9 @@ import {
   likeSpot,
   fetchFavoriteSpotIds,
   fetchRecSpots,
+  searchRecSpots,
 } from 'containers/Spotlight/actions';
+import { REC_SPOTS_BUFFER_COUNT } from 'containers/Spotlight/constants';
 import Spinner from 'components/Spinner';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import ZoneMenu from './ZoneMenu';
@@ -54,12 +56,10 @@ import {
   ButtonHeartIcon,
 } from './Styled';
 
-const REC_SPOTS_BUFFER_COUNT = 3;
-
 const ExplorePage = (props) => {
   const {
     spot,
-    setSpotsMeta,
+    searchRecSpotsMeta,
     location,
     history,
     handleFetchFavoriteSpotIds,
@@ -68,6 +68,7 @@ const ExplorePage = (props) => {
     handleLikeSpot,
     handleExploreNextSpot,
     recSpotIds,
+    handleSearchRecSpots,
   } = props;
 
   const [zonesState, dispatch] = useReducer(zoneReducer, fromJS(zonesData));
@@ -80,7 +81,7 @@ const ExplorePage = (props) => {
   const [keyword, setKeyword] = useState('');
   const handleSearchInputKeyUp = (event) => {
     if (event.key === 'Enter') {
-      handleFetchRecSpots({ kw: keyword, zones: selectedZones });
+      handleSearchRecSpots({ kw: keyword, zones: selectedZones });
       event.currentTarget.blur();
     }
   };
@@ -91,9 +92,7 @@ const ExplorePage = (props) => {
     }
 
     if (recSpotIds.slice(recSpotIds.indexOf(spot.get('spot_id'))).size < REC_SPOTS_BUFFER_COUNT) {
-      for (let i = 0; i < REC_SPOTS_BUFFER_COUNT; i += 1) {
-        handleFetchRecSpots({ kw: keyword, zones: selectedZones });
-      }
+      handleSearchRecSpots({ kw: keyword, zones: selectedZones });
     }
   }, []);
 
@@ -149,7 +148,7 @@ const ExplorePage = (props) => {
           </ZoneLabel>
         ))}
       </ZonesRow>
-      {setSpotsMeta.get('isLoading')
+      {searchRecSpotsMeta.get('isLoading')
         ? <Spinner />
         : (
           <React.Fragment>
@@ -206,7 +205,7 @@ const ExplorePage = (props) => {
 
 ExplorePage.propTypes = {
   spot: PropTypes.instanceOf(Map),
-  setSpotsMeta: PropTypes.object,
+  searchRecSpotsMeta: PropTypes.object,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   handleFetchFavoriteSpotIds: PropTypes.func.isRequired,
@@ -215,11 +214,12 @@ ExplorePage.propTypes = {
   handleLikeSpot: PropTypes.func.isRequired,
   handleExploreNextSpot: PropTypes.func.isRequired,
   recSpotIds: PropTypes.instanceOf(List).isRequired,
+  handleSearchRecSpots: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   spot: selectExploringSpot(),
-  setSpotsMeta: selectSpotsMeta(),
+  searchRecSpotsMeta: selectSearchRecSpotsMeta(),
   favoriteSpotIdsMeta: selectFavoriteSpotIdsMeta(),
   recSpotIds: selectRecSpotIds(),
 });
@@ -229,6 +229,7 @@ const mapDispatchToProps = (dispatch) => ({
   handleFetchRecSpots: ({ kw, zones }) => dispatch(fetchRecSpots({ kw, zones })),
   handleLikeSpot: (id) => dispatch(likeSpot(id)),
   handleExploreNextSpot: () => dispatch(exploreNextSpot()),
+  handleSearchRecSpots: ({ kw, zones }) => dispatch(searchRecSpots({ kw, zones })),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExplorePage));
