@@ -20,6 +20,8 @@ import {
 const ZoneMenu = ({
   zonesState,
   dispatch,
+  handleSearchRecSpots,
+  keyword,
 }) => {
   const [editZonesState, dispatchEdit] = useReducer(zoneReducer, zonesState);
   const regions = editZonesState.map((zone) => zone.get('region')).toSet();
@@ -38,10 +40,19 @@ const ZoneMenu = ({
         <HeaderRightButtons>
           <HeaderLinkButton
             to={`/${PAGE_NAME.EXPLORE.name}`}
-            onClick={() => dispatch({
-              type: 'SET_ZONES',
-              payload: editZonesState,
-            })}
+            onClick={() => {
+              dispatch({
+                type: 'SET_ZONES',
+                payload: editZonesState,
+              });
+              handleSearchRecSpots({
+                kw: keyword,
+                zones: editZonesState.filter((zone) => zone.get('selected'))
+                  .map((zone) => zone.get('name'))
+                  .toList()
+                  .toJS(),
+              });
+            }}
           >
             <i className="fas fa-check" />
           </HeaderLinkButton>
@@ -85,6 +96,8 @@ const ZoneMenu = ({
 ZoneMenu.propTypes = {
   zonesState: PropTypes.instanceOf(Map).isRequired,
   dispatch: PropTypes.func.isRequired,
+  handleSearchRecSpots: PropTypes.func.isRequired,
+  keyword: PropTypes.string.isRequired,
 };
 
 export default ZoneMenu;

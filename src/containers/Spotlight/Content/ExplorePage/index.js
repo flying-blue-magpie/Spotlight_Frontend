@@ -133,6 +133,8 @@ const ExplorePage = (props) => {
         history={history}
         zonesState={zonesState}
         dispatch={dispatch}
+        keyword={keyword}
+        handleSearchRecSpots={handleSearchRecSpots}
       />
     );
   }
