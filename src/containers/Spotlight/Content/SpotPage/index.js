@@ -68,7 +68,7 @@ const SpotPage = ({
     return <Spinner />;
   }
 
-  const spot = spots.get(Number(spotId), Map());
+  const spot = spots.get(spotId, Map());
   if (!spot.size) {
     return <div>找不到該景點資料</div>;
   }
