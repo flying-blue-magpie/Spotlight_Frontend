@@ -27,6 +27,7 @@ import {
   Container,
   BackButton,
   AddButton,
+  Content,
 } from './Styled';
 
 const { SpotlightContext } = Context;
@@ -74,40 +75,42 @@ const SpotPage = ({
   }
   return (
     <Container>
-      <Feature>
-        <BackButton onClick={() => history.goBack()}>
-          <i className="fas fa-arrow-left" />
-        </BackButton>
-        <AddButton to={`${location.pathname}/${PAGE_NAME.ADD_SPOT_TO_PROJECT.name}`}>
-          <i className="fas fa-plus" />
-        </AddButton>
-        <FeatureImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
-        <FeatureInfo>
-          <SpotName>{spot.get('name')}</SpotName>
-          <LikeButton
-            onClick={handleLikeOnClick}
-            isActive={isSpotFavorite}
-            likeNumber={spot.get('like_num')}
-          />
-        </FeatureInfo>
-      </Feature>
-      <Title>景點介紹</Title>
-      <Paragraph>
-        {spot.get('describe')}
-      </Paragraph>
-      <Title>地址</Title>
-      <Paragraph>{spot.get('address')}</Paragraph>
-      <Title>電話</Title>
-      <Paragraph>{spot.get('tel')}</Paragraph>
-      {
-        spot.get('website') &&
-        <>
-          <Title>網址</Title>
-          <Paragraph>
-            <a href={spot.get('website')}>{spot.get('website')}</a>
-          </Paragraph>
-        </>
-      }
+      <BackButton onClick={() => history.goBack()}>
+        <i className="fas fa-arrow-left" />
+      </BackButton>
+      <AddButton to={`${location.pathname}/${PAGE_NAME.ADD_SPOT_TO_PROJECT.name}`}>
+        <i className="fas fa-plus" />
+      </AddButton>
+      <Content>
+        <Feature>
+          <FeatureImage src={spot.getIn(['pic', 0]) || 'https://www.taiwan.net.tw/att/1/big_scenic_spots/pic_R177_10.jpg'} />
+          <FeatureInfo>
+            <SpotName>{spot.get('name')}</SpotName>
+            <LikeButton
+              onClick={handleLikeOnClick}
+              isActive={isSpotFavorite}
+              likeNumber={spot.get('like_num')}
+            />
+          </FeatureInfo>
+        </Feature>
+        <Title>景點介紹</Title>
+        <Paragraph>
+          {spot.get('describe')}
+        </Paragraph>
+        <Title>地址</Title>
+        <Paragraph>{spot.get('address')}</Paragraph>
+        <Title>電話</Title>
+        <Paragraph>{spot.get('tel')}</Paragraph>
+        {
+          spot.get('website') &&
+          <>
+            <Title>網址</Title>
+            <Paragraph>
+              <a href={spot.get('website')}>{spot.get('website')}</a>
+            </Paragraph>
+          </>
+        }
+      </Content>
     </Container>
   );
 };

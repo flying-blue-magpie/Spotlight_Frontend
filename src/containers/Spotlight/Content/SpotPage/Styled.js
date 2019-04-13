@@ -1,9 +1,16 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Likes from 'components/Likes';
+import { HEIGHT_NAVIGATION } from 'Styled/Settings/constants';
 
 export const Container = styled.div`
   background-color: #FAFAFA;
+  position: relative;
+`;
+
+export const Content = styled.div`
+  height: calc(100vh - ${HEIGHT_NAVIGATION}px);
+  overflow-y: auto;
 `;
 
 export const Feature = styled.div`
@@ -13,7 +20,7 @@ export const Feature = styled.div`
 `;
 
 export const BackButton = styled.button`
-  position: fixed;
+  position: absolute;
   z-index: 1;
   font-size: 18px;
   color: #333333;
@@ -27,7 +34,7 @@ export const BackButton = styled.button`
 `;
 
 export const AddButton = styled(Link)`
-  position: fixed;
+  position: absolute;
   z-index: 1;
   font-size: 18px;
   color: #333333;

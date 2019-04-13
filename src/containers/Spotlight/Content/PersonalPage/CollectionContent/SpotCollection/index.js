@@ -14,7 +14,9 @@ const StyledSpotCollection = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-row-gap: 10px;
   grid-column-gap: 10px;
-  padding: 10px 28px;
+  padding: 15px;
+  background-color: #FAFAFA;
+  min-height: 100%;
 `;
 
 const SpotCollection = ({
