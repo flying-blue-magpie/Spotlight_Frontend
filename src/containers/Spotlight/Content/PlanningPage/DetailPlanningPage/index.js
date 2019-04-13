@@ -13,12 +13,14 @@ import {
   fetchOwnProjects,
   fetchSpotById,
   fetchProjectById,
+  fetchUserById,
 } from 'containers/Spotlight/actions';
 import {
   selectOwnProjects,
   selectOwnProjectsMeta,
   selectSpots,
   selectUser,
+  selectUsers,
   selectProjects,
 } from 'containers/Spotlight/selectors';
 import DateTabs from './DateTabs';
@@ -31,10 +33,12 @@ import {
 const DetailPlanningPage = (props) => {
   const {
     user,
+    users,
     match,
     ownProjectsMeta,
     projects,
     handleFetchProjectById,
+    handleFetchUser,
   } = props;
   const {
     params: {
@@ -68,13 +72,16 @@ const DetailPlanningPage = (props) => {
     const travelerPagePath = `/${PAGE_NAME.TRAVELER.name}/${owner}`;
     history.push(travelerPagePath);
   };
+  if (!users.get(owner)) {
+    handleFetchUser(owner);
+  }
 
   const name = project.get('name');
   const days = project.get('tot_days');
   const startDay = moment(project.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日');
   const endDay = moment(project.get('start_day'), 'YYYY-MM-DD').add(days - 1, 'days').format('YYYY年MM月DD日');
   const plan = project.get('plan');
-  const faviconPath = user.get('portrait_link') || peopleIconPath;
+  const faviconPath = users.getIn([owner.toString(), 'portrait_link']) || peopleIconPath;
 
   return (
     <DetailPlanningPageContainer faviconPath={faviconPath}>
@@ -106,11 +113,13 @@ const DetailPlanningPage = (props) => {
 
 DetailPlanningPage.propTypes = {
   user: PropTypes.instanceOf(Map),
+  users: PropTypes.instanceOf(Map).isRequired,
   match: PropTypes.object,
   ownProjectsMeta: PropTypes.instanceOf(Map),
   projects: PropTypes.instanceOf(Map).isRequired,
   handleFetchOwnProjects: PropTypes.func,
   handleFetchProjectById: PropTypes.func,
+  handleFetchUser: PropTypes.func,
 };
 
 DetailPlanningPage.defaultProps = {
@@ -119,6 +128,7 @@ DetailPlanningPage.defaultProps = {
   ownProjectsMeta: Map(),
   handleFetchOwnProjects: () => { },
   handleFetchProjectById: () => { },
+  handleFetchUser: () => { },
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -127,12 +137,14 @@ const mapStateToProps = createStructuredSelector({
   projects: selectProjects(),
   spots: selectSpots(),
   user: selectUser(),
+  users: selectUsers(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleFetchOwnProjects: () => dispatch(fetchOwnProjects()),
   handleFetchSpotById: (spotId) => dispatch(fetchSpotById(spotId)),
   handleFetchProjectById: (id) => dispatch(fetchProjectById(id)),
+  handleFetchUser: (userId) => dispatch(fetchUserById(userId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailPlanningPage);
