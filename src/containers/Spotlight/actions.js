@@ -84,6 +84,9 @@ import {
   FETCH_REC_SPOTS,
   SET_REC_SPOTS_LOADING,
   SET_REC_SPOTS_DONE,
+  SEARCH_REC_SPOTS,
+  SET_SEARCH_REC_SPOTS_LOADING,
+  SET_SEARCH_REC_SPOTS_DONE,
 } from './constants';
 
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
@@ -205,6 +208,23 @@ export const setRecSpotsLoading = () => ({
 
 export const setRecSpotsDone = (error, spots) => ({
   type: SET_REC_SPOTS_DONE,
+  payload: {
+    error,
+    ...normalize(spots, spotListSchema),
+  },
+});
+
+export const searchRecSpots = ({ zones = [], kw = '' } = {}) => ({
+  type: SEARCH_REC_SPOTS,
+  payload: { zones, kw },
+});
+
+export const setSearchRecSpotsLoading = () => ({
+  type: SET_SEARCH_REC_SPOTS_LOADING,
+});
+
+export const setSearchRecSpotsDone = (error, spots) => ({
+  type: SET_SEARCH_REC_SPOTS_DONE,
   payload: {
     error,
     ...normalize(spots, spotListSchema),
