@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Map, List } from 'immutable';
 import moment from 'moment';
+import { getDistance } from 'utils/distance';
 import moveIconPath from 'assets/move_icon.svg';
 
 export const HEIGHT_SPOT_CARD = 60;
@@ -94,11 +95,46 @@ const SpotCard = (props) => {
     : moment(dayStartTime, 'HH:mm:ss').add(arrange.map((arr) => arr.get('during')).toJS().splice(0, index).reduce((a, b) => a + b), 'minutes');
   const duringTime = arrange.getIn([index, 'during']);
   const endTime = moment(startTime, 'HH:mm:ss').add(duringTime, 'minutes');
+
+  let driveTime = '1時15分';
+  let walkTime = '6時15分';
+  if (!(arrange.size - 1 === index)) {
+    if (!arrange.getIn([index, 'spot_id']) || !arrange.getIn([index + 1, 'spot_id'])) {
+      return null;
+    }
+    const spotA = spots.get(arrange.getIn([index, 'spot_id']).toString());
+    const spotB = spots.get(arrange.getIn([index + 1, 'spot_id']).toString());
+    if (!spotB) {
+      handleFetchSpotById(arrange.getIn([index + 1, 'spot_id']));
+      return null;
+    }
+    const distance = getDistance(spotA.get('px'), spotA.get('py'), spotB.get('px'), spotB.get('py')) / 1000;
+    driveTime = `${Math.round(distance / 60)}時${Math.floor(((distance / 60) - Math.floor(distance / 60)) * 60)}分`;
+    walkTime = `${Math.round(distance / 10)}時${Math.floor(((distance / 10) - Math.floor(distance / 10)) * 60)}分`;
+  }
+
+  let driveHour = 0;
+  let driveMinute = 0;
+  if (index > 0) {
+    if (!arrange.getIn([index, 'spot_id']) || !arrange.getIn([index - 1, 'spot_id'])) {
+      return null;
+    }
+    const spotA = spots.get(arrange.getIn([index, 'spot_id']).toString());
+    const spotB = spots.get(arrange.getIn([index - 1, 'spot_id']).toString());
+    if (!spotB) {
+      handleFetchSpotById(arrange.getIn([index - 1, 'spot_id']));
+      return null;
+    }
+    const distance = getDistance(spotA.get('px'), spotA.get('py'), spotB.get('px'), spotB.get('py')) / 1000;
+    driveHour = Math.round(distance / 60);
+    driveMinute = Math.floor(((distance / 60) - Math.floor(distance / 60)) * 60);
+  }
+
   return (
     <StyledSpotCard>
       <div className="spot-card__card-row">
         <div className="spot-card__start-end-time-wrapper">
-          <div>{moment(startTime, 'HH:mm:ss').format('HH:mm')}</div>
+          <div>{moment(startTime, 'HH:mm:ss').add(driveHour, 'hours').add(driveMinute, 'minutes').format('HH:mm')}</div>
           <div>|</div>
           <div>{moment(endTime, 'HH:mm:ss').format('HH:mm')}</div>
         </div>
@@ -112,16 +148,19 @@ const SpotCard = (props) => {
           }
         </div>
       </div>
-      <div className="spot-card__travel-row-wrapper">
-        <div className="spot-card__travel-time-wrapper">
-          <i className="fas fa-car spot-card__travel-time-icon" />
-          <div>1時15分</div>
+      {
+        !(arrange.size - 1 === index) &&
+        <div className="spot-card__travel-row-wrapper">
+          <div className="spot-card__travel-time-wrapper">
+            <i className="fas fa-car spot-card__travel-time-icon" />
+            <div>{driveTime}</div>
+          </div>
+          <div className="spot-card__travel-time-wrapper">
+            <i className="fas fa-running spot-card__travel-time-icon" />
+            <div>{walkTime}</div>
+          </div>
         </div>
-        <div className="spot-card__travel-time-wrapper">
-          <i className="fas fa-running spot-card__travel-time-icon" />
-          <div>6時15分</div>
-        </div>
-      </div>
+      }
     </StyledSpotCard>
   );
 };

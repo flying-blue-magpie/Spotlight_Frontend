@@ -77,7 +77,7 @@ const DetailPlanningPage = (props) => {
   }
 
   const name = project.get('name');
-  const days = project.get('tot_days');
+  const days = project.get('plan').size;
   const startDay = moment(project.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日');
   const endDay = moment(project.get('start_day'), 'YYYY-MM-DD').add(days - 1, 'days').format('YYYY年MM月DD日');
   const plan = project.get('plan');
