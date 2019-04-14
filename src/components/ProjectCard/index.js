@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import defaultBackgroundImagePath from 'assets/default_background_3x.png';
 
 import {
   Container,
@@ -37,7 +38,7 @@ ProjectCard.propTypes = {
 };
 
 ProjectCard.defaultProps = {
-  image: 'https://icrvb3jy.xinmedia.com/solomo/article/139141/7A21D0A7-AEA1-D18D-C305-9A5930D37D27.jpeg',
+  image: defaultBackgroundImagePath,
   title: '標題',
   subtitle: '副標題',
 };
