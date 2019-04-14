@@ -246,7 +246,7 @@ export const setProjectDone = (error, project) => ({
   type: SET_PROJECT_DONE,
   payload: {
     error,
-    project,
+    ...normalize(project, projectSchema),
   },
 });
 
@@ -360,7 +360,7 @@ export const setOwnProjectsDone = (error, ownProjects) => ({
   type: SET_OWN_PROJECTS_DONE,
   payload: {
     error,
-    ownProjects,
+    ...normalize(ownProjects, projectListSchema),
   },
 });
 
