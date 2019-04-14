@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
-import ImageGallery from 'react-image-gallery';
+import Carousel from 'nuka-carousel';
 import { CardImage as StyledCardImage } from './Styled';
 import emptySpotImage from './empty-spot.png';
 
@@ -15,17 +15,20 @@ const CardImage = ({ pics }) => {
   }
 
   return (
-    <ImageGallery
-      items={pics.map((pic) => ({ original: pic })).toJS()}
-      renderItem={(items) => <StyledCardImage src={items.original} />}
-      showThumbnails={false}
-      showFullscreenButton={false}
-      showPlayButton={false}
-      showNav={false}
-      autoPlay
-      slideInterval={3000}
-      disableSwipe
-    />
+    <Carousel
+      autoplay
+      swiping={false}
+      dragging={false}
+      wrapAround
+      withoutControls
+      autoplayInterval={3000}
+      speed={450}
+      pauseOnHover={false}
+    >
+      {pics.map((pic, index) => (
+        <StyledCardImage key={index} src={pic} />
+      ))}
+    </Carousel>
   );
 };
 
