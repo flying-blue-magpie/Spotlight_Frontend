@@ -31,13 +31,18 @@ export const SpotlightContainer = styled.div`
     grid-area: content;
     display: flex;
     justify-content: center;
-    overflow-y: auto;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
   }
   .spot-light__navigation-container {
     grid-area: navigation;
     display: flex;
     justify-content: center;
-    position: relative;
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    background-color: white;
     z-index: 1;
+    height: 60px;
   }
 `;
