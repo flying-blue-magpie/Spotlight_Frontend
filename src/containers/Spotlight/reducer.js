@@ -99,7 +99,6 @@ const initialState = fromJS({
   setUserMeta: META,
   setUsersMeta: META,
   setUserStatsMeta: META,
-  ownProjects: [],
   exploringSpotId: null,
   setFavoriteSpotIdsMeta: META,
   setFavoriteProjectIdsMeta: META,
@@ -183,7 +182,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setSpotMeta', updateMetaDone);
       }
       return state
-        .mergeDeepIn(['spots'], fromJS({ [spot.spot_id]: spot }))
+        .mergeIn(['spots'], fromJS({ [spot.spot_id]: spot }))
         .update('setSpotMeta', updateMetaDone);
     }
 
@@ -201,7 +200,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setSpotsMeta', updateMetaError);
       }
       return state
-        .mergeDeepIn(['spots'], fromJS(entities.spots))
+        .mergeIn(['spots'], fromJS(entities.spots))
         .set('spotsResult', fromJS(result))
         .update('setSpotsMeta', updateMetaDone)
         .set('exploringSpotId', result[0]);
@@ -221,7 +220,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setRecSpotsMeta', updateMetaError);
       }
       return state
-        .mergeDeepIn(['spots'], fromJS(entities.spots))
+        .mergeIn(['spots'], fromJS(entities.spots))
         .update(
           'recSpotsResult',
           (recSpotsResult) => result.reduce(
@@ -248,7 +247,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setSearchRecSpotsMeta', updateMetaError);
       }
       return state
-        .mergeDeepIn(['spots'], fromJS(entities.spots))
+        .mergeIn(['spots'], fromJS(entities.spots))
         .update(
           'recSpotsResult',
           (recSpotsResult) => result.reduce(
@@ -266,17 +265,23 @@ function spotLightReducer(state = initialState, action) {
     case SET_PROJECT_DONE: {
       const {
         error,
-        project,
+        entities,
+        result,
       } = action.payload;
 
       if (error) {
         return state.update('setProjectMeta', updateMetaError);
       }
-      if (!project) { // handle project is undefined
+      if (!entities.projects) { // handle project is undefined
         return state.update('setProjectMeta', updateMetaDone);
       }
       return state
-        .mergeDeepIn(['projects'], fromJS({ [project.proj_id]: project }))
+        .mergeIn(['projects'], fromJS(entities.projects))
+        .update('projectsResult', (projectsResult) => (
+          projectsResult.indexOf(result) !== -1
+            ? result
+            : projectsResult.push(result)
+        ))
         .update('setProjectMeta', updateMetaDone);
     }
 
@@ -294,7 +299,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setProjectsMeta', updateMetaError);
       }
       return state
-        .mergeDeepIn(['projects'], fromJS(entities.projects))
+        .mergeIn(['projects'], fromJS(entities.projects))
         .set('projectsResult', fromJS(result))
         .update('setProjectsMeta', updateMetaDone);
     }
@@ -372,13 +377,21 @@ function spotLightReducer(state = initialState, action) {
     case SET_OWN_PROJECTS_DONE: {
       const {
         error,
-        ownProjects,
+        entities,
+        result,
       } = action.payload;
       if (error) {
         return state.update('ownProjectsMeta', updateMetaError);
       }
       return state
-        .set('ownProjects', fromJS(ownProjects))
+        .mergeIn(['projects'], fromJS(entities.projects))
+        .update(
+          'projectsResult',
+          (projectsResult) => result.reduce(
+            (ids, id) => (ids.indexOf(id) !== -1 ? ids : ids.push(id)),
+            projectsResult,
+          ),
+        )
         .update('ownProjectsMeta', updateMetaDone);
     }
 

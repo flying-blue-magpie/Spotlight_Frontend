@@ -89,7 +89,9 @@ export const selectLoginStatusMeta = () => createSelector(
 
 export const selectOwnProjects = () => createSelector(
   selectSpotlight,
-  (spotlightState) => spotlightState.get('ownProjects'),
+  (spotlightState) => spotlightState.get('projects')
+    .filter((project) => project.get('owner') === spotlightState.getIn(['user', 'user_id']))
+    .toList(),
 );
 
 export const selectOwnProjectsMeta = () => createSelector(

@@ -52,6 +52,13 @@ const DetailPlanningPage = (props) => {
     }
   }, [projectId]);
 
+  const owner = projects.getIn([projectId, 'owner']);
+  useEffect(() => {
+    if (owner && !users.get(String(owner))) {
+      handleFetchUser(owner);
+    }
+  }, [owner, users]);
+
   if (!projects || !projects.size) {
     return <div>尚無任何旅行計劃</div>;
   }
@@ -64,7 +71,6 @@ const DetailPlanningPage = (props) => {
     return <div>找不到該旅行計劃資料</div>;
   }
 
-  const owner = project.get('owner');
   const userId = user.get('user_id');
   const isOwner = userId === owner;
 
@@ -72,9 +78,6 @@ const DetailPlanningPage = (props) => {
     const travelerPagePath = `/${PAGE_NAME.TRAVELER.name}/${owner}`;
     history.push(travelerPagePath);
   };
-  if (!users.get(owner)) {
-    handleFetchUser(owner);
-  }
 
   const name = project.get('name');
   const days = project.get('plan').size;
