@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import styled from 'styled-components';
@@ -6,11 +6,15 @@ import history from 'utils/history';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import moment from 'moment';
 import Context from 'containers/Spotlight/Context';
+import Carousel from 'nuka-carousel';
 import {
   findAttributeInEvent,
 } from 'utils/event';
 import Modal from 'antd/lib/modal';
 import trashIconPath from 'assets/trash_icon.svg';
+import defaultBackgroundImagePath from 'assets/default_background_3x.png';
+
+const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const { confirm } = Modal;
 const { SpotlightContext } = Context;
@@ -21,7 +25,7 @@ const Container = styled.div`
   border-radius: 10px;
   position: relative;
   .project-card__cover-image {
-    background-image: url("https://icrvb3jy.xinmedia.com/solomo/article/139141/7A21D0A7-AEA1-D18D-C305-9A5930D37D27.jpeg");
+    background-image: url(${(props) => props.backgroundImagePath});
     background-size: cover;
     height: 150px;
     border-radius: 10px 10px 0px 0px;
@@ -85,8 +89,10 @@ const ProjectCard = (props) => {
     isEditMode,
   } = context;
   const {
+    spots,
     project,
     handleDeleteProject,
+    handleFetchSpotById,
   } = props;
   const projectId = project.get('proj_id');
   const name = project.get('name');
@@ -116,6 +122,17 @@ const ProjectCard = (props) => {
       },
     });
   }, []);
+  const spotIds = project.get('plan')
+    .map((p) => p.get('arrange'))
+    .filter((arrange) => arrange.size)
+    .reduce((a, b) => a.concat(b))
+    .map((arrange) => arrange.get('spot_id'));
+  useEffect(() => {
+    spotIds.map((spotId) => handleFetchSpotById(spotId));
+  }, []);
+  const spotsPics = spotIds.map((spotId) => spots.get(spotId.toString())).filter((s) => Boolean(s));
+  const pics = spotsPics.get(0) ? spotsPics.getIn([0, 'pic']) : [defaultBackgroundImagePath];
+
   return (
     <Container isEditMode={isEditMode} onClick={handleOnClick}>
       {
@@ -132,7 +149,25 @@ const ProjectCard = (props) => {
           </div>
         </>
       }
-      <div className="project-card__cover-image" />
+      {
+        spotsPics.get(0) &&
+        <Carousel
+          autoplay
+          wrapAround
+          withoutControls
+          autoplayInterval={getRandom(3000, 5000)}
+          speed={450}
+        >
+          {pics.map((pic, index) => (
+            <img
+              key={index}
+              className="project-card__cover-image"
+              src={pic}
+              alt={spotsPics.get(0).get('name')}
+            />
+          ))}
+        </Carousel>
+      }
       <div className="project-card__info-row">
         <div className="project-card__info-title">{name}</div>
         <div className="project-card__info-period">{`${startDay}-${endDay} / ${days}天`}</div>
@@ -142,13 +177,17 @@ const ProjectCard = (props) => {
 };
 
 ProjectCard.propTypes = {
+  spots: PropTypes.instanceOf(Map),
   project: PropTypes.instanceOf(Map),
   handleDeleteProject: PropTypes.func,
+  handleFetchSpotById: PropTypes.func,
 };
 
 ProjectCard.defaultProps = {
   project: Map(),
+  spots: Map(),
   handleDeleteProject: () => { },
+  handleFetchSpotById: () => { },
 };
 
 export default ProjectCard;

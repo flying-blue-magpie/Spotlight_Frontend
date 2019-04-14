@@ -9,10 +9,12 @@ import { withRouter } from 'react-router';
 import {
   fetchOwnProjects,
   submitDeleteProject,
+  fetchSpotById,
 } from 'containers/Spotlight/actions';
 import {
   selectOwnProjects,
   selectOwnProjectsMeta,
+  selectSpots,
 } from 'containers/Spotlight/selectors';
 import Spinner from 'components/Spinner';
 import ProjectCard from './components/ProjectCard';
@@ -23,12 +25,13 @@ const Container = styled.div`
   overflow: scroll;
 `;
 
-const PlanningPage = ({
-  ownProjectsMeta,
-  ownProjects,
-  handleFetchOwnProjects,
-  handleDeleteProject,
-}) => {
+const PlanningPage = (props) => {
+  const {
+    ownProjectsMeta,
+    ownProjects,
+    handleFetchOwnProjects,
+    handleDeleteProject,
+  } = props;
   const isLoaded = ownProjectsMeta.get('isLoaded');
   const isLoading = ownProjectsMeta.get('isLoading');
   useEffect(() => {
@@ -50,6 +53,7 @@ const PlanningPage = ({
             key={project.get('proj_id')}
             project={project}
             handleDeleteProject={handleDeleteProject}
+            {...props}
           />
         ))
       }
@@ -74,11 +78,13 @@ PlanningPage.defaultProps = {
 const mapStateToProps = createStructuredSelector({
   ownProjectsMeta: selectOwnProjectsMeta(),
   ownProjects: selectOwnProjects(),
+  spots: selectSpots(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   handleFetchOwnProjects: () => dispatch(fetchOwnProjects()),
   handleDeleteProject: (projectId) => dispatch(submitDeleteProject(projectId)),
+  handleFetchSpotById: (spotId) => dispatch(fetchSpotById(spotId)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PlanningPage));
