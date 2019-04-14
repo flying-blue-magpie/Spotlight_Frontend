@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import ImageGallery from 'react-image-gallery';
+import Carousel from 'nuka-carousel';
 import history from 'utils/history';
 import Likes from 'components/Likes';
 import peopleIconPath from 'assets/people_icon_100.svg';
@@ -61,17 +61,20 @@ const TravelCard = ({
       </Header>
       {(cardImageSrcList && cardImageSrcList.length > 0)
         ? (
-          <ImageGallery
-            items={cardImageSrcList.map((pic) => ({ original: pic }))}
-            renderItem={(items) => <CardImage src={items.original} />}
-            showThumbnails={false}
-            showFullscreenButton={false}
-            showPlayButton={false}
-            showNav={false}
-            autoPlay
-            slideInterval={Math.floor(Math.random() * (3000 - 2000 + 1)) + 2000}
-            disableSwipe
-          />
+          <Carousel
+            autoplay
+            swiping={false}
+            dragging={false}
+            wrapAround
+            withoutControls
+            autoplayInterval={Math.floor(Math.random() * (3000 - 2000 + 1)) + 2000}
+            speed={450}
+            pauseOnHover={false}
+          >
+            {cardImageSrcList.map((pic, index) => (
+              <CardImage key={index} src={pic} />
+            ))}
+          </Carousel>
         )
         : <CardImage src={cardImageSrc} />
       }

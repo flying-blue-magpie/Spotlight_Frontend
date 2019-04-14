@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useCallback } from 'react';
-import 'react-image-gallery/styles/css/image-gallery.css';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import Spinner from 'components/Spinner';
-import ImageGallery from 'react-image-gallery';
+import Carousel from 'nuka-carousel';
 import Context from 'containers/Spotlight/Context';
 
 import redHeartCircleIconPath from 'assets/red_heart_circle_icon.svg';
@@ -35,12 +34,11 @@ const LikedSpotCardContainer = styled.div`
     height: 100px;
     max-height: 100px;
   }
-  .image-gallery-slides {
-    border-radius: 10px 10px 0px 0px;
-  }
 
   .liked-spot-card__card-cover {
     height: 100%;
+    border-radius: 10px 10px 0px 0px;
+    overflow: hidden;
   }
   .liked-spot-card__card-title-wrapper {
     height: 40px;
@@ -120,24 +118,27 @@ const LikedSpotCard = ({
   if (selectedLikedSpotId) {
     showMask = selectedLikedSpotId.spotId === spotId;
   }
-  const pics = foundSpotDetail.get('pic').map((pic) => ({
-    original: pic,
-    thumbnail: pic,
-  })).toJS();
 
   return (
     <LikedSpotCardContainer>
       <div role="presentation" className="liked-spot-card__card-wrapper" onClick={handleSelectLikedSpot}>
         <div className="liked-spot-card__card-cover">
-          <ImageGallery
-            items={pics}
-            showThumbnails={false}
-            showFullscreenButton={false}
-            showPlayButton={false}
-            showNav={false}
-            autoPlay
-            slideInterval={getRandom(3000, 5000)}
-          />
+          <Carousel
+            autoplay
+            wrapAround
+            withoutControls
+            autoplayInterval={getRandom(3000, 5000)}
+            speed={450}
+          >
+            {foundSpotDetail.get('pic').map((pic, index) => (
+              <img
+                key={index}
+                className="image-gallery-image"
+                src={pic}
+                alt={foundSpotDetail.get('name')}
+              />
+            ))}
+          </Carousel>
         </div>
         <div className="liked-spot-card__card-title-wrapper">
           <div className="liked-spot-card__card-title">{foundSpotDetail.get('name')}</div>
