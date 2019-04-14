@@ -98,6 +98,8 @@ const SpotCard = (props) => {
 
   let driveTime = '1時15分';
   let walkTime = '6時15分';
+  const carSpeed = 30;
+  const walkSpeed = 10;
   if (!(arrange.size - 1 === index)) {
     if (!arrange.getIn([index, 'spot_id']) || !arrange.getIn([index + 1, 'spot_id'])) {
       return null;
@@ -109,8 +111,8 @@ const SpotCard = (props) => {
       return null;
     }
     const distance = getDistance(spotA.get('px'), spotA.get('py'), spotB.get('px'), spotB.get('py')) / 1000;
-    driveTime = `${Math.round(distance / 60)}時${Math.floor(((distance / 60) - Math.floor(distance / 60)) * 60)}分`;
-    walkTime = `${Math.round(distance / 10)}時${Math.floor(((distance / 10) - Math.floor(distance / 10)) * 60)}分`;
+    driveTime = `${Math.round(distance / carSpeed)}時${Math.floor(((distance / carSpeed) - Math.floor(distance / carSpeed)) * 60)}分`;
+    walkTime = `${Math.round(distance / walkSpeed)}時${Math.floor(((distance / walkSpeed) - Math.floor(distance / walkSpeed)) * 60)}分`;
   }
 
   let driveHour = 0;
@@ -126,8 +128,8 @@ const SpotCard = (props) => {
       return null;
     }
     const distance = getDistance(spotA.get('px'), spotA.get('py'), spotB.get('px'), spotB.get('py')) / 1000;
-    driveHour = Math.round(distance / 60);
-    driveMinute = Math.floor(((distance / 60) - Math.floor(distance / 60)) * 60);
+    driveHour = Math.round(distance / carSpeed);
+    driveMinute = Math.floor(((distance / carSpeed) - Math.floor(distance / carSpeed)) * 60);
   }
 
   return (
