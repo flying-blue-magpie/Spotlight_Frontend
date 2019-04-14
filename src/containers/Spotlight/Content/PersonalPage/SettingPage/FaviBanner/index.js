@@ -4,12 +4,13 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import { selectUser } from 'containers/Spotlight/selectors';
+import peopleIconPath from 'assets/people_icon_100.svg';
 import { StyledFaviBanner } from './styles';
 
 const FaviBanner = ({
   user,
 }) => {
-  const faviconPath = (user && user.get('portrait_link')) || 'http://i.imgur.com/EUAd2ht.jpg';
+  const faviconPath = (user && user.get('portrait_link')) || peopleIconPath;
   return (
     <StyledFaviBanner
       faviconPath={faviconPath}

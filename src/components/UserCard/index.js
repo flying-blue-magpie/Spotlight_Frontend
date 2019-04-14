@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import peopleIconPath from 'assets/people_icon_100.svg';
 
 import {
   Container,
@@ -53,7 +54,7 @@ UserCard.propTypes = {
 
 UserCard.defaultProps = {
   userName: '使用者',
-  userImage: 'http://i.imgur.com/EUAd2ht.jpg',
+  userImage: peopleIconPath,
   publishedProjectsCount: 0,
   collectedCount: 0,
   projectsLikedCount: 0,

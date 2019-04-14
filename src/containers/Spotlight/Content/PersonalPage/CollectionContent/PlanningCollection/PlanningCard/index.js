@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import peopleIconPath from 'assets/people_icon_100.svg';
 
 const StyledPlanningCard = styled.div`
   height: 100px;
@@ -44,7 +45,7 @@ const StyledPlanningCard = styled.div`
 
 const PlanningCard = ({ planningId, handleOnClick }) => {
   const imagePath = 'https://cw1.tw/CW/opinion/images/common/201801/opinion-5a618a5f20fb8.jpg';
-  const faviconPath = 'https://img.ltn.com.tw/Upload/liveNews/BigPic/600_php7mZoYr.jpg';
+  const faviconPath = peopleIconPath;
   return (
     <StyledPlanningCard
       imagePath={imagePath}

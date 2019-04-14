@@ -21,6 +21,7 @@ import {
   fetchFavoriteProjectIds,
 } from 'containers/Spotlight/actions';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import peopleIconPath from 'assets/people_icon_100.svg';
 import Information from './Information';
 import CollectionTabs from './CollectionTabs';
 import CollectionContent from './CollectionContent';
@@ -70,7 +71,7 @@ const PersonalPage = ({
   fetchUserStats,
 }) => {
   const [activeCollectionType, setActiveCollectionType] = useState('spot');
-  const faviconPath = (user && user.get('portrait_link')) || 'http://i.imgur.com/EUAd2ht.jpg';
+  const faviconPath = (user && user.get('portrait_link')) || peopleIconPath;
   const faviconSize = 70;
   const handleOnTabClick = (event) => {
     const type = findAttributeInEvent(event, 'data-collection-type');

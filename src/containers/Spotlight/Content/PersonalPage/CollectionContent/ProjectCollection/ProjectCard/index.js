@@ -1,16 +1,21 @@
 import React, { useEffect } from 'react';
+import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import { createStructuredSelector } from 'reselect';
+import peopleIconPath from 'assets/people_icon_100.svg';
+import defaultBackgroundImagePath from 'assets/default_background_3x.png';
 import {
   selectUsers,
   selectProjects,
+  selectSpots,
 } from 'containers/Spotlight/selectors';
 import {
   fetchUserById,
   fetchProjectById,
+  fetchSpotById,
 } from 'containers/Spotlight/actions';
 
 import TravelCard from 'components/TravelCard';
@@ -23,20 +28,32 @@ const StyledTravelCard = styled(TravelCard)`
 
 /* eslint no-shadow: 0 */
 const ProjectCard = ({
+  spots,
   users,
   projects,
   projectId,
-  fetchUserById,
-  fetchProjectById,
+  handleFetchUserById,
+  handleFetchSpotById,
+  handleFetchProjectById,
 }) => {
   useEffect(() => {
-    const project = projects.get(String(projectId));
-    if (!project) {
-      fetchProjectById(projectId);
+    const project = projects.get(String(projectId)) || Map();
+    if (!project.size) {
+      handleFetchProjectById(projectId);
     } else {
+      const spotIds = project.get('plan')
+        .map((p) => p.get('arrange'))
+        .filter((arrange) => arrange.size)
+        .reduce((a, b) => a.concat(b))
+        .map((arrange) => arrange.get('spot_id'));
+      spotIds.forEach((spotid) => {
+        if (!spots.get(spotid.toString())) {
+          handleFetchSpotById(spotid);
+        }
+      });
       const ownerId = project.get('owner');
       if (!users.get(String(ownerId))) {
-        fetchUserById(ownerId);
+        handleFetchUserById(ownerId);
       }
     }
   }, [users, projects]);
@@ -47,11 +64,21 @@ const ProjectCard = ({
     return null;
   }
 
+  const spotIds = project.get('plan')
+    .map((p) => p.get('arrange'))
+    .filter((arrange) => arrange.size)
+    .reduce((a, b) => a.concat(b))
+    .map((arrange) => arrange.get('spot_id'));
+  const spotsPics = spotIds.map((spotId) => spots.get(spotId.toString())).filter((s) => Boolean(s));
+  if (!spots.size) {
+    return null;
+  }
   const ownerId = project.get('owner');
   const user = users.get(String(ownerId));
   const userName = user && (user.get('name') || '在地專業嚮導');
-  const imagePath = 'https://cw1.tw/CW/opinion/images/common/201801/opinion-5a618a5f20fb8.jpg';
-  const faviconPath = user && (user.get('portrait_link') || 'https://img.ltn.com.tw/Upload/liveNews/BigPic/600_php7mZoYr.jpg');
+  const imagePath = spotsPics.get(0) ? spotsPics.getIn([0, 'pic', 0]) : defaultBackgroundImagePath;
+  const faviconPath = user && (user.get('portrait_link') || peopleIconPath);
+
   return (
     <StyledTravelCard
       userName={userName}
@@ -69,18 +96,27 @@ const ProjectCard = ({
 
 ProjectCard.propTypes = {
   users: PropTypes.object.isRequired,
+  spots: PropTypes.instanceOf(Map),
   projects: PropTypes.object.isRequired,
   projectId: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
   ]).isRequired,
-  fetchUserById: PropTypes.func.isRequired,
-  fetchProjectById: PropTypes.func.isRequired,
+  handleFetchUserById: PropTypes.func.isRequired,
+  handleFetchProjectById: PropTypes.func,
+  handleFetchSpotById: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   users: selectUsers(),
   projects: selectProjects(),
+  spots: selectSpots(),
 });
 
-export default connect(mapStateToProps, { fetchUserById, fetchProjectById })(ProjectCard);
+const mapDispatchToProps = (dispatch) => ({
+  handleFetchUserById: (id) => dispatch(fetchUserById(id)),
+  handleFetchProjectById: (id) => dispatch(fetchProjectById(id)),
+  handleFetchSpotById: (id) => dispatch(fetchSpotById(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectCard);
