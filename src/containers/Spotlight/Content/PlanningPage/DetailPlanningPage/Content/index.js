@@ -174,7 +174,7 @@ const Content = (props) => {
     setIsEditExistingSpotModalVisible(false);
   }, []);
   const handleDeleteSelectedSpot = useCallback(() => {
-    const foundSpot = spots.get(selectedSpotId);
+    const foundSpot = spots.get(selectedSpotId.toString());
     confirm({
       title: '刪除景點',
       content: `確認是否刪除 "${foundSpot.get('name')}"？`,
