@@ -313,6 +313,9 @@ const Content = (props) => {
             });
             setAddSpotAfterIndex(null);
           }}
+          onCreateSpotButtonClick={() => {
+            history.push(`/${PAGE_NAME.CREATE_SPOT.name}`);
+          }}
           onCancelClick={() => setIsAddSpotModalVisible(false)}
         />
       )}
