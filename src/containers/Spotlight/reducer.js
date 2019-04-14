@@ -182,7 +182,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setSpotMeta', updateMetaDone);
       }
       return state
-        .mergeDeepIn(['spots'], fromJS({ [spot.spot_id]: spot }))
+        .mergeIn(['spots'], fromJS({ [spot.spot_id]: spot }))
         .update('setSpotMeta', updateMetaDone);
     }
 
@@ -200,7 +200,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setSpotsMeta', updateMetaError);
       }
       return state
-        .mergeDeepIn(['spots'], fromJS(entities.spots))
+        .mergeIn(['spots'], fromJS(entities.spots))
         .set('spotsResult', fromJS(result))
         .update('setSpotsMeta', updateMetaDone)
         .set('exploringSpotId', result[0]);
@@ -220,7 +220,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setRecSpotsMeta', updateMetaError);
       }
       return state
-        .mergeDeepIn(['spots'], fromJS(entities.spots))
+        .mergeIn(['spots'], fromJS(entities.spots))
         .update(
           'recSpotsResult',
           (recSpotsResult) => result.reduce(
@@ -247,7 +247,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setSearchRecSpotsMeta', updateMetaError);
       }
       return state
-        .mergeDeepIn(['spots'], fromJS(entities.spots))
+        .mergeIn(['spots'], fromJS(entities.spots))
         .update(
           'recSpotsResult',
           (recSpotsResult) => result.reduce(
