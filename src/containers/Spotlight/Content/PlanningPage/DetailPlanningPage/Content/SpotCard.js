@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Map, List } from 'immutable';
@@ -73,8 +73,12 @@ const SpotCard = (props) => {
     handleFetchSpotById,
   } = props;
   const spot = spots.get(String(spotIndexInfo.get('spot_id')));
+  useEffect(() => {
+    if (!spot) {
+      handleFetchSpotById(spotIndexInfo.get('spot_id'));
+    }
+  }, []);
   if (!spot) {
-    handleFetchSpotById(spotIndexInfo.get('spot_id'));
     return null;
   }
 
