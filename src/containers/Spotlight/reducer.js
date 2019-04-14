@@ -99,7 +99,6 @@ const initialState = fromJS({
   setUserMeta: META,
   setUsersMeta: META,
   setUserStatsMeta: META,
-  ownProjects: [],
   exploringSpotId: null,
   setFavoriteSpotIdsMeta: META,
   setFavoriteProjectIdsMeta: META,
