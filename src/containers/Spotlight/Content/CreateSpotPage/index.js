@@ -1,6 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import Context from 'containers/Spotlight/Context';
 import {
+  HeaderLeftButtons,
+  HeaderButton,
+  HeaderTitle,
+  HeaderRightButtons,
+} from 'containers/Spotlight/Header/Styled';
+import history from 'utils/history';
+import {
   Container,
   Cover,
   DefaultImage,
@@ -10,6 +17,7 @@ import {
   FieldName,
   TextInput,
   TextArea,
+  HeaderContainer,
 } from './Styled';
 import defaultImageSrc from './default-image.svg';
 import cameraImageSrc from './camera.svg';
@@ -30,6 +38,21 @@ const CreateSpotPage = () => {
 
   return (
     <Container>
+      <HeaderContainer>
+        <HeaderLeftButtons>
+          <HeaderButton onClick={() => history.goBack()}>
+            <i className="fas fa-arrow-left" />
+          </HeaderButton>
+        </HeaderLeftButtons>
+        <HeaderTitle>
+          自建景點
+        </HeaderTitle>
+        <HeaderRightButtons>
+          <HeaderButton onClick={() => history.goBack()}>
+            <i className="fas fa-arrow-right" />
+          </HeaderButton>
+        </HeaderRightButtons>
+      </HeaderContainer>
       <Cover>
         <DefaultImage src={defaultImageSrc} />
         請上傳景點照片

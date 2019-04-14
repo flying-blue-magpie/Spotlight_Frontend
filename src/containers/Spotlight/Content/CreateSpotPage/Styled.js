@@ -1,6 +1,24 @@
 import styled from 'styled-components';
+import {
+  HeaderContainer as StyledHeaderContainer,
+} from 'containers/Spotlight/Header/Styled';
+import {
+  HEIGHT_HEADER,
+  MAX_WIDTH,
+} from 'Styled/Settings/constants';
 
 export const Container = styled.div`
+  padding-top: ${HEIGHT_HEADER}px;
+`;
+
+export const HeaderContainer = styled(StyledHeaderContainer)`
+  height: ${HEIGHT_HEADER}px;
+  background-color: #F9D94A;
+  font-weight: bold;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-width: ${MAX_WIDTH}px;
 `;
 
 export const Cover = styled.div`
