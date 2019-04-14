@@ -56,16 +56,16 @@ const SettingSpotCardPage = (props) => {
         spot_id: parseInt(spotId, 10),
         during,
       });
-      const updatedArrange = arrange.toJS();
-      const isIndexSmallThanSize = arrange.size >= parseInt(afterIndex, 10);
+      const insertIndex = parseInt(afterIndex, 10);
+      const isIndexSmallThanSize = arrange.size >= insertIndex;
+
+      // insert at positions between spots
       if (isIndexSmallThanSize) {
-        updatedArrange.splice(parseInt(afterIndex, 10), 0, newSpotCard.toJS());
-        return updatedArrange;
+        return arrange.insert(insertIndex, newSpotCard);
       }
-      return fromJS([
-        ...updatedArrange,
-        newSpotCard.toJS(),
-      ]);
+
+      // insert at last position
+      return arrange.push(newSpotCard);
     });
 
     const result = fromJS({
