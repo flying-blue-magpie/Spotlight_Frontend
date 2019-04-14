@@ -45,6 +45,9 @@ export const UploadImageButton = styled.button`
   align-items: center;
   justify-content: center;
   margin: 0 15px 0 auto;
+  appearance: none;
+  border: 0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
 `;
 
 export const Fields = styled.div`
