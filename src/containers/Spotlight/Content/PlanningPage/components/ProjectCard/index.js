@@ -152,9 +152,9 @@ const ProjectCard = (props) => {
       {
         spotsPics.get(0) &&
         <Carousel
-          autoplay
           wrapAround
           withoutControls
+          autoplay={pics.size > 1}
           autoplayInterval={getRandom(3000, 5000)}
           speed={450}
         >
