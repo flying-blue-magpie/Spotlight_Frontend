@@ -19,6 +19,11 @@ const Button = styled.button`
 
 const AddFromFavoriteButton = styled(Button)`
   color: #333333;
+  margin-bottom: 5px;
+`;
+
+const CreateSpotButton = styled(Button)`
+  color: #333333;
   margin-bottom: 15px;
 `;
 
@@ -28,6 +33,7 @@ const CancelButton = styled(Button)`
 
 const AddSpotModal = ({
   onAddFromFavoriteClick,
+  onCreateSpotButtonClick,
   onCancelClick,
 }) => (
   <Modal
@@ -36,12 +42,14 @@ const AddSpotModal = ({
     isVisible
   >
     <AddFromFavoriteButton onClick={onAddFromFavoriteClick}>從收藏添加景點</AddFromFavoriteButton>
+    <CreateSpotButton onClick={onCreateSpotButtonClick}>自建景點</CreateSpotButton>
     <CancelButton onClick={onCancelClick}>取消</CancelButton>
   </Modal>
 );
 
 AddSpotModal.propTypes = {
   onAddFromFavoriteClick: PropTypes.func,
+  onCreateSpotButtonClick: PropTypes.func,
   onCancelClick: PropTypes.func,
 };
 

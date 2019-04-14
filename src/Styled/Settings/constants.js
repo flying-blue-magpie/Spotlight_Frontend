@@ -17,6 +17,7 @@ export const PAGE_NAME = {
   ADD_SPOT_TO_PROJECT: { name: 'addSpotToProject', text: '加到我的行程' },
   EDIT_PLANNING_DAY: { name: 'editPlanningDay', text: '編輯天數' },
   TRAVELER: { name: 'traveler', text: '旅遊者' },
+  CREATE_SPOT: { name: 'createSpot', text: '自建景點' },
 };
 
 export const mixinWidthWrapper = () => `

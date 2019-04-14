@@ -19,6 +19,7 @@ import SpotPage from 'containers/Spotlight/Content/SpotPage';
 import AddSpotToProjectPage from 'containers/Spotlight/Content/AddSpotToProjectPage';
 import AddSpotToProjectPlanPage from 'containers/Spotlight/Content/AddSpotToProjectPlanPage';
 import TravelerPage from 'containers/Spotlight/Content/TravelerPage';
+import CreateSpotPage from 'containers/Spotlight/Content/CreateSpotPage';
 
 export const routePathConfig = {
   loginPagePath: '/',
@@ -38,6 +39,7 @@ export const routePathConfig = {
   addSpotToProjectPagePath: `/${PAGE_NAME.EXPLORE.name}/:spotId/${PAGE_NAME.ADD_SPOT_TO_PROJECT.name}`,
   addSpotToProjectPlanPagePath: `/${PAGE_NAME.EXPLORE.name}/:spotId/${PAGE_NAME.ADD_SPOT_TO_PROJECT.name}/:projectId`,
   travelerPagePath: `/${PAGE_NAME.TRAVELER.name}/:userId`,
+  createSpotPath: `/${PAGE_NAME.CREATE_SPOT.name}`,
 };
 
 export default () => (
@@ -60,6 +62,7 @@ export default () => (
       <Route exact path={routePathConfig.addSpotToProjectPagePath} component={AddSpotToProjectPage} />
       <Route exact path={routePathConfig.addSpotToProjectPlanPagePath} component={AddSpotToProjectPlanPage} />
       <Route exact path={routePathConfig.travelerPagePath} component={TravelerPage} />
+      <Route exact path={routePathConfig.createSpotPath} component={CreateSpotPage} />
     </Switch>
   </Router>
 );
