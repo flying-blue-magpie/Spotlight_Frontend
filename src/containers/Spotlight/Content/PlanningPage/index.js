@@ -32,7 +32,7 @@ const PlanningPage = ({
   const isLoaded = ownProjectsMeta.get('isLoaded');
   const isLoading = ownProjectsMeta.get('isLoading');
   useEffect(() => {
-    if (!isLoaded) {
+    if (!isLoaded && !isLoading) {
       handleFetchOwnProjects();
     }
   }, []);
