@@ -283,7 +283,7 @@ function spotLightReducer(state = initialState, action) {
           }
           return (
             projectsResult.indexOf(result) !== -1
-              ? result
+              ? List([result])
               : projectsResult.push(result)
           );
         })
