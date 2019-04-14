@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS, List } from 'immutable';
 import META, {
   updateMetaLoading,
   updateMetaDone,
@@ -277,11 +277,16 @@ function spotLightReducer(state = initialState, action) {
       }
       return state
         .mergeIn(['projects'], fromJS(entities.projects))
-        .update('projectsResult', (projectsResult) => (
-          projectsResult.indexOf(result) !== -1
-            ? result
-            : projectsResult.push(result)
-        ))
+        .update('projectsResult', (projectsResult) => {
+          if (!List.isList(projectsResult)) {
+            return List();
+          }
+          return (
+            projectsResult.indexOf(result) !== -1
+              ? result
+              : projectsResult.push(result)
+          );
+        })
         .update('setProjectMeta', updateMetaDone);
     }
 
