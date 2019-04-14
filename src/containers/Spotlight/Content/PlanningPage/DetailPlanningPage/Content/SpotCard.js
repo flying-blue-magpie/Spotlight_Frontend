@@ -106,6 +106,10 @@ const SpotCard = (props) => {
     }
     const spotA = spots.get(arrange.getIn([index, 'spot_id']).toString());
     const spotB = spots.get(arrange.getIn([index + 1, 'spot_id']).toString());
+    if (!spotA) {
+      handleFetchSpotById(arrange.getIn([index, 'spot_id']));
+      return null;
+    }
     if (!spotB) {
       handleFetchSpotById(arrange.getIn([index + 1, 'spot_id']));
       return null;
@@ -123,6 +127,10 @@ const SpotCard = (props) => {
     }
     const spotA = spots.get(arrange.getIn([index, 'spot_id']).toString());
     const spotB = spots.get(arrange.getIn([index - 1, 'spot_id']).toString());
+    if (!spotA) {
+      handleFetchSpotById(arrange.getIn([index, 'spot_id']));
+      return null;
+    }
     if (!spotB) {
       handleFetchSpotById(arrange.getIn([index - 1, 'spot_id']));
       return null;
