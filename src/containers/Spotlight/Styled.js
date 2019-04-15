@@ -39,10 +39,11 @@ export const SpotlightContainer = styled.div`
     display: flex;
     justify-content: center;
     position: fixed;
-    width: 100vw;
+    width: 100%;
+    max-width: ${MAX_WIDTH}px;
     bottom: 0;
     background-color: white;
     z-index: 1;
-    height: 60px;
+    height: ${HEIGHT_NAVIGATION}px;
   }
 `;
