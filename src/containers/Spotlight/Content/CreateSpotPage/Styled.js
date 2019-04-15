@@ -22,8 +22,14 @@ export const HeaderContainer = styled(StyledHeaderContainer)`
 `;
 
 export const Cover = styled.div`
+  position: relative;
   height: 200px;
-  background-color: #EEEEEE;
+  ${(props) => {
+    if (props.coverImage) {
+      return `background-image: url(${props.coverImage});`;
+    }
+    return 'background-color: #eee;';
+  }}
   color: #707070;
   font-size: 18px;
   font-weight: bold;
@@ -41,13 +47,23 @@ export const UploadImageButton = styled.button`
   border-radius: 50%;
   width: 30px;
   height: 30px;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  margin: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 15px 0 auto;
   appearance: none;
   border: 0;
   box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
+  cursor: pointer;
+  outline: none;
+  .upload-image-button__image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const Fields = styled.div`

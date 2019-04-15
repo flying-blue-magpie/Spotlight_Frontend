@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Context from 'containers/Spotlight/Context';
 import {
   HeaderLeftButtons,
@@ -25,6 +25,8 @@ import cameraImageSrc from './camera.svg';
 const { SpotlightContext } = Context;
 
 const CreateSpotPage = () => {
+  const [uploadImageBase64, setUploadImageBase64] = useState('');
+  const inputRef = React.createRef();
   const { setIsHeaderVisible, setIsNavVisible } = useContext(SpotlightContext);
   useEffect(() => {
     setIsHeaderVisible(false);
@@ -35,6 +37,21 @@ const CreateSpotPage = () => {
       setIsNavVisible(true);
     };
   }, []);
+  const handleTriggerUpload = () => {
+    inputRef.current.click();
+  };
+  const handleReadURL = () => {
+    const inputFiles = inputRef.current.files;
+    if (inputFiles && inputFiles[0]) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        setUploadImageBase64(e.target.result);
+      };
+
+      reader.readAsDataURL(inputFiles[0]);
+    }
+  };
 
   return (
     <Container>
@@ -53,10 +70,16 @@ const CreateSpotPage = () => {
           </HeaderButton>
         </HeaderRightButtons>
       </HeaderContainer>
-      <Cover>
-        <DefaultImage src={defaultImageSrc} />
-        請上傳景點照片
-        <UploadImageButton>
+      <Cover coverImage={uploadImageBase64}>
+        {
+          !uploadImageBase64 &&
+          <>
+            <DefaultImage src={defaultImageSrc} />
+            請上傳景點照片
+          </>
+        }
+        <UploadImageButton type="file" onClick={handleTriggerUpload}>
+          <input ref={inputRef} type="file" onChange={handleReadURL} style={{ display: 'none' }} />
           <img src={cameraImageSrc} alt="上傳照片" />
         </UploadImageButton>
       </Cover>

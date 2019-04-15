@@ -15,6 +15,8 @@ const Button = styled.button`
   width: 100%;
   background-color: #FFFFFF;
   border-radius: 10px;
+  cursor: pointer;
+  outline: none;
 `;
 
 const AddFromFavoriteButton = styled(Button)`
