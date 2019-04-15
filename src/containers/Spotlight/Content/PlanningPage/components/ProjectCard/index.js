@@ -1,6 +1,6 @@
 import React, { useContext, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 import styled from 'styled-components';
 import history from 'utils/history';
 import { PAGE_NAME } from 'Styled/Settings/constants';
@@ -25,8 +25,9 @@ const Container = styled.div`
   border-radius: 10px;
   position: relative;
   .project-card__cover-image {
-    background-image: url(${(props) => props.backgroundImagePath});
-    background-size: cover;
+    display: block;
+    width: 100%;
+    object-fit: cover;
     height: 150px;
     border-radius: 10px 10px 0px 0px;
   }
@@ -125,13 +126,17 @@ const ProjectCard = (props) => {
   const spotIds = project.get('plan')
     .map((p) => p.get('arrange'))
     .filter((arrange) => arrange.size)
-    .reduce((a, b) => a.concat(b))
+    .reduce((a, b) => a.concat(b), List())
     .map((arrange) => arrange.get('spot_id'));
   useEffect(() => {
     spotIds.map((spotId) => handleFetchSpotById(spotId));
   }, []);
-  const spotsPics = spotIds.map((spotId) => spots.get(spotId.toString())).filter((s) => Boolean(s));
-  const pics = spotsPics.get(0) ? spotsPics.getIn([0, 'pic']) : [defaultBackgroundImagePath];
+  const spotsPics = spotIds
+    .map((spotId) => spots.getIn([spotId.toString(), 'pic']))
+    .flatten(1)
+    .filter((pic) => pic !== undefined)
+    .toSet()
+    .toList();
 
   return (
     <Container isEditMode={isEditMode} onClick={handleOnClick}>
@@ -150,23 +155,30 @@ const ProjectCard = (props) => {
         </>
       }
       {
-        spotsPics.get(0) &&
-        <Carousel
-          wrapAround
-          withoutControls
-          autoplay={pics.size > 1}
-          autoplayInterval={getRandom(3000, 5000)}
-          speed={450}
-        >
-          {pics.map((pic, index) => (
-            <img
-              key={index}
-              className="project-card__cover-image"
-              src={pic}
-              alt={spotsPics.get(0).get('name')}
-            />
-          ))}
-        </Carousel>
+        spotsPics.size > 0 ? (
+          <Carousel
+            wrapAround
+            withoutControls
+            autoplay={spotsPics.size > 1}
+            autoplayInterval={getRandom(3000, 5000)}
+            speed={450}
+          >
+            {spotsPics.map((pic, index) => (
+              <img
+                key={index}
+                className="project-card__cover-image"
+                src={pic}
+                alt="景點照"
+              />
+            ))}
+          </Carousel>
+        ) : (
+          <img
+            className="project-card__cover-image"
+            src={defaultBackgroundImagePath}
+            alt="預設景點照"
+          />
+        )
       }
       <div className="project-card__info-row">
         <div className="project-card__info-title">{name}</div>
