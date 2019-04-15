@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { connect } from 'react-redux';
@@ -29,6 +29,29 @@ import Content from './Content';
 import {
   DetailPlanningPageContainer,
 } from './Styled';
+import boraImage from './default-cover-images/bora.jpg';
+import columbiaImage from './default-cover-images/british-columbia.jpg';
+import fernImage from './default-cover-images/fern.jpg';
+import mountainImage from './default-cover-images/mountain.jpg';
+import skyImage from './default-cover-images/sky.jpg';
+import sunrise1Image from './default-cover-images/sunrise-1.jpg';
+import sunrise2Image from './default-cover-images/sunrise-2.jpg';
+import taiwan1Image from './default-cover-images/taiwan-1.jpg';
+import taiwan2Image from './default-cover-images/taiwan-2.jpg';
+import southPeakImage from './default-cover-images/the-odd-knight-of-the-south-peak.jpg';
+
+const coverImagePaths = [
+  boraImage,
+  columbiaImage,
+  fernImage,
+  mountainImage,
+  skyImage,
+  sunrise1Image,
+  sunrise2Image,
+  taiwan1Image,
+  taiwan2Image,
+  southPeakImage,
+];
 
 const DetailPlanningPage = (props) => {
   const {
@@ -59,6 +82,11 @@ const DetailPlanningPage = (props) => {
     }
   }, [owner, users]);
 
+  const [coverImage, serCoverImage] = useState(null);
+  if (coverImage === null) {
+    serCoverImage(coverImagePaths[Math.floor(Math.random() * (coverImagePaths.length - 1))]);
+  }
+
   if (!projects || !projects.size) {
     return <div>尚無任何旅行計劃</div>;
   }
@@ -87,7 +115,10 @@ const DetailPlanningPage = (props) => {
   const faviconPath = users.getIn([owner.toString(), 'portrait_link']) || peopleIconPath;
 
   return (
-    <DetailPlanningPageContainer faviconPath={faviconPath}>
+    <DetailPlanningPageContainer
+      faviconPath={faviconPath}
+      coverImagePath={coverImage}
+    >
       {
         isLoading &&
         <Spinner type="opacity" />
