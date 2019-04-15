@@ -79,7 +79,7 @@ const CreateSpotPage = () => {
           </>
         }
         <UploadImageButton type="file" onClick={handleTriggerUpload}>
-          <input ref={inputRef} type="file" onChange={handleReadURL} style={{ display: 'none' }} />
+          <input ref={inputRef} type="file" onChange={handleReadURL} accept="image/*" style={{ display: 'none' }} />
           <img src={cameraImageSrc} alt="上傳照片" />
         </UploadImageButton>
       </Cover>
