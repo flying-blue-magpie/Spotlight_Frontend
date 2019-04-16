@@ -65,6 +65,7 @@ import {
   SET_REC_SPOTS_DONE,
   SET_SEARCH_REC_SPOTS_LOADING,
   SET_SEARCH_REC_SPOTS_DONE,
+  DELETE_PROJECT_BY_ID,
 } from './constants';
 
 const initialState = fromJS({
@@ -458,6 +459,14 @@ function spotLightReducer(state = initialState, action) {
       return state
         .update('deleteProjectMeta', updateMetaDone);
     }
+
+    case DELETE_PROJECT_BY_ID:
+      return state
+        .deleteIn(['projects', String(action.payload.id)])
+        .update(
+          'projectsResult',
+          (result) => result.filter((id) => id !== action.payload.id),
+        );
 
     case SET_LIKE_SPOT_DONE: {
       const { error, id } = action.payload;
