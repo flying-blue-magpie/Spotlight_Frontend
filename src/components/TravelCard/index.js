@@ -62,7 +62,7 @@ const TravelCard = ({
       {(cardImageSrcList && cardImageSrcList.length > 0)
         ? (
           <Carousel
-            autoplay
+            autoplay={cardImageSrcList.length > 1}
             swiping={false}
             dragging={false}
             wrapAround

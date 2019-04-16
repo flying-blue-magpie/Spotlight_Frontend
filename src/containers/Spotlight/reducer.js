@@ -1,4 +1,4 @@
-import { fromJS, List } from 'immutable';
+import { fromJS } from 'immutable';
 import META, {
   updateMetaLoading,
   updateMetaDone,
@@ -277,16 +277,11 @@ function spotLightReducer(state = initialState, action) {
       }
       return state
         .mergeIn(['projects'], fromJS(entities.projects))
-        .update('projectsResult', (projectsResult) => {
-          if (!List.isList(projectsResult)) {
-            return List();
-          }
-          return (
-            projectsResult.indexOf(result) !== -1
-              ? List([result])
-              : projectsResult.push(result)
-          );
-        })
+        .update('projectsResult', (projectsResult) => (
+          projectsResult.indexOf(result) !== -1
+            ? projectsResult
+            : projectsResult.push(result)
+        ))
         .update('setProjectMeta', updateMetaDone);
     }
 
@@ -304,7 +299,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setProjectsMeta', updateMetaError);
       }
       return state
-        .mergeIn(['projects'], fromJS(entities.projects))
+        .setIn(['projects'], fromJS(entities.projects))
         .set('projectsResult', fromJS(result))
         .update('setProjectsMeta', updateMetaDone);
     }
@@ -388,7 +383,25 @@ function spotLightReducer(state = initialState, action) {
       if (error) {
         return state.update('ownProjectsMeta', updateMetaError);
       }
+
+      const existingOwnProjectIds = state.get('projects')
+        .filter((project) => project.get('owner') === state.getIn(['user', 'user_id']))
+        .map((project) => project.get('proj_id'))
+        .toList();
+
       return state
+        // delete existing own project states
+        .update('projects', (projects) => (
+          projects.filter((project) => project.get('owner') !== state.getIn(['user', 'user_id']))
+        ))
+        .update(
+          'projectsResult',
+          (projectsResult) => projectsResult.filter(
+            (id) => !existingOwnProjectIds.includes(id),
+          ),
+        )
+
+        // update new own projects into store
         .mergeIn(['projects'], fromJS(entities.projects))
         .update(
           'projectsResult',
