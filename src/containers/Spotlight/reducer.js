@@ -65,6 +65,7 @@ import {
   SET_REC_SPOTS_DONE,
   SET_SEARCH_REC_SPOTS_LOADING,
   SET_SEARCH_REC_SPOTS_DONE,
+  DELETE_PROJECT_BY_ID,
 } from './constants';
 
 const initialState = fromJS({
@@ -299,7 +300,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setProjectsMeta', updateMetaError);
       }
       return state
-        .setIn(['projects'], fromJS(entities.projects))
+        .mergeIn(['projects'], fromJS(entities.projects))
         .set('projectsResult', fromJS(result))
         .update('setProjectsMeta', updateMetaDone);
     }
@@ -383,25 +384,7 @@ function spotLightReducer(state = initialState, action) {
       if (error) {
         return state.update('ownProjectsMeta', updateMetaError);
       }
-
-      const existingOwnProjectIds = state.get('projects')
-        .filter((project) => project.get('owner') === state.getIn(['user', 'user_id']))
-        .map((project) => project.get('proj_id'))
-        .toList();
-
       return state
-        // delete existing own project states
-        .update('projects', (projects) => (
-          projects.filter((project) => project.get('owner') !== state.getIn(['user', 'user_id']))
-        ))
-        .update(
-          'projectsResult',
-          (projectsResult) => projectsResult.filter(
-            (id) => !existingOwnProjectIds.includes(id),
-          ),
-        )
-
-        // update new own projects into store
         .mergeIn(['projects'], fromJS(entities.projects))
         .update(
           'projectsResult',
@@ -458,6 +441,14 @@ function spotLightReducer(state = initialState, action) {
       return state
         .update('deleteProjectMeta', updateMetaDone);
     }
+
+    case DELETE_PROJECT_BY_ID:
+      return state
+        .deleteIn(['projects', String(action.payload.id)])
+        .update(
+          'projectsResult',
+          (result) => result.filter((id) => id !== action.payload.id),
+        );
 
     case SET_LIKE_SPOT_DONE: {
       const { error, id } = action.payload;

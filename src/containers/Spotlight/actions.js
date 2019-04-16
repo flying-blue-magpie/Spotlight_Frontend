@@ -87,6 +87,7 @@ import {
   SEARCH_REC_SPOTS,
   SET_SEARCH_REC_SPOTS_LOADING,
   SET_SEARCH_REC_SPOTS_DONE,
+  DELETE_PROJECT_BY_ID,
 } from './constants';
 
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
@@ -420,6 +421,13 @@ export const deleteProjectDone = (error) => ({
   type: DELETE_PROJECT_DONE,
   payload: {
     error,
+  },
+});
+
+export const deleteProjectById = (id) => ({
+  type: DELETE_PROJECT_BY_ID,
+  payload: {
+    id,
   },
 });
 
