@@ -383,7 +383,25 @@ function spotLightReducer(state = initialState, action) {
       if (error) {
         return state.update('ownProjectsMeta', updateMetaError);
       }
+
+      const existingOwnProjectIds = state.get('projects')
+        .filter((project) => project.get('owner') === state.getIn(['user', 'user_id']))
+        .map((project) => project.get('proj_id'))
+        .toList();
+
       return state
+        // delete existing own project states
+        .update('projects', (projects) => (
+          projects.filter((project) => project.get('owner') !== state.getIn(['user', 'user_id']))
+        ))
+        .update(
+          'projectsResult',
+          (projectsResult) => projectsResult.filter(
+            (id) => !existingOwnProjectIds.includes(id),
+          ),
+        )
+
+        // update new own projects into store
         .mergeIn(['projects'], fromJS(entities.projects))
         .update(
           'projectsResult',
