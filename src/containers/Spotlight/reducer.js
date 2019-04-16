@@ -277,16 +277,11 @@ function spotLightReducer(state = initialState, action) {
       }
       return state
         .mergeIn(['projects'], fromJS(entities.projects))
-        .update('projectsResult', (projectsResult) => {
-          if (!List.isList(projectsResult)) {
-            return List();
-          }
-          return (
-            projectsResult.indexOf(result) !== -1
-              ? List([result])
-              : projectsResult.push(result)
-          );
-        })
+        .update('projectsResult', (projectsResult) => (
+          projectsResult.indexOf(result) !== -1
+            ? projectsResult
+            : projectsResult.push(result)
+        ))
         .update('setProjectMeta', updateMetaDone);
     }
 
