@@ -102,6 +102,7 @@ import {
   setRecSpotsLoading,
   setSearchRecSpotsLoading,
   setSearchRecSpotsDone,
+  deleteProjectById,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -375,11 +376,16 @@ const deleteProjectEpic = (action$, state$, { request, fetchErrorEpic }) => (
         method: 'delete',
         url: `/proj/${projectId}`,
       }).pipe(
-        flatMap(() => {
-          message.success('刪除成功');
+        flatMap((res) => {
+          if (res.status === 'success') {
+            message.success('刪除成功');
+            return of(
+              deleteProjectDone(null),
+              deleteProjectById(projectId),
+            );
+          }
           return of(
-            deleteProjectDone(null),
-            fetchOwnProjects(), // reload own projects after creation
+            deleteProjectDone(res),
           );
         }),
         catchError((error) => {
