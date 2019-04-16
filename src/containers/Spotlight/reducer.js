@@ -299,7 +299,7 @@ function spotLightReducer(state = initialState, action) {
         return state.update('setProjectsMeta', updateMetaError);
       }
       return state
-        .mergeIn(['projects'], fromJS(entities.projects))
+        .setIn(['projects'], fromJS(entities.projects))
         .set('projectsResult', fromJS(result))
         .update('setProjectsMeta', updateMetaDone);
     }
