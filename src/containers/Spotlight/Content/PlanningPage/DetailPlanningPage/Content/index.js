@@ -156,15 +156,11 @@ const Content = (props) => {
   useEffect(() => {
     setArrangeState(arrange);
   }, [day, arrange]);
-  const handleGoToAddSpot = useCallback((event) => {
+  const handleShowAddSpotModal = useCallback((event) => {
     const insertAfterIndex = findAttributeInEvent(event, 'data-index');
-    const addSpotToPlanPagePath = `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`;
-    history.push({
-      pathname: addSpotToPlanPagePath,
-      search: `${search}&afterIndex=${insertAfterIndex}`,
-      state: { afterIndex: insertAfterIndex },
-    });
-  }, [projectId, search]);
+    setIsAddSpotModalVisible(true);
+    setAddSpotAfterIndex(insertAfterIndex);
+  }, []);
   const handleShowModal = useCallback((event) => {
     const spotId = parseInt(findAttributeInEvent(event, 'data-spotid'), 10);
     setSelectedSpotId(spotId);
@@ -215,7 +211,7 @@ const Content = (props) => {
                       role="presentation"
                       className="operator__map-marker-wrapper"
                       data-index={1}
-                      onClick={handleGoToAddSpot}
+                      onClick={handleShowAddSpotModal}
                     >
                       <img src={mapPlusIconPath} className="operator__map-marker-icon" alt="" />
                     </div>
@@ -224,6 +220,23 @@ const Content = (props) => {
                     <img className="content__arrow-left_grey-icon" src={arrowLeftGreyIconPath} alt="" />
                     <div className="content__default-message-text">按左側按鈕開始添加你的行程</div>
                   </div>
+                  {isAddSpotModalVisible && (
+                    <AddSpotModal
+                      onAddFromFavoriteClick={() => {
+                        setIsAddSpotModalVisible(false);
+                        history.push({
+                          pathname: `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`,
+                          search: `${search}&afterIndex=${addSpotAfterIndex}`,
+                          state: { afterIndex: addSpotAfterIndex },
+                        });
+                        setAddSpotAfterIndex(null);
+                      }}
+                      onCreateSpotButtonClick={() => {
+                        history.push(`/${PAGE_NAME.CREATE_SPOT.name}`);
+                      }}
+                      onCancelClick={() => setIsAddSpotModalVisible(false)}
+                    />
+                  )}
                 </>
               )
               : (
@@ -267,11 +280,7 @@ const Content = (props) => {
                   role="presentation"
                   className="operator__map-marker-wrapper"
                   data-index={index + 1}
-                  onClick={(event) => {
-                    const insertAfterIndex = findAttributeInEvent(event, 'data-index');
-                    setIsAddSpotModalVisible(true);
-                    setAddSpotAfterIndex(insertAfterIndex);
-                  }}
+                  onClick={handleShowAddSpotModal}
                 >
                   <img src={isOwner ? mapPlusIconPath : ''} className="operator__map-marker-icon" alt="" />
                 </div>
