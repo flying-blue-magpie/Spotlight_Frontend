@@ -17,6 +17,7 @@ const Button = styled.button`
   border-radius: 10px;
   cursor: pointer;
   outline: none;
+  border: 0;
 `;
 
 const AddFromFavoriteButton = styled(Button)`

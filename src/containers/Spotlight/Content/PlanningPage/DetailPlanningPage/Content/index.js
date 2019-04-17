@@ -28,6 +28,9 @@ import AddSpotModal from './AddSpotModal';
 
 const { confirm } = AntdModal;
 
+const ADD_SPOT_MODAL = 'ADD_SPOT_MODAL';
+const EDIT_EXISTING_SPOT_MODAL = 'EDIT_EXISTING_SPOT_MODAL';
+
 const StyledContent = styled.div`
   padding: 15px 15px;
   padding-top: 0;
@@ -134,8 +137,7 @@ const SpotOperator = styled.div`
 `;
 
 const Content = (props) => {
-  const [isEditExistingSpotModalVisible, setIsEditExistingSpotModalVisible] = useState(false);
-  const [isAddSpotModalVisible, setIsAddSpotModalVisible] = useState(false);
+  const [modal, setModal] = useState(null);
   const [addSpotAfterIndex, setAddSpotAfterIndex] = useState(null);
   const [selectedSpotId, setSelectedSpotId] = useState();
   const [arrangeState, setArrangeState] = useState(Map());
@@ -156,22 +158,18 @@ const Content = (props) => {
   useEffect(() => {
     setArrangeState(arrange);
   }, [day, arrange]);
-  const handleGoToAddSpot = useCallback((event) => {
+  const handleShowAddSpotModal = useCallback((event) => {
     const insertAfterIndex = findAttributeInEvent(event, 'data-index');
-    const addSpotToPlanPagePath = `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`;
-    history.push({
-      pathname: addSpotToPlanPagePath,
-      search: `${search}&afterIndex=${insertAfterIndex}`,
-      state: { afterIndex: insertAfterIndex },
-    });
-  }, [projectId, search]);
-  const handleShowModal = useCallback((event) => {
+    setModal(ADD_SPOT_MODAL);
+    setAddSpotAfterIndex(insertAfterIndex);
+  }, []);
+  const handleShowEditExistingSpotModal = useCallback((event) => {
     const spotId = parseInt(findAttributeInEvent(event, 'data-spotid'), 10);
     setSelectedSpotId(spotId);
-    setIsEditExistingSpotModalVisible(true);
+    setModal(EDIT_EXISTING_SPOT_MODAL);
   }, []);
-  const handleHideModal = useCallback(() => {
-    setIsEditExistingSpotModalVisible(false);
+  const handleHideEditExistingSpotModal = useCallback(() => {
+    setModal(null);
   }, []);
   const handleDeleteSelectedSpot = useCallback(() => {
     const foundSpot = spots.get(selectedSpotId.toString());
@@ -183,7 +181,7 @@ const Content = (props) => {
       onOk: () => {
         const updatedPlan = plan.updateIn([day - 1, 'arrange'], (arrs) => arrs.filter((arr) => arr.get('spot_id') !== selectedSpotId));
         handleSubmitUpdateProject(projectId, fromJS({ plan: updatedPlan }));
-        setIsEditExistingSpotModalVisible(false);
+        setModal(null);
       },
     });
   }, [selectedSpotId, projectId]);
@@ -215,7 +213,7 @@ const Content = (props) => {
                       role="presentation"
                       className="operator__map-marker-wrapper"
                       data-index={1}
-                      onClick={handleGoToAddSpot}
+                      onClick={handleShowAddSpotModal}
                     >
                       <img src={mapPlusIconPath} className="operator__map-marker-icon" alt="" />
                     </div>
@@ -224,6 +222,23 @@ const Content = (props) => {
                     <img className="content__arrow-left_grey-icon" src={arrowLeftGreyIconPath} alt="" />
                     <div className="content__default-message-text">按左側按鈕開始添加你的行程</div>
                   </div>
+                  {modal === ADD_SPOT_MODAL && (
+                    <AddSpotModal
+                      onAddFromFavoriteClick={() => {
+                        setModal(null);
+                        history.push({
+                          pathname: `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`,
+                          search: `${search}&afterIndex=${addSpotAfterIndex}`,
+                          state: { afterIndex: addSpotAfterIndex },
+                        });
+                        setAddSpotAfterIndex(null);
+                      }}
+                      onCreateSpotButtonClick={() => {
+                        history.push(`/${PAGE_NAME.CREATE_SPOT.name}`);
+                      }}
+                      onCancelClick={() => setModal(null)}
+                    />
+                  )}
                 </>
               )
               : (
@@ -254,7 +269,7 @@ const Content = (props) => {
                     role="presentation"
                     className="operator__number-circle-border"
                     data-spotid={spot.get('spot_id')}
-                    onClick={isOwner ? handleShowModal : () => { }}
+                    onClick={isOwner ? handleShowEditExistingSpotModal : () => { }}
                   >
                     <span>{index + 1}</span>
                   </div>
@@ -267,11 +282,7 @@ const Content = (props) => {
                   role="presentation"
                   className="operator__map-marker-wrapper"
                   data-index={index + 1}
-                  onClick={(event) => {
-                    const insertAfterIndex = findAttributeInEvent(event, 'data-index');
-                    setIsAddSpotModalVisible(true);
-                    setAddSpotAfterIndex(insertAfterIndex);
-                  }}
+                  onClick={handleShowAddSpotModal}
                 >
                   <img src={isOwner ? mapPlusIconPath : ''} className="operator__map-marker-icon" alt="" />
                 </div>
@@ -295,17 +306,17 @@ const Content = (props) => {
           {...props}
         />
       </div>
-      {isEditExistingSpotModalVisible && (
+      {modal === EDIT_EXISTING_SPOT_MODAL && (
         <EditExistingSpotModal
           onDeleteSpotClick={handleDeleteSelectedSpot}
-          onCancelClick={handleHideModal}
+          onCancelClick={handleHideEditExistingSpotModal}
           onEditSpotClick={handleGoToUpdatingPage}
         />
       )}
-      {isAddSpotModalVisible && (
+      {modal === ADD_SPOT_MODAL && (
         <AddSpotModal
           onAddFromFavoriteClick={() => {
-            setIsAddSpotModalVisible(false);
+            setModal(null);
             history.push({
               pathname: `/${PAGE_NAME.ADD_SPOT_TO_PLAN.name}/${projectId}`,
               search: `${search}&afterIndex=${addSpotAfterIndex}`,
@@ -316,7 +327,7 @@ const Content = (props) => {
           onCreateSpotButtonClick={() => {
             history.push(`/${PAGE_NAME.CREATE_SPOT.name}`);
           }}
-          onCancelClick={() => setIsAddSpotModalVisible(false)}
+          onCancelClick={() => setModal(null)}
         />
       )}
     </StyledContent>
