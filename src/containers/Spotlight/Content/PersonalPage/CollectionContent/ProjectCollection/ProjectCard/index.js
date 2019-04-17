@@ -3,6 +3,7 @@ import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import moment from 'moment';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import { createStructuredSelector } from 'reselect';
 import peopleIconPath from 'assets/people_icon_100.svg';
@@ -87,6 +88,7 @@ const ProjectCard = ({
       userImageTo={`/${PAGE_NAME.TRAVELER.name}/${ownerId}`}
       cardDate={project.get('created_time')}
       cardTitle={project.get('name')}
+      cardSubtitle={`${moment(project.get('start_day'), 'YYYY-MM-DD').format('YYYY年MM月DD日')}-${moment(project.get('start_day'), 'YYYY-MM-DD').add(project.get('tot_days') - 1, 'days').format('YYYY年MM月DD日')} / ${project.get('tot_days')}天`}
       likeNumber={project.get('like_num')}
       isLikeActive
       to={`${PAGE_NAME.DETAIL_PLANNING.name}/${projectId}?day=1`}
