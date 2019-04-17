@@ -163,12 +163,12 @@ const Content = (props) => {
     setModal(ADD_SPOT_MODAL);
     setAddSpotAfterIndex(insertAfterIndex);
   }, []);
-  const handleShowModal = useCallback((event) => {
+  const handleShowEditExistingSpotModal = useCallback((event) => {
     const spotId = parseInt(findAttributeInEvent(event, 'data-spotid'), 10);
     setSelectedSpotId(spotId);
     setModal(EDIT_EXISTING_SPOT_MODAL);
   }, []);
-  const handleHideModal = useCallback(() => {
+  const handleHideEditExistingSpotModal = useCallback(() => {
     setModal(null);
   }, []);
   const handleDeleteSelectedSpot = useCallback(() => {
@@ -269,7 +269,7 @@ const Content = (props) => {
                     role="presentation"
                     className="operator__number-circle-border"
                     data-spotid={spot.get('spot_id')}
-                    onClick={isOwner ? handleShowModal : () => { }}
+                    onClick={isOwner ? handleShowEditExistingSpotModal : () => { }}
                   >
                     <span>{index + 1}</span>
                   </div>
@@ -309,7 +309,7 @@ const Content = (props) => {
       {modal === EDIT_EXISTING_SPOT_MODAL && (
         <EditExistingSpotModal
           onDeleteSpotClick={handleDeleteSelectedSpot}
-          onCancelClick={handleHideModal}
+          onCancelClick={handleHideEditExistingSpotModal}
           onEditSpotClick={handleGoToUpdatingPage}
         />
       )}
