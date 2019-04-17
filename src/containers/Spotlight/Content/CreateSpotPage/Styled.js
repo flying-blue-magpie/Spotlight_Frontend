@@ -21,12 +21,20 @@ export const HeaderContainer = styled(StyledHeaderContainer)`
   max-width: ${MAX_WIDTH}px;
 `;
 
+export const ContentContainer = styled.div`
+  overflow-y: auto;
+  height: calc(100vh - ${HEIGHT_HEADER}px);
+`;
+
 export const Cover = styled.div`
   position: relative;
   height: 200px;
   ${(props) => {
     if (props.coverImage) {
-      return `background-image: url(${props.coverImage});`;
+      return `
+      background-image: url(${props.coverImage});
+      background-size: cover;
+      `;
     }
     return 'background-color: #eee;';
   }}
