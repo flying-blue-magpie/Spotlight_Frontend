@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Context from 'containers/Spotlight/Context';
 import {
   HeaderLeftButtons,
@@ -6,6 +8,7 @@ import {
   HeaderTitle,
   HeaderRightButtons,
 } from 'containers/Spotlight/Header/Styled';
+import { submitCreateSpot } from 'containers/Spotlight/actions';
 import history from 'utils/history';
 import {
   Container,
@@ -25,8 +28,13 @@ import cameraImageSrc from './camera.svg';
 
 const { SpotlightContext } = Context;
 
-const CreateSpotPage = () => {
+const CreateSpotPage = ({ handleSubmitCreateSpot }) => {
   const [uploadImageBase64, setUploadImageBase64] = useState('');
+  const [spotName, setSpotName] = useState('');
+  const [spotAddress, setSpotAddress] = useState('');
+  const [spotPhoneNumber, setSpotPhoneNumber] = useState('');
+  const [spotUrl, setSpotUrl] = useState('');
+  const [spotNote, setSpotNote] = useState('');
   const inputRef = React.createRef();
   const { setIsHeaderVisible, setIsNavVisible } = useContext(SpotlightContext);
   useEffect(() => {
@@ -53,6 +61,17 @@ const CreateSpotPage = () => {
       reader.readAsDataURL(inputFiles[0]);
     }
   };
+  const handleOnSubmit = () => {
+    history.goBack();
+    handleSubmitCreateSpot({
+      uploadImageBase64,
+      spotName,
+      spotAddress,
+      spotPhoneNumber,
+      spotUrl,
+      spotNote,
+    });
+  };
 
   return (
     <Container>
@@ -66,7 +85,7 @@ const CreateSpotPage = () => {
           自建景點
         </HeaderTitle>
         <HeaderRightButtons>
-          <HeaderButton onClick={() => history.goBack()}>
+          <HeaderButton onClick={handleOnSubmit}>
             <i className="fas fa-arrow-right" />
           </HeaderButton>
         </HeaderRightButtons>
@@ -88,26 +107,44 @@ const CreateSpotPage = () => {
         <Fields>
           <Field>
             <FieldName>景點名稱</FieldName>
-            <TextInput placeholder="請輸入景點名稱" />
+            <TextInput
+              value={spotName}
+              placeholder="請輸入景點名稱"
+              onChange={(e) => setSpotName(e.currentTarget.value)}
+            />
           </Field>
           <Field>
             <FieldName>景點地區</FieldName>
           </Field>
           <Field>
             <FieldName>景點地址</FieldName>
-            <TextInput placeholder="請輸入具體地址" />
+            <TextInput
+              value={spotAddress}
+              placeholder="請輸入具體地址"
+              onChange={(e) => setSpotAddress(e.currentTarget.value)}
+            />
           </Field>
           <Field>
             <FieldName>電話</FieldName>
-            <TextInput />
+            <TextInput
+              value={spotPhoneNumber}
+              onChange={(e) => setSpotPhoneNumber(e.currentTarget.value)}
+            />
           </Field>
           <Field>
             <FieldName>網址</FieldName>
-            <TextInput />
+            <TextInput
+              value={spotUrl}
+              onChange={(e) => setSpotUrl(e.currentTarget.value)}
+            />
           </Field>
           <Field>
             <FieldName>景點備註</FieldName>
-            <TextArea placeholder="可以寫上與景點有關資訊。例如遊玩方式、交通轉乘資訊或是景點相關簡介等等。" />
+            <TextArea
+              value={spotNote}
+              onChange={(e) => setSpotNote(e.currentTarget.value)}
+              placeholder="可以寫上與景點有關資訊。例如遊玩方式、交通轉乘資訊或是景點相關簡介等等。"
+            />
           </Field>
         </Fields>
       </ContentContainer>
@@ -115,4 +152,20 @@ const CreateSpotPage = () => {
   );
 };
 
-export default CreateSpotPage;
+CreateSpotPage.propTypes = {
+  handleSubmitCreateSpot: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  handleSubmitCreateSpot: (spot) => dispatch(submitCreateSpot({
+    name: spot.spotName,
+    zone: '臺北市',
+    describe: spot.spotNote,
+    tel: spot.spotPhoneNumber,
+    website: spot.spotUrl,
+    address: spot.spotAddress,
+    pic1: spot.uploadImageBase64.split('base64,')[1],
+  })),
+});
+
+export default connect(null, mapDispatchToProps)(CreateSpotPage);
