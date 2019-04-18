@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Context from 'containers/Spotlight/Context';
 import {
   HeaderLeftButtons,
@@ -6,6 +8,7 @@ import {
   HeaderTitle,
   HeaderRightButtons,
 } from 'containers/Spotlight/Header/Styled';
+import { submitCreateSpot } from 'containers/Spotlight/actions';
 import history from 'utils/history';
 import {
   Container,
@@ -25,7 +28,7 @@ import cameraImageSrc from './camera.svg';
 
 const { SpotlightContext } = Context;
 
-const CreateSpotPage = () => {
+const CreateSpotPage = ({ handleSubmitCreateSpot }) => {
   const [uploadImageBase64, setUploadImageBase64] = useState('');
   const [spotName, setSpotName] = useState('');
   const [spotAddress, setSpotAddress] = useState('');
@@ -58,6 +61,17 @@ const CreateSpotPage = () => {
       reader.readAsDataURL(inputFiles[0]);
     }
   };
+  const handleOnSubmit = () => {
+    history.goBack();
+    handleSubmitCreateSpot({
+      uploadImageBase64,
+      spotName,
+      spotAddress,
+      spotPhoneNumber,
+      spotUrl,
+      spotNote,
+    });
+  };
 
   return (
     <Container>
@@ -71,7 +85,7 @@ const CreateSpotPage = () => {
           自建景點
         </HeaderTitle>
         <HeaderRightButtons>
-          <HeaderButton onClick={() => history.goBack()}>
+          <HeaderButton onClick={handleOnSubmit}>
             <i className="fas fa-arrow-right" />
           </HeaderButton>
         </HeaderRightButtons>
@@ -138,4 +152,20 @@ const CreateSpotPage = () => {
   );
 };
 
-export default CreateSpotPage;
+CreateSpotPage.propTypes = {
+  handleSubmitCreateSpot: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  handleSubmitCreateSpot: (spot) => dispatch(submitCreateSpot({
+    name: spot.spotName,
+    zone: '臺北市',
+    describe: spot.spotNote,
+    tel: spot.spotPhoneNumber,
+    website: spot.spotUrl,
+    address: spot.spotAddress,
+    pic1: spot.uploadImageBase64.split('base64,')[1],
+  })),
+});
+
+export default connect(null, mapDispatchToProps)(CreateSpotPage);
