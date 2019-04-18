@@ -66,6 +66,7 @@ import {
   SET_SEARCH_REC_SPOTS_LOADING,
   SET_SEARCH_REC_SPOTS_DONE,
   DELETE_PROJECT_BY_ID,
+  CREATE_SPOT_DONE,
 } from './constants';
 
 const initialState = fromJS({
@@ -545,6 +546,9 @@ function spotLightReducer(state = initialState, action) {
         }
         return ids;
       });
+    
+    // case CREATE_SPOT_DONE:
+    //   return state.
 
     default:
       return state;
