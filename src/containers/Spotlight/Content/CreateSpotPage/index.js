@@ -27,6 +27,11 @@ const { SpotlightContext } = Context;
 
 const CreateSpotPage = () => {
   const [uploadImageBase64, setUploadImageBase64] = useState('');
+  const [spotName, setSpotName] = useState('');
+  const [spotAddress, setSpotAddress] = useState('');
+  const [spotPhoneNumber, setSpotPhoneNumber] = useState('');
+  const [spotUrl, setSpotUrl] = useState('');
+  const [spotNote, setSpotNote] = useState('');
   const inputRef = React.createRef();
   const { setIsHeaderVisible, setIsNavVisible } = useContext(SpotlightContext);
   useEffect(() => {
@@ -88,26 +93,44 @@ const CreateSpotPage = () => {
         <Fields>
           <Field>
             <FieldName>景點名稱</FieldName>
-            <TextInput placeholder="請輸入景點名稱" />
+            <TextInput
+              value={spotName}
+              placeholder="請輸入景點名稱"
+              onChange={(e) => setSpotName(e.currentTarget.value)}
+            />
           </Field>
           <Field>
             <FieldName>景點地區</FieldName>
           </Field>
           <Field>
             <FieldName>景點地址</FieldName>
-            <TextInput placeholder="請輸入具體地址" />
+            <TextInput
+              value={spotAddress}
+              placeholder="請輸入具體地址"
+              onChange={(e) => setSpotAddress(e.currentTarget.value)}
+            />
           </Field>
           <Field>
             <FieldName>電話</FieldName>
-            <TextInput />
+            <TextInput
+              value={spotPhoneNumber}
+              onChange={(e) => setSpotPhoneNumber(e.currentTarget.value)}
+            />
           </Field>
           <Field>
             <FieldName>網址</FieldName>
-            <TextInput />
+            <TextInput
+              value={spotUrl}
+              onChange={(e) => setSpotUrl(e.currentTarget.value)}
+            />
           </Field>
           <Field>
             <FieldName>景點備註</FieldName>
-            <TextArea placeholder="可以寫上與景點有關資訊。例如遊玩方式、交通轉乘資訊或是景點相關簡介等等。" />
+            <TextArea
+              value={spotNote}
+              onChange={(e) => setSpotNote(e.currentTarget.value)}
+              placeholder="可以寫上與景點有關資訊。例如遊玩方式、交通轉乘資訊或是景點相關簡介等等。"
+            />
           </Field>
         </Fields>
       </ContentContainer>
