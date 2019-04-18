@@ -88,6 +88,9 @@ import {
   SET_SEARCH_REC_SPOTS_LOADING,
   SET_SEARCH_REC_SPOTS_DONE,
   DELETE_PROJECT_BY_ID,
+  SUBMIT_CREATE_SPOT,
+  CREATE_SPOT_DONE,
+  CREATE_SPOT_LOADING,
 } from './constants';
 
 const spotSchema = new schema.Entity('spots', {}, { idAttribute: 'spot_id' });
@@ -195,6 +198,23 @@ export const setSpotsDone = (error, spots) => ({
   payload: {
     error,
     ...normalize(spots, spotListSchema),
+  },
+});
+
+export const submitCreateSpot = (spot) => ({
+  type: SUBMIT_CREATE_SPOT,
+  payload: spot,
+});
+
+export const createSpotLoading = () => ({
+  type: CREATE_SPOT_LOADING,
+});
+
+export const createSpotDone = (error, spot) => ({
+  type: CREATE_SPOT_DONE,
+  payload: {
+    error,
+    spot,
   },
 });
 
