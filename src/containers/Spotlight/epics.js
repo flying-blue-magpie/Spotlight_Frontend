@@ -43,6 +43,7 @@ import {
   FETCH_REC_SPOTS,
   SEARCH_REC_SPOTS,
   REC_SPOTS_BUFFER_COUNT,
+  SUBMIT_CREATE_SPOT,
 } from './constants';
 import {
   setUserLoading,
@@ -103,6 +104,8 @@ import {
   setSearchRecSpotsLoading,
   setSearchRecSpotsDone,
   deleteProjectById,
+  createSpotDone,
+  createSpotLoading,
 } from './actions';
 
 const setInit = (action$) => action$.ofType(INIT).switchMap(() => Observable.empty());
@@ -251,6 +254,41 @@ const searchRecSpotsEpic = (action$, state$, { request, fetchErrorEpic }) => (
         )),
       )
     )),
+  )
+);
+
+const createSpotEpic = (action$, state$, { request, fetchErrorEpic }) => (
+  action$.pipe(
+    ofType(SUBMIT_CREATE_SPOT),
+    switchMap((action) => {
+      const spot = {
+        name: action.payload.name,
+        zone: action.payload.zone,
+        describe: action.payload.describe,
+        tel: action.payload.tel,
+        website: action.payload.website,
+        address: action.payload.address,
+        pic1: action.payload.pic1,
+        pic2: action.payload.pic2,
+        pic3: action.payload.pic3,
+      };
+      return request({
+        method: 'post',
+        url: '/own/spot',
+        data: spot,
+      }).pipe(
+        flatMap((res) => (
+          res.status === 'success'
+            ? of(createSpotDone(null, spot))
+            : of(createSpotDone(res))
+        )),
+        catchError((error) => fetchErrorEpic(
+          error,
+          createSpotDone(error),
+        )),
+        startWith(createSpotLoading()),
+      );
+    }),
   )
 );
 
@@ -703,4 +741,5 @@ export default [
   fetchFavoriteSpotIdsEpic,
   fetchFavoriteProjectIdsEpic,
   exploreNextSpotEpic,
+  createSpotEpic,
 ];
