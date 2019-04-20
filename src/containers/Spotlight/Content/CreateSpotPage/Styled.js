@@ -119,3 +119,17 @@ export const TextArea = styled.textarea`
   height: 78px;
   flex-basis: 75%;
 `;
+
+export const Select = styled.select`
+  appearance: none;
+  background-color: transparent;
+  border: 0;
+  color: #AAAAAA;
+  flex-basis: 70%;
+  outline: 0;
+`;
+
+export const ArrowIcon = styled.i`
+  flex-basis: 5%;
+  font-size: 18px;
+`;
