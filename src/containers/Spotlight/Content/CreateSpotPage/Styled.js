@@ -107,6 +107,10 @@ export const TextInput = styled.input`
   outline: none;
   border: 0;
   flex-basis: 75%;
+
+  &::placeholder {
+    color: #AAAAAA;
+  }
 `;
 
 export const TextArea = styled.textarea`
@@ -118,6 +122,10 @@ export const TextArea = styled.textarea`
   border: 0;
   height: 78px;
   flex-basis: 75%;
+
+  &::placeholder {
+    color: #AAAAAA;
+  }
 `;
 
 export const Select = styled.select`
@@ -132,4 +140,5 @@ export const Select = styled.select`
 export const ArrowIcon = styled.i`
   flex-basis: 5%;
   font-size: 18px;
+  color: #333333;
 `;
