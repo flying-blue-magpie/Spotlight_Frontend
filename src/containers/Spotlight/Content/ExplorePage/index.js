@@ -28,13 +28,12 @@ import {
   fetchRecSpots,
   searchRecSpots,
 } from 'containers/Spotlight/actions';
-import { REC_SPOTS_BUFFER_COUNT } from 'containers/Spotlight/constants';
+import { REC_SPOTS_BUFFER_COUNT, ZONES } from 'containers/Spotlight/constants';
 import Spinner from 'components/Spinner';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import Context from 'containers/Spotlight/Context';
 import ZoneMenu from './ZoneMenu';
 import { zoneReducer } from './reducer';
-import { zones as zonesData } from './constants';
 import CardImage from './CardImage';
 import {
   Container,
@@ -76,7 +75,7 @@ const ExplorePage = (props) => {
     handleSearchRecSpots,
   } = props;
 
-  const [zonesState, dispatch] = useReducer(zoneReducer, fromJS(zonesData));
+  const [zonesState, dispatch] = useReducer(zoneReducer, fromJS(ZONES));
   const selectedZones = zonesState
     .filter((zone) => zone.get('selected'))
     .map((zone) => zone.get('name'))
