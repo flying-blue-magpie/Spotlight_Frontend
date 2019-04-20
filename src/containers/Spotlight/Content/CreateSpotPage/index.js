@@ -9,6 +9,7 @@ import {
   HeaderRightButtons,
 } from 'containers/Spotlight/Header/Styled';
 import { submitCreateSpot } from 'containers/Spotlight/actions';
+import { ZONES } from 'containers/Spotlight/constants';
 import history from 'utils/history';
 import {
   Container,
@@ -22,6 +23,8 @@ import {
   TextArea,
   HeaderContainer,
   ContentContainer,
+  Select,
+  ArrowIcon,
 } from './Styled';
 import defaultImageSrc from './default-image.svg';
 import cameraImageSrc from './camera.svg';
@@ -31,6 +34,7 @@ const { SpotlightContext } = Context;
 const CreateSpotPage = ({ handleSubmitCreateSpot }) => {
   const [uploadImageBase64, setUploadImageBase64] = useState('');
   const [spotName, setSpotName] = useState('');
+  const [spotZone, setSpotZone] = useState(Object.keys(ZONES)[0]);
   const [spotAddress, setSpotAddress] = useState('');
   const [spotPhoneNumber, setSpotPhoneNumber] = useState('');
   const [spotUrl, setSpotUrl] = useState('');
@@ -66,6 +70,7 @@ const CreateSpotPage = ({ handleSubmitCreateSpot }) => {
     handleSubmitCreateSpot({
       uploadImageBase64,
       spotName,
+      spotZone,
       spotAddress,
       spotPhoneNumber,
       spotUrl,
@@ -115,6 +120,12 @@ const CreateSpotPage = ({ handleSubmitCreateSpot }) => {
           </Field>
           <Field>
             <FieldName>景點地區</FieldName>
+            <Select value={spotZone} onChange={(e) => setSpotZone(e.currentTarget.value)}>
+              {Object.keys(ZONES).map((zone) => (
+                <option key={zone} value={zone}>{zone}</option>
+              ))}
+            </Select>
+            <ArrowIcon className="fas fa-caret-right" />
           </Field>
           <Field>
             <FieldName>景點地址</FieldName>
@@ -159,7 +170,7 @@ CreateSpotPage.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
   handleSubmitCreateSpot: (spot) => dispatch(submitCreateSpot({
     name: spot.spotName,
-    zone: '臺北市',
+    zone: spot.spotZone,
     describe: spot.spotNote,
     tel: spot.spotPhoneNumber,
     website: spot.spotUrl,
