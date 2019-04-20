@@ -702,12 +702,16 @@ const exploreNextSpotEpic = (action$, state$) => (
       const favoriteSpotIds = state.get('favoriteSpotIds');
       const spotIds = state.get('recSpotsResult');
       const exploringSpotId = state.get('exploringSpotId');
-      const nextSpotId = spotIds
-        .slice(spotIds.indexOf(exploringSpotId) + 1)
+      const notExploredSpotIds = spotIds
+        .slice(spotIds.indexOf(exploringSpotId) + 1);
+      const nextSpotId = notExploredSpotIds
         .find((notExploredId) => !favoriteSpotIds.includes(notExploredId));
 
       if (nextSpotId) {
         return setExploringSpotId(nextSpotId);
+      }
+      if (notExploredSpotIds.size === 0) {
+        return setExploringSpotId(spotIds.get(0));
       }
 
       return setExploringSpotId(exploringSpotId);
