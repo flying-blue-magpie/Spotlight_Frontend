@@ -133,12 +133,13 @@ export const Select = styled.select`
   background-color: transparent;
   border: 0;
   color: #AAAAAA;
-  flex-basis: 70%;
+  flex-grow: 1;
   outline: 0;
 `;
 
 export const ArrowIcon = styled.i`
-  flex-basis: 5%;
+  flex-shrink: 0;
+  margin-right: 20px;
   font-size: 18px;
   color: #333333;
 `;
