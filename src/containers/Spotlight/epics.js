@@ -279,7 +279,7 @@ const createSpotEpic = (action$, state$, { request, fetchErrorEpic }) => (
       }).pipe(
         flatMap((res) => (
           res.status === 'success'
-            ? of(createSpotDone(null, spot))
+            ? of(createSpotDone(null, res.content))
             : of(createSpotDone(res))
         )),
         catchError((error) => fetchErrorEpic(

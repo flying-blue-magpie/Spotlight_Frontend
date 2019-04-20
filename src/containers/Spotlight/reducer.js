@@ -67,6 +67,7 @@ import {
   SET_SEARCH_REC_SPOTS_DONE,
   DELETE_PROJECT_BY_ID,
   CREATE_SPOT_DONE,
+  CREATE_SPOT_LOADING,
 } from './constants';
 
 const initialState = fromJS({
@@ -74,6 +75,7 @@ const initialState = fromJS({
   setSpotsMeta: META,
   setRecSpotsMeta: META,
   setSearchRecSpotsMeta: META,
+  createSpotMeta: META,
   spots: {},
   spotsResult: [],
   recSpotsResult: [],
@@ -546,9 +548,24 @@ function spotLightReducer(state = initialState, action) {
         }
         return ids;
       });
-    
-    // case CREATE_SPOT_DONE:
-    //   return state.
+
+    case CREATE_SPOT_LOADING:
+      return state.update('createSpotMeta', updateMetaLoading);
+
+    case CREATE_SPOT_DONE: {
+      const {
+        error,
+        spot,
+      } = action.payload;
+
+      if (error) {
+        return state.update('createSpotMeta', updateMetaError);
+      }
+
+      return state
+        .mergeIn(['spots'], fromJS({ [spot.spot_id]: spot }))
+        .update('createSpotMeta', updateMetaDone);
+    }
 
     default:
       return state;
