@@ -1,14 +1,19 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { HEIGHT_HEADER } from 'Styled/Settings/constants';
 
 export const HeaderContainer = styled.div`
-  height: 100%;
+  height: ${HEIGHT_HEADER}px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   font-size: 20px;
+  background: ${(props) => props.theme.mainColor};
 
+  .header-container__title {
+    font-weight: 500;
+  }
   .header-container__icon-wrapper {
     position: absolute;
     margin: 0px 6px;

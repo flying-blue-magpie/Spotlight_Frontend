@@ -108,6 +108,8 @@ const initialState = fromJS({
   setFavoriteProjectIdsMeta: META,
   favoriteSpotIds: [],
   favoriteProjectIds: [],
+
+  createdSpotId: null,
 });
 
 function spotLightReducer(state = initialState, action) {
@@ -178,9 +180,10 @@ function spotLightReducer(state = initialState, action) {
         error,
         spot,
       } = action.payload;
-
       if (error) {
-        return state.update('setSpotMeta', updateMetaError);
+        return state
+          .mergeIn(['spots'], fromJS({ [spot.spot_id]: spot }))
+          .update('setSpotMeta', updateMetaError);
       }
       if (!spot) { // handle spot is undefined
         return state.update('setSpotMeta', updateMetaDone);
@@ -564,7 +567,8 @@ function spotLightReducer(state = initialState, action) {
 
       return state
         .mergeIn(['spots'], fromJS({ [spot.spot_id]: spot }))
-        .update('createSpotMeta', updateMetaDone);
+        .update('createSpotMeta', updateMetaDone)
+        .set('createdSpotId', spot.spot_id);
     }
 
     default:

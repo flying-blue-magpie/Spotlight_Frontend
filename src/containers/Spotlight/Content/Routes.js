@@ -39,7 +39,7 @@ export const routePathConfig = {
   addSpotToProjectPagePath: `/${PAGE_NAME.EXPLORE.name}/:spotId/${PAGE_NAME.ADD_SPOT_TO_PROJECT.name}`,
   addSpotToProjectPlanPagePath: `/${PAGE_NAME.EXPLORE.name}/:spotId/${PAGE_NAME.ADD_SPOT_TO_PROJECT.name}/:projectId`,
   travelerPagePath: `/${PAGE_NAME.TRAVELER.name}/:userId`,
-  createSpotPath: `/${PAGE_NAME.CREATE_SPOT.name}`,
+  createSpotPath: `/${PAGE_NAME.CREATE_SPOT.name}/:projectId`,
 };
 
 export default () => (

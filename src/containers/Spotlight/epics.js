@@ -174,9 +174,12 @@ const fetchSpotByIdEpic = (action$, state$, { request, fetchErrorEpic }) => (
       method: 'get',
       url: `/spot/${action.payload.id}`,
     }).pipe(
-      flatMap((data) => of(
-        setSpotDone(null, data.content),
-      )),
+      flatMap((res) => {
+        if (res.status === 'success') {
+          return of(setSpotDone(null, res.content));
+        }
+        return of(setSpotDone(res, { spot_id: action.payload.id }));
+      }),
       catchError((error) => fetchErrorEpic(
         error,
         setSpotDone(error),
@@ -277,11 +280,14 @@ const createSpotEpic = (action$, state$, { request, fetchErrorEpic }) => (
         url: '/own/spot',
         data: spot,
       }).pipe(
-        flatMap((res) => (
-          res.status === 'success'
-            ? of(createSpotDone(null, res.content))
-            : of(createSpotDone(res))
-        )),
+        flatMap((res) => {
+          if (res.status === 'success') {
+            message.success('景點建立成功');
+            return of(createSpotDone(null, res.content));
+          }
+          message.success('景點建立失敗，請檢查資料格式');
+          return of(createSpotDone(res));
+        }),
         catchError((error) => fetchErrorEpic(
           error,
           createSpotDone(error),
