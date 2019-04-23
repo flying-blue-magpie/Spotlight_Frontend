@@ -568,7 +568,7 @@ function spotLightReducer(state = initialState, action) {
       return state
         .mergeIn(['spots'], fromJS({ [spot.spot_id]: spot }))
         .update('createSpotMeta', updateMetaDone)
-        .set('createdSpotId', spot.spot_id);
+        .set('createdSpotId', action.payload.spot.spot_id);
     }
 
     default:

@@ -73,7 +73,7 @@ const AddCreatedSpotToProjectPlanPage = ({
       pathname: `/${PAGE_NAME.DETAIL_PLANNING.name}/${projectId}`,
       search: location.search,
     });
-  }, [match, location, projects, duringTime]);
+  }, [match, location, projects, duringTime, createdSpotId]);
 
   return (
     <Modal
