@@ -69,7 +69,7 @@ const AddCreatedSpotToProjectPlanPage = ({
       plan: updatedPlan,
     }));
     setIsVisible(false);
-    history.push({
+    history.replace({
       pathname: `/${PAGE_NAME.DETAIL_PLANNING.name}/${projectId}`,
       search: location.search,
     });
