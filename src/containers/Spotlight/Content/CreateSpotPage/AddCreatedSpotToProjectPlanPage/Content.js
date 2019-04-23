@@ -42,7 +42,7 @@ const Content = ({ isLoading, duringTime, setDurintTime }) => {
       <Container>
         <InputBox
           title="停留時間"
-          defaultValue={value}
+          value={value}
           readonly
           handleOnClick={handleShowTimePickerModal}
         />

@@ -70,18 +70,18 @@ const UpdatePlanningPage = ({
     return <div>找不到該旅行計劃資料</div>;
   }
   const name = ownProject.get('name');
-  const startDay = moment(ownProject.get('start_day'), 'YYYY-MM-DD').format('YYYY-MM-DD'); // defaultValue format must be YYYY-MM-DD
+  const startDay = moment(ownProject.get('start_day'), 'YYYY-MM-DD').format('YYYY-MM-DD'); // value format must be YYYY-MM-DD
   return (
     <UpdatePlanningPageWrapper>
       <InputBox
         title="旅程名稱"
-        defaultValue={name}
+        value={name}
         handleOnChange={handleOnNameChange}
       />
       <InputBox
         title="出發日期"
         inputType="date"
-        defaultValue={startDay}
+        value={startDay}
         handleOnChange={handleOnDateChange}
       />
     </UpdatePlanningPageWrapper>
