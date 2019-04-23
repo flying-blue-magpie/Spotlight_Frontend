@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Context from 'containers/Spotlight/Context';
 import InputBox from 'components/InputBox';
@@ -33,34 +33,43 @@ const StyledCreateProjectPage = styled.div`
 
 const CreateProjectPage = () => {
   const context = useContext(SpotlightContext);
+  const [name, setName] = useState();
+  const [startDay, setStartDay] = useState();
+  const [days, setDays] = useState(1);
   const {
     setNewProject,
   } = context;
   const handleOnNameChange = (event) => {
     const currentValue = event.currentTarget.value;
+    setName(currentValue);
     setNewProject((newProject) => newProject.set('name', currentValue));
   };
   const handleOnStartDayChange = (event) => {
     const currentValue = event.currentTarget.value;
+    setStartDay(currentValue);
     setNewProject((newProject) => newProject.set('start_day', currentValue));
   };
   const handleOnDaysChange = (event) => {
     const currentValue = event.currentTarget.value > 0 ? parseInt(event.currentTarget.value, 10) : 0;
+    setDays(currentValue);
     setNewProject((newProject) => newProject.set('tot_days', currentValue));
   };
   return (
     <StyledCreateProjectPage>
       <InputBox
         title="旅程名稱"
+        value={name}
         handleOnChange={handleOnNameChange}
       />
       <InputBox
         title="出發日期"
         inputType="date"
+        value={startDay}
         handleOnChange={handleOnStartDayChange}
       />
       <InputBox
         title="天數"
+        value={days.toString()}
         handleOnChange={handleOnDaysChange}
       />
     </StyledCreateProjectPage>

@@ -11,6 +11,10 @@ import {
 import { submitCreateSpot } from 'containers/Spotlight/actions';
 import { ZONES } from 'containers/Spotlight/constants';
 import history from 'utils/history';
+// import { PAGE_NAME } from 'Styled/Settings/constants';
+import message from 'antd/lib/message';
+import ModalAddCreatedSpotToProjectPlanPage from './AddCreatedSpotToProjectPlanPage';
+
 import {
   Container,
   Cover,
@@ -31,7 +35,7 @@ import cameraImageSrc from './camera.svg';
 
 const { SpotlightContext } = Context;
 
-const CreateSpotPage = ({ handleSubmitCreateSpot }) => {
+const CreateSpotPage = ({ match, location, handleSubmitCreateSpot }) => {
   const [uploadImageBase64, setUploadImageBase64] = useState('');
   const [spotName, setSpotName] = useState('');
   const [spotZone, setSpotZone] = useState(Object.keys(ZONES)[0]);
@@ -39,8 +43,10 @@ const CreateSpotPage = ({ handleSubmitCreateSpot }) => {
   const [spotPhoneNumber, setSpotPhoneNumber] = useState('');
   const [spotUrl, setSpotUrl] = useState('');
   const [spotNote, setSpotNote] = useState('');
+  const [isAddCreatedSpotModalVisible, setIsAddCreatedSpotModalVisible] = useState(false);
   const inputRef = React.createRef();
   const { setIsHeaderVisible, setIsNavVisible } = useContext(SpotlightContext);
+
   useEffect(() => {
     setIsHeaderVisible(false);
     setIsNavVisible(false);
@@ -66,7 +72,11 @@ const CreateSpotPage = ({ handleSubmitCreateSpot }) => {
     }
   };
   const handleOnSubmit = () => {
-    history.goBack();
+    if (!spotName || !spotZone) {
+      message.error('景點名稱及景點地區為必填');
+      return;
+    }
+    setIsAddCreatedSpotModalVisible(true);
     handleSubmitCreateSpot({
       uploadImageBase64,
       spotName,
@@ -159,12 +169,20 @@ const CreateSpotPage = ({ handleSubmitCreateSpot }) => {
           </Field>
         </Fields>
       </ContentContainer>
+      <ModalAddCreatedSpotToProjectPlanPage
+        match={match}
+        location={location}
+        isVisible={isAddCreatedSpotModalVisible}
+        setIsVisible={setIsAddCreatedSpotModalVisible}
+      />
     </Container>
   );
 };
 
 CreateSpotPage.propTypes = {
   handleSubmitCreateSpot: PropTypes.func.isRequired,
+  match: PropTypes.object,
+  location: PropTypes.object,
 };
 
 const mapDispatchToProps = (dispatch) => ({

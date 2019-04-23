@@ -174,9 +174,12 @@ const fetchSpotByIdEpic = (action$, state$, { request, fetchErrorEpic }) => (
       method: 'get',
       url: `/spot/${action.payload.id}`,
     }).pipe(
-      flatMap((data) => of(
-        setSpotDone(null, data.content),
-      )),
+      flatMap((res) => {
+        if (res.status === 'success') {
+          return of(setSpotDone(null, res.content));
+        }
+        return of(setSpotDone(res, { spot_id: action.payload.id }));
+      }),
       catchError((error) => fetchErrorEpic(
         error,
         setSpotDone(error),
@@ -277,11 +280,14 @@ const createSpotEpic = (action$, state$, { request, fetchErrorEpic }) => (
         url: '/own/spot',
         data: spot,
       }).pipe(
-        flatMap((res) => (
-          res.status === 'success'
-            ? of(createSpotDone(null, spot))
-            : of(createSpotDone(res))
-        )),
+        flatMap((res) => {
+          if (res.status === 'success') {
+            message.success('景點建立成功');
+            return of(createSpotDone(null, res.content));
+          }
+          message.success('景點建立失敗，請檢查資料格式');
+          return of(createSpotDone(res));
+        }),
         catchError((error) => fetchErrorEpic(
           error,
           createSpotDone(error),
@@ -702,12 +708,16 @@ const exploreNextSpotEpic = (action$, state$) => (
       const favoriteSpotIds = state.get('favoriteSpotIds');
       const spotIds = state.get('recSpotsResult');
       const exploringSpotId = state.get('exploringSpotId');
-      const nextSpotId = spotIds
-        .slice(spotIds.indexOf(exploringSpotId) + 1)
+      const notExploredSpotIds = spotIds
+        .slice(spotIds.indexOf(exploringSpotId) + 1);
+      const nextSpotId = notExploredSpotIds
         .find((notExploredId) => !favoriteSpotIds.includes(notExploredId));
 
       if (nextSpotId) {
         return setExploringSpotId(nextSpotId);
+      }
+      if (notExploredSpotIds.size === 0) {
+        return setExploringSpotId(spotIds.get(0));
       }
 
       return setExploringSpotId(exploringSpotId);

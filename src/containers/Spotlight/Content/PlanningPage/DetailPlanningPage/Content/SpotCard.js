@@ -2,9 +2,8 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Map, List } from 'immutable';
-import moment from 'moment';
-import { getDistance } from 'utils/distance';
 import moveIconPath from 'assets/move_icon.svg';
+import { getTravelingData } from './utils';
 
 export const HEIGHT_SPOT_CARD = 60;
 export const HEIGHT_SPOT_TRAVEL_TIME = 40;
@@ -94,63 +93,30 @@ const SpotCard = (props) => {
   if (!arrange.size) {
     return null;
   }
-  const startTime = index === 0
-    ? dayStartTime
-    : moment(dayStartTime, 'HH:mm:ss').add(arrange.map((arr) => arr.get('during')).toJS().splice(0, index).reduce((a, b) => a + b), 'minutes');
-  const duringTime = arrange.getIn([index, 'during']);
-  const endTime = moment(startTime, 'HH:mm:ss').add(duringTime, 'minutes');
+  const spotIds = arrange.map((arr) => arr.get('spot_id'));
+  const isAllSpotsReady = spotIds
+    .map((sid) => Boolean(spots.get(sid.toString())))
+    .toJS()
+    .reduce((a, b) => a === true && b === true);
 
-  let driveTime = '1時15分';
-  let walkTime = '6時15分';
-  const carSpeed = 30;
-  const walkSpeed = 10;
-  if (!(arrange.size - 1 === index)) {
-    if (!arrange.getIn([index, 'spot_id']) || !arrange.getIn([index + 1, 'spot_id'])) {
-      return null;
-    }
-    const spotA = spots.get(arrange.getIn([index, 'spot_id']).toString());
-    const spotB = spots.get(arrange.getIn([index + 1, 'spot_id']).toString());
-    if (!spotA) {
-      handleFetchSpotById(arrange.getIn([index, 'spot_id']));
-      return null;
-    }
-    if (!spotB) {
-      handleFetchSpotById(arrange.getIn([index + 1, 'spot_id']));
-      return null;
-    }
-    const distance = getDistance(spotA.get('px'), spotA.get('py'), spotB.get('px'), spotB.get('py')) / 1000;
-    driveTime = `${Math.round(distance / carSpeed)}時${Math.floor(((distance / carSpeed) - Math.floor(distance / carSpeed)) * 60)}分`;
-    walkTime = `${Math.round(distance / walkSpeed)}時${Math.floor(((distance / walkSpeed) - Math.floor(distance / walkSpeed)) * 60)}分`;
+  if (!isAllSpotsReady) {
+    return null;
   }
-
-  let driveHour = 0;
-  let driveMinute = 0;
-  if (index > 0) {
-    if (!arrange.getIn([index, 'spot_id']) || !arrange.getIn([index - 1, 'spot_id'])) {
-      return null;
-    }
-    const spotA = spots.get(arrange.getIn([index, 'spot_id']).toString());
-    const spotB = spots.get(arrange.getIn([index - 1, 'spot_id']).toString());
-    if (!spotA) {
-      handleFetchSpotById(arrange.getIn([index, 'spot_id']));
-      return null;
-    }
-    if (!spotB) {
-      handleFetchSpotById(arrange.getIn([index - 1, 'spot_id']));
-      return null;
-    }
-    const distance = getDistance(spotA.get('px'), spotA.get('py'), spotB.get('px'), spotB.get('py')) / 1000;
-    driveHour = Math.round(distance / carSpeed);
-    driveMinute = Math.floor(((distance / carSpeed) - Math.floor(distance / carSpeed)) * 60);
-  }
+  const travelingData = getTravelingData({
+    spotIds,
+    dayStartTime,
+    spots,
+    arrange,
+  });
+  const spotInfo = travelingData.find((td) => td.get('id') === spotIndexInfo.get('spot_id'));
 
   return (
     <StyledSpotCard>
       <div className="spot-card__card-row">
         <div className="spot-card__start-end-time-wrapper">
-          <div>{moment(startTime, 'HH:mm:ss').add(driveHour, 'hours').add(driveMinute, 'minutes').format('HH:mm')}</div>
+          <div>{spotInfo.get('startTime')}</div>
           <div>|</div>
-          <div>{moment(endTime, 'HH:mm:ss').format('HH:mm')}</div>
+          <div>{spotInfo.get('endTime')}</div>
         </div>
         <div className="spot-card__card-body">
           <div>
@@ -167,11 +133,11 @@ const SpotCard = (props) => {
         <div className="spot-card__travel-row-wrapper">
           <div className="spot-card__travel-time-wrapper">
             <i className="fas fa-car spot-card__travel-time-icon" />
-            <div>{driveTime}</div>
+            <div>{spotInfo.get('driveTimeText')}</div>
           </div>
           <div className="spot-card__travel-time-wrapper">
             <i className="fas fa-running spot-card__travel-time-icon" />
-            <div>{walkTime}</div>
+            <div>{spotInfo.get('walkTimeText')}</div>
           </div>
         </div>
       }

@@ -234,7 +234,11 @@ const Content = (props) => {
                         setAddSpotAfterIndex(null);
                       }}
                       onCreateSpotButtonClick={() => {
-                        history.push(`/${PAGE_NAME.CREATE_SPOT.name}`);
+                        history.push({
+                          pathname: `/${PAGE_NAME.CREATE_SPOT.name}/${projectId}`,
+                          search: `${search}&afterIndex=${addSpotAfterIndex}`,
+                          state: { afterIndex: addSpotAfterIndex },
+                        });
                       }}
                       onCancelClick={() => setModal(null)}
                     />
@@ -325,7 +329,11 @@ const Content = (props) => {
             setAddSpotAfterIndex(null);
           }}
           onCreateSpotButtonClick={() => {
-            history.push(`/${PAGE_NAME.CREATE_SPOT.name}`);
+            history.push({
+              pathname: `/${PAGE_NAME.CREATE_SPOT.name}/${projectId}`,
+              search: `${search}&afterIndex=${addSpotAfterIndex}`,
+              state: { afterIndex: addSpotAfterIndex },
+            });
           }}
           onCancelClick={() => setModal(null)}
         />

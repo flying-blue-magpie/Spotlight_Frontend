@@ -33,15 +33,17 @@ const InputBoxWrapper = styled.div`
 `;
 
 const InputBox = ({
-  title, inputType, defaultValue, handleOnChange,
+  title, inputType, value, handleOnChange, handleOnClick, readonly,
 }) => (
   <InputBoxWrapper className="input-box__input-wrapper">
     <div className="input-box__label-box"><span>{title}</span></div>
     <input
       type={inputType}
-      defaultValue={defaultValue}
+      value={value}
       className="input-box__input"
       onChange={handleOnChange}
+      onClick={handleOnClick}
+      readOnly={readonly}
     />
   </InputBoxWrapper>
 );
@@ -49,15 +51,19 @@ const InputBox = ({
 InputBox.propTypes = {
   title: PropTypes.string,
   inputType: PropTypes.string,
-  defaultValue: PropTypes.string,
+  value: PropTypes.string,
+  readonly: PropTypes.bool,
   handleOnChange: PropTypes.func,
+  handleOnClick: PropTypes.func,
 };
 
 InputBox.defaultProps = {
   title: '',
   inputType: 'text',
-  defaultValue: '',
+  value: '',
+  readonly: false,
   handleOnChange: () => { },
+  handleOnClick: () => { },
 };
 
 export default InputBox;
