@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
 import message from 'antd/lib/message';
+import { useTranslation } from 'react-i18next';
 import {
   selectExploringSpot,
   selectSearchRecSpotsMeta,
@@ -130,6 +131,8 @@ const ExplorePage = (props) => {
     handleFetchRecSpots({ kw: keyword, zones: selectedZones });
   });
 
+  const { t } = useTranslation();
+
   const query = queryString.parse(location.search);
 
   if (query.menu === 'zone') {
@@ -150,13 +153,13 @@ const ExplorePage = (props) => {
       <SearchRow>
         <SearchBar>
           <SelectCountyButton onClick={() => history.replace(`${location.pathname}?menu=zone`)}>
-            縣市選擇
+            {t('chooseCounty')}
             <i className="fas fa-caret-right" />
           </SelectCountyButton>
           <SearchInputContainer>
             <SearchInput
               type="text"
-              placeholder="搜尋景點關鍵字"
+              placeholder={t('searchForSpot')}
               value={keyword}
               onChange={(event) => {
                 setKeyword(event.target.value);
@@ -175,7 +178,7 @@ const ExplorePage = (props) => {
       <ZonesRow>
         {selectedZones.map((zone) => (
           <ZoneLabel key={zone}>
-            {zone}
+            {t(zone)}
             <ZoneLabelCrossIcon className="fas fa-times" />
           </ZoneLabel>
         ))}
@@ -190,8 +193,7 @@ const ExplorePage = (props) => {
                 <CardInfo>
                   <SpotName>{spot.get('name')}</SpotName>
                   <SpotLikes>
-                    {spot.get('like_num')}
-                    人收藏
+                    {t('favoriteWithCount', { count: spot.get('like_num') })}
                   </SpotLikes>
                 </CardInfo>
               </Card>
@@ -202,20 +204,20 @@ const ExplorePage = (props) => {
               <Button onClick={handleOnSkipClick}>
                 <ButtonCrossIcon className="fas fa-times" />
               </Button>
-              <span>跳過</span>
+              <span>{t('skip')}</span>
             </ButtonLabel>
             <ButtonLabel>
               <Button onClick={handleOnLikeClick}>
                 <ButtonHeartIcon className="fas fa-heart" />
               </Button>
-              <span>想去</span>
+              <span>{t('wantToGo')}</span>
             </ButtonLabel>
           </ButtonRow>
         </React.Fragment>
       )}
       {(!searchRecSpotsMeta.get('isLoading') && recSpotIds.size === 0) && (
         <SpotNotFound>
-          {'找不到景點 >"<'}
+          {t('noSpotFound')}
         </SpotNotFound>
       )}
     </Container>
