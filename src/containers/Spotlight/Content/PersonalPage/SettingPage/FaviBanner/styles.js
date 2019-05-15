@@ -7,6 +7,15 @@ export const StyledFaviBanner = styled(Link)`
   justify-content: space-between;
   align-items: center;
   padding: 18px 15px;
+  .favi-banner__user {
+    display: flex;
+    align-items: center;
+  }
+  .favi-banner__name {
+    font-size: 16px;
+    color: #333333;
+    margin-left: 10px;
+  }
   .favi-banner__favicon {
     background-image: url(${(props) => props.faviconPath});
     background-size: cover;
