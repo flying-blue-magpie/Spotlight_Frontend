@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import { selectUser } from 'containers/Spotlight/selectors';
 import peopleIconPath from 'assets/people_icon_100.svg';
+import { PAGE_NAME } from 'Styled/Settings/constants';
 import { StyledFaviBanner } from './styles';
 
 const FaviBanner = ({
@@ -14,6 +15,7 @@ const FaviBanner = ({
   return (
     <StyledFaviBanner
       faviconPath={faviconPath}
+      to={`/${PAGE_NAME.TRAVELER.name}/${user && user.get('user_id')}`}
     >
       <div className="favi-banner__favicon-container">
         <div className="favi-banner__favicon" />
