@@ -29,16 +29,18 @@ const SettingPage = (props) => {
     <StyledSettingPage>
       <FaviBanner />
       <div className="setting-page__general-setting">一般設定</div>
-      <div className="setting-page__language">
-        {isZhHant ? '繁體中文' : 'English'}
-        <Switch onChange={handleOnChange} checked={!isZhHant} />
-      </div>
-      <div
-        role="presentation"
-        className="setting-page__logout-button"
-        onClick={handleLogoutClick}
-      >
-       登出
+      <div className="setting-page__settings">
+        <div className="setting-page__language setting-page__setting">
+          {isZhHant ? '繁體中文' : 'English'}
+          <Switch onChange={handleOnChange} checked={!isZhHant} />
+        </div>
+        <div
+          role="presentation"
+          className="setting-page__logout-button setting-page__setting"
+          onClick={handleLogoutClick}
+        >
+        登出
+        </div>
       </div>
     </StyledSettingPage>
   );

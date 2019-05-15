@@ -1,32 +1,31 @@
 import styled from 'styled-components';
-import {
-  GRAY_DARK,
-  BACKGROUND_COLOR,
-} from 'Styled/Settings/colors';
 
 export const StyledSettingPage = styled.div`
   height: 100%;
-  background-color: ${BACKGROUND_COLOR};
-  .setting-page__general-setting {
-    background-color: ${GRAY_DARK};
+  background-color: #fff;
+  font-size: 14px;
+  .setting-page__settings {
     padding: 0 15px;
-    line-height: 48px;
-    font-size: 18px;
+  }
+  .setting-page__setting {
+    border-bottom: solid 1px #EEEEEE;
+  }
+  .setting-page__general-setting {
+    background-color: #333333;
+    color: #fff;
+    padding: 10px 15px;
   }
   .setting-page__language {
     background-color: white;
-    padding: 10px 15px;
-    font-size: 18px;
+    padding: 10px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   .setting-page__logout-button {
     background-color: white;
-    padding: 0 15px;
     line-height: 48px;
     text-align: center;
-    font-size: 18px;
     cursor: pointer;
   }
 `;
