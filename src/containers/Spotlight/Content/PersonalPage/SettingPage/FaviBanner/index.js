@@ -17,9 +17,7 @@ const FaviBanner = ({
       faviconPath={faviconPath}
       to={`/${PAGE_NAME.TRAVELER.name}/${user && user.get('user_id')}`}
     >
-      <div className="favi-banner__favicon-container">
-        <div className="favi-banner__favicon" />
-      </div>
+      <div className="favi-banner__favicon" />
       <div className="favi-banner__favicon-right-arrow" />
     </StyledFaviBanner>
   );
