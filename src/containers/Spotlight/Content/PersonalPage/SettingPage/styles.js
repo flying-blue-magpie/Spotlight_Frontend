@@ -13,6 +13,14 @@ export const StyledSettingPage = styled.div`
     line-height: 48px;
     font-size: 18px;
   }
+  .setting-page__language {
+    background-color: white;
+    padding: 10px 15px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   .setting-page__logout-button {
     background-color: white;
     padding: 0 15px;
