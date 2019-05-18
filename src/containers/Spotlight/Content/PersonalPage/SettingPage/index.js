@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Switch from 'antd/lib/switch';
-import { useTranslation } from 'react-i18next';
 import { logout } from 'containers/Spotlight/actions';
 import history from 'utils/history';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import Context from 'containers/Spotlight/Context';
 import FaviBanner from './FaviBanner';
 import { StyledSettingPage } from './styles';
 
+const { SpotlightContext } = Context;
+
 const SettingPage = (props) => {
-  const { i18n } = useTranslation();
-  const [isZhHant, setIsZhHant] = useState(i18n.language === 'zh-Hant');
+  const { language, setLanguage } = useContext(SpotlightContext);
   const handleLogoutClick = () => {
     props.logout();
     history.push(`/${PAGE_NAME.EXPLORE.name}`);
   };
   const handleOnChange = (checked) => {
     if (checked) {
-      setIsZhHant(false);
-      i18n.changeLanguage('en');
+      setLanguage('en');
     } else {
-      setIsZhHant(true);
-      i18n.changeLanguage('zh-Hant');
+      setLanguage('zh-Hant');
     }
   };
   return (
@@ -31,8 +30,8 @@ const SettingPage = (props) => {
       <div className="setting-page__general-setting">一般設定</div>
       <div className="setting-page__settings">
         <div className="setting-page__language setting-page__setting">
-          {isZhHant ? '繁體中文' : 'English'}
-          <Switch onChange={handleOnChange} checked={!isZhHant} />
+          {language === 'zh-Hant' ? '繁體中文' : 'English'}
+          <Switch onChange={handleOnChange} checked={language === 'en'} />
         </div>
         <div
           role="presentation"

@@ -218,9 +218,9 @@ export const createSpotDone = (error, spot) => ({
   },
 });
 
-export const fetchRecSpots = ({ zones = [], kw = '' } = {}) => ({
+export const fetchRecSpots = ({ zones = [], kw = '', language = 'zh-Hant' } = {}) => ({
   type: FETCH_REC_SPOTS,
-  payload: { zones, kw },
+  payload: { zones, kw, language },
 });
 
 export const setRecSpotsLoading = () => ({
@@ -235,9 +235,9 @@ export const setRecSpotsDone = (error, spots) => ({
   },
 });
 
-export const searchRecSpots = ({ zones = [], kw = '' } = {}) => ({
+export const searchRecSpots = ({ zones = [], kw = '', language = 'zh-Hant' } = {}) => ({
   type: SEARCH_REC_SPOTS,
-  payload: { zones, kw },
+  payload: { zones, kw, language },
 });
 
 export const setSearchRecSpotsLoading = () => ({

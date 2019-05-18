@@ -85,7 +85,7 @@ const ExplorePage = (props) => {
 
   const [keyword, setKeyword] = useState('');
 
-  const { setIsHeaderVisible } = useContext(SpotlightContext);
+  const { setIsHeaderVisible, language } = useContext(SpotlightContext);
 
   useEffect(() => {
     if (!favoriteSpotIdsMeta.get('isLoading')) {
@@ -93,7 +93,7 @@ const ExplorePage = (props) => {
     }
 
     if (recSpotIds.slice(recSpotIds.indexOf(spot.get('spot_id'))).size < REC_SPOTS_BUFFER_COUNT) {
-      handleSearchRecSpots({ kw: keyword, zones: selectedZones });
+      handleSearchRecSpots({ kw: keyword, zones: selectedZones, language });
     }
   }, []);
 
@@ -114,6 +114,7 @@ const ExplorePage = (props) => {
         handleSearchRecSpots({
           kw: event.detail.keyword,
           zones: event.detail.zones,
+          language,
         });
       });
     }
@@ -123,12 +124,12 @@ const ExplorePage = (props) => {
     message.success('加入收藏');
     handleLikeSpot(spot.get('spot_id'));
     handleExploreNextSpot();
-    handleFetchRecSpots({ kw: keyword, zones: selectedZones });
+    handleFetchRecSpots({ kw: keyword, zones: selectedZones, language });
   });
 
   const handleOnSkipClick = useCallback(() => {
     handleExploreNextSpot();
-    handleFetchRecSpots({ kw: keyword, zones: selectedZones });
+    handleFetchRecSpots({ kw: keyword, zones: selectedZones, language });
   });
 
   const { t } = useTranslation();
@@ -247,10 +248,10 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   handleFetchFavoriteSpotIds: () => dispatch(fetchFavoriteSpotIds()),
-  handleFetchRecSpots: ({ kw, zones }) => dispatch(fetchRecSpots({ kw, zones })),
+  handleFetchRecSpots: ({ kw, zones, language }) => dispatch(fetchRecSpots({ kw, zones, language })),
   handleLikeSpot: (id) => dispatch(likeSpot(id)),
   handleExploreNextSpot: () => dispatch(exploreNextSpot()),
-  handleSearchRecSpots: ({ kw, zones }) => dispatch(searchRecSpots({ kw, zones })),
+  handleSearchRecSpots: ({ kw, zones, language }) => dispatch(searchRecSpots({ kw, zones, language })),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExplorePage));

@@ -219,6 +219,7 @@ const fetchRecSpotsEpic = (action$, state$, { request, fetchErrorEpic }) => (
       url: `/rec/spots${getSearchSpotQueryString({
         zones: action.payload.zones,
         keyword: action.payload.kw,
+        language: action.payload.language,
       })}`,
     }).pipe(
       flatMap((data) => of(
@@ -242,6 +243,7 @@ const searchRecSpotsEpic = (action$, state$, { request, fetchErrorEpic }) => (
         url: `/rec/spots${getSearchSpotQueryString({
           zones: action.payload.zones,
           keyword: action.payload.kw,
+          language: action.payload.language,
         })}`,
       }))).pipe(
         mergeAll(),
@@ -474,10 +476,17 @@ const getZonesQueryString = (zones) => zones
   .map((zone) => `zone=${zone}`)
   .join('&');
 
-const getSearchSpotQueryString = ({ zones, keyword }) => {
+const getLanguageQueryString = (language) => (
+  language === 'en'
+    ? 'lang=en'
+    : undefined
+);
+
+const getSearchSpotQueryString = ({ zones, keyword, language }) => {
   const queryString = [
     getKeywordQueryString(keyword),
     getZonesQueryString(zones),
+    getLanguageQueryString(language),
   ]
     .filter((queryStringSegment) => queryStringSegment !== '')
     .join('&');

@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import message from 'antd/lib/message';
@@ -10,6 +10,7 @@ import {
   HeaderRightButtons,
 } from 'containers/Spotlight/Header/Styled';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import Context from 'containers/Spotlight/Context';
 import { zoneReducer } from '../reducer';
 import {
   HeaderContainer,
@@ -17,6 +18,8 @@ import {
   ZoneLabel,
   Container,
 } from './Styled';
+
+const { SpotlightContext } = Context;
 
 const ZoneMenu = ({
   zonesState,
@@ -26,6 +29,7 @@ const ZoneMenu = ({
 }) => {
   const [editZonesState, dispatchEdit] = useReducer(zoneReducer, zonesState);
   const regions = editZonesState.map((zone) => zone.get('region')).toSet();
+  const { language } = useContext(SpotlightContext);
   const { t } = useTranslation();
 
   return (
@@ -53,6 +57,7 @@ const ZoneMenu = ({
                   .map((zone) => zone.get('name'))
                   .toList()
                   .toJS(),
+                language,
               });
             }}
           >
