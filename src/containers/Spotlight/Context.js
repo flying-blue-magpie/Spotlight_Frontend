@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { fromJS, Map, List } from 'immutable';
+import { useTranslation } from 'react-i18next';
 import { DEFAULT_PROJECT } from './constants';
 
 const SpotlightContext = createContext();
@@ -21,6 +22,8 @@ const useSelection = () => {
   const [selectedLikedSpotId, setSelectedLikedSpotId] = useState();
 
   const [selectedDays, setSelectedDays] = useState(List());
+  const { i18n } = useTranslation();
+  const [language, setLanguage] = useState(i18n.language);
 
   return {
     isNavVisible,
@@ -46,6 +49,12 @@ const useSelection = () => {
 
     selectedDays,
     setSelectedDays,
+
+    language,
+    setLanguage: (language) => {
+      i18n.changeLanguage(language);
+      setLanguage(language);
+    },
   };
 };
 
