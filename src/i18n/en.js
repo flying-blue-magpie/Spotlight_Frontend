@@ -46,6 +46,7 @@ export default {
   navigation: {
     探索景點: 'explore',
     計劃旅程: 'plan',
+    遊記: 'articles',
     旅遊牆: 'posts',
     我的: 'me',
   },
