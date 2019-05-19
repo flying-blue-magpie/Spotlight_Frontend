@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
-export const StyledFaviBanner = styled(Link)`
+export const StyledFaviBanner = styled.div`
+  cursor: pointer;
   background-color: white;
   display: flex;
   justify-content: space-between;

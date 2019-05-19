@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -6,16 +6,23 @@ import { Map } from 'immutable';
 import { selectUser } from 'containers/Spotlight/selectors';
 import peopleIconPath from 'assets/people_icon_100.svg';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import history from 'utils/history';
 import { StyledFaviBanner } from './styles';
 
 const FaviBanner = ({
   user,
 }) => {
-  const faviconPath = (user && user.get('portrait_link')) || peopleIconPath;
+  if (!user) {
+    return null;
+  }
+  const handleOnClick = useCallback(() => {
+    history.push(`/${PAGE_NAME.TRAVELER.name}/${user.get('user_id')}`);
+  }, [user]);
+  const faviconPath = user.get('portrait_link') || peopleIconPath;
   return (
     <StyledFaviBanner
       faviconPath={faviconPath}
-      to={`/${PAGE_NAME.TRAVELER.name}/${user && user.get('user_id')}`}
+      onClick={handleOnClick}
     >
       <div className="favi-banner__user">
         <div className="favi-banner__favicon" />
