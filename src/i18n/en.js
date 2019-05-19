@@ -37,4 +37,10 @@ export default {
     chooseAtMost5: 'choose at most 5!',
     探索景點: 'explore spot',
   },
+  navigation: {
+    探索景點: 'explore',
+    計畫旅程: 'plan',
+    旅遊牆: 'posts',
+    我的: 'me',
+  },
 };
