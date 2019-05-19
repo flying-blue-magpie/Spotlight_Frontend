@@ -20,11 +20,13 @@ import AddSpotToProjectPage from 'containers/Spotlight/Content/AddSpotToProjectP
 import AddSpotToProjectPlanPage from 'containers/Spotlight/Content/AddSpotToProjectPlanPage';
 import TravelerPage from 'containers/Spotlight/Content/TravelerPage';
 import CreateSpotPage from 'containers/Spotlight/Content/CreateSpotPage';
+import ArticlesPage from 'containers/Spotlight/Content/ArticlesPage';
 
 export const routePathConfig = {
   loginPagePath: '/',
   explorePagePath: `/${PAGE_NAME.EXPLORE.name}`,
   planningPagePath: `/${PAGE_NAME.PLANNING.name}`,
+  articlesPagePath: `/${PAGE_NAME.ARTICLES.name}`,
   travelWallPagePath: `/${PAGE_NAME.TRAVEL_WALL.name}`,
   personalPagePath: `/${PAGE_NAME.PERSONAL_PAGE.name}`,
   settingPath: `/${PAGE_NAME.SETTING.name}`,
@@ -48,6 +50,7 @@ export default () => (
       <Route exact path={routePathConfig.loginPagePath} component={LoginPage} />
       <Route exact path={routePathConfig.explorePagePath} component={ExplorePage} />
       <Route exact path={routePathConfig.planningPagePath} component={PlanningPage} />
+      <Route exact path={routePathConfig.articlesPagePath} component={ArticlesPage} />
       <Route exact path={routePathConfig.travelWallPagePath} component={TravelWallPage} />
       <Route exact path={routePathConfig.personalPagePath} component={PersonalPage} />
       <Route exact path={routePathConfig.settingPath} component={SettingPage} />
