@@ -1,23 +1,23 @@
 self.__precacheManifest = [
   {
-    "revision": "2f5d32e51ce41fd9d3ed",
+    "revision": "6787511422f0586ee17e",
     "url": "/static/css/main.01cdd49d.chunk.css"
   },
   {
-    "revision": "2f5d32e51ce41fd9d3ed",
-    "url": "/static/js/main.4999974c.chunk.js"
+    "revision": "6787511422f0586ee17e",
+    "url": "/static/js/main.a0e9b8c0.chunk.js"
   },
   {
     "revision": "42ac5946195a7306e2a5",
     "url": "/static/js/runtime~main.a8a9905a.js"
   },
   {
-    "revision": "4edd99d04c88a98d07f0",
+    "revision": "d70348d21d1b00f8c561",
     "url": "/static/css/2.41bff4c5.chunk.css"
   },
   {
-    "revision": "4edd99d04c88a98d07f0",
-    "url": "/static/js/2.e43bd368.chunk.js"
+    "revision": "d70348d21d1b00f8c561",
+    "url": "/static/js/2.3d46181d.chunk.js"
   },
   {
     "revision": "fa0895d745b38604a1e35bd339b1af6c",
@@ -62,6 +62,14 @@ self.__precacheManifest = [
   {
     "revision": "28d4e2ebe5e9e4de047c13b9de6754d8",
     "url": "/static/media/explore_icon_hover.28d4e2eb.svg"
+  },
+  {
+    "revision": "7142514e46cbdfad3400d2db0e779722",
+    "url": "/static/media/articles_icon.7142514e.svg"
+  },
+  {
+    "revision": "d401862adc3a75c3f51d03f9058b3ec9",
+    "url": "/static/media/articles_icon_hover.d401862a.svg"
   },
   {
     "revision": "db44269d6f4024a3df55be126312d765",
@@ -172,7 +180,27 @@ self.__precacheManifest = [
     "url": "/static/media/camera.06c3586c.svg"
   },
   {
-    "revision": "7e5f91ac256372bc38c1e1fbeab512d1",
+    "revision": "e45d6a677c19703dfd85cfc987a759e7",
+    "url": "/static/media/buildings-1846728_640@3x.e45d6a67.png"
+  },
+  {
+    "revision": "e7863ca966fd38f604f505f32e0343ce",
+    "url": "/static/media/taiwan-667563_640@3x.e7863ca9.png"
+  },
+  {
+    "revision": "fc61d802b136efdb2f1870e10a98fdba",
+    "url": "/static/media/yehliu-geopark-257886_640@3x.fc61d802.png"
+  },
+  {
+    "revision": "2f6761c9c017127a5d25674eeb954713",
+    "url": "/static/media/taiwan-1057813_640@3x.2f6761c9.png"
+  },
+  {
+    "revision": "10edbf6ee7546164b5c80c3577959383",
+    "url": "/static/media/chingtienkang-1784872_640@3x.10edbf6e.png"
+  },
+  {
+    "revision": "cb44db82c93d8f3b9f10a2b45ff0d01b",
     "url": "/index.html"
   }
 ];
