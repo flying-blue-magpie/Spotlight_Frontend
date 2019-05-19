@@ -9,7 +9,16 @@ export default () => {
   const { t } = useTranslation();
   return (
     <HeaderContainer>
-      {t(`${PAGE_NAME.ARTICLES.text}`)}
+      <div>{t(`${PAGE_NAME.ARTICLES.text}`)}</div>
+      <div className="header-container__icon-wrapper icon-right">
+        <i role="presentation" className="fas fa-pen icon-style" onClick={() => {}} />
+        <i
+          role="presentation"
+          className="fas fa-plus icon-style"
+          data-redirect-path={PAGE_NAME.CREATE_PROJECT.name}
+          onClick={() => {}}
+        />
+      </div>
     </HeaderContainer>
   );
 };
