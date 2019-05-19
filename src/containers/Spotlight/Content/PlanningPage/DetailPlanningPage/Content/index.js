@@ -179,9 +179,11 @@ const Content = (props) => {
       okText: '刪除',
       okType: 'danger',
       onOk: () => {
-        const updatedPlan = plan.updateIn([day - 1, 'arrange'], (arrs) => arrs.filter((arr) => arr.get('spot_id') !== selectedSpotId));
+        const newArrange = arrangeState.filter((arr) => arr.get('spot_id') !== selectedSpotId);
+        const updatedPlan = plan.setIn([day - 1, 'arrange'], newArrange);
         handleSubmitUpdateProject(projectId, fromJS({ plan: updatedPlan }));
         setModal(null);
+        setArrangeState(newArrange);
       },
     });
   }, [selectedSpotId, projectId]);
