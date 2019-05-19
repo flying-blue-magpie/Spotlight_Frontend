@@ -1,5 +1,6 @@
 import React, { useContext, useCallback, useEffect } from 'react';
 import { PAGE_NAME } from 'Styled/Settings/constants';
+import { useTranslation } from 'react-i18next';
 import {
   findAttributeInEvent,
 } from 'utils/event';
@@ -12,6 +13,7 @@ import {
 const { SpotlightContext } = Context;
 
 export default () => {
+  const { t } = useTranslation();
   const context = useContext(SpotlightContext);
   const {
     isEditMode,
@@ -50,7 +52,7 @@ export default () => {
   }
   return (
     <HeaderContainer>
-      <div>{PAGE_NAME.PLANNING.text}</div>
+      <div>{t(`${PAGE_NAME.PLANNING.text}`)}</div>
       <div className="header-container__icon-wrapper icon-right">
         <i role="presentation" className="fas fa-pen icon-style" onClick={handleEditModeOn} />
         <i

@@ -114,7 +114,7 @@ const ProjectCard = (props) => {
   const handleOnDeleteProject = useCallback((event) => {
     const projId = findAttributeInEvent(event, 'data-project-id');
     confirm({
-      title: '刪除旅程計畫',
+      title: '刪除旅程計劃',
       content: `確認是否刪除 "${name}" ？`,
       okText: '刪除',
       okType: 'danger',

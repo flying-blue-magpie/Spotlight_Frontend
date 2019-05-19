@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Switch from 'antd/lib/switch';
 import { logout } from 'containers/Spotlight/actions';
 import history from 'utils/history';
+import { useTranslation } from 'react-i18next';
 import { PAGE_NAME } from 'Styled/Settings/constants';
 import Context from 'containers/Spotlight/Context';
 import FaviBanner from './FaviBanner';
@@ -12,6 +13,7 @@ import { StyledSettingPage } from './styles';
 const { SpotlightContext } = Context;
 
 const SettingPage = (props) => {
+  const { t } = useTranslation();
   const { language, setLanguage } = useContext(SpotlightContext);
   const handleLogoutClick = () => {
     props.logout();
@@ -27,7 +29,7 @@ const SettingPage = (props) => {
   return (
     <StyledSettingPage>
       <FaviBanner />
-      <div className="setting-page__general-setting">一般設定</div>
+      <div className="setting-page__general-setting">{t('一般設定')}</div>
       <div className="setting-page__settings">
         <div className="setting-page__language setting-page__setting">
           {language === 'zh-Hant' ? '繁體中文' : 'English'}
@@ -38,7 +40,7 @@ const SettingPage = (props) => {
           className="setting-page__logout-button setting-page__setting"
           onClick={handleLogoutClick}
         >
-        登出
+          {t('登出')}
         </div>
       </div>
     </StyledSettingPage>
