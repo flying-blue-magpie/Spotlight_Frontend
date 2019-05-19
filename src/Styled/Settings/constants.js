@@ -5,6 +5,7 @@ export const HEIGHT_NAVIGATION = 60;
 export const PAGE_NAME = {
   EXPLORE: { name: 'explore', text: '探索景點' },
   PLANNING: { name: 'planning', text: '計劃旅程' },
+  ARTICLES: { name: 'articles', text: '遊記' },
   TRAVEL_WALL: { name: 'travelWall', text: '旅遊牆' },
   PERSONAL_PAGE: { name: 'personal', text: '我的' },
   SETTING: { name: 'setting', text: '設定' },
