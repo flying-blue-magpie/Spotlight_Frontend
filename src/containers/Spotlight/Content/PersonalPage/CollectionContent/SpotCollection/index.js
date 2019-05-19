@@ -27,9 +27,9 @@ const SpotCollection = ({
   return (
     <StyledSpotCollection>
       {
-        cards.map((card) => (
+        cards.map((card, index) => (
           <SpotCard
-            key={card}
+            key={`${card}-${index}`}
             spotId={card}
             handleOnClick={handleOnClick}
           />

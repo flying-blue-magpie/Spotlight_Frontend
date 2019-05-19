@@ -24,9 +24,9 @@ const ProjectCollection = ({
   return (
     <StyledProjectCollection>
       {
-        cards.map((card) => (
+        cards.map((card, index) => (
           <ProjectCard
-            key={card}
+            key={`${card}-${index}`}
             projectId={card}
           />
         ))
