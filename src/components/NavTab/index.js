@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import {
   findAttributeInEvent,
 } from 'utils/event';
@@ -51,10 +52,11 @@ const NavTab = (props) => {
     history.push(`/${pagePath}`);
   };
   const isActive = window.location.pathname.includes(page.name);
+  const { t } = useTranslation();
   return (
     <NavTabWrapper iconPath={iconPath} data-page-path={page.name} onClick={handleRedirect}>
       <div className={`nav-tab__image ${setNavTabActive(isActive)}`} />
-      <div>{page.text}</div>
+      <div>{t(`navigation:${page.text}`)}</div>
     </NavTabWrapper>
   );
 };
