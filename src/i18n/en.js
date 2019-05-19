@@ -35,7 +35,7 @@ export default {
     金門縣: 'Jinmen County',
     澎湖縣: 'Penghu County',
     chooseAtMost5: 'choose at most 5!',
-    探索景點: 'explore spot',
+    探索景點: 'Explore spot',
   },
   navigation: {
     探索景點: 'explore',
