@@ -38,6 +38,7 @@ export default {
     探索景點: 'Explore spot',
     旅遊牆: 'Posts',
     計劃旅程: 'Plan',
+    遊記: 'Articles',
     我的: 'Me',
     設定: 'Setting',
     一般設定: 'General Setting',
@@ -46,6 +47,7 @@ export default {
   navigation: {
     探索景點: 'explore',
     計劃旅程: 'plan',
+    遊記: 'articles',
     旅遊牆: 'posts',
     我的: 'me',
   },

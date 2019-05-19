@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="29.915" height="30.042" viewBox="0 0 29.915 30.042">
+  <g id="_Tab_Bar_icon3_hover" data-name=" Tab Bar_icon3_hover" transform="translate(2250 330)">
+    <g id="Group_455" data-name="Group 455" transform="translate(-3477.322 -489.12)">
+      <g id="Group_453" data-name="Group 453">
+        <path id="Path_592" data-name="Path 592" d="M1250.112,166.445v20.717a1,1,0,0,1-1,1h-19.79a1,1,0,0,1-1-1V161.12a1,1,0,0,1,1-1h14.337" fill="#fbe45a"/>
+        <path id="Path_593" data-name="Path 593" d="M1249.111,189.162h-19.789a2,2,0,0,1-2-2V161.12a2,2,0,0,1,2-2h14.337v2h-14.337v26.042h19.789V166.445h2v20.717A2,2,0,0,1,1249.111,189.162Z" fill="#333"/>
+      </g>
+      <g id="Group_454" data-name="Group 454">
+        <path id="Path_594" data-name="Path 594" d="M1250.112,166.572h-6.452V160.12Z" fill="#333"/>
+        <path id="Path_595" data-name="Path 595" d="M1250.111,167.572h-6.452a1,1,0,0,1-1-1V160.12a1,1,0,0,1,1.707-.707l6.452,6.452a1,1,0,0,1-.707,1.707Zm-5.452-2h3.038l-3.038-3.038Z" fill="#333"/>
+      </g>
+    </g>
+    <g id="top_bar_icon6" data-name="top bar icon6" transform="translate(-3477.322 -489.12)">
+      <g id="Path_158" data-name="Path 158">
+        <path id="Path_596" data-name="Path 596" d="M1245.347,179.546v2.479h2.477l7.305-7.307-2.477-2.477Zm11.7-6.743a.657.657,0,0,0,0-.93h0l-1.546-1.545a.656.656,0,0,0-.929,0l0,0-1.208,1.208,2.477,2.477Z" fill="#333"/>
+      </g>
+    </g>
+    <g id="Group_458" data-name="Group 458" transform="translate(-3477.322 -489.12)">
+      <g id="Group_456" data-name="Group 456">
+        <path id="Path_597" data-name="Path 597" d="M1243.71,178.471H1234.6a1,1,0,0,1,0-2h9.112a1,1,0,0,1,0,2Z" fill="#333"/>
+      </g>
+      <g id="Group_457" data-name="Group 457">
+        <path id="Path_598" data-name="Path 598" d="M1239.153,181.792H1234.6a1,1,0,0,1,0-2h4.555a1,1,0,0,1,0,2Z" fill="#333"/>
+      </g>
+    </g>
+  </g>
+</svg>

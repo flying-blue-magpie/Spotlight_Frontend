@@ -4,6 +4,9 @@ import planningHoverIconPath from 'assets/NavIcons/planning_icon_hover.svg';
 import exploreIconPath from 'assets/NavIcons/explore_icon.svg';
 import exploreHoverIconPath from 'assets/NavIcons/explore_icon_hover.svg';
 
+import articlesIconPath from 'assets/NavIcons/articles_icon.svg';
+import articlesHoverIconPath from 'assets/NavIcons/articles_icon_hover.svg';
+
 import travelWallIconPath from 'assets/NavIcons/travel_wall_icon.svg';
 import travelWallHoverIconPath from 'assets/NavIcons/travel_wall_icon_hover.svg';
 
@@ -142,6 +145,10 @@ export const NavIcon = {
   planning: {
     normal: planningIconPath,
     hover: planningHoverIconPath,
+  },
+  articles: {
+    normal: articlesIconPath,
+    hover: articlesHoverIconPath,
   },
   travelWall: {
     normal: travelWallIconPath,

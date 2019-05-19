@@ -20,6 +20,7 @@ const Navigation = () => (
   <NavigationContainer>
     <NavTab page={PAGE_NAME.EXPLORE} iconPath={NavIcon.explore} />
     <NavTab page={PAGE_NAME.PLANNING} iconPath={NavIcon.planning} />
+    <NavTab page={PAGE_NAME.ARTICLES} iconPath={NavIcon.articles} />
     <NavTab page={PAGE_NAME.TRAVEL_WALL} iconPath={NavIcon.travelWall} />
     <NavTab page={PAGE_NAME.PERSONAL_PAGE} iconPath={NavIcon.personal} />
   </NavigationContainer>

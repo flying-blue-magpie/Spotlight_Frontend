@@ -3,6 +3,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 import history from 'utils/history';
 import ExplorePage from 'containers/Spotlight/Header/ExplorePage';
 import PlanningPage from 'containers/Spotlight/Header/PlanningPage';
+import ArticlesPage from 'containers/Spotlight/Header/ArticlesPage';
 import TravelWallPage from 'containers/Spotlight/Header/TravelWallPage';
 import PersonalPage from 'containers/Spotlight/Header/PersonalPage';
 import SettingPage from 'containers/Spotlight/Header/PersonalPage/SettingPage';
@@ -24,6 +25,7 @@ export default () => (
     <Switch>
       <Route exact path={routePathConfig.explorePagePath} component={ExplorePage} />
       <Route exact path={routePathConfig.planningPagePath} component={PlanningPage} />
+      <Route exact path={routePathConfig.articlesPagePath} component={ArticlesPage} />
       <Route exact path={routePathConfig.travelWallPagePath} component={TravelWallPage} />
       <Route exact path={routePathConfig.personalPagePath} component={PersonalPage} />
       <Route exact path={routePathConfig.settingPath} component={SettingPage} />
