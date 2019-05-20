@@ -17,6 +17,7 @@ import {
   CardSubtitle,
   Footer,
   FooterInfo,
+  Review,
 } from './Styled';
 
 const TravelCard = ({
@@ -34,6 +35,8 @@ const TravelCard = ({
   onCardClick,
   userImageTo,
   cardImageSrcList,
+  reviewScore,
+  reviewCount,
 }) => {
   const handleOnClick = useCallback(() => {
     history.push(to);
@@ -58,6 +61,9 @@ const TravelCard = ({
           <UserName>{userName}</UserName>
           <CardDate>{cardDate}</CardDate>
         </HeaderInfo>
+        <Review>
+          {`${reviewScore} (${reviewCount})`}
+        </Review>
       </Header>
       {(cardImageSrcList && cardImageSrcList.length > 0)
         ? (
@@ -114,6 +120,8 @@ TravelCard.propTypes = {
     PropTypes.object,
     PropTypes.string,
   ]).isRequired,
+  reviewScore: PropTypes.number,
+  reviewCount: PropTypes.number,
 };
 
 TravelCard.defaultProps = {
@@ -125,6 +133,8 @@ TravelCard.defaultProps = {
   cardSubtitle: '卡片副標題',
   onLikeClick: () => {},
   onCardClick: () => {},
+  reviewScore: 0,
+  reviewCount: 0,
 };
 
 export default TravelCard;
