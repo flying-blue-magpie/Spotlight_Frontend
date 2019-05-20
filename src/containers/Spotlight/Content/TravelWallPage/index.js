@@ -72,6 +72,8 @@ const TravelWallPage = ({
               String(project.getIn(['plan', 0, 'arrange', 0, 'spot_id'])),
               'pic',
             ], List()).toJS()}
+            reviewScore={project.get('reviewScore')}
+            reviewCount={project.get('reviewCount')}
           />
         ))
       }
