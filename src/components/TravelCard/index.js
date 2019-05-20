@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Carousel from 'nuka-carousel';
+import Modal from 'antd/lib/modal';
+import Rate from 'antd/lib/rate';
 import history from 'utils/history';
 import Likes from 'components/Likes';
 import peopleIconPath from 'assets/people_icon_100.svg';
@@ -17,6 +19,7 @@ import {
   CardSubtitle,
   Footer,
   FooterInfo,
+  Review,
 } from './Styled';
 
 const TravelCard = ({
@@ -34,6 +37,8 @@ const TravelCard = ({
   onCardClick,
   userImageTo,
   cardImageSrcList,
+  reviewScore,
+  reviewCount,
 }) => {
   const handleOnClick = useCallback(() => {
     history.push(to);
@@ -50,6 +55,31 @@ const TravelCard = ({
     history.push(userImageTo);
   });
 
+  const handleOnReviewClick = useCallback((event) => {
+    event.stopPropagation();
+    Modal.confirm({
+      title: '為這個旅程匿名評價',
+      cancelText: '取消',
+      okText: '確定',
+      content: <Rate />,
+      icon: null,
+      okButtonProps: {
+        style: {
+          backgroundColor: '#FBE45A',
+          color: '#292929',
+          borderColor: '#FBE45A',
+        },
+      },
+      cancelButtonProps: {
+        style: {
+          backgroundColor: '#EEEEEE',
+          color: '#292929',
+          borderColor: '#EEEEEE',
+        },
+      },
+    });
+  });
+
   return (
     <Container onClick={handleOnClick} className={className}>
       <Header>
@@ -58,6 +88,9 @@ const TravelCard = ({
           <UserName>{userName}</UserName>
           <CardDate>{cardDate}</CardDate>
         </HeaderInfo>
+        <Review onClick={handleOnReviewClick}>
+          {`${reviewScore} (${reviewCount})`}
+        </Review>
       </Header>
       {(cardImageSrcList && cardImageSrcList.length > 0)
         ? (
@@ -114,6 +147,8 @@ TravelCard.propTypes = {
     PropTypes.object,
     PropTypes.string,
   ]).isRequired,
+  reviewScore: PropTypes.number,
+  reviewCount: PropTypes.number,
 };
 
 TravelCard.defaultProps = {
@@ -125,6 +160,8 @@ TravelCard.defaultProps = {
   cardSubtitle: '卡片副標題',
   onLikeClick: () => {},
   onCardClick: () => {},
+  reviewScore: 0,
+  reviewCount: 0,
 };
 
 export default TravelCard;

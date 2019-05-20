@@ -21,6 +21,24 @@ export const UserImage = styled.img`
   margin-right: 5px;
 `;
 
+export const Review = styled.div`
+  flex-shrink: 0;
+  font-size: 14px;
+  color: #333333;
+  display: flex;
+  align-items: center;
+
+  &:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f005";
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 900;
+    color: #FBE45A;
+    margin-right: 6px;
+  }
+`;
+
 export const HeaderInfo = styled.div`
   flex-grow: 1;
 `;

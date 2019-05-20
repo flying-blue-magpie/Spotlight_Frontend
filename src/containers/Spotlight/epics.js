@@ -329,13 +329,21 @@ const fetchProjectsEpic = (action$, state$, { request, fetchErrorEpic }) => (
         only_public: action.payload.onlyPublic,
       })}`,
     }).pipe(
-      flatMap((data) => of(
-        setProjectsDone(null, data.content),
-        ...data.content
-          .map((project) => project.owner)
-          .filter((ownerId, index, ownerIds) => ownerIds.indexOf(ownerId) === index)
-          .map((ownerId) => fetchUserById(ownerId)),
-      )),
+      flatMap((data) => {
+        const projectsWithReview = data.content.map((project) => ({
+          ...project,
+          reviewScore: Number.parseFloat((Math.random() * 5).toFixed(1)),
+          reviewCount: Math.floor(Math.random() * 10 + 1),
+        }));
+
+        return of(
+          setProjectsDone(null, projectsWithReview),
+          ...data.content
+            .map((project) => project.owner)
+            .filter((ownerId, index, ownerIds) => ownerIds.indexOf(ownerId) === index)
+            .map((ownerId) => fetchUserById(ownerId)),
+        );
+      }),
       catchError((error) => fetchErrorEpic(
         error,
         setProjectsDone(error),
