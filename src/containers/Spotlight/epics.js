@@ -341,8 +341,8 @@ const fetchProjectsEpic = (action$, state$, { request, fetchErrorEpic }) => (
         ];
         const projectsWithReview = data.content.map((project) => ({
           ...project,
-          reviewScore: Number.parseFloat((Math.random() * 5).toFixed(1)),
-          reviewCount: Math.floor(Math.random() * 10 + 1),
+          reviewScore: Number.parseFloat((randomBetween({ min: 2, max: 4 }) + Math.random()).toFixed(1)),
+          reviewCount: randomBetween({ min: 4, max: 10 }),
           comments: arrayShuffle(comments).slice(0, randomBetween({ min: 3, max: 5 })),
         }));
 
