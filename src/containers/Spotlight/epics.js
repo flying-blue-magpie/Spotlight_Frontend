@@ -15,6 +15,8 @@ import {
 import message from 'antd/lib/message';
 
 import toQueryString from 'utils/query-string';
+import randomBetween from 'utils/random-between';
+import arrayShuffle from 'utils/array-shuffle';
 import {
   INIT,
   FETCH_USER_BY_ID,
@@ -330,10 +332,18 @@ const fetchProjectsEpic = (action$, state$, { request, fetchErrorEpic }) => (
       })}`,
     }).pipe(
       flatMap((data) => {
+        const comments = [
+          { userName: 'CY', userImage: 'http://chittagongit.com/download/96686', comment: '下次我也去看看好風景' },
+          { userName: 'EP', userImage: 'http://chittagongit.com/download/96696', comment: '謝謝分享～' },
+          { userName: 'LW', userImage: 'https://www.pinclipart.com/picdir/middle/133-1331433_free-user-avatar-icons-happy-flat-design-png.png', comment: '收藏了～謝謝！' },
+          { userName: 'XB', userImage: 'https://img.icons8.com/color/420/avatar.png', comment: '看起來很猛XD' },
+          { userName: 'MT', userImage: 'https://cdn.iconscout.com/icon/free/png-256/avatar-376-456328.png', comment: '最近蠻適合去這裡的，感謝分享' },
+        ];
         const projectsWithReview = data.content.map((project) => ({
           ...project,
           reviewScore: Number.parseFloat((Math.random() * 5).toFixed(1)),
           reviewCount: Math.floor(Math.random() * 10 + 1),
+          comments: arrayShuffle(comments).slice(0, randomBetween({ min: 3, max: 5 })),
         }));
 
         return of(
