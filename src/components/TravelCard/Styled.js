@@ -87,3 +87,29 @@ export const FooterInfo = styled.div`
 export const LikeLabel = styled.label`
   flex-shrink: 0;
 `;
+
+export const ResponseInfo = styled.div`
+  display: flex;
+  background-color: #fff;
+  padding: 0px 15px;
+  padding-bottom: 10px;
+  .responsse-info__icon-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 32px;
+    color: #AAAAAA;
+    font-size: 14px;
+  }
+  .responsse-info__icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 6px;
+    border-radius: 100%;
+    height: 30px;
+    width: 30px;
+    color: #AAAAAA;
+    box-shadow: 0px 0px 6px rgba(0,0,0,0.3);
+  }
+`;

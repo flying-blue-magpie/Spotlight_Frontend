@@ -20,7 +20,10 @@ import {
   Footer,
   FooterInfo,
   Review,
+  ResponseInfo,
 } from './Styled';
+
+const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const TravelCard = ({
   className,
@@ -122,6 +125,20 @@ const TravelCard = ({
           isActive={isLikeActive}
         />
       </Footer>
+      <ResponseInfo>
+        <div className="responsse-info__icon-group">
+          <div className="responsse-info__icon-wrapper"><i className="far fa-heart" /></div>
+          <div>{getRandom(10, 999)}</div>
+        </div>
+        <div className="responsse-info__icon-group">
+          <div className="responsse-info__icon-wrapper"><i className="fas fa-comment-dots" /></div>
+          <div>{getRandom(1, 300)}</div>
+        </div>
+        <div className="responsse-info__icon-group">
+          <div className="responsse-info__icon-wrapper"><i className="fas fa-eye" /></div>
+          <div>{getRandom(20, 9999)}</div>
+        </div>
+      </ResponseInfo>
     </Container>
   );
 };
