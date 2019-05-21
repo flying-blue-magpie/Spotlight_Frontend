@@ -19,6 +19,7 @@ export const PAGE_NAME = {
   EDIT_PLANNING_DAY: { name: 'editPlanningDay', text: '編輯天數' },
   TRAVELER: { name: 'traveler', text: '旅遊者' },
   CREATE_SPOT: { name: 'createSpot', text: '自建景點' },
+  COMMENT: { name: 'comments', text: '留言' },
 };
 
 export const mixinWidthWrapper = () => `
