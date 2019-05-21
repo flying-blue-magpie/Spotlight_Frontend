@@ -20,6 +20,9 @@ import {
   Footer,
   FooterInfo,
   Review,
+  FooterButtons,
+  Comment,
+  CommentIcon,
 } from './Styled';
 
 const TravelCard = ({
@@ -39,6 +42,8 @@ const TravelCard = ({
   cardImageSrcList,
   reviewScore,
   reviewCount,
+  commentCount,
+  commentTo,
 }) => {
   const handleOnClick = useCallback(() => {
     history.push(to);
@@ -80,6 +85,11 @@ const TravelCard = ({
     });
   });
 
+  const handleOnCommentClick = useCallback((event) => {
+    event.stopPropagation();
+    history.push(commentTo);
+  });
+
   return (
     <Container onClick={handleOnClick} className={className}>
       <Header>
@@ -116,12 +126,18 @@ const TravelCard = ({
           <CardTitle>{cardTitle}</CardTitle>
           <CardSubtitle>{cardSubtitle}</CardSubtitle>
         </FooterInfo>
+      </Footer>
+      <FooterButtons>
         <Likes
           onClick={handleOnLikeClick}
           likeNumber={likeNumber}
           isActive={isLikeActive}
         />
-      </Footer>
+        <Comment onClick={handleOnCommentClick}>
+          <CommentIcon className="fas fa-comment-dots" />
+          {commentCount}
+        </Comment>
+      </FooterButtons>
     </Container>
   );
 };
@@ -149,6 +165,8 @@ TravelCard.propTypes = {
   ]).isRequired,
   reviewScore: PropTypes.number,
   reviewCount: PropTypes.number,
+  commentCount: PropTypes.number,
+  commentTo: PropTypes.string,
 };
 
 TravelCard.defaultProps = {
@@ -162,6 +180,7 @@ TravelCard.defaultProps = {
   onCardClick: () => {},
   reviewScore: 0,
   reviewCount: 0,
+  commentCount: 0,
 };
 
 export default TravelCard;
