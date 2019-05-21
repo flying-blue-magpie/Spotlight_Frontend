@@ -88,28 +88,29 @@ export const LikeLabel = styled.label`
   flex-shrink: 0;
 `;
 
-export const ResponseInfo = styled.div`
+export const FooterButtons = styled.div`
   display: flex;
+  padding: 0 15px 10px 15px;
   background-color: #fff;
-  padding: 0px 15px;
-  padding-bottom: 10px;
-  .responsse-info__icon-group {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 32px;
-    color: #AAAAAA;
-    font-size: 14px;
-  }
-  .responsse-info__icon-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 6px;
-    border-radius: 100%;
-    height: 30px;
-    width: 30px;
-    color: #AAAAAA;
-    box-shadow: 0px 0px 6px rgba(0,0,0,0.3);
-  }
+`;
+
+export const Comment = styled.div`
+  display: flex;
+  align-items: center;
+  color: #AAAAAA;
+  font-size: 14px;
+  margin-left: 30px;
+`;
+
+export const CommentIcon = styled.div`
+  margin-right: 6px;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, .16);
+  color: #AAAAAA;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

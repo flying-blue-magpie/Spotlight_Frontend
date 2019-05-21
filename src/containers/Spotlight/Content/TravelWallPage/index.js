@@ -74,6 +74,8 @@ const TravelWallPage = ({
             ], List()).toJS()}
             reviewScore={project.get('reviewScore')}
             reviewCount={project.get('reviewCount')}
+            commentTo={`/${PAGE_NAME.COMMENT.name}/${project.get('proj_id')}`}
+            commentCount={project.get('comments').size}
           />
         ))
       }

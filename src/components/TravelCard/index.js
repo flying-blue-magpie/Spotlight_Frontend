@@ -20,10 +20,10 @@ import {
   Footer,
   FooterInfo,
   Review,
-  ResponseInfo,
+  FooterButtons,
+  Comment,
+  CommentIcon,
 } from './Styled';
-
-const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const TravelCard = ({
   className,
@@ -42,6 +42,8 @@ const TravelCard = ({
   cardImageSrcList,
   reviewScore,
   reviewCount,
+  commentCount,
+  commentTo,
 }) => {
   const handleOnClick = useCallback(() => {
     history.push(to);
@@ -83,6 +85,11 @@ const TravelCard = ({
     });
   });
 
+  const handleOnCommentClick = useCallback((event) => {
+    event.stopPropagation();
+    history.push(commentTo);
+  });
+
   return (
     <Container onClick={handleOnClick} className={className}>
       <Header>
@@ -119,26 +126,18 @@ const TravelCard = ({
           <CardTitle>{cardTitle}</CardTitle>
           <CardSubtitle>{cardSubtitle}</CardSubtitle>
         </FooterInfo>
+      </Footer>
+      <FooterButtons>
         <Likes
           onClick={handleOnLikeClick}
           likeNumber={likeNumber}
           isActive={isLikeActive}
         />
-      </Footer>
-      <ResponseInfo>
-        <div className="responsse-info__icon-group">
-          <div className="responsse-info__icon-wrapper"><i className="far fa-heart" /></div>
-          <div>{getRandom(10, 999)}</div>
-        </div>
-        <div className="responsse-info__icon-group">
-          <div className="responsse-info__icon-wrapper"><i className="fas fa-comment-dots" /></div>
-          <div>{getRandom(1, 300)}</div>
-        </div>
-        <div className="responsse-info__icon-group">
-          <div className="responsse-info__icon-wrapper"><i className="fas fa-eye" /></div>
-          <div>{getRandom(20, 9999)}</div>
-        </div>
-      </ResponseInfo>
+        <Comment onClick={handleOnCommentClick}>
+          <CommentIcon className="fas fa-comment-dots" />
+          {commentCount}
+        </Comment>
+      </FooterButtons>
     </Container>
   );
 };
@@ -166,6 +165,8 @@ TravelCard.propTypes = {
   ]).isRequired,
   reviewScore: PropTypes.number,
   reviewCount: PropTypes.number,
+  commentCount: PropTypes.number,
+  commentTo: PropTypes.string,
 };
 
 TravelCard.defaultProps = {
@@ -179,6 +180,7 @@ TravelCard.defaultProps = {
   onCardClick: () => {},
   reviewScore: 0,
   reviewCount: 0,
+  commentCount: 0,
 };
 
 export default TravelCard;
